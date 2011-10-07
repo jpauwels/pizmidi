@@ -1,0 +1,10 @@
+midiBlackKeyFilter
+
+Separately adjust velocity of black and white keys, and/or send them on different channels.
+
+Parameters:
+•	InputCh – Channel to affect: Any, or 1-16
+•	WhiteCh – Channel to send white keys on: No Change, or 1-16
+•	WhiteVel – Velocity adjustment in percent for white keys (0-200%)
+•	BlackCh - Channel to send black keys on: No Change, or 1-16
+•	BlackVel - Velocity adjustment in percent for black keys (0-200%)

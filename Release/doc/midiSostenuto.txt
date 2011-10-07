@@ -1,0 +1,16 @@
+midiSostenuto
+
+Like a piano sostenuto pedal, but for midi notes instead of piano dampers. Sostenuto is a selective sustain pedal; only notes that are held down at the moment the pedal is depressed will be sustained.
+
+
+Parameters:
+
+Pedal CC - MIDI CC to use for the sostenuto pedal. This should be 66 according to the MIDI specification, but you can use any CC here.
+
+Low Note - Lowest note that can be affected by sostenuto.
+
+High Note - Highest note that can be affected by sostenuto.
+
+Pedal Position - Instead of using a CC, you can use this parameter as the pedal.
+
+Channel - Only notes on this channel will be affected.

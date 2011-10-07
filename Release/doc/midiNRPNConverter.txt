@@ -1,0 +1,37 @@
+midiNRPNConverter
+
+Converts between NRPN/RPN and CC messages, with 16 conversion slots. Slots are processed top to bottom. Multple slots can be set to the same input message to convert one message to multiple messages.
+
+Parameters:
+
+
+--Global--
+
+Input - Input message type (CC, NRPN, NRPN(LSB), RPN, or RPN(LSB)). For the LSB modes, the MSB is ignored. 
+
+Output - Output message type (CC, NRPN, NRPN(LSB), RPN, or RPN(LSB)). 
+
+Channel In - Input channel on which to look for messages. Either "Any" or 1-16.
+
+Channel Out - Channel on which to send output messages. Either "No Change" (same as input) or 1-16.
+
+
+--Per slot (16 slots)--
+
+#:Coarse In - Select the input CC number (0-127) or MSB of the input (N)RPN in hex (0x0000 - 0x3f80). When set to "None" the slot is disabled. 
+
+#:(N)RPN In - Sets the LSB of the input (N)RPN; first set the Coarse In, then the full (N)RPN is displayed here in hex. Not used when Input is set to CC. Set this to 0 to enable NRPN Learn.
+
+#:Coarse Out - Select the output CC number (0-127), or MSB of the output (N)RPN. When set to "None" the input message is simply blocked.
+
+#:(N)RPN Out - Sets the LSB of the output (N)RPN. Not used when Input is set to CC.
+
+
+--Another global parameter--
+
+Thru - What to do with other MIDI messages. Options:
+	Block Converted - Unselected messages are sent through; selected input messages are blocked.
+	Block All - Unselected messages as well as selected input messages are blocked; only the 
+		output messages are sent.
+	Thru All - All messages are sent through, except for conversions where the output is the 
+		same message as the input.

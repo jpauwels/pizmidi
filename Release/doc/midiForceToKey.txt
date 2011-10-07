@@ -1,0 +1,30 @@
+midiForceToKey
+
+Enforces a scale, and transposes within the scale (optionally based on midi notes on a selected channel).
+
+
+Parameters:
+
+C / C# / D / D# / E / F / F# / G / G# / A / A# / B - These parameters define the scale as on/off switches for each note. When an "off" note is received, it will be changed to a nearby "on" note, based on the setting of the Mode parameter.
+
+Mode - Options:
+	Off - Turns off the plugin; input notes set to "off" will be output unchanged.
+	Nearest - "off" notes will be changed to the nearest "on" note, whether higher or lower, with 
+		priority given to lower notes.
+	Always Up - Transposes "off" notes up to the next "on" note.
+	Always Down - Transposes "off" notes down to the next "on" note.
+	Block - Blocks "off" notes completely.
+
+Transpose - Transposition by scale degree; each note will be moved this number of steps (from -50 to +50) within the scale, after being forced to the scale.
+
+Tr.Channel - When not set to "None", notes on this channel will set the Transpose parameter based on their distance from the selected Root Note.
+
+Root Note - Note to use for scale transposition, when using the Tr.Channel.
+
+N.Channel - When not set to "None", notes on this channel activate the note on/off switches.
+
+N.Ch.Mode - Options for the effect of input notes on N.Channel:
+	Momentary - Switches are "on" only while input notes are held down (note-on is "on," note-off is "off").
+	Toggle - Input note-ons toggle the switches between "on" and "off."
+
+Program - This parameter simply selects a VST program.

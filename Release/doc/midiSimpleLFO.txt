@@ -1,0 +1,42 @@
+midiSimpleLFO
+
+One CC LFO with some "simple" options.
+
+
+Parameters:
+
+Waveform - 
+	Sawtooth - Descending linear ramp
+	Ramp - Ascending linear ramp
+	Triangle - Linear ramp up/down
+	Square - Evenly-spaced high & low values only
+	Sine - Sinusoidal
+	Slow Random - Sends a random value once every cycle
+	Fast Random - Sends a lot of random values every cycle
+	
+CC Out - CC number for the LFO output. Incoming events of this CC are blocked.
+
+Channel Out - Channel for the LFO output.
+
+Freq Mode - Options:
+	Tempo - Frequency in musical times, based on host tempo.
+	Hz - Frequency in Hz, independent of host tempo.
+	
+Frequency - In Tempo mode, 32 bars to 32nd note; In Hz mode, 0-27 Hz. At 0 Hz a single CC value will be sent only when triggered by a note (see Triggering modes).
+
+Phase - Oscillator phase from -180 to +180 degrees. Can be modulated in real time.
+
+Amplitude - Sets the LFO's output range, from 0 to 127. The range is centered at 63.
+
+Offset - A constant added to all the values, from -64 to +63, for adjusting the "center line" of the waveform.
+
+Triggering - Modes:
+	Notes (Mono) - The LFO will start when a note is received, and will continue as long as any note is 
+		playing.
+	Notes (Poly) - The LFO will restart every time a note is received, and will continue as long as any note 
+		is playing.
+	Beat Sync - The LFO will be active only when the host is playing, and will be in sync with the host 
+		timeline.
+	Free Running - The LFO will be always active, independent of note input and host timeline.
+	
+Power - On/Off switch for the LFO.

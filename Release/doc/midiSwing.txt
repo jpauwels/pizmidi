@@ -1,0 +1,46 @@
+midiSwing
+
+Delays and/or offsets velocity of and applies probability to notes (and optionally also CCs) at every other step of a selected note value.
+
+
+Parameters:
+
+Mode - Off, Notes Only, or Notes & CCs.
+
+NoteValue - Swing will apply to events near every other step of this value, from 3 bars to a 64th note. "Near" is defined by TimeFocus.
+
+Swing - From 0% up to MaxSwing. 
+
+TimeFocus - Sets how much to focus on the selected time step, by narrowing the width of the affected range of time.
+
+Time Shape - Sets the shape of the "swing envelope" around the selected time step. 
+	Parabolic - Events in the middle of the range will be delayed the most, with gradually less delay 
+		approaching the edges.
+	Flat - All events inside the range will be delayed by the same amount.
+	Linear Up - The amount of delay increases linearly between the beginning and end of the range.
+	Linear Down - The amount of delay decreases linearly between the beginning and end of the range.
+	
+TimeOffset - Shifts the position of the time step by up to one full step in either direction.
+
+Velocity - Apply a velocity offset to swung notes, from -126 to +127.
+
+Probability - This is the probability that any given swung note will be played. When less than 100%, some notes will be skipped.
+
+Randomness - Applies an amount of randomness to delay times and velocity.
+
+MaxSwing - Determines the maximum possible delay for swung notes:
+	100% - 2:1 ratio (for tied-triplet swing), delay is 1/3 of NoteValue.
+	150% - 3:1 ratio (for e.g. dotted 8th/16th note swing), delay is 1/2 of NoteValue.
+	200% - 5:1 ratio, delay is 2/3 of NoteValue.
+	250% - 11:1 ratio, delay is 5/6 of NoteValue.
+	300% - infinity:1 ratio, delay is equal to NoteValue
+	
+NoteOff - What to do with note off messages:
+	Equal Delay - Whenever possible, delay the note-off by the same time as the note-on was delayed, so that 
+		the note length stays the same
+	Stingy Delay - If possible, don't delay the note-off. If and only if the delay time is longer than the 
+		original note, the note-off will be delayed by the same amount as the note-on.
+	Legato - Swing will apply to note-offs based on their position, so that the space between consecutive 
+		notes remains about the same.
+		
+Channel - Input channel to affect, either "All" or 1-16.

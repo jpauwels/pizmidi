@@ -1,0 +1,56 @@
+midiProbability
+
+Add probability-based effects to incoming midi events, optionally synced to host timeline. Has two slots which can each be set to affect a different step on the host timeline. Slots are processed top-to-bottom, with the first slot having priority.
+
+
+Parameters:
+
+Power - Selects what types of MIDI messages to affect:
+	Off
+	On (Notes)
+	On (Notes & CCs)
+	On (Everything)
+
+	
+--Per-slot parameters (2 slots)--
+
+#:Step - Musical note value from 3 bars to 64th note. Probability effects will only apply to events near (Required "nearness" is determined by the TimeFocus parameter) this step, starting at 0 on the host's timeline. Set Step past 64 to "All Notes" to ignore this value and simply affect every event. See also StepShift below.
+
+#:StepShift - Shifts the above step from 0% (no shift) to 100% (full step length). For example, at StepShift=50% and Step=8, this slot will affect events that occur halfway between every 8th note.
+
+#:Mode - Selects the type of effect for this slot. Whether or not the effect actually applies to each specific event is determined by the Prob parameter (see below). Modes:
+	Off - Slot is disabled.
+	Skip - Events will be skipped.
+	OctaveUp - Notes will be transposed up one octave. Has no effect on other events.
+	OctaveDown - Notes will be transposed down one octave. Has no effect on other events.
+	RandTransp - Notes will be transposed by a random amount between -12 and +12 semitones. For other events, the first data byte will be shifted by this amount.
+	Transpose - Notes will be transposed by the amount set by the Transpose parameter below.
+	RandVeloc - Velocity of notes will be shifted by a random amount between -64 and +64. For other events, the second data byte will be shifted by this amount.
+	OffsetVel - Velocity of notes will be shifted by the amount set by the VelOffset parameter below.
+	Channelize - Events will be sent on the channel set by the ChnlizeChan parameter below.
+	Multi - Events will be processed by all "Multi" parameters (see below).
+	
+#:Prob - Probability for events to be affected by this slot, from 0% (never) to 100% (always).
+
+
+--Global parameters--
+
+TimeFocus - Affects how "wide" each step is, or how close an event must be to a step before it is affected. Higher values mean the step is more "focused" and events must be closer to the step.
+
+Multi probabilities: These only apply to slots that have Mode set to Multi. Any number of Multi effects can simultaneously apply to any given event.
+Multi-Skip - Probabilty for events to be skipped.
+Multi-OctUp - Probability for notes to be transposed up an octave.
+Multi-OctDn - Probability for notes to be transposed down an octave.
+Multi-RndTrn - Probability for notes to be transposed by a random interval.
+Multi-Transp - Probability for notes to be transposed by the amount set by Transpose.
+Multi-RndVel - Probability for notes to be shifted in velocity by a random amount.
+Multi-OffsetVel - Probability for notes to be shifted in velocity by the amount set by VelOffset.
+Multi-Chnlze - Probability for notes to be sent on ChnlizeChan.
+
+Transpose - Interval up to +/-36 semitones to transpose affected notes by.
+
+VelOffset - Amount up to +/-64 to shift the velocity of affected notes by.
+
+ChnlizeChan - Channel to use for channelized events, either "Random" or 1-16.
+
+InputChan - Only events on this channel will be affected; can be "All" to affect all channels.

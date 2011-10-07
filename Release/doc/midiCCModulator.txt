@@ -1,0 +1,58 @@
+midiCCModulator
+
+Use one CC to modulate another CC (or note velocity) in various ways.
+
+
+Parameters:
+
+Mode - Options:
+    Off            - The plugin won't do anything
+    CC -> CC       - Modulate a CC
+    CC -> Velocity - Modulate the velocity of input MIDI notes
+
+Input - The input CC to modulate, either "Any CC"/"Any Note" or 0-127
+
+Modulator - The CC used to modulate the input, or "Manual" which uses a VST parameter instead of a CC
+
+Manual - When Modulator is set to "Manual", this parameter is used as the modulator
+
+Output - Output CC, either "Same as Input" or 0-127, ignored for "CC -> Velocity" mode
+
+Amt/Thresh - Modulation amount, threshold, or nothing, depending on the ModType setting
+
+ModType - The algorithm to apply to the Input and Modulator. Options:
+    Invert - Simply inverts the input values, modulator is not used
+    Add - Scales Modulator by Amt and adds it to Input, limited to 127 maximum output
+    Average - Averages Input and Modulator, Amt crossfades between Input and the average
+    WrapAdd - Same as Add, but values over 127 wrap around instead
+    Subtract - Scales Modulator by Amt and subtracts it from Input, limited to 0 minimum output
+    Add/Subtract - Like Add or Subtract, but treats Modulator as a bipolar value between -64 and +63
+    Multiply - Normalizes Modulator to a maximum value of 2.0, scaled by Amt, and multiplies Input by it
+    Compare - Outputs the higher of Input or Modulator
+    Limit - Outputs the lower of Input or Modulator
+    Bite - When Input is greater than Modulator, subtracts Modulator (scaled by Amt) from Input
+    Mangle - When Input is less than Modulator, does a bipolar addition like Add/Subtract mode
+    Gate - When Modulator is below Thresh, output is 0
+    Block - When Modulator is at or above Thresh, output is 0
+    AND - When both Modulator and Input are at or above Thresh, output is 127, otherwise 0
+    NAND - When both Modulator and Input are at or above Thresh, output is 0, otherwise 127
+    OR - When either Modulator or Input are at or above Thresh, output is 127, otherwise 0
+    NOR - When either Modulator or Input are at or above Thresh, output is 0, otherwise 127
+    XOR - When either Modulator or Input (but not both) are at or above Thresh, output is 127, otherwise 0
+    XNOR - When either Modulator or Input (but not both) are at or above Thresh, output is 0, otherwise 127
+    Match - When Modulator is equal to Input, output is 127, otherwise 0
+    bitwise OR - Input | Modulator
+    bitwise AND - Input & Modulator
+    bitwise XOR - Input ^ Modulator
+    << - Shifts the bits of Input left by Modulator amount
+    >> - Shifts the bits of Input right by Modulator amount
+    Randomize - Applies a random offset to Input between 0 and Modulator amount, scaled by Amt
+	
+OutLevel - Output level from 0-200%
+
+Channel - MIDI Channel to listen on
+
+Thru - What to do with MIDI messages other than the Input and Modulator
+	Off - All incoming messages are blocked; only the output message is sent
+	Block ModCC - All incoming messages are sent through, except the selected Modulator CC which is blocked
+	All Thru - All incoming messages are sent through

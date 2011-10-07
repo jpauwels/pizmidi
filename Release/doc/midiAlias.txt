@@ -1,0 +1,14 @@
+midiAlias
+
+Note values are reflected between a "Nyquist Note" and a "Zero Note," similar to the effect of audio sample aliasing.
+
+
+Parameters:
+
+Nyquist Note - The highest allowed note value. Input notes higher than this will be reflected downward.
+
+Zero Note - The lowest allowed note value. Input notes lower than this will be reflected upward.
+
+Pre Shift - Number of semitones to shift input notes before applying the reflection.
+
+Power - Turns the plugin on or off.

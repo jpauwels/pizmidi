@@ -1,0 +1,100 @@
+midiConverter3
+
+Change and convert between CC, Channel Pressure, Poly Aftertouch, Program Change, Pitch Bend, NRPN/RPN, Note On/Off, and other messages in various ways. Pitch Bend and (N)RPN conversions will use the full 14-bit values when possible.
+
+
+Parameters:
+
+--Input section--
+Here you select an input message to convert.
+
+Input Type - Incoming message to convert. See also "In Param 1" and "In Param 2" which further define the message. For note input types, note-offs and 0-velocity note-ons are treated interchangeably. For LSB modes, the low 7 bits of the 14-bit message are used as the input message. Options:
+	CC
+	14-bit CC
+	Program Change
+	Channel Pressure
+	Poly Aftertouch
+	Pitch Bend
+	Pitch Bend (LSB)
+	NRPN
+	NRPN (LSB)
+	RPN
+	RPN (LSB)
+	Note On #
+	Note On Velocity
+	Note Off #
+	Note Off Velocity
+	
+In Param 1 - Selects input CC number, note number, or (N)RPN MSB.
+
+In Param 2 - Selects input (N)RPN LSB.
+
+Channel In - Selects input channel.
+
+
+--Mapping section--
+These parameters determine how the input values are mapped to output values. 
+
+Low Input - Lowest allowed input value (except for Stretch/Stretch mode, see below). Low Input cannot be higher than High Input. If you try to set it that way, High Input will be automatically set equal to Low Input.
+
+High Input - Highest allowed input value (except for Stretch/Stretch mode, see below). Low Input cannot be higher than High Input. If you try to set it that way, Low Input will be automatically set equal to High Input.
+
+Map Mode - Options:
+	Clip/Limit - Values outside Low & High Input are discarded; values inside are then limited to 
+		Low & High Output.
+	Clip/Stretch - Values outside Low & High Input are discarded; values inside are then 
+		stretched or compressed to fit between Low & High Output.
+	Stretch/Stretch - The full input range 0-127 is compressed to fit between Low & High Input
+		and then is stretched or compressed again to fit between Low & High Output.
+
+Low Output - Lowest possible output value. When Low Output is higher than High Output, the values are reversed, and this will be the highest output value.
+
+High Output - Highest possible output value. When Low Output is higher than High Output, the values are reversed, and this will be the lowest output value.
+
+Offset - This value is added to the output value after the above mapping.
+
+
+--Output section--
+Here you set what the input message is converted to. For 14-bit to 7-bit conversions, rounding is used. For 7-bit to 14-bit conversions, the input value is used for both bytes, except when the value is below 64, in which case the LSB is set to 0.
+
+Output Type - Options:
+	Discard - No conversion, just block the input message.
+	CC - Mapped value will be used as the value of a CC message set by Out Param 1, optionally
+		(set by Out Param 2) with smoothing.
+	14-bit CC - Mapped value will be used as the value of a 14-bit CC message pair set by Out 			
+		Param 1, optionally (set by Out Param 2) with smoothing.
+	Program Change
+	Channel Pressure
+	Poly Aftertouch - Mapped value will be used as the value of a polyphonic aftertouch message 
+		with note number set by Out 1.
+	Pitch Bend - Mapped value will be used as the value of a pitch bend message, optionally (set 
+		by Out Param 1) with smoothing.
+	Pitch Bend (LSB) - Mapped value will be used as the LSB of a pitch bend message with MSB set 
+		by Out Param 1.
+	NRPN
+	NRPN (LSB)
+	RPN
+	RPN (LSB)
+	Note On # - Mapped value will be used as the note number for a note-on message with velocity 
+		set by Out Param 1. Optionally (set by Out Param 2) also immediately send a
+		corresponding note-off.
+	Note On Velocity - Mapped value will be used as the velocity for a note-on message with note 
+		number set by Out Param 1.
+	Note Off # - Mapped value will be used as the note number for a note-off message with 
+		velocity set by Out Param 1. 
+	Note Off Velocity - Mapped value will be used as the velocity for a note-off message with 
+		note number set by Out Param 1.
+	Clock - Input message will trigger a MIDI Clock tick (0xF8).
+
+Out Param 1 - Selects output CC number, note number, or (N)RPN MSB.
+
+Out Param 2 - Selects output (N)RPN LSB, or Pitch Bend / CC smoothing amount.
+
+Channel Out - Selects output channel.
+
+Thru - What to do with other MIDI messages. Options:
+	Block Converted - Unselected messages are sent through; selected input messages are blocked.
+	Thru All - All messages are sent through, except for conversions where the output is the 
+		same message as the input.	
+	Converted Only - Unselected messages as well as selected input messages are blocked; only the 
+		output messages are sent.

@@ -1,0 +1,9 @@
+midiPitchBendQuantize
+
+Quantizes pitch bend messages to up to 25 values.
+
+Parameters:
+
+q+12 through q-12 - Quantization steps. 25 values of pitch bend can be set, and other values will snap to the nearest step.
+
+Channel - MIDI channel to affect (Any, or 1 - 16).

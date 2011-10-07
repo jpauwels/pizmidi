@@ -1,0 +1,30 @@
+midiChordSplit
+
+For splitting polyphonic material to multiple midi channels based on selected note ranges for each voice. This is different from a straight keyboard splitter because the ranges can overlap, and the plugin attempts to choose the most appropriate channel.
+
+
+Global Parameters:
+
+Power - On/Off switch for the whole plugin.
+
+InChannel - Input channel.
+
+NotePriority - How to decide which notes to end when polyphony limit is exceeded:
+	Steal Oldest - The note with the oldest start time will be ended.
+	Steal Last - The note with the most recent start time will be ended.
+	Steal Quietest - The note with the lowest original velocity will be ended.
+	High - Higher notes have priority, lowest pitched note will be ended.
+	Low - Lower notes have priority, highest pitched note will be ended.
+	Centered - Notes closest to the "center" (median) of held note have priority.
+	Random - Note to steal is chosen at random.
+	
+
+Per-channel settings, with N from 1 to 16:
+
+ChNPower - On/Off switch for channel N.
+
+ChNLow - Lowest allowed note for channel N. Can't be set higher than ChNHigh.
+
+ChNHigh - Highest allowed note for channel N. Can't be set lower than ChNLow. 
+
+ChNPoly - Maximum number of notes allowed on channel N (1-64 notes).

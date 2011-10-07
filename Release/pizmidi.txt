@@ -1,0 +1,239 @@
+piz midi VST plugins
+http://thepiz.org/pizmidi/
+
+Change log
+
+
+----------------------------
+changes 20110924:
+
+* Most note-transposing plugins now also transpose poly aftertouch
+
+----------------------------
+changes 20110922:
+
+* Added support (pass-through) for VST sysex
+* Minor consistency fixes
+
+----------------------------
+changes 20110914:
+
+* Fixed rounding error in midiForceToKey Transpose display
+* Updated all plugins for x64 compatibility
+
+----------------------------
+changes 20110221:
+
+* Fixed bug in midiNoteToggle (noteoffs out of range are no longer ignored)
+* midiConverter3: Renamed "Clip/Limit" mode to "Clip/Stretch/Limit" and added new non-stretching "Clip/Limit" mode
+
+----------------------------
+changes 20110204:
+
+* Fixed bug in midiChordHold causing it to do nothing
+
+----------------------------
+changes 20110129:
+
+* Fixed Clip/Limit mode of midiConverter3
+
+----------------------------
+changes 20110118:
+
+* Fixed Mac crashes in midiAudioToCC and midiNotesToCC
+
+----------------------------
+changes 20101231:
+
+* Added midiTranspose
+* Minor fixes for Mac compatibility
+
+----------------------------
+changes 20101130:
+
+* Fixed bug in midiAudioToCC
+* Added midiChordSplit
+* Added "bottomOctave=n" setting to pizmidi.ini, for plugins that display note names (default is bottomOctave=-2)
+* Plugins now look for "actual_plugin_file_name.fxb" instead of built-in plugin name for default settings
+
+----------------------------
+changes 20101026:
+
+* Updated all plugins to use pizmidi.ini consistently
+
+----------------------------
+changes 20101019:
+
+* Fixed "Block Notes" and actual workingness of midiCCStepper
+
+----------------------------
+changes 20100706:
+
+* Added midiAlias and midiScaleChanger
+* Added "ChanMode" setting to midiPolyphony
+* Added "PC Listen" to midiForceToKey
+* Added "default" values settings in pizmidi.ini
+* Fixed "audio ins" setting in pizmidi.ini
+
+----------------------------
+changes 20100703:
+
+* Fixed crash in midiDelay
+* Fixed midiCCReset not restoring state in Reaper
+
+----------------------------
+changes 20100328:
+
+* Fixed midiCCToggle
+* Fixed midiPolyphony (maybe)
+
+----------------------------
+changes 20100319:
+
+* Fixed bug in midiStuckNoteKiller
+* Added N.Channel to midiForceToKey
+* Added "Centered" and "Random" priority to midiPolyphony (experimental)
+* Increased max polyphony per channel in midiPolyphony
+* Fixed sustain pedal in midiPolyphony (wasn't working)
+* Fixed a crash in midiProbability, midiSwing, and midiProgramChange
+
+----------------------------
+changes 20091009:
+
+* Changed parameter ranges on some plugins for better compatibility with mGUI (may break existing patches)
+* Added midiBlackKeyFilter, midiKeySplit4, midiOverlappingNoteKiller, midiPitchBendQuantize, and midiPitchBendToNotes
+* Added PDF manual
+* Fixed plugins not loading in Kore
+* Added NRPN learning to midiNRPNConverter
+
+----------------------------
+changes 20090818:
+
+* Added support for "pizmidi.ini" settings file
+* Put "_inst" or "_fx" in each plugin's filename to force loading as instrument or effect
+* Plugins load as instruments in Buzz (Polac loader)
+* Fixed a bug in midiStrum with VelToSpeed in Simple mode
+* Fixed minor display bug in midiConverter3
+* Added midiChannelFilter
+
+----------------------------
+changes 20090506:
+
+* Added hanging note protection for transposing, and MIDI learn for split note in midiKeySplit
+* Fixed midi16CCRouter to allow mapping the same CC to multiple others
+
+----------------------------
+changes 20090328:
+
+* Added midiNoteGroups
+* Added midiTriggerList
+* Fixed numerous bugs in midiStrum
+* Added sustain pedal, more strum trigger notes, and "While Strumming" Audition mode to midiStrum; see documetation
+* Added more conversions and CC smoothing and renamed midiConverter2 to midiConverter3
+* Fixed minor display issues in some plugins
+* Fixed a crash in VSTHost with midiConverter2/3
+* Prevented plugins with min/max settings from having reversed ranges when not supported
+* Fixed MIDI thru and channel selection bugs in midiSimpleLFO
+* Fixed note-stealing bug in midiPolyphony
+* Fixed bug in midiChs_noGUI where channels set to "--" weren't actually blocked
+* Minor documentation updates
+
+----------------------------
+changes 20081204:
+
+* Updated for Mac & Linux
+
+----------------------------
+changes 20081122:
+
+* Added midiDuplicateBlocker
+* Made some major changes to midiCCReset; see documentation
+* Fixed a bug in all plugins that limited the number of simultaneous MIDI events that could be sent
+* Maybe something else, I forget
+
+----------------------------
+changes 20081011:
+
+* Added midiKeySplit
+* Added midiDelay
+* Added midiExactDelay
+* Added midiProgramChange
+* Added midiCCStepper
+* Added midiProbability
+* Added midiStrum
+* Added midiPolyphony
+* Added midiCCModulator
+* Added midiStuckNoteKiller
+* Added midiCCToggle
+* Added midiSwing
+* Added midiFingered
+* Added midiCCReset
+* Added documentation for all plugins
+* Fixed several bugs in midiAudioToCC
+* Added "Unconverted" MIDI Thru mode to midiNotesToCC: only sends through notes that haven't been used as CCs
+* Changed midiConverter2 note input modes to use 0-velocity note-ons and "real" note-offs interchangeably
+* Fixed pitch bend smoothing in midiConverter2 and made it optional
+* Added Stretch/Stretch mapping mode and Converted Only Thru mode to midiConverter2
+* Fixed a minor display bug with midiForceToKey and midi2qwerty
+* Added Program Change support to midi16CCRouter
+* Fixed some bugs in midiSimpleLFO with Fast Random and Slow Random modes, and mono note triggering
+* Various other minor fixes
+
+changes 20080610:
+* Fixed a bug in midiVelocityScaler
+* Fixed a bug in midiNotesToCC
+
+changes 20080203:
+* Added midiNoteToggle
+* Implemented hanging note protection in midiForceToKey, midiForceToRange, and midiInvertNotes
+* Changes in host's sample rate are now detected in midiSimpleLFO and midiAudioToCC
+
+changes 20080104:
+* Added midiNRPNConverter
+* Updated midiConverter with many more conversion types, and renamed it to midiConverter2
+* Linux and OS X versions updated with changes from 20071222 as well (see below)
+
+changes 20071222:
+* Updated midi2qwerty to have 16 slots instead of 4, and renamed it to midi2qwerty16
+* Removed XT2 transport control (still available separately)
+* Removed midiCCToTempo
+* Plugins will now automatically become "instrument" VSTs in hosts that need it
+* Removed separate instrument versions
+
+changes 20071124:
+* Added midi16CCRouter.
+* midiAudioToCC now has somewhat working "inertia" and "rate" parameters. not perfect yet.
+* next time i might remove XT2 transport control
+
+changes 20071112:
+* midi2qwerty and midiForceToKey now have a "program" parameter. automate it to change the current program. also increased the number of programs to 128, so automating it with a CC will correspond exactly to the program number.
+* midiVelocityScale can now also affect the release velocity, separate from the note-on velocity.
+
+changes 20071101:
+* all plugins now use rounding instead of truncation when creating MIDI values. in most cases this will be better, but some old patches might be affected. this change hasn't been thoroughly tested.
+* added audio output to midiAudioToCC so it will work in Live
+* improvements to midi2qwerty (keydown and keyup are now sent separately in some cases; also added more keys, more triggering modes, and MIDI output)
+
+changes 20071031:
+* experimental build with VST SDK version 2.4 (was 2.3 previously).
+* "instrument" versions for Live and Cubase.
+* linux and mac versions finally updated.
+* maybe other small improvements (i forgot already).
+
+changes 20071030:
+* minor initialization improvement in all plugins.
+
+changes 20071026:
+* updated the LFO again. now it will always be in phase in beat-sync/tempo mode, rather than waiting until the next bar.
+
+changes 20071025:
+* fixed more bugs in midiSimpleLFO and added a "slow" random mode (one message per cycle).
+
+changes 20071024:
+* fixed a few (bad) bugs in the beat-triggered mode of midiSimpleLFO.
+* compiled midiChs_noGUI as an "effect" to match the others
+
+changes 20071023:
+* improved midiSimpleLFO - more sync and triggering modes
+* improved midi2qwerty - full keyboard now accessible, and there are now two CC trigger modes: CC+ (127) and CC- (0).
+* both of these may break old patches, so use them carefully.

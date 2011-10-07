@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ 
+<ProgValues progIndex="0">
+  <PadValues padIndex="0" Ydata1="60" Ycc="0" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\1.svg" text="Pad 1"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="1" Ydata1="60" Ycc="1" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\2.svg" text="Pad 2"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="2" Ydata1="60" Ycc="2" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\3.svg" text="Pad 3"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="3" Ydata1="60" Ycc="3" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\4.svg" text="Pad 4"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="4" Ydata1="60" Ycc="4" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\5.svg" text="Pad 5"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="5" Ydata1="60" Ycc="5" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\6.svg" text="Pad 6"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="6" Ydata1="60" Ycc="6" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\7.svg" text="Pad 7"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="7" Ydata1="60" Ycc="7" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\8.svg" text="Pad 8"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="8" Ydata1="60" Ycc="8" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="1" UseYCC="1" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\9.svg" text="Pad 9"
+             padcolor="ff000000" roundness="0.200000003" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="9" Ydata1="60" Ycc="9" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="1" UseYCC="1" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\10.svg" text="Pad 10"
+             padcolor="ff000000" roundness="0.200000003" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="10" Ydata1="60" Ycc="10" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\11.svg" text="Pad 11"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="11" Ydata1="60" Ycc="11" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\12.svg" text="Pad 12"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="12" Ydata1="60" Ycc="12" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\13.svg" text="Pad 13"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="13" Ydata1="60" Ycc="13" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\14.svg" text="Pad 14"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="14" Ydata1="60" Ycc="14" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\15.svg" text="Pad 15"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="15" Ydata1="60" Ycc="15" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\16.svg" text="Pad 16"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="16" Ydata1="60" Ycc="16" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\17.svg" text="Pad 17"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="17" Ydata1="60" Ycc="17" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\18.svg" text="Pad 18"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="18" Ydata1="60" Ycc="18" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\19.svg" text="Pad 19"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="19" Ydata1="60" Ycc="19" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\20.svg" text="Pad 20"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="20" Ydata1="60" Ycc="20" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\21.svg" text="Pad 21"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="21" Ydata1="60" Ycc="21" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\22.svg" text="Pad 22"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="22" Ydata1="60" Ycc="22" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\23.svg" text="Pad 23"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="23" Ydata1="60" Ycc="23" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\24.svg" text="Pad 24"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="24" Ydata1="60" Ycc="24" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\25.svg" text="Pad 25"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="25" Ydata1="60" Ycc="25" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\26.svg" text="Pad 26"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="26" Ydata1="60" Ycc="26" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\27.svg" text="Pad 27"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="27" Ydata1="60" Ycc="27" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\28.svg" text="Pad 28"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="28" Ydata1="60" Ycc="28" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\29.svg" text="Pad 29"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="29" Ydata1="60" Ycc="29" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\30.svg" text="Pad 30"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="30" Ydata1="60" Ycc="30" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\31.svg" text="Pad 31"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="31" Ydata1="60" Ycc="31" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\32.svg" text="Pad 32"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="32" Ydata1="60" Ycc="32" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\33.svg" text="Pad 33"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="33" Ydata1="60" Ycc="33" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\34.svg" text="Pad 34"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="34" Ydata1="60" Ycc="34" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\35.svg" text="Pad 35"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="35" Ydata1="60" Ycc="35" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\36.svg" text="Pad 36"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="36" Ydata1="60" Ycc="36" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\37.svg" text="Pad 37"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="37" Ydata1="60" Ycc="37" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\38.svg" text="Pad 38"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="38" Ydata1="60" Ycc="38" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\39.svg" text="Pad 39"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="39" Ydata1="60" Ycc="39" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\40.svg" text="Pad 40"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="40" Ydata1="60" Ycc="40" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\41.svg" text="Pad 41"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="41" Ydata1="60" Ycc="41" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\42.svg" text="Pad 42"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="42" Ydata1="60" Ycc="42" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\43.svg" text="Pad 43"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="43" Ydata1="60" Ycc="43" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\44.svg" text="Pad 44"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="44" Ydata1="60" Ycc="44" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\45.svg" text="Pad 45"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="45" Ydata1="60" Ycc="45" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\46.svg" text="Pad 46"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="46" Ydata1="60" Ycc="46" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\47.svg" text="Pad 47"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="47" Ydata1="60" Ycc="47" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\48.svg" text="Pad 48"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="48" Ydata1="60" Ycc="48" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\49.svg" text="Pad 49"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="49" Ydata1="60" Ycc="49" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\50.svg" text="Pad 50"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="50" Ydata1="60" Ycc="50" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\51.svg" text="Pad 51"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="51" Ydata1="60" Ycc="51" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\52.svg" text="Pad 52"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="52" Ydata1="60" Ycc="52" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\53.svg" text="Pad 53"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="53" Ydata1="60" Ycc="53" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\54.svg" text="Pad 54"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="54" Ydata1="60" Ycc="54" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\55.svg" text="Pad 55"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="55" Ydata1="60" Ycc="55" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\56.svg" text="Pad 56"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="56" Ydata1="60" Ycc="56" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\57.svg" text="Pad 57"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="57" Ydata1="60" Ycc="57" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\58.svg" text="Pad 58"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="58" Ydata1="60" Ycc="58" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\59.svg" text="Pad 59"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="59" Ydata1="60" Ycc="59" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\60.svg" text="Pad 60"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="60" Ydata1="60" Ycc="60" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\61.svg" text="Pad 61"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="61" Ydata1="60" Ycc="61" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\62.svg" text="Pad 62"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="62" Ydata1="60" Ycc="62" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\63.svg" text="Pad 63"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="63" Ydata1="60" Ycc="63" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\64.svg" text="Pad 64"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="64" Ydata1="60" Ycc="64" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\65.svg" text="Pad 65"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="65" Ydata1="60" Ycc="65" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\66.svg" text="Pad 66"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="66" Ydata1="60" Ycc="66" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\67.svg" text="Pad 67"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="67" Ydata1="60" Ycc="67" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\68.svg" text="Pad 68"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="68" Ydata1="60" Ycc="68" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\69.svg" text="Pad 69"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="69" Ydata1="60" Ycc="69" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\70.svg" text="Pad 70"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="70" Ydata1="60" Ycc="70" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\71.svg" text="Pad 71"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="71" Ydata1="60" Ycc="71" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\72.svg" text="Pad 72"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="72" Ydata1="60" Ycc="72" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\73.svg" text="Pad 73"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="73" Ydata1="60" Ycc="73" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\74.svg" text="Pad 74"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="74" Ydata1="60" Ycc="74" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\75.svg" text="Pad 75"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="75" Ydata1="60" Ycc="75" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\76.svg" text="Pad 76"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="76" Ydata1="60" Ycc="76" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\77.svg" text="Pad 77"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="77" Ydata1="60" Ycc="77" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\78.svg" text="Pad 78"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="78" Ydata1="60" Ycc="78" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\79.svg" text="Pad 79"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="79" Ydata1="60" Ycc="79" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\80.svg" text="Pad 80"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="80" Ydata1="60" Ycc="80" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\81.svg" text="Pad 81"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="81" Ydata1="60" Ycc="81" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\82.svg" text="Pad 82"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="82" Ydata1="60" Ycc="82" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\83.svg" text="Pad 83"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="83" Ydata1="60" Ycc="83" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\84.svg" text="Pad 84"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="84" Ydata1="60" Ycc="84" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\85.svg" text="Pad 85"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="85" Ydata1="60" Ycc="85" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\86.svg" text="Pad 86"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="86" Ydata1="60" Ycc="86" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\87.svg" text="Pad 87"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="87" Ydata1="60" Ycc="87" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\88.svg" text="Pad 88"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="88" Ydata1="60" Ycc="88" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\89.svg" text="Pad 89"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="89" Ydata1="60" Ycc="89" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\90.svg" text="Pad 90"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="90" Ydata1="60" Ycc="90" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\91.svg" text="Pad 91"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="91" Ydata1="60" Ycc="91" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\92.svg" text="Pad 92"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="92" Ydata1="60" Ycc="92" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\93.svg" text="Pad 93"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="93" Ydata1="60" Ycc="93" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\94.svg" text="Pad 94"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="94" Ydata1="60" Ycc="94" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\95.svg" text="Pad 95"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="95" Ydata1="60" Ycc="95" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\96.svg" text="Pad 96"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="96" Ydata1="60" Ycc="96" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\97.svg" text="Pad 97"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="97" Ydata1="60" Ycc="97" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\98.svg" text="Pad 98"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="98" Ydata1="60" Ycc="98" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\99.svg" text="Pad 99"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="99" Ydata1="60" Ycc="99" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\100.svg" text="Pad 100"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="100" Ydata1="60" Ycc="100" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\101.svg" text="Pad 101"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="101" Ydata1="60" Ycc="101" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\102.svg" text="Pad 102"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="102" Ydata1="60" Ycc="102" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\103.svg" text="Pad 103"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="103" Ydata1="60" Ycc="103" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\104.svg" text="Pad 104"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="104" Ydata1="60" Ycc="104" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\105.svg" text="Pad 105"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="105" Ydata1="60" Ycc="105" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\106.svg" text="Pad 106"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="106" Ydata1="60" Ycc="106" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\107.svg" text="Pad 107"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="107" Ydata1="60" Ycc="107" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\108.svg" text="Pad 108"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="108" Ydata1="60" Ycc="108" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\109.svg" text="Pad 109"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="109" Ydata1="60" Ycc="109" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\110.svg" text="Pad 110"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="110" Ydata1="60" Ycc="110" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\111.svg" text="Pad 111"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="111" Ydata1="60" Ycc="111" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\112.svg" text="Pad 112"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="112" Ydata1="60" Ycc="112" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\113.svg" text="Pad 113"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="113" Ydata1="60" Ycc="113" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\114.svg" text="Pad 114"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="114" Ydata1="60" Ycc="114" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\115.svg" text="Pad 115"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="115" Ydata1="60" Ycc="115" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\116.svg" text="Pad 116"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="116" Ydata1="60" Ycc="116" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\117.svg" text="Pad 117"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="117" Ydata1="60" Ycc="117" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\118.svg" text="Pad 118"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="118" Ydata1="60" Ycc="118" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\119.svg" text="Pad 119"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="119" Ydata1="60" Ycc="119" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\120.svg" text="Pad 120"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="120" Ydata1="60" Ycc="120" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\121.svg" text="Pad 121"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="121" Ydata1="60" Ycc="121" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\122.svg" text="Pad 122"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="122" Ydata1="60" Ycc="122" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\123.svg" text="Pad 123"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="123" Ydata1="60" Ycc="123" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\124.svg" text="Pad 124"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="124" Ydata1="60" Ycc="124" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\125.svg" text="Pad 125"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="125" Ydata1="60" Ycc="125" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\126.svg" text="Pad 126"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="126" Ydata1="60" Ycc="126" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\127.svg" text="Pad 127"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="127" Ydata1="60" Ycc="127" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\128.svg" text="Pad 128"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.5" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <GlobalValues VelOffset="0.5" CCOffset="0.5" ChIn="0" ChOut="0" UseTrigger="0"
+                NoteOnTrig="0" UseVel="1" Thru="1" UseAft="0" Mono="0" lastUIWidth="400"
+                lastUIHeight="400" bghue="0.100000001" bgsat="0.100000001" bgbri="0.800000012"
+                contrast="0.300000012" squares="10" editmode="1" usemouseup="1"
+                hex="0" name="Pads"/>
+  <Layout name="10 Pads">
+    <PadPosition visible="1" x="0.0186999999" y="0.0649000034" w="0.230299994"
+                 h="0.231900007"/>
+    <PadPosition visible="1" x="0.262699991" y="0.0649000034" w="0.230299994"
+                 h="0.231900007"/>
+    <PadPosition visible="1" x="0.507000029" y="0.0649000034" w="0.230299994"
+                 h="0.231900007"/>
+    <PadPosition visible="1" x="0.75120002" y="0.0649000034" w="0.230299994" h="0.231900007"/>
+    <PadPosition visible="1" x="0.0186999999" y="0.298299998" w="0.230299994"
+                 h="0.231900007"/>
+    <PadPosition visible="1" x="0.262699991" y="0.298299998" w="0.230299994" h="0.231900007"/>
+    <PadPosition visible="1" x="0.507000029" y="0.298299998" w="0.230299994" h="0.231900007"/>
+    <PadPosition visible="1" x="0.75120002" y="0.298299998" w="0.230299994" h="0.231900007"/>
+    <PadPosition visible="1" x="0.0186999999" y="0.531700015" w="0.479299992"
+                 h="0.463699996"/>
+    <PadPosition visible="1" x="0.507300019" y="0.531700015" w="0.479299992" h="0.463699996"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+  </Layout>
+</ProgValues>

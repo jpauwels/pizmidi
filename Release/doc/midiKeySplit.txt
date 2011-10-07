@@ -1,0 +1,18 @@
+midiKeySplit
+
+Simple keyboard splitter. Splits the keyboard into two zones, each of which can be sent on a different channel and/or transposed separately.
+
+
+Parameters:
+
+1: OutChannel - Output channel for the first zone (below the Split Note).
+
+1: Transpose - Number of semitones to transpose the first zone, from -48 to +48.
+
+Split Note - First note of the second zone. Set this parameter to 0 for MIDI learn. 
+
+2: OutChannel - Output channel for the second zone (Split Note and above).
+
+2: Transpose - Number of semitones to transpose the first zone, from -48 to +48. 
+
+InChannel - Only notes on this channel will be affected. 

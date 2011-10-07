@@ -1,0 +1,12 @@
+midi16CCRouter
+
+Changes up to 16 CCs to 16 other CCs. Optionally responds to Program Change. 
+
+Notes, unselected CCs, and other MIDI messages are sent through unaffected.
+
+Parameters:
+CC In ##   - Input CC number for this slot, between 0 and 127
+CC Out ##  - Output CC number for this slot, either "No Change" (same as input), or between 0 and 127
+Ch. In     - Input channel to listen on, either "Any" or 1-16
+Ch. Out    - Output channel, either "No Change" or 1-16
+PC Channel - Channel to listen to for Program Change messages, either "Any", 1-16, or "None"

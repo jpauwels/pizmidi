@@ -1,0 +1,18 @@
+midiCCToggle
+
+For changing momentary CC buttons into toggles. When a value of 64 or higher is recieved, the outgoing value will toggle between selected high and low values. Incoming values below 64 are blocked.
+
+
+Parameters:
+
+Power - On/Off switch
+
+Low CC - Lowest CC to affect; every CC from this one to High CC will be affected
+
+High CC - Highest CC to affect; set equal to Low CC to affect only one CC
+
+On Value - "High" CC value to send (can be below Off Value)
+
+Off Value - "Low" CC value to send (can be above On Value)
+
+Channel - MIDI Channel to listen on. Other channels are sent through unaffected.

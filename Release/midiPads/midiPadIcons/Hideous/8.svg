@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docbase="C:\Documents and Settings\Reuben\Desktop\pizmidi\winvst\GUI\MidiPadIcons"
+   sodipodi:docname="8.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="375"
+     inkscape:cy="521.38488"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="748"
+     inkscape:window-height="578"
+     inkscape:window-x="154"
+     inkscape:window-y="133" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;color:#000000;fill:#ff94fa;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3170"
+       sodipodi:sides="5"
+       sodipodi:cx="191.42857"
+       sodipodi:cy="329.50504"
+       sodipodi:r1="43.705883"
+       sodipodi:r2="21.85294"
+       sodipodi:arg1="-0.19739556"
+       sodipodi:arg2="0.43092297"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 234.28572,320.93361 L 211.28373,338.63322 L 212.82407,367.61588 L 188.88274,351.20918 L 161.79458,361.63026 L 170,333.79075 L 151.71826,311.24867 L 180.73082,310.44961 L 196.52025,286.09675 L 206.24557,313.44242 L 234.28572,320.93361 z "
+       transform="matrix(0.9315909,-0.3635086,0.3635086,0.9315909,-105.61197,92.517838)" />
+  </g>
+</svg>

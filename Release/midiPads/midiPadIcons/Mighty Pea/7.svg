@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44.1"
+   sodipodi:docbase="C:\Program Files\Vstplugins\_devs\PIZ\MidiPadIcons"
+   sodipodi:docname="7.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="452.59668"
+     inkscape:cy="588.68351"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1280"
+     inkscape:window-height="977"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="M 293.09625,315.93361 L 524.0466,363.07647 C 528.13621,363.07647 531.42857,367.53647 531.42857,373.07647 L 531.42857,447.36218 C 531.42857,452.90218 528.13621,457.36218 524.0466,457.36218 L 293.09625,501.64789 C 289.00664,501.64789 285.71428,497.18789 285.71428,491.64789 L 285.71428,325.93361 C 285.71428,320.39361 289.00664,315.93361 293.09625,315.93361 z "
+       id="rect1870"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:black;stroke-width:12.51070499;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 268.39042,510.11879 C 222.68007,510.11879 185.58182,464.72382 185.58182,408.79074 C 185.58182,352.85767 222.68007,307.4627 268.39042,307.4627"
+       id="path1870"
+       sodipodi:nodetypes="csc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:black;stroke-width:11.28409004;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 265.97813,474.43445 C 236.36544,474.43445 212.33195,445.02608 212.33195,408.79075 C 212.33195,372.55542 236.36544,343.14704 265.97813,343.14704"
+       id="path1872"
+       sodipodi:nodetypes="csc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:black;stroke-width:7.93705654;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 263.9434,437.33778 C 251.06547,437.33778 240.61382,424.54871 240.61382,408.79074 C 240.61382,393.03278 251.06547,380.24371 263.9434,380.24371"
+       id="path1874"
+       sodipodi:nodetypes="csc" />
+  </g>
+</svg>

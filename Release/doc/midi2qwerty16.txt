@@ -1,0 +1,31 @@
+midi2qwerty16
+
+Use MIDI to trigger fake keystrokes to the focused window. Any used MIDI messages will also be blocked from the plugin's output.
+
+
+Parameters:
+
+---Per slot (16 of each)---
+##: data - MIDI message to use as the trigger for this slot. Options:
+    Off - Slot will be ignored
+    Note - Selected Note-On message
+    ProgCh + - Program Change message one program higher than the previous
+    ProgCh - - Program Change message one program lower than the previous
+    CC (127) - Selected CC with value 127
+    CC (0) - Selected CC with value 0
+    CC (>64) - Selected CC with any value over 64
+    CC (<64) - Selected CC with any value under 64
+    CC slider > 100 - Selected CC with any value over 100, and won't be triggered again until after the value drops below 100
+    CC slider < 27 - Selected CC with any value under 27, and won't be triggered again until after the value goes over 27
+
+note/cc - Note or CC number, between 0 and 127 (if data is "Note", note name will also be shown). Not used for ProgCh settings.
+
+modifiers - Key modifiers to apply to the sent keystroke, either "None" or any combination of Shift, Ctrl, Alt, and Windows keys.
+
+key - Key to send.
+
+
+---Global---
+channel - MIDI channel to listen on, "Any" or 1-16.
+
+Program - Selects a program (for automating program changes).

@@ -1,0 +1,32 @@
+midiProgramChange
+
+Send Program Change and/or Bank Select messages.
+
+
+Internal Programs: 
+The plugin's internal VST programs can be used to store 128 Program/Bank combinations, which will be sent when switching to that internal program. All parameters other than Program, Bank MSB, and Bank LSB are shared between all internal programs.
+
+
+Parameters:
+
+Program - Selects the program number to send with Program Change messages, or set to "Off" to disable sending PC. When Mode is set to Direct, changing this parameter will itself send the PC messages.
+
+Bank MSB - Selects the MSB of the bank number to send with Bank Select messages, or set to "Off" to disable sending Bank MSB. When Mode is set to Direct, changing this parameter will itself send the Bank MSB messages.
+
+Bank LSB - Selects the LSB of the bank number to send with Bank Select messages, or set to "Off" to disable sending Bank LSB. When Mode is set to Direct, changing this parameter will itself send the Bank LSB messages.
+
+Mode - Direct: in addition to using triggers, also send messages continuously when the above parameters are adjusted; Triggered: only send messages when triggered by the parameters below.
+
+PC Trig. - When parameter goes to maximum, send a Program Change message.
+
+PC Incr. - When parameter goes to maximum, increase Program by one and send a Program Change message.
+
+PC Decr. - When parameter goes to maximum, decrease Program by one and send a Program Change message.
+
+Bank Trig. - When parameter goes to maximum, send Bank Select MSB and/or LSB.
+
+PC Listen - When on, the plugin will respond to incoming Program Change messages, which will select an internal program and send the values for that program.
+
+Channel - Input/output channel.
+
+Thru - Whether or not to send through other MIDI messages.

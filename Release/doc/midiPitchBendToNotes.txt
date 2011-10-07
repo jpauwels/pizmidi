@@ -1,0 +1,9 @@
+midiPitchBendToNotes
+
+Changes pitch bend plus note messages into notes at the "bent" pitch (useful for playing Suzuki QChord with non-multitimbral instruments). A pitch bend range of +/-12 is assumed, but will also be set from the standard RPN message for pitch bend range.
+
+Parameters:
+
+Power - On or Off.
+
+Channel - Output MIDI channel. When set to "No Change" the notes (and any other MIDI messages) are sent on the original channel; otherwise they are all combined to the selected channel.

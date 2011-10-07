@@ -1,0 +1,30 @@
+midiCCStepper
+
+Quantize CC events by value or in time.
+
+
+Parameters:
+
+Val Quantize - On/Off switch for value quantization
+
+ValQ Steps - Number of steps for value quantization. From 2 (CC values rounded to either 0 or 127) to 128 (no change)
+
+Time Quantize - On/Off switch for time quantization
+
+Note Value - Tempo-based value for time quantization, from 128 (128th note) to 1 (whole note)
+
+Host Sync - For time quantization. When On, the note value quantization steps will be aligned to the host timeline. Otherwise the timing will be based only on input events. 
+
+Beat Offset - Offset the quantization grid from the host timeline, from 0-100% of the Note Value. Only applies if Host Sync is On.
+
+SendCCAfter - When enabled, CCs recieved after the time step are sent at the next time step.
+
+Low CC - Lowest CC to affect; every CC from this one to High CC will be affected
+
+High CC - Highest CC to affect
+
+CC Shift - Changes the CC number of all affected CCs by this amount. For example, incoming CC 1 with CC Shift of 8 will be sent out as CC 9. Shift can be -127 to +127; numbers will wrap around.
+
+Channel - MIDI Channel to listen on. Other channels are sent through unaffected.
+
+NotesThru - Optionally block notes from being sent through the plugin.

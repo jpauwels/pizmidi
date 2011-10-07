@@ -1,0 +1,22 @@
+midiDelay
+
+Delay notes and/or CCs with feedback.
+
+
+Parameters:
+
+TempoSync - When On, DelayTime will be measured in musical note values, following host tempo; when Off, DelayTime will be absolute time in milliseconds.
+
+DelayTime - Either tempo-synced values from 64th note to 3 bars (TempoSync On), or 0-2000ms (TempoSync Off).
+
+Feedback - "Amount" of delayed signal to be delayed again. At 0%, the input will only be delayed once; at 100% the input signal will repeat indefinitely.
+
+FdbkLimit - Optionally limit the number of times each event will be sent through the feedback loop. Either "Off" (unlimited) or 1-16.
+
+Wet - Level of the delayed events, from 0-100% of the internal value. This is applied only at the output, after the feedback path. 
+
+Dry - Level of the input events (notes and/or CCs) passed through to the output.
+
+Mode - Notes Only, or Notes & CCs. Be careful when delaying CC events with feedback.
+
+Channel - MIDI channel on which to delay events; either "All" or 1-16.

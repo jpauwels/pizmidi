@@ -1,0 +1,39 @@
+midiNotesToCC
+
+Converts note number and velocity to CC messages. 
+
+
+Parameters:
+
+Note to CC - Selects the destination CC number for note number conversion. The pitch of incoming notes will be used as the value of this CC. Set to "Off" to disable. 
+
+High Note - The highest input note that will be used. This range acts as a filter for both note number and velocity conversion.
+
+Low Note - The lowest input note that will be used.
+
+High NCC Value - Highest possible output value for the note number CC. The incoming range defined by High Note & Low Note is stretched/compressed to this range.
+
+Low NCC Value - Lowest possible output value for the note number CC.
+
+NCC Rest Value - If enabled (not set to "Off") this value will be sent when a note-off is received. Only applies when Note to CC is also set.
+
+Velocity to CC - Selects the destination CC number for velocity conversion. The velocity of incoming notes will be used as the value of this CC.
+
+High Velocity - The highest input velocity that will be used (1-127). This range acts as a filter for both note number and velocity conversion.
+
+Low Velocity - The lowest input velocity that will be used (1-127). 
+
+High VCC Value - Highest possible output value for the velocity CC. The incoming range defined by High Velocity & Low Velocity is stretched/compressed to this range.
+
+Low VCC Value - Lowest possible output value for the velocity CC.
+
+VCC Rest Value - If enabled (not set to "Off") this value will be sent when a note-off is received. Only applies when Velocity to CC is also set.
+
+In Channel - "Any" or 1-16.
+
+Out Channel - Output CCs are sent on this channel, either "Same as input" or 1-16.
+
+Thru - Options:
+	Off - Only the output CCs will be sent.
+	Unconverted - Unused MIDI messages will be sent through; only notes that have been converted are blocked.
+	All - All MIDI messages will be sent through, including notes used for conversion.

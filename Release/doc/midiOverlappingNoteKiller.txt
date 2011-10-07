@@ -1,0 +1,7 @@
+midiOverlappingNoteKiller
+
+Prevents overlapping notes at the same pitch.
+
+Parameters:
+
+Power - On or Off.

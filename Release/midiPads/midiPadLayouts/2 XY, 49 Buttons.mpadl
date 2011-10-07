@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ 
+<Layout name="2 XY, 49 Buttons">
+  <PadPosition visible="1" x="0.0164999999" y="0.402999997" w="0.497900009"
+               h="0.582199991"/>
+  <PadPosition visible="1" x="0.724300027" y="0.0680999979" w="0.262300014"
+               h="0.312599987"/>
+  <PadPosition visible="1" x="0.553499997" y="0.402999997" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.553499997" y="0.515600026" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.555599988" y="0.628099978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.555599988" y="0.745199978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.555599988" y="0.854799986" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.64200002" y="0.402999997" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.64200002" y="0.515600026" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.643999994" y="0.628099978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.643999994" y="0.745199978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.643999994" y="0.854799986" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.729399979" y="0.402999997" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.729399979" y="0.515600026" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.73150003" y="0.628099978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.73150003" y="0.742200017" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.73150003" y="0.854799986" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.817900002" y="0.402999997" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.817900002" y="0.515600026" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.818899989" y="0.628099978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.818899989" y="0.742200017" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.818899989" y="0.854799986" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.0216000006" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.0237000007" y="0.180700004" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.0237000007" y="0.293300003" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.112099998" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.115199998" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.115199998" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.2016" y="0.0680999979" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.202700004" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.202700004" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.289099991" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.290100008" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.290100008" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.377600014" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.377600014" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.377600014" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.463999987" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.465000004" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.465000004" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.551400006" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.55250001" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.55250001" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.639900029" y="0.0680999979" w="0.057599999"
+               h="0.0948000029"/>
+  <PadPosition visible="1" x="0.639900029" y="0.180700004" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.639900029" y="0.293300003" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.903299987" y="0.402999997" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.903299987" y="0.515600026" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.905399978" y="0.628099978" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.905399978" y="0.742200017" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="1" x="0.905399978" y="0.854799986" w="0.057599999" h="0.0948000029"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+  <PadPosition visible="0"/>
+</Layout>

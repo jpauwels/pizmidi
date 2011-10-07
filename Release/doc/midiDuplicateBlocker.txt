@@ -1,0 +1,18 @@
+midiDuplicateBlocker
+
+Remembers all MIDI message values it gets on each channel, and blocks any repeated values until a different value is received. 
+
+
+Parameters:
+
+Mode - Choose the type of messages to affect, or turn off the plugin. Options:
+	Off
+	CCs
+	Notes - Disregards velocity
+	PitchBend
+	ProgChange
+	ChanPressure
+	PolyAftertouch
+	All - All of the above
+
+Channel - MIDI channel to affect. When set to "All" the plugin will block duplicates on every channel.

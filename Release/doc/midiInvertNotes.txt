@@ -1,0 +1,10 @@
+midiInvertNotes
+
+"Mirrors" notes centered around the selected note. 
+
+
+Parameters:
+
+Center Note - Notes on either side of this one will be transposed to the other side of this note; the center note itself does not get transposed.
+
+Power - Turns the plugin on or off.

@@ -1,0 +1,8 @@
+midiStuckNoteKiller
+
+Sends note-off messages to end hanging notes when the host stops (for hosts that don't do this themselves).
+
+
+Parameters:
+
+Power - On/Off switch.

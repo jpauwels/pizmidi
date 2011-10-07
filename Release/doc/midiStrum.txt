@@ -1,0 +1,51 @@
+midiStrum
+
+Sequentially delays notes of an input chord to simulate strumming.
+
+
+Parameters:
+
+Mode - 
+	Complicated - Chord notes and strum patterns (downstroke or upstroke) are sent separately
+	Simple - Any notes that arrive at the same time will be strummed with a downstroke
+
+NoteLength - Sets whether the length of strummed chords is based on the chord notes (InChannel) or the strum notes (StrumChannel).
+
+Speed - Speed of the strum. At 0% the total strum time will be Max Time; at 100% speed the strum will be instantaneous. 
+
+Max Time - Maximum total strum time, either in milliseconds (100-3000 ms) or in musical tempo-based values (64th note to 4 bars) depending on the setting of TempoSync.
+
+TempoSync - Sets whether strum time is absolute or related to tempo.
+
+VelToSpeed - Sets how much effect strum note velocity will have on strum speed (higher velocity --> faster strum).
+
+VelToVel - Sets how much effect strum note velocity will have on the velocity of notes in the strummed chord.
+
+DownVel - Sets the base velocity for downstroke chords.
+
+UpVel - Sets the base velocity for upstroke chords.
+
+VelRamp - Applies a change in velocity over the course of the strum.
+
+Randomness - Applies randomness to the velocity and duration of notes within the strummed chord.
+
+Accel - Speed up or slow down over the course of the strum. Overall strum time remains the same.
+
+In Chan - Channel to use for chord note input (which will be automatically strummed in Simple mode).
+
+Strum Chan - Channel to use for strum stroke input. Can be the same as In Chan, but make sure you don't want to play any notes in the Strum Octave.
+
+Strum Octave - Set the location of the notes which are used to trigger strums. Downstrokes and upstrokes are mapped within this octave as follows:
+	C, C# 	down
+	D, D# 	up
+	E 		down
+	F, F# 	up
+	G, G#	down
+	A, A#	up
+	B		down
+	
+Out Chan - Output channel for strummed chords.
+
+Audition - When set to "Always," notes on the In Chan will be sent through unstrummed. This is useful when building chords for Complicated mode, but should be turned off when strumming. When set to "While Strumming," a low-velocity note is sent through only if strum is sounding, for a "hammer-on" kind of effect.
+
+Use Sustain - When on, sustain pedal (CC 64) on In Chan will be used to hold chord notes, and those CC 64 events will not be passed through to the MIDI output.

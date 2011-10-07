@@ -1,0 +1,22 @@
+midiNoteGroups
+
+Assign play and/or choke groups to MIDI notes.
+
+
+Parameters:
+
+Use ProgCh - When on, the plugin will respond to Program Change on the selected channel.
+
+Channel - Input and output channel to use.
+
+Thru - When on, other MIDI messages will pass through, otherwise only the grouped notes will be sent.
+
+---Per slot (8 of each)---
+Note ## - Choices: Select a MIDI note (0-127),
+                   Set to "Off" to disable the slot, or
+				   Set to "Learn Next" to use the next recieved MIDI note as the selected note
+
+##: ChokeGroup - When receiving any note assigned to this group, any other playing notes in the group will end. If any notes are in the same play and choke groups, they will be ended first and then immediately retriggered.
+
+##: PlayGroup - When receiving any note assigned to this group, all other notes in the group will also play.
+

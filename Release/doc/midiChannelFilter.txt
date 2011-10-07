@@ -1,0 +1,8 @@
+midiChannelFilter
+
+Only passes through data on the selected channel.
+
+
+Parameters:
+
+Channel - Channel to filter. When set to "All" the plugin will have no effect (all channels will be passed).

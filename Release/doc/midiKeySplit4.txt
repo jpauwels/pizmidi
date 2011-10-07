@@ -1,0 +1,14 @@
+midiKeySplit4
+
+Splits the keyboard into four zones, each of which can be sent on a different channel and/or transposed separately.
+
+
+Parameters:
+
+[1, 2, 3, 4]: OutChannel - Output channel for the numbered zone.
+
+[1, 2, 3, 4]: Transpose - Number of semitones to transpose the numbered zone, from -48 to +48.
+
+[1/2, 2/3, 3/4]: Split Note - First note of the second zone in the numbered pair. Set this parameter to 0 for MIDI learn. 
+
+InChannel - Only notes on this channel will be affected. 

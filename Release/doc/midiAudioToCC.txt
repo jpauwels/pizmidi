@@ -1,0 +1,20 @@
+midiAudioToCC
+
+Converts audio amplitude (RMS) to CC messages. Audio is sent through the plugin unaffected.
+
+
+Parameters:
+
+Input Gain - Gain applied to the input signal before conversion to MIDI. This is only used for internal calculations and does not affect the output signal.
+
+CC Out L - For Mono mode, this is the output CC; for Stereo mode, this is the output CC for the left channel.
+
+CC Out R - For Stereo mode, this is the output CC for the left channel; not used for Mono mode
+
+Channel Out - Output MIDI channel
+
+Mode - Mono (summed left and right) or Stereo operation
+
+Inertia - Wimpy smoothing of output CC messages
+
+Rate - Controls the rate of output CC messages, from about 300 to 1000 per second

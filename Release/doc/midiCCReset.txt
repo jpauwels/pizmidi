@@ -1,0 +1,29 @@
+midiCCReset
+
+Remembers CC values and sends them out again at selected times. 
+
+
+Programs: Each VST program saves its own set of CCs (128 CCs x 16 channels), and these can optionally be sent when selecting a program. All VST parameters (except ManualTrig and Clear) are common to all programs.
+
+
+Parameters:
+
+ManualTrig - Move this parameter to maximum to manually send the saved CCs.
+
+RecordTrig - When set to "On" the saved CC values will be sent when the host starts recording.
+
+ProgramTrig - When set to "On" the saved CC values will be sent when changing programs on the plugin (either manually or with Program Change messages, if PC Listen is enabled).
+
+Capture - When set to "On" any incoming CC events will be saved as the default values.
+
+Clear - Move this parameter to maximum to clear any saved CC values.
+
+Channel - MIDI channel to listen/send on. When set to "All" the plugin will store and send every CC on every channel (128x16 = 2048 values).
+
+PC Listen - When "On" the plugin will respond to Program Change messages on the above selected channel.
+
+Duplicates - Determines whether duplicate CC messages will be sent on preset change.
+	Allow - Always send the whole preset
+	Block - Only send the preset values that are different from the last output values
+	
+Thru - When "On" all incoming MIDI is passed through; otherwise it is blocked, and the triggered CCs are the only output from the plugin.

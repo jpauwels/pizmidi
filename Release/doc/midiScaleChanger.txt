@@ -1,0 +1,26 @@
+midiScaleChanger
+
+Transposes notes by individual scale degrees and/or globally, to change one scale into another. Among other things, this allows you to play any scale using only the white keys.
+
+Example: Change C Major to F# Minor
+
+- Disable C#, D#, F#, G#, A#
+- Set E, A, and B to -1 
+- Set Root Note to -6 (F#)
+
+Input notes in C Major and they come out as F# Minor.
+
+
+Parameters:
+
+C / C# / D / D# / E / F / F# / G / G# / A / A# / B - Transpose each input note by up to +/-12 semitones, or set to "--" to disable a note. These settings apply to every octave. 
+
+Root Note - Transposes the whole scale by up to +/-48 semitones. 
+
+OctaveWrap - If the total offset (Root Note + scale degree transposition) would place a note outside of the MIDI range (0-127), it will either be transposed by octave back into the range (OctaveWrap On) or blocked (OctaveWrap Off).
+
+OutChannel - Non-disabled notes will be output on this channel. 
+
+AltChannel - When not set to "None", disabled notes will be sent on this channel.
+
+Program - This parameter simply selects a VST program.

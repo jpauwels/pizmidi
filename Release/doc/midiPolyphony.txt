@@ -1,0 +1,35 @@
+midiPolyphony
+
+For spreading polyphony across midi channels, i.e. if you play 4 notes, each one will go to a different channel. Polyphony per channel can be set from 1 to 64 notes for more flexibility. You can also use it to convert polyphonic input to monophonic output. 
+
+
+Parameters:
+
+Power - On/Off switch for the effect.
+
+LowChannel - First channel to route notes to.
+
+HighChannel - Last channel to route notes to.
+
+PolyPerChan - Maximum number of notes to be sent on each channel (1-64 notes).
+
+NotePriority - How to decide which notes to end when polyphony limit is exceeded:
+	Steal Oldest - The note with the oldest start time will be ended.
+	Steal Last - The note with the most recent start time will be ended.
+	Steal Quietest - The note with the lowest original velocity will be ended.
+	High - Higher notes have priority, lowest pitched note will be ended.
+	Low - Lower notes have priority, highest pitched note will be ended.
+	Centered - Notes closest to the "center" (median) of held note have priority.
+	Random - Note to steal is chosen at random.
+
+Retrigger - When on, held notes that have been stolen (based on NotePriority) will be retriggered again when polyphony becomes available.
+
+InChannel - Input channel.
+
+SustainPedal - What to do with sustain pedal messages (CC 64) on the selected InChannel:
+	Pass Thru - CC 64 will be sent to all channels between LowChannel and HighChannel
+	Use - CC 64 will be used to sustain notes internally, and will not be sent through.
+	
+ChanMode - Options for determining how the channel for each note is chosen:
+	Reuse - Lowest channel is always used until polyphony exceeds the PolyPerChan setting (old method). 
+	Prefer New - Consecutive notes will cycle through the channels.

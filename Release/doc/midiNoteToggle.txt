@@ -1,0 +1,14 @@
+midiNoteToggle
+
+Notes (optionally within a selected range and/or channel) are toggled... play a note once to turn it on, play it again to turn it off. 
+
+
+Parameters:
+
+Power - Turn note toggling on or off.
+
+Low Note - Lowest note to toggle.
+
+High Note - Highest note to toggle.
+
+Channel - Channel on which to toggle notes.

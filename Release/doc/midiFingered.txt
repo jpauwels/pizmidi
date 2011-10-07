@@ -1,0 +1,10 @@
+midiFingered
+
+Selectively sends standard portamento on/off CC messages to emulate "fingered portamento" for synths that don't have it. For this to work, the target instrument must have a portamento on/off switch that responds to CC 65. 
+
+
+Parameters:
+
+Power - On/Off switch
+
+Channel - MIDI channel, either "All" or 1-16.

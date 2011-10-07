@@ -1,0 +1,12 @@
+midiChs_noGUI
+
+Channel filter/changer like energyXT1 "MIDI chs" component.
+
+
+Parameters:
+
+1 -> through 16 -> - Transform each incoming MIDI channel to the selected output channel. Set to "--" to block the channel.
+
+Reset - Setting this parameter to maximum sets all output channels to the same as the input channels.
+
+Clear - Setting this parameter to maximum sets all output channels "--" (blocked).

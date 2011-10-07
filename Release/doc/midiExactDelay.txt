@@ -1,0 +1,33 @@
+midiExactDelay
+
+Simple delay (no dry signal, no feedback) with flexible and precise delay time, measured in seconds, tempo-synced note values, or samples.
+
+
+Parameters:
+
+TimeMode - Choose the units of measurement (and corresponding parameters) to use for delay time: 
+	Seconds - Absolute delay time, adjustable from 0.001 to 100.999 seconds
+		using the Seconds/Tenths/Hundredths/Thousandths parameters.
+	NoteValue - Tempo-based delay time, set by the Bars/Beats/NoteValue/Ticks parameters.
+	Samples - Absolute delay time in samples, set by the the 1000/100/10/samples parameters.
+
+Seconds - Adds 0-100 whole seconds to the delay time.
+Tenths - Adds 0.0-0.9 seconds to the delay time.
+Hundredths - Adds 0.0-0.09 seconds to the delay time.
+Thousandths - Adds 0.0-0.009 seconds to the delay time.
+
+Bars - Adds 0-32 bars (based on time signature) to the delay time.
+Beats - Adds 0-32 beats (based on time signature) to the delay time.
+NoteValue - Adds a musical note duration from a 128th note to a dotted half (set to "--" for 0 delay).
+Ticks - Adds 0-100 ticks (960 ticks per quarter note) to the delay time. 
+
+1000 samples - Adds 0-10000 samples in increments of 1000 to the delay time.
+100 samples - Adds 0-900 samples in increments of 100 to the delay time.
+10 samples - Adds 0-90 samples in increments of 10 to the delay time.
+samples - Adds 0-9 samples to the delay time.
+
+Output - Scale the values of output messages by this amount (0-100%).
+	
+Mode - Type of events to delay: Notes Only, Notes & CCs, or Everything.
+
+Channel - MIDI channel on which to delay events; either "All" or 1-16.

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" version="1.0" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <title id="title3051">Air Traffic Control: unpaved runway restricted airport icon</title>
+ <defs id="defs4">
+  <filter id="filter3426" color-interpolation-filters="sRGB">
+   <feGaussianBlur id="feGaussianBlur3428" stdDeviation="1.0751563"/>
+  </filter>
+ </defs>
+ <metadata id="metadata7">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+    <dc:title>Air Traffic Control: unpaved runway restricted airport icon</dc:title>
+    <dc:date>2009-08-04</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Nicolas Dufour (JazzyNico)</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+   <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+    <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+   </cc:License>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1" transform="translate(74.3658,37.207794)">
+  <g id="g3046" stroke-miterlimit="4" transform="translate(-12.546875,13.546875)">
+   <path id="path3334" style="stroke-dasharray:none;" d="m31.562,16.094c-8.477,0-15.375,6.8668-15.375,15.344,0,8.477,6.898,15.375,15.375,15.375s15.344-6.898,15.344-15.375-6.8668-15.344-15.344-15.344z" transform="translate(-74.3658,-63.207794)" filter="url(#filter3426)" stroke="#0b0b0b" stroke-width="1.20000005" fill="#38385c"/>
+   <path id="path2419" style="stroke-dasharray:none;" d="m31.562,16.094c-8.477,0-15.375,6.8668-15.375,15.344,0,8.477,6.898,15.375,15.375,15.375s15.344-6.898,15.344-15.375-6.8668-15.344-15.344-15.344z" transform="translate(-74.3658,-63.207794)" stroke="#FFF" stroke-width="1.20000005" fill="#38385c"/>
+   <path id="path3670" stroke-linejoin="round" style="stroke-dasharray:none;" d="m45.142,24.056c0,8.529-6.4155,15.443-14.329,15.443-7.9139,0-14.329-6.9141-14.329-15.443,0-8.529,6.4155-15.443,14.329-15.443,7.9139,0,14.329,6.9141,14.329,15.443z" fill-rule="nonzero" transform="matrix(0.9671241,0,0,0.8973796,-72.618016,-53.34175)" stroke-dashoffset="0" stroke="#38385c" stroke-linecap="butt" stroke-width="1.65856087" fill="#FFF"/>
+  </g>
+ </g>
+</svg>

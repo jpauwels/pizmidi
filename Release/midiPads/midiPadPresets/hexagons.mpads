@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ 
+<ProgValues progIndex="0">
+  <PadValues padIndex="0" Ydata="0.283464567" Ycc="0.283464581" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.283464581" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="A" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.283464581"/>
+  <PadValues padIndex="1" Ydata="0.291338583" Ycc="0.291338593" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.291338593" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="D" padcolor="ff7c7cff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.291338593"/>
+  <PadValues padIndex="2" Ydata="0.299212598" Ycc="0.299212605" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.299212605" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="G" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.299212605"/>
+  <PadValues padIndex="3" Ydata="0.307086614" Ycc="0.307086617" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.307086617" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="C" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.307086617"/>
+  <PadValues padIndex="4" Ydata="0.31496063" Ycc="0.314960629" Ytype="1" Ydata2="1"
+             Yoff="0" trigger="0.338582665" Xcc="0.00787401572" Xoff="0" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0" icon=""
+             text="F#" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.330708653"/>
+  <PadValues padIndex="5" Ydata="0.322834646" Ycc="0.322834641" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.322834641" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="B" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.322834641"/>
+  <PadValues padIndex="6" Ydata="0.330708661" Ycc="0.330708653" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.330708653" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="E" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.330708653"/>
+  <PadValues padIndex="7" Ydata="0.338582677" Ycc="0.338582665" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.338582665" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="A" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.338582665"/>
+  <PadValues padIndex="8" Ydata="0.346456693" Ycc="0.346456707" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.346456707" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="Bb" padcolor="ff000000" roundness="0.400000006"
+             lastx="63" lasty="63" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.346456707"/>
+  <PadValues padIndex="9" Ydata="0.354330709" Ycc="0.354330719" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.354330719" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="Eb" padcolor="ff000000" roundness="0.400000006"
+             lastx="63" lasty="63" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.354330719"/>
+  <PadValues padIndex="10" Ydata="0.362204724" Ycc="0.362204731" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.362204731" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="G#" padcolor="ff002188" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.362204731"/>
+  <PadValues padIndex="11" Ydata="0.37007874" Ycc="0.370078743" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.370078743" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="C#" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.370078743"/>
+  <PadValues padIndex="12" Ydata="0.377952756" Ycc="0.377952754" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.377952754" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="G" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.377952754"/>
+  <PadValues padIndex="13" Ydata="0.385826772" Ycc="0.385826766" Ytype="1"
+             Ydata2="1" Yoff="0" trigger="0.385826766" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="C" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.385826766"/>
+  <PadValues padIndex="14" Ydata="0.393700787" Ycc="0.393700778" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.393700778" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="F" padcolor="ffffffff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.393700778"/>
+  <PadValues padIndex="15" Ydata="0.401574803" Ycc="0.40157479" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.40157479" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="Bb" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.40157479"/>
+  <PadValues padIndex="16" Ydata="0.409448819" Ycc="0.409448832" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.409448832" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.409448832"/>
+  <PadValues padIndex="17" Ydata="0.417322835" Ycc="0.417322844" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.417322844" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.417322844"/>
+  <PadValues padIndex="18" Ydata="0.42519685" Ycc="0.425196856" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.425196856" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.425196856"/>
+  <PadValues padIndex="19" Ydata="0.433070866" Ycc="0.433070868" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.433070868" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff7c7cff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.433070868"/>
+  <PadValues padIndex="20" Ydata="0.440944882" Ycc="0.44094488" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.44094488" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff002188" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.44094488"/>
+  <PadValues padIndex="21" Ydata="0.448818898" Ycc="0.448818892" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.448818892" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.448818892"/>
+  <PadValues padIndex="22" Ydata="0.456692913" Ycc="0.456692904" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.456692904" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.456692904"/>
+  <PadValues padIndex="23" Ydata="0.464566929" Ycc="0.464566916" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.464566916" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.464566916"/>
+  <PadValues padIndex="24" Ydata="0.472440945" Ycc="0.472440958" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.472440958" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.472440958"/>
+  <PadValues padIndex="25" Ydata="0.480314961" Ycc="0.48031497" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.48031497" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.48031497"/>
+  <PadValues padIndex="26" Ydata="0.488188976" Ycc="0.488188982" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.488188982" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.488188982"/>
+  <PadValues padIndex="27" Ydata="0.496062992" Ycc="0.496062994" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.496062994" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.496062994"/>
+  <PadValues padIndex="28" Ydata="0.503937008" Ycc="0.503937006" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.503937006" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.503937006"/>
+  <PadValues padIndex="29" Ydata="0.511811024" Ycc="0.511811018" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.511811018" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff7c7cff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.511811018"/>
+  <PadValues padIndex="30" Ydata="0.519685039" Ycc="0.51968503" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.51968503" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.51968503"/>
+  <PadValues padIndex="31" Ydata="0.527559055" Ycc="0.527559042" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.527559042" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.527559042"/>
+  <PadValues padIndex="32" Ydata="0.535433071" Ycc="0.535433054" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.535433054" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.535433054"/>
+  <PadValues padIndex="33" Ydata="0.543307087" Ycc="0.543307066" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.543307066" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.543307066"/>
+  <PadValues padIndex="34" Ydata="0.551181102" Ycc="0.551181078" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.551181078" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.551181078"/>
+  <PadValues padIndex="35" Ydata="0.559055118" Ycc="0.55905509" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.55905509" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.55905509"/>
+  <PadValues padIndex="36" Ydata="0.566929134" Ycc="0.566929162" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.566929162" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="C#" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.566929162"/>
+  <PadValues padIndex="37" Ydata="0.57480315" Ycc="0.574803174" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.574803174" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="D" padcolor="ff7c7cff" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="0" showvalues="1"
+             Ydata1="0.574803174"/>
+  <PadValues padIndex="38" Ydata="0.582677165" Ycc="0.582677186" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.582677186" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.582677186"/>
+  <PadValues padIndex="39" Ydata="0.590551181" Ycc="0.590551198" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.590551198" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ffffffff" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.590551198"/>
+  <PadValues padIndex="40" Ydata="0.598425197" Ycc="0.59842521" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.59842521" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.59842521"/>
+  <PadValues padIndex="41" Ydata="0.606299213" Ycc="0.606299222" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.606299222" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.606299222"/>
+  <PadValues padIndex="42" Ydata="0.614173228" Ycc="0.614173234" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.614173234" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.614173234"/>
+  <PadValues padIndex="43" Ydata="0.622047244" Ycc="0.622047246" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.622047246" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.622047246"/>
+  <PadValues padIndex="44" Ydata="0.62992126" Ycc="0.629921257" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.629921257" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.629921257"/>
+  <PadValues padIndex="45" Ydata="0.637795276" Ycc="0.637795269" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.637795269" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.637795269"/>
+  <PadValues padIndex="46" Ydata="0.645669291" Ycc="0.645669281" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.645669281" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.645669281"/>
+  <PadValues padIndex="47" Ydata="0.653543307" Ycc="0.653543293" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.653543293" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.653543293"/>
+  <PadValues padIndex="48" Ydata="0.661417323" Ycc="0.661417305" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.661417305" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.661417305"/>
+  <PadValues padIndex="49" Ydata="0.669291339" Ycc="0.669291317" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.669291317" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.669291317"/>
+  <PadValues padIndex="50" Ydata="0.677165354" Ycc="0.677165329" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.677165329" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.677165329"/>
+  <PadValues padIndex="51" Ydata="0.68503937" Ycc="0.685039341" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.685039341" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.685039341"/>
+  <PadValues padIndex="52" Ydata="0.692913386" Ycc="0.692913413" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.692913413" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.692913413"/>
+  <PadValues padIndex="53" Ydata="0.700787402" Ycc="0.700787425" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.700787425" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.700787425"/>
+  <PadValues padIndex="54" Ydata="0.708661417" Ycc="0.708661437" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.708661437" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.708661437"/>
+  <PadValues padIndex="55" Ydata="0.716535433" Ycc="0.716535449" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.716535449" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.716535449"/>
+  <PadValues padIndex="56" Ydata="0.724409449" Ycc="0.724409461" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.724409461" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.724409461"/>
+  <PadValues padIndex="57" Ydata="0.732283465" Ycc="0.732283473" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.732283473" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.732283473"/>
+  <PadValues padIndex="58" Ydata="0.74015748" Ycc="0.740157485" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.740157485" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.740157485"/>
+  <PadValues padIndex="59" Ydata="0.748031496" Ycc="0.748031497" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.748031497" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.748031497"/>
+  <PadValues padIndex="60" Ydata="0.755905512" Ycc="0.755905509" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.755905509" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.755905509"/>
+  <PadValues padIndex="61" Ydata="0.763779528" Ycc="0.763779521" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.763779521" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.763779521"/>
+  <PadValues padIndex="62" Ydata="0.771653543" Ycc="0.771653533" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.771653533" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.771653533"/>
+  <PadValues padIndex="63" Ydata="0.779527559" Ycc="0.779527545" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0.779527545" Xcc="0.00787401572"
+             Xoff="0" UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="0"
+             icon="" text="" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="0" showvalues="1" Ydata1="0.779527545"/>
+  <PadValues padIndex="64" Ydata="0.787401575" Ycc="0.787401557" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 65" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="65" Ydata="0.795275591" Ycc="0.795275569" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 66" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="66" Ydata="0.803149606" Ycc="0.803149581" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 67" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="67" Ydata="0.811023622" Ycc="0.811023593" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 68" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="68" Ydata="0.818897638" Ycc="0.818897665" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 69" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="69" Ydata="0.826771654" Ycc="0.826771677" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 70" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="70" Ydata="0.834645669" Ycc="0.834645689" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 71" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="71" Ydata="0.842519685" Ycc="0.842519701" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 72" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="72" Ydata="0.850393701" Ycc="0.850393713" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 73" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="73" Ydata="0.858267717" Ycc="0.858267725" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 74" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="74" Ydata="0.866141732" Ycc="0.866141737" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 75" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="75" Ydata="0.874015748" Ycc="0.874015749" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 76" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="76" Ydata="0.881889764" Ycc="0.88188976" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 77" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="77" Ydata="0.88976378" Ycc="0.889763772" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 78" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="78" Ydata="0.897637795" Ycc="0.897637784" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 79" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="79" Ydata="0.905511811" Ycc="0.905511796" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 80" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="80" Ydata="0.913385827" Ycc="0.913385808" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 81" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="81" Ydata="0.921259843" Ycc="0.92125982" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 82" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="82" Ydata="0.929133858" Ycc="0.929133832" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 83" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="83" Ydata="0.937007874" Ycc="0.937007844" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 84" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="84" Ydata="0.94488189" Ycc="0.944881916" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 85" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="85" Ydata="0.952755906" Ycc="0.952755928" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 86" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="86" Ydata="0.960629921" Ycc="0.96062994" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 87" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="87" Ydata="0.968503937" Ycc="0.968503952" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 88" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="88" Ydata="0.976377953" Ycc="0.976377964" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 89" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="89" Ydata="0.984251969" Ycc="0.984251976" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 90" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="90" Ydata="0.992125984" Ycc="0.992125988" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 91" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="91" Ydata="1" Ycc="1" Ytype="0" Ydata2="1" Yoff="0"
+             trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0" UseY="0"
+             UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon="" text="Pad 92"
+             padcolor="ff000000" roundness="0.400000006" lastx="0" lasty="0"
+             togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="92" Ydata="1.00787402" Ycc="1.00787401" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 93" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="93" Ydata="1.01574803" Ycc="1.01574802" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 94" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="94" Ydata="1.02362205" Ycc="1.02362204" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 95" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="95" Ydata="1.03149606" Ycc="1.03149605" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 96" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="96" Ydata="1.03937008" Ycc="1.03937006" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 97" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="97" Ydata="1.04724409" Ycc="1.04724407" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 98" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="98" Ydata="1.05511811" Ycc="1.05511808" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 99" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="99" Ydata="1.06299213" Ycc="1.0629921" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 100" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="100" Ydata="1.07086614" Ycc="1.07086611" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 101" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="101" Ydata="1.07874016" Ycc="1.07874012" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 102" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="102" Ydata="1.08661417" Ycc="1.08661413" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 103" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="103" Ydata="1.09448819" Ycc="1.09448814" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 104" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="104" Ydata="1.1023622" Ycc="1.10236216" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 105" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="105" Ydata="1.11023622" Ycc="1.11023617" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 106" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="106" Ydata="1.11811024" Ycc="1.11811018" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 107" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="107" Ydata="1.12598425" Ycc="1.12598431" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 108" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="108" Ydata="1.13385827" Ycc="1.13385832" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 109" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="109" Ydata="1.14173228" Ycc="1.14173234" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 110" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="110" Ydata="1.1496063" Ycc="1.14960635" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 111" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="111" Ydata="1.15748031" Ycc="1.15748036" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 112" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="112" Ydata="1.16535433" Ycc="1.16535437" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 113" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="113" Ydata="1.17322835" Ycc="1.17322838" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 114" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="114" Ydata="1.18110236" Ycc="1.1811024" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 115" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="115" Ydata="1.18897638" Ycc="1.18897641" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 116" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="116" Ydata="1.19685039" Ycc="1.19685042" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 117" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="117" Ydata="1.20472441" Ycc="1.20472443" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 118" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="118" Ydata="1.21259843" Ycc="1.21259844" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 119" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="119" Ydata="1.22047244" Ycc="1.22047246" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 120" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="120" Ydata="1.22834646" Ycc="1.22834647" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 121" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="121" Ydata="1.23622047" Ycc="1.23622048" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 122" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="122" Ydata="1.24409449" Ycc="1.24409449" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 123" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="123" Ydata="1.2519685" Ycc="1.2519685" Ytype="0" Ydata2="1"
+             Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080" UseX="0"
+             UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1" icon=""
+             text="Pad 124" padcolor="ff000000" roundness="0.400000006" lastx="0"
+             lasty="0" togglestate="0" showdots="1" showvalues="1" Ydata1="0"/>
+  <PadValues padIndex="124" Ydata="1.25984252" Ycc="1.25984251" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 125" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="125" Ydata="1.26771654" Ycc="1.26771653" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 126" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="126" Ydata="1.27559055" Ycc="1.27559054" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 127" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <PadValues padIndex="127" Ydata="1.28346457" Ycc="1.28346455" Ytype="0"
+             Ydata2="1" Yoff="0" trigger="0" Xcc="0.00787401572" Xoff="-431602080"
+             UseX="0" UseY="0" UseYCC="0" UseXPB="0" toggle="0" SendOff="1"
+             icon="" text="Pad 128" padcolor="ff000000" roundness="0.400000006"
+             lastx="0" lasty="0" togglestate="0" showdots="1" showvalues="1"
+             Ydata1="0"/>
+  <GlobalValues VelOffset="0.5" CCOffset="0.5" ChIn="0" ChOut="0" UseTrigger="0"
+                NoteOnTrig="0" UseVel="1" Thru="1" UseAft="0" Mono="0" lastUIWidth="639"
+                lastUIHeight="402" bghue="0.730769217" bgsat="0.15384616" bgbri="0.442307681"
+                contrast="0.730769217" squares="64" editmode="1" usemouseup="1"
+                hex="1" name="hexagons"/>
+  <Layout name="Hexagons">
+    <PadPosition visible="1" x="0.0370000005" y="0.150399998" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.0370000005" y="0.337199986" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.0370000005" y="0.524100006" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.0370000005" y="0.711000025" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.135800004" y="0.243799999" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.135800004" y="0.430700004" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.135800004" y="0.617500007" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.135800004" y="0.804400027" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.234599993" y="0.150399998" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.234599993" y="0.337199986" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.234599993" y="0.524100006" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.234599993" y="0.711000025" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.333299994" y="0.243799999" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.333299994" y="0.430700004" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.333299994" y="0.617500007" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.333299994" y="0.804400027" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.432099998" y="0.150399998" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.432099998" y="0.337199986" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.432099998" y="0.524100006" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.432099998" y="0.711000025" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.530900002" y="0.243799999" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.530900002" y="0.430700004" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.530900002" y="0.617500007" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.530900002" y="0.804400027" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.629599988" y="0.150399998" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.629599988" y="0.337199986" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.629599988" y="0.524100006" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.629599988" y="0.711000025" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.728399992" y="0.243799999" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.728399992" y="0.430700004" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.728399992" y="0.617500007" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.728399992" y="0.804400027" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.827199996" y="0.150399998" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.827199996" y="0.337199986" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.827199996" y="0.524100006" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.827199996" y="0.711000025" w="0.131699994" h="0.186900005"/>
+    <PadPosition visible="1" x="0.135800004" y="0.0584000014" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.333299994" y="0.0584000014" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.530900002" y="0.0584000014" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="1" x="0.728399992" y="0.0584000014" w="0.131699994"
+                 h="0.186900005"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+  </Layout>
+</ProgValues>

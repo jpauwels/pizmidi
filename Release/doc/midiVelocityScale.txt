@@ -1,0 +1,14 @@
+midiVelocityScale
+
+Scale/reverse/offset velocity of input notes (Note On and/or Note Off).
+
+
+Parameters:
+
+Velocity 1 / Velocity 2 - The input range 1 - 127 will be mapped to the range Velocity 1 - Velocity 2. If Velocity 1 is greater than Velocity 2, the range is reversed.
+
+Offset - This value is added to the outgoing velocity after mapping to the range defined above.
+
+ReleaseVel1 / ReleaseVel2 - Same as Velocity 1/2 but for note-off velocity.
+
+Rel.Offset - This value is added to the outgoing note-off velocity after mapping to the range defined above.

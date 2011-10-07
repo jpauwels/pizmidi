@@ -1,0 +1,26 @@
+midiNotchFilter
+
+Isolate, remove, or channelize up to 4 specific midi messages. 
+
+Parameters:
+
+Message N - Type of message for this slot:
+	None - Slot is disabled.
+	CC - Control Change message; optionally select channel and CC number below.
+	Note - Note on and off messages; optionally select channel and note number below.
+	Pitch Bend - Pitch Bend message; optionally select channel below.
+	Chan.Pressure - Channel Pressure (Aftertouch) message; optionally select channel below.
+	Aftertouch - Polyphonic Aftertouch message; optionally select channel and note number below.
+	Prog.Change - Program Change message; optionally select channel below.
+ 
+ N.Channel - MIDI channel for this slot.
+ 
+ N.Value - CC or note number for this slot (for CC, Note, and Aftertouch messages only).
+
+Mode - Options:
+	Block (Channelize) - When Out Channel is not set, the selected messages are blocked; otherwise
+		they will be sent on the selected channel instead of the input channel.
+	Pass - Only the selected messages will be sent through, and will be transformed to the Out 
+		Channel if set; all other messages are blocked.
+
+Out Channel - Sets the output channel for affected messages.

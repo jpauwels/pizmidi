@@ -1,0 +1,21 @@
+midiTranspose
+
+Transposes notes on a selected channel, with selectable range up to ±72 semitones, and option to transpose immediately (splitting sounding notes).
+
+
+Parameters:
+
+Transpose - Actual transpose amount in semitones, controllable by Pitch Bend and/or Transp CC, if enabled below.
+
+Range - Range of the Transpose parameter, from 0 to ±72 semitones (±6 octaves).
+
+Immediate - When enabled, on any change of the transpose amount, currently playing notes will be ended and restarted at the new pitch. Otherwise, they will continue at the old pitch until a note off event. 
+
+InChannel - Input channel(s) to affect, All or any single channel.
+
+PitchBend - 
+	Thru: Pitch Bend events on InChannel are just passed through the plugin
+	Use: Pitch Bend events on InChannel are used to control the Transpose parameter, and 
+		 are blocked from the output.
+
+Transp CC - CC number on InChannel to use to control the Transpose parameter.

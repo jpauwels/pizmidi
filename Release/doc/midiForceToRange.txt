@@ -1,0 +1,12 @@
+midiForceToRange
+
+Transposes notes by octave into the selected range. If the range is incomplete (less than 12 notes), notes not included in the range will be ignored.
+
+
+Parameters:
+
+LowNote - Lowest note of the target range. Notes below this note will be transposed up.
+
+HighNote - Highest note of the target range. Notes above this note will be transposed down.
+
+Channel - Only notes on this channel will be affected; either "Any" or 1-16.
