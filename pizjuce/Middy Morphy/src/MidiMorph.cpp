@@ -296,52 +296,52 @@ juce::XmlElement* MidiMorph::getXml(const juce::String tagname) {
   // Bouml preserved body begin 0004040D
 	XmlElement* xml = new XmlElement(tagname);
 
-	XmlElement* controllersXml = new XmlElement(T("controllers"));
+	XmlElement* controllersXml = new XmlElement("controllers");
 	XmlElement* controllerXml;
 	for (int i = 0 ; i < this->controllers.size() ; i++)
 	{
 		Controller* controller = controllers[i];
-		controllerXml = new XmlElement(T("controller"));
+		controllerXml = new XmlElement("controller");
 		XmlElement* valueXml;
 		for(int i = 0 ; i < controller->getNumValues() ; i++)
 		{
 			ControllerValue* value = controller->getValue(i);
-			valueXml = new XmlElement(T("value"));
-			valueXml->setAttribute(T("value"),value->getValue());
-			valueXml->setAttribute(T("scene"),value->getScene()->getId());
+			valueXml = new XmlElement("value");
+			valueXml->setAttribute("value",value->getValue());
+			valueXml->setAttribute("scene",value->getScene()->getId());
 			controllerXml->addChildElement(valueXml);
 		}
-		controllerXml->setAttribute(T("ccno"),controller->getCcNo());
-		controllerXml->setAttribute(T("channel"),controller->getChannel());
-		controllerXml->setAttribute(T("name"),controller->getChannel());
+		controllerXml->setAttribute("ccno",controller->getCcNo());
+		controllerXml->setAttribute("channel",controller->getChannel());
+		controllerXml->setAttribute("name",controller->getChannel());
 		controllersXml->addChildElement(controllerXml);
 	}
 
-	XmlElement* scenesXml = new XmlElement(T("scenes"));
+	XmlElement* scenesXml = new XmlElement("scenes");
 	XmlElement* sceneXml;
 	for (int i = 0 ; i < this->scenes.size() ; i++)
 	{
 		Scene* scene = scenes[i];
-		sceneXml = new XmlElement(T("scene"));
-		sceneXml->setAttribute(T("id"),i);
-        sceneXml->setAttribute(T("name"),scene->getName());
-		sceneXml->setAttribute(T("colour"),scene->getColour().toString());
-        sceneXml->setAttribute(T("x"),scene->Point::getX());
-        sceneXml->setAttribute(T("y"),scene->Point::getY());
-        sceneXml->setAttribute(T("size"),scene->size);
+		sceneXml = new XmlElement("scene");
+		sceneXml->setAttribute("id",i);
+        sceneXml->setAttribute("name",scene->getName());
+		sceneXml->setAttribute("colour",scene->getColour().toString());
+        sceneXml->setAttribute("x",scene->Point::getX());
+        sceneXml->setAttribute("y",scene->Point::getY());
+        sceneXml->setAttribute("size",scene->size);
 
 		scenesXml->addChildElement(sceneXml);
 		
 	}
 
 	XmlElement* gui = new XmlElement("gui");
-	gui->setAttribute(T("width"),this->guiBounds.getWidth());
-	gui->setAttribute(T("height"),this->guiBounds.getHeight());
-	gui->setAttribute(T("listwidth"),this->controllerListWidth);
+	gui->setAttribute("width",this->guiBounds.getWidth());
+	gui->setAttribute("height",this->guiBounds.getHeight());
+	gui->setAttribute("listwidth",this->controllerListWidth);
 
 	XmlElement* cursorXml = new XmlElement("cursor");
-    cursorXml->setAttribute(T("x"),cursor->Point::getX());
-	cursorXml->setAttribute(T("y"),cursor->Point::getY());
+    cursorXml->setAttribute("x",cursor->Point::getX());
+	cursorXml->setAttribute("y",cursor->Point::getY());
 
     XmlElement* options = new XmlElement("options");
     options->setAttribute(T("autokey"),this->autoKey);

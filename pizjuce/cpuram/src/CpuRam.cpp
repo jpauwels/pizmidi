@@ -81,23 +81,23 @@ void CpuRam::setParameter (int index, float newValue)
 
 const String CpuRam::getParameterName (int index)
 {
-    if (index == 0) return T("interval");
-    if (index == 1) return T("minimize");
-    if (index == 2) return T("show graph");
+    if (index == 0) return "interval";
+    if (index == 1) return "minimize";
+    if (index == 2) return "show graph";
 	else return String::empty;
 }
 
 const String CpuRam::getParameterText (int index)
 {
     if (index == 0) {
-        return String((int)(interval*1700.0)+300)+String(T(" ms"));
+        return String((int)(interval*1700.0)+300)+String(" ms");
     }
     if (index == 1) {
-        if (minimize>=0.5f) return String(T("yes"));
-        else return String(T("no"));
+        if (minimize>=0.5f) return String("yes");
+        else return String("no");
     }
     if (index == 2) {
-        return showGraph ? String(T("yes")) : String(T("no"));
+        return showGraph ? String("yes") : String("no");
     }
 	else return String::empty;
 }
@@ -159,15 +159,15 @@ void CpuRam::getStateInformation (JUCE_NAMESPACE::MemoryBlock& destData)
     // params as XML..
 
     // create an outer XML element..
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
+    XmlElement xmlState ("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    xmlState.setAttribute (T("pluginVersion"), 1);
-    xmlState.setAttribute (T("intervalLevel"), interval);
-	xmlState.setAttribute (T("showGraph"), showGraph);
-    xmlState.setAttribute (T("uiWidth"), lastUIWidth);
-    xmlState.setAttribute (T("uiHeight"), lastUIHeight);
-    xmlState.setAttribute (T("bgcolor"), (int)(bgcolor.getARGB()));
+    xmlState.setAttribute ("pluginVersion", 1);
+    xmlState.setAttribute ("intervalLevel", interval);
+	xmlState.setAttribute ("showGraph", showGraph);
+    xmlState.setAttribute ("uiWidth", lastUIWidth);
+    xmlState.setAttribute ("uiHeight", lastUIHeight);
+    xmlState.setAttribute ("bgcolor", (int)(bgcolor.getARGB()));
 
     // you could also add as many child elements as you need to here..
 
@@ -184,14 +184,14 @@ void CpuRam::setStateInformation (const void* data, int sizeInBytes)
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            interval = (float) xmlState->getDoubleAttribute (T("intervalLevel"), interval);
-			showGraph = xmlState->getBoolAttribute (T("showGraph"), showGraph);
-            lastUIWidth = xmlState->getIntAttribute (T("uiWidth"), lastUIWidth);
-            lastUIHeight = xmlState->getIntAttribute (T("uiHeight"), lastUIHeight);
-            bgcolor = Colour(xmlState->getIntAttribute (T("bgcolor"), bgcolor.getARGB()));
+            interval = (float) xmlState->getDoubleAttribute ("intervalLevel", interval);
+			showGraph = xmlState->getBoolAttribute ("showGraph", showGraph);
+            lastUIWidth = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+            lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
+            bgcolor = Colour(xmlState->getIntAttribute ("bgcolor", bgcolor.getARGB()));
             sendChangeMessage ();
         }
 

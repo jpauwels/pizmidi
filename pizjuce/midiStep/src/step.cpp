@@ -15,7 +15,7 @@ PizAudioProcessor* JUCE_CALLTYPE createPluginFilter()
 JuceProgram::JuceProgram ()
 {
     //default program name
-	name = T("midiStep");
+	name = "midiStep";
 
     //default values
 	for (int i=0;i<kNumParams;i++)
@@ -50,8 +50,8 @@ MidiStep::MidiStep()
 		loop.add(new Loop());
 
 	loopDir = ((File::getSpecialLocation(File::currentExecutableFile)).getParentDirectory()).getFullPathName()
-                 + File::separator + T("midiStep");
-	String defaultBank = loopDir + File::separator + T("default.fxb");
+                 + File::separator + "midiStep";
+	String defaultBank = loopDir + File::separator + "default.fxb";
     programs = new JuceProgram[getNumPrograms()];
     if (File(defaultBank).exists()) {
         MemoryBlock bank = MemoryBlock(0,true);
@@ -106,17 +106,17 @@ void MidiStep::setParameter (int index, float newValue)
 
 const String MidiStep::getParameterName (int index)
 {
-	if (index==kRecord) return T("Record");
-	if (index==kRecActive) return T("RecActive");
-	if (index==kActiveLoop) return T("ActiveLoop");
-	if (index==kThru) return T("Thru");
+	if (index==kRecord) return "Record";
+	if (index==kRecActive) return "RecActive";
+	if (index==kActiveLoop) return "ActiveLoop";
+	if (index==kThru) return "Thru";
 	else {
 		String loopnum = String((index-kNumGlobalParams)%16 + 1);
-		if (index<kChannel) return T("RecArm") + loopnum;
-		if (index<kTriggerKey) return T("InChannel") + loopnum;
-		if (index<kTranspose) return T("TriggerKey") + loopnum;
-		if (index<kOutChannel) return T("Transpose") + loopnum;
-		if (index<kNumParams) return T("OutChannel") + loopnum;
+		if (index<kChannel) return "RecArm" + loopnum;
+		if (index<kTriggerKey) return "InChannel" + loopnum;
+		if (index<kTranspose) return "TriggerKey" + loopnum;
+		if (index<kOutChannel) return "Transpose" + loopnum;
+		if (index<kNumParams) return "OutChannel" + loopnum;
 	}
 	return String::empty;
 }
@@ -124,24 +124,24 @@ const String MidiStep::getParameterName (int index)
 const String MidiStep::getParameterText (int index)
 {
 	if (index==kRecord) {
-        return param[kRecord]<0.5f ? String(T("Off")) : String(T("On"));
+        return param[kRecord]<0.5f ? String("Off") : String("On");
     }
 	if (index==kRecActive) {
-        return param[kRecActive]<0.5f ? String(T("Off")) : String(T("On"));
+        return param[kRecActive]<0.5f ? String("Off") : String("On");
     }
 	if (index==kActiveLoop) {
-        if (roundFloatToInt(param[kActiveLoop]*16.0f)==0) return String(T("Any"));
+        if (roundFloatToInt(param[kActiveLoop]*16.0f)==0) return String("Any");
         else return String(roundFloatToInt(param[kActiveLoop]*16.0f));
     }
 	if (index==kThru) {
-        return param[kThru]<0.5f ? String(T("Off")) : String(T("On"));
+        return param[kThru]<0.5f ? String("Off") : String("On");
     }
 	else {
 		if (index<kChannel) { //rec arm
-            return param[index]<0.5f ? String(T("Off")) : String(T("On"));
+            return param[index]<0.5f ? String("Off") : String("On");
         }
 		if (index<kTriggerKey) { //in channel
-            if (roundFloatToInt(param[index]*16.0f)==0) return String(T("Any"));
+            if (roundFloatToInt(param[index]*16.0f)==0) return String("Any");
             else return String(roundFloatToInt(param[index]*16.0f));
         }
         if (index<kTranspose) { //trigger key
@@ -152,7 +152,7 @@ const String MidiStep::getParameterText (int index)
             return String(roundFloatToInt(param[index] * 96.f) - 48);
 		}
 		if (index<kNumParams) { //out channel
-			if (roundFloatToInt(param[index]*16.0f)==0) return String(T("No Change"));
+			if (roundFloatToInt(param[index]*16.0f)==0) return String("No Change");
 			else return String(roundFloatToInt(param[index]*16.0f));
 		}
 	}
@@ -387,17 +387,17 @@ void MidiStep::getStateInformation(MemoryBlock &destData) {
 
 	MemoryBlock xmlData(512);
 
-    XmlElement xmlState (T("midiStepSettings"));
-    xmlState.setAttribute (T("pluginVersion"), 2);
-    xmlState.setAttribute (T("program"), getCurrentProgram());
+    XmlElement xmlState ("midiStepSettings");
+    xmlState.setAttribute ("pluginVersion", 2);
+    xmlState.setAttribute ("program", getCurrentProgram());
     for (int p=0;p<getNumPrograms();p++) {
-        String prefix = T("P") + String(p) + T("_");
-        xmlState.setAttribute (prefix+T("progname"), programs[p].name);
+        String prefix = "P" + String(p) + "_";
+        xmlState.setAttribute (prefix+"progname", programs[p].name);
         for (int i=0;i<kNumParams;i++) {
             xmlState.setAttribute (prefix+String(i), programs[p].param[i]);
         }
-        xmlState.setAttribute(prefix+T("uiWidth"), programs[p].lastUIWidth);
-        xmlState.setAttribute(prefix+T("uiHeight"), programs[p].lastUIHeight);
+        xmlState.setAttribute(prefix+"uiWidth", programs[p].lastUIWidth);
+        xmlState.setAttribute(prefix+"uiHeight", programs[p].lastUIHeight);
     }
     copyXmlToBinary (xmlState, xmlData);
 	destData.append(xmlData.getData(),xmlData.getSize());
@@ -428,16 +428,16 @@ void MidiStep::setStateInformation (const void* data, int sizeInBytes) {
 
     if (xmlState != 0)
     {
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")) || xmlState->hasTagName (T("midiStepSettings")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS") || xmlState->hasTagName ("midiStepSettings"))
         {
             for (int p=0;p<getNumPrograms();p++) {
-                String prefix = T("P") + String(p) + T("_");
+                String prefix = "P" + String(p) + "_";
                 for (int i=0;i<kNumParams;i++) {
                     programs[p].param[i] = (float) xmlState->getDoubleAttribute (prefix+String(i), programs[p].param[i]);
                 }
-                programs[p].lastUIWidth = xmlState->getIntAttribute (prefix+T("uiWidth"), programs[p].lastUIWidth);
-                programs[p].lastUIHeight = xmlState->getIntAttribute (prefix+T("uiHeight"), programs[p].lastUIHeight);
-                programs[p].name = xmlState->getStringAttribute (prefix+T("progname"), programs[p].name);
+                programs[p].lastUIWidth = xmlState->getIntAttribute (prefix+"uiWidth", programs[p].lastUIWidth);
+                programs[p].lastUIHeight = xmlState->getIntAttribute (prefix+"uiHeight", programs[p].lastUIHeight);
+                programs[p].name = xmlState->getStringAttribute (prefix+"progname", programs[p].name);
             }
             init=true;
             setCurrentProgram(0);

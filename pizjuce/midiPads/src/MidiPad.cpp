@@ -10,7 +10,7 @@ MidiPad::MidiPad (int _index)
     backgroundOff = Colour (0xffbbbbff);
     backgroundOn = Colour (0xff3333ff);
 
-	Description = T("x:0 y:0");
+	Description = "x:0 y:0";
     showdot=false;
 	showvalues=false;
     showx=false;
@@ -24,7 +24,7 @@ MidiPad::MidiPad (int _index)
     isPlaying=false;
     setMouseClickGrabsKeyboardFocus (false);
 
-	addAndMakeVisible(text = new Label(T("label"),T("")));
+	addAndMakeVisible(text = new Label("label",""));
 	text->setMouseClickGrabsKeyboardFocus (false);
     text->setJustificationType (Justification::centredTop);
     text->setEditable (false, false, false);
@@ -186,9 +186,9 @@ void MidiPad::paintButton (Graphics& g, bool isMouseOverButton, bool isButtonDow
         g.setFont (Font (fontsize*0.9f, Font::plain));
 		g.setColour (getBackgroundColour().contrasting(0.8f));
         String xy = String::empty;
-        if (showx && showy) xy=T("x:")+String((int)(x*127.1))+T(" y:")+String((int)(y*127.1));
-        else if (showx) xy=T("x:")+String((int)(x*127.1));
-        else if (showy) xy=T("y:")+String((int)(y*127.1));
+        if (showx && showy) xy="x:"+String((int)(x*127.1))+" y:"+String((int)(y*127.1));
+        else if (showx) xy="x:"+String((int)(x*127.1));
+        else if (showy) xy="y:"+String((int)(y*127.1));
         g.drawFittedText (xy,
                     proportionOfWidth (0.0447f), proportionOfHeight (0.8057f), proportionOfWidth (0.9137f), proportionOfHeight (0.1355f),
                     Justification::centred, 1);

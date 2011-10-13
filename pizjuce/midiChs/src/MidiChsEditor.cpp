@@ -14,16 +14,16 @@ MidiChsEditor::MidiChsEditor (MidiChsProcessor* const ownerFilter)
     bgcolor=Colour(getFilter()->getParameter(18),getFilter()->getParameter(19),getFilter()->getParameter(20),1.0f);
     fgcolor=Colour(bgcolor.contrasting(getFilter()->getParameter(21)));
 
-    addAndMakeVisible (resetButton = new TextButton (T("reset")));
-    resetButton->setButtonText (T("Reset"));
+    addAndMakeVisible (resetButton = new TextButton ("reset"));
+    resetButton->setButtonText ("Reset");
     resetButton->addListener (this);
     resetButton->setColour (TextButton::buttonColourId, bgcolor);
     resetButton->setColour (TextButton::textColourOnId, fgcolor);
 	resetButton->setColour (TextButton::textColourOffId, fgcolor);
     resetButton->setMouseClickGrabsKeyboardFocus(false);
 
-    addAndMakeVisible (clearButton = new TextButton (T("clear")));
-    clearButton->setButtonText (T("Clear"));
+    addAndMakeVisible (clearButton = new TextButton ("clear"));
+    clearButton->setButtonText ("Clear");
     clearButton->addListener (this);
     clearButton->setColour (TextButton::buttonColourId, bgcolor);
     clearButton->setColour (TextButton::textColourOnId, fgcolor);
@@ -31,7 +31,7 @@ MidiChsEditor::MidiChsEditor (MidiChsProcessor* const ownerFilter)
     clearButton->setMouseClickGrabsKeyboardFocus(false);
 
     for (int i=0;i<16;i++) {
-        addAndMakeVisible (slider[i] = new Slider (T("new slider")));
+        addAndMakeVisible (slider[i] = new Slider ("new slider"));
         slider[i]->setRange (0, 16, 1);
         slider[i]->setSliderStyle (Slider::LinearBar);
         slider[i]->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
@@ -43,7 +43,7 @@ MidiChsEditor::MidiChsEditor (MidiChsProcessor* const ownerFilter)
         slider[i]->addListener (this);
         slider[i]->setMouseClickGrabsKeyboardFocus(false);
 
-        addAndMakeVisible (label[i] = new Label (T("new label"), String(i+1)));
+        addAndMakeVisible (label[i] = new Label ("new label", String(i+1)));
         label[i]->setFont (Font (15.0000f, Font::plain));
         label[i]->setJustificationType (Justification::centred);
         label[i]->setEditable (false, false, false);

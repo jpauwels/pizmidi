@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\vst2.x">
+      <UniqueIdentifier>{e71fb7b5-a387-4530-b33f-3fca943977ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{c0332113-3ecb-45a3-9f83-3bc882ba16f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PizMidi">
+      <UniqueIdentifier>{22a34cde-7a38-4ded-8612-32eea2a10521}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\pluginterfaces\vst2.x\aeffect.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\pluginterfaces\vst2.x\aeffectx.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\pluginterfaces\vst2.x\vstfxstore.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\pizvstbase.h">
+      <Filter>Source Files\PizMidi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\MIDI.h">
+      <Filter>Source Files\PizMidi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\PizMidi.h">
+      <Filter>Source Files\PizMidi</Filter>
+    </ClInclude>
+    <ClInclude Include="PizPluginInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midiConverter3.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="midiConverter3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vstsdk2.4\public.sdk\source\vst2.x\audioeffect.cpp">
+      <Filter>Source Files\vst2.x</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vstsdk2.4\public.sdk\source\vst2.x\audioeffectx.cpp">
+      <Filter>Source Files\vst2.x</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\vstplugmain.cpp">
+      <Filter>Source Files\PizMidi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\PizMidi.cpp">
+      <Filter>Source Files\PizMidi</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

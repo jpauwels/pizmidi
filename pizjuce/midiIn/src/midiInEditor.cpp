@@ -95,7 +95,7 @@ MidiInEditor::MidiInEditor (MidiInFilter* const ownerFilter)
     StringArray devices = ownerFilter->devices;
 
     comboBox->setMouseClickGrabsKeyboardFocus(false);
-    comboBox->addItem(String(T("--")),1);
+    comboBox->addItem(String("--"),1);
     for (int i=0;i<devices.size();i++) {
         comboBox->addItem(devices.joinIntoString("",i,1),i+2);
     }
@@ -103,7 +103,7 @@ MidiInEditor::MidiInEditor (MidiInFilter* const ownerFilter)
 
     imagepad->setTriggeredOnMouseDown(true);
     imagepad->addButtonListener(this);
-    imagepad->drawableButton->Label = T("");
+    imagepad->drawableButton->Label = "";
 	imagepad->setButtonText(String::empty);
 
     hostButton->setMouseClickGrabsKeyboardFocus(false);
@@ -213,16 +213,16 @@ void MidiInEditor::buttonStateChanged (Button* buttonThatWasClicked) {
         ModifierKeys mousebutton = ModifierKeys::getCurrentModifiers();
         if (mousebutton.isPopupMenu()) {
             PopupMenu m, sub1;
-            m.addItem(66,T("Clear Image"));
+            m.addItem(66,"Clear Image");
             m.addSeparator();
 
             int result = m.show();
             if (result != 0)
             {
                 if (result==66) {
-                    getFilter()->icon = String(T(""));
+                    getFilter()->icon = String("");
                     imagepad->drawableButton->setImages(0);
-                    imagepad->drawableButton->setName(T(""));
+                    imagepad->drawableButton->setName("");
                 }
             }
         }

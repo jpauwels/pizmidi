@@ -274,32 +274,32 @@ void MidiChsProcessor::getStateInformation (MemoryBlock& destData)
     // params as XML..
 
     // create an outer XML element..
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
+    XmlElement xmlState ("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    xmlState.setAttribute (T("1"), fChannel1);
-    xmlState.setAttribute (T("2"), fChannel2);
-    xmlState.setAttribute (T("3"), fChannel3);
-    xmlState.setAttribute (T("4"), fChannel4);
-    xmlState.setAttribute (T("5"), fChannel5);
-    xmlState.setAttribute (T("6"), fChannel6);
-    xmlState.setAttribute (T("7"), fChannel7);
-    xmlState.setAttribute (T("8"), fChannel8);
-    xmlState.setAttribute (T("9"), fChannel9);
-    xmlState.setAttribute (T("10"), fChannel10);
-    xmlState.setAttribute (T("11"), fChannel11);
-    xmlState.setAttribute (T("12"), fChannel12);
-    xmlState.setAttribute (T("13"), fChannel13);
-    xmlState.setAttribute (T("14"), fChannel14);
-    xmlState.setAttribute (T("15"), fChannel15);
-    xmlState.setAttribute (T("16"), fChannel16);
-    xmlState.setAttribute (T("pluginVersion"), 1);
-    xmlState.setAttribute (T("Hue"), bghue);
-    xmlState.setAttribute (T("Sat"), bgsat);
-    xmlState.setAttribute (T("Bri"), bgbri);
-    xmlState.setAttribute (T("Contrast"), contrast);
-    xmlState.setAttribute (T("uiWidth"), lastUIWidth);
-    xmlState.setAttribute (T("uiHeight"), lastUIHeight);
+    xmlState.setAttribute ("1", fChannel1);
+    xmlState.setAttribute ("2", fChannel2);
+    xmlState.setAttribute ("3", fChannel3);
+    xmlState.setAttribute ("4", fChannel4);
+    xmlState.setAttribute ("5", fChannel5);
+    xmlState.setAttribute ("6", fChannel6);
+    xmlState.setAttribute ("7", fChannel7);
+    xmlState.setAttribute ("8", fChannel8);
+    xmlState.setAttribute ("9", fChannel9);
+    xmlState.setAttribute ("10", fChannel10);
+    xmlState.setAttribute ("11", fChannel11);
+    xmlState.setAttribute ("12", fChannel12);
+    xmlState.setAttribute ("13", fChannel13);
+    xmlState.setAttribute ("14", fChannel14);
+    xmlState.setAttribute ("15", fChannel15);
+    xmlState.setAttribute ("16", fChannel16);
+    xmlState.setAttribute ("pluginVersion", 1);
+    xmlState.setAttribute ("Hue", bghue);
+    xmlState.setAttribute ("Sat", bgsat);
+    xmlState.setAttribute ("Bri", bgbri);
+    xmlState.setAttribute ("Contrast", contrast);
+    xmlState.setAttribute ("uiWidth", lastUIWidth);
+    xmlState.setAttribute ("uiHeight", lastUIHeight);
 
     // you could also add as many child elements as you need to here..
 
@@ -316,32 +316,32 @@ void MidiChsProcessor::setStateInformation (const void* data, int sizeInBytes)
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            fChannel1  = (float) xmlState->getDoubleAttribute (T("1"),  fChannel1 );
-            fChannel2  = (float) xmlState->getDoubleAttribute (T("2"),  fChannel2 );
-            fChannel3  = (float) xmlState->getDoubleAttribute (T("3"),  fChannel3 );
-            fChannel4  = (float) xmlState->getDoubleAttribute (T("4"),  fChannel4 );
-            fChannel5  = (float) xmlState->getDoubleAttribute (T("5"),  fChannel5 );
-            fChannel6  = (float) xmlState->getDoubleAttribute (T("6"),  fChannel6 );
-            fChannel7  = (float) xmlState->getDoubleAttribute (T("7"),  fChannel7 );
-            fChannel8  = (float) xmlState->getDoubleAttribute (T("8"),  fChannel8 );
-            fChannel9  = (float) xmlState->getDoubleAttribute (T("9"),  fChannel9 );
-            fChannel10 = (float) xmlState->getDoubleAttribute (T("10"), fChannel10);
-            fChannel11 = (float) xmlState->getDoubleAttribute (T("11"), fChannel11);
-            fChannel12 = (float) xmlState->getDoubleAttribute (T("12"), fChannel12);
-            fChannel13 = (float) xmlState->getDoubleAttribute (T("13"), fChannel13);
-            fChannel14 = (float) xmlState->getDoubleAttribute (T("14"), fChannel14);
-            fChannel15 = (float) xmlState->getDoubleAttribute (T("15"), fChannel15);
-            fChannel16 = (float) xmlState->getDoubleAttribute (T("16"), fChannel16);
-            bghue = (float) xmlState->getDoubleAttribute (T("Hue"), bghue);
-            bgsat = (float) xmlState->getDoubleAttribute (T("Sat"), bgsat);
-            bgbri = (float) xmlState->getDoubleAttribute (T("Bri"), bgbri);
-            contrast = (float) xmlState->getDoubleAttribute (T("Contrast"), contrast);
+            fChannel1  = (float) xmlState->getDoubleAttribute ("1",  fChannel1 );
+            fChannel2  = (float) xmlState->getDoubleAttribute ("2",  fChannel2 );
+            fChannel3  = (float) xmlState->getDoubleAttribute ("3",  fChannel3 );
+            fChannel4  = (float) xmlState->getDoubleAttribute ("4",  fChannel4 );
+            fChannel5  = (float) xmlState->getDoubleAttribute ("5",  fChannel5 );
+            fChannel6  = (float) xmlState->getDoubleAttribute ("6",  fChannel6 );
+            fChannel7  = (float) xmlState->getDoubleAttribute ("7",  fChannel7 );
+            fChannel8  = (float) xmlState->getDoubleAttribute ("8",  fChannel8 );
+            fChannel9  = (float) xmlState->getDoubleAttribute ("9",  fChannel9 );
+            fChannel10 = (float) xmlState->getDoubleAttribute ("10", fChannel10);
+            fChannel11 = (float) xmlState->getDoubleAttribute ("11", fChannel11);
+            fChannel12 = (float) xmlState->getDoubleAttribute ("12", fChannel12);
+            fChannel13 = (float) xmlState->getDoubleAttribute ("13", fChannel13);
+            fChannel14 = (float) xmlState->getDoubleAttribute ("14", fChannel14);
+            fChannel15 = (float) xmlState->getDoubleAttribute ("15", fChannel15);
+            fChannel16 = (float) xmlState->getDoubleAttribute ("16", fChannel16);
+            bghue = (float) xmlState->getDoubleAttribute ("Hue", bghue);
+            bgsat = (float) xmlState->getDoubleAttribute ("Sat", bgsat);
+            bgbri = (float) xmlState->getDoubleAttribute ("Bri", bgbri);
+            contrast = (float) xmlState->getDoubleAttribute ("Contrast", contrast);
 
-            lastUIWidth = xmlState->getIntAttribute (T("uiWidth"), lastUIWidth);
-            lastUIHeight = xmlState->getIntAttribute (T("uiHeight"), lastUIHeight);
+            lastUIWidth = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+            lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
 
             sendChangeMessage ();
         }

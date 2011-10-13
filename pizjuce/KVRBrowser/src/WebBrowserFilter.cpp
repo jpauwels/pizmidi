@@ -61,7 +61,7 @@ void WebBrowserFilter::setParameter (int index, float newValue)
 const String WebBrowserFilter::getParameterName (int index)
 {
     if (index == 0)
-        return T(" ");
+        return " ";
 
     return String::empty;
 }
@@ -187,14 +187,14 @@ void WebBrowserFilter::getStateInformation (MemoryBlock& destData)
     // params as XML..
 
     // create an outer XML element..
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
+    XmlElement xmlState ("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    xmlState.setAttribute (T("pluginVersion"), 1);
-    xmlState.setAttribute (T("gainLevel"), gain);
-    xmlState.setAttribute (T("uiWidth"), lastUIWidth);
-    xmlState.setAttribute (T("uiHeight"), lastUIHeight);
-    xmlState.setAttribute (T("lastURL"), URL);
+    xmlState.setAttribute ("pluginVersion", 1);
+    xmlState.setAttribute ("gainLevel", gain);
+    xmlState.setAttribute ("uiWidth", lastUIWidth);
+    xmlState.setAttribute ("uiHeight", lastUIHeight);
+    xmlState.setAttribute ("lastURL", URL);
 
     // you could also add as many child elements as you need to here..
 
@@ -211,14 +211,14 @@ void WebBrowserFilter::setStateInformation (const void* data, int sizeInBytes)
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            gain = (float) xmlState->getDoubleAttribute (T("gainLevel"), gain);
+            gain = (float) xmlState->getDoubleAttribute ("gainLevel", gain);
 
-            lastUIWidth = xmlState->getIntAttribute (T("uiWidth"), lastUIWidth);
-            lastUIHeight = xmlState->getIntAttribute (T("uiHeight"), lastUIHeight);
-            URL = xmlState->getStringAttribute (T("lastURL"), URL);
+            lastUIWidth = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+            lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
+            URL = xmlState->getStringAttribute ("lastURL", URL);
 
             sendChangeMessage ();
         }

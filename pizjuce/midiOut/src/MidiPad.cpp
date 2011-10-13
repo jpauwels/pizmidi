@@ -3,7 +3,7 @@
 MidiPad::MidiPad ()
 : drawableButton (0)
 {
-    addAndMakeVisible (drawableButton = new DrawablePad(T("MidiPad")));
+    addAndMakeVisible (drawableButton = new DrawablePad("MidiPad"));
     drawableButton->addListener (this);
 	addAndMakeVisible (label = new Label("Label",String::empty));
     label->setFont (Font (9.0000f, Font::plain));
@@ -81,6 +81,6 @@ void MidiPad::addListener (ButtonListener *const newListener) {
 void MidiPad::clearIcon()
 {
     drawableButton->setImages(0);
-    drawableButton->setName(T(""));
+    drawableButton->setName("");
 	label->setText("Drag\nIcon",false);
 }

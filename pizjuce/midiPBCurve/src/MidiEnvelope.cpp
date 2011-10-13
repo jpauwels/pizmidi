@@ -12,8 +12,8 @@ MidiEnvelope::MidiEnvelope (const int envelopeType_,
 	labelX(0),
 	labelY(0)
 {
-    addAndMakeVisible (labelX = new Label (T("x label"),
-		T("x: --")));
+    addAndMakeVisible (labelX = new Label ("x label",
+		"x: --"));
     labelX->setFont (Font (15.0000f, Font::plain));
     labelX->setJustificationType (Justification::centredLeft);
     labelX->setEditable (false, false, false);
@@ -22,8 +22,8 @@ MidiEnvelope::MidiEnvelope (const int envelopeType_,
 	labelX->setOpaque(false);
 	labelX->setInterceptsMouseClicks(false,false);
 
-    addAndMakeVisible (labelY = new Label (T("y label"),
-		T("y: --")));
+    addAndMakeVisible (labelY = new Label ("y label",
+		"y: --"));
     labelY->setFont (Font (15.0000f, Font::plain));
     labelY->setJustificationType (Justification::centredLeft);
     labelY->setEditable (false, false, false);
@@ -207,27 +207,27 @@ void MidiEnvelope::mouseDown (const MouseEvent& e)
 			if (pbrange2==0.f) pbrange2=pbrange;
 			if (p.getX()>0.5f)
 			{
-				labelX->setText(T("x: ")
+				labelX->setText("x: "
 					+ String(roundFloatToInt(16383.f*p.getX()))
 					+ " (" + String(pbrange*(p.getX()-0.5f),2) + ")",
 					false);
 			}
 			else 
 			{
-				labelX->setText(T("x: ")
+				labelX->setText("x: "
 					+ String(roundFloatToInt(16383.f*p.getX()))
 					+ " (" + String(pbrange2*(p.getX()-0.5f),2) + ")",
 					false);
 			}
 			if (p.getY()>0.5f)
 			{
-				labelY->setText(T("y: ")
+				labelY->setText("y: "
 					+ String(roundFloatToInt(16383.f*p.getY())) 
 					+ " (" + String(pbrange*(p.getY()-0.5f),2) + ")",
 					false);
 			}
 			else {
-				labelY->setText(T("y: ")
+				labelY->setText("y: "
 					+ String(roundFloatToInt(16383.f*p.getY())) 
 					+ " (" + String(pbrange2*(p.getY()-0.5f),2) + ")",
 					false);
@@ -335,27 +335,27 @@ void MidiEnvelope::mouseDrag (const MouseEvent& e)
 		if (pbrange2==0.f) pbrange2=pbrange;
 		if (p.getX()>0.5f)
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		else 
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange2*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		if (p.getY()>0.5f)
 		{
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange*(p.getY()-0.5f),2) + ")",
 				false);
 		}
 		else {
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange2*(p.getY()-0.5f),2) + ")",
 				false);
@@ -419,27 +419,27 @@ void MidiEnvelope::mouseMove(const MouseEvent& e)
 		if (pbrange2==0.f) pbrange2=pbrange;
 		if (p.getX()>0.5f)
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		else 
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange2*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		if (p.getY()>0.5f)
 		{
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange*(p.getY()-0.5f),2) + ")",
 				false);
 		}
 		else {
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange2*(p.getY()-0.5f),2) + ")",
 				false);
@@ -457,27 +457,27 @@ void MidiEnvelope::mouseMove(const MouseEvent& e)
 		if (pbrange2==0.f) pbrange2=pbrange;
 		if (p.getX()>0.5f)
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		else 
 		{
-			labelX->setText(T("x: ")
+			labelX->setText("x: "
 				+ String(roundFloatToInt(16383.f*p.getX()))
 				+ " (" + String(pbrange2*(p.getX()-0.5f),2) + ")",
 				false);
 		}
 		if (p.getY()>0.5f)
 		{
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange*(p.getY()-0.5f),2) + ")",
 				false);
 		}
 		else {
-			labelY->setText(T("y: ")
+			labelY->setText("y: "
 				+ String(roundFloatToInt(16383.f*p.getY())) 
 				+ " (" + String(pbrange2*(p.getY()-0.5f),2) + ")",
 				false);

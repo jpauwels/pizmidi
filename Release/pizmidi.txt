@@ -5,6 +5,11 @@ Change log
 
 
 ----------------------------
+changes 20111013:
+
+* Fixed bug with large number of output events (broken in 20110922)
+
+----------------------------
 changes 20110924:
 
 * Most note-transposing plugins now also transpose poly aftertouch

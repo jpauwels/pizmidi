@@ -151,27 +151,27 @@ void PizKeyboard::setParameter (int index, float newValue)
 const String PizKeyboard::getParameterName (int index)
 {
     if (index == kWidth)
-        return T("KeyWidth");
+        return "KeyWidth";
     else if (index == kChannel)
-        return T("Channel");
+        return "Channel";
     if (index == kVelocity)
-        return T("Velocity");
+        return "Velocity";
     if (index == kUseY)
-        return T("Use Y");
+        return "Use Y";
 	if (index == kToggleInput)
-		return T("Toggle");
+		return "Toggle";
 	if (index == kHidePanel)
-		return T("HidePanel");
+		return "HidePanel";
 	if (index == kQwertyAnywhere)
-		return T("QwertyAnywhere");
+		return "QwertyAnywhere";
 	if (index == kCapsLock)
-		return T("UseCapsLock");
+		return "UseCapsLock";
 	if (index == kUseProgCh)
-		return T("UseProgCh");
+		return "UseProgCh";
 	if (index == kSendHeldNotes)
-		return T("SendHeldNotes");
+		return "SendHeldNotes";
 	if (index == kClearHeldNotes)
-		return T("Reset");
+		return "Reset";
     return String::empty;
 }
 
@@ -413,24 +413,24 @@ void PizKeyboard::getStateInformation (MemoryBlock& destData)
     // params as XML..
 
     // create an outer XML element..
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
+    XmlElement xmlState ("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    xmlState.setAttribute (T("pluginVersion"), 2);
+    xmlState.setAttribute ("pluginVersion", 2);
 
-    xmlState.setAttribute (T("keyWidth"), width);
-    xmlState.setAttribute (T("velocity"), velocity);
-    xmlState.setAttribute (T("useY"), useY);
-    xmlState.setAttribute (T("channel"), channel);
-    xmlState.setAttribute (T("toggle"), toggle);
-    xmlState.setAttribute (T("hide"), hide);
-    xmlState.setAttribute (T("usepc"), usepc);
+    xmlState.setAttribute ("keyWidth", width);
+    xmlState.setAttribute ("velocity", velocity);
+    xmlState.setAttribute ("useY", useY);
+    xmlState.setAttribute ("channel", channel);
+    xmlState.setAttribute ("toggle", toggle);
+    xmlState.setAttribute ("hide", hide);
+    xmlState.setAttribute ("usepc", usepc);
 
-    xmlState.setAttribute (T("qwerty"), qwerty);
-    xmlState.setAttribute (T("octave"), octave);
-    xmlState.setAttribute (T("keyPosition"), keyPosition);
-    xmlState.setAttribute (T("uiWidth"), lastUIWidth);
-    xmlState.setAttribute (T("uiHeight"), lastUIHeight);
+    xmlState.setAttribute ("qwerty", qwerty);
+    xmlState.setAttribute ("octave", octave);
+    xmlState.setAttribute ("keyPosition", keyPosition);
+    xmlState.setAttribute ("uiWidth", lastUIWidth);
+    xmlState.setAttribute ("uiHeight", lastUIHeight);
 
     // you could also add as many child elements as you need to here..
 
@@ -447,22 +447,22 @@ void PizKeyboard::setStateInformation (const void* data, int sizeInBytes)
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            width = (float) xmlState->getDoubleAttribute (T("gainLevel"), width); //old name for compatibility
-            width = (float) xmlState->getDoubleAttribute (T("keyWidth"), width);
-            velocity = (float) xmlState->getDoubleAttribute (T("velocity"), velocity);
-            channel = xmlState->getIntAttribute (T("channel"), channel);
-            useY = xmlState->getBoolAttribute (T("useY"), useY);
-            toggle = xmlState->getBoolAttribute (T("toggle"), toggle);
-            hide = xmlState->getBoolAttribute (T("hide"), hide);
-            usepc = xmlState->getBoolAttribute (T("usepc"), usepc);
-            qwerty = xmlState->getBoolAttribute (T("qwerty"), qwerty);
-			keyPosition = xmlState->getIntAttribute (T("keyPosition"), keyPosition);
-            octave = xmlState->getIntAttribute (T("octave"), octave);
-            lastUIWidth = xmlState->getIntAttribute (T("uiWidth"), lastUIWidth);
-            lastUIHeight = xmlState->getIntAttribute (T("uiHeight"), lastUIHeight);
+            width = (float) xmlState->getDoubleAttribute ("gainLevel", width); //old name for compatibility
+            width = (float) xmlState->getDoubleAttribute ("keyWidth", width);
+            velocity = (float) xmlState->getDoubleAttribute ("velocity", velocity);
+            channel = xmlState->getIntAttribute ("channel", channel);
+            useY = xmlState->getBoolAttribute ("useY", useY);
+            toggle = xmlState->getBoolAttribute ("toggle", toggle);
+            hide = xmlState->getBoolAttribute ("hide", hide);
+            usepc = xmlState->getBoolAttribute ("usepc", usepc);
+            qwerty = xmlState->getBoolAttribute ("qwerty", qwerty);
+			keyPosition = xmlState->getIntAttribute ("keyPosition", keyPosition);
+            octave = xmlState->getIntAttribute ("octave", octave);
+            lastUIWidth = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+            lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
             sendChangeMessage ();
 			this->dispatchPendingMessages();
         }

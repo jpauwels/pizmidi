@@ -9,25 +9,25 @@ CpuRamEditor::CpuRamEditor (CpuRam* const ownerFilter)
 	LookAndFeel::setDefaultLookAndFeel (MyLook);
 	setMouseClickGrabsKeyboardFocus(false);
 
-	addAndMakeVisible (infoLabel = new Label(String(T("CPU")),String::empty));
+	addAndMakeVisible (infoLabel = new Label(String("CPU"),String::empty));
 	infoLabel->setMouseClickGrabsKeyboardFocus(false);
 	infoLabel->setInterceptsMouseClicks(false,false);
 
-	addAndMakeVisible (memLabel2 = new Label(String(T("RAM")),String::empty));
+	addAndMakeVisible (memLabel2 = new Label(String("RAM"),String::empty));
 	memLabel2->setMouseClickGrabsKeyboardFocus(false);
 	memLabel2->setInterceptsMouseClicks(false,false);
 
-	addAndMakeVisible (slider = new Slider(String(T("interval"))));
+	addAndMakeVisible (slider = new Slider(String("interval")));
     slider->setMouseClickGrabsKeyboardFocus(false);
     slider->setSliderStyle(Slider::LinearBar);
     slider->setRange(300,2000,1);
-    slider->setTextValueSuffix(String(T(" ms")));
+    slider->setTextValueSuffix(String(" ms"));
     slider->addListener(this);
 
 	addAndMakeVisible (graph = new CpuGraph());
 
     colourSelector = new ColourSelector(ColourSelector::showColourAtTop|ColourSelector::showSliders|ColourSelector::showColourspace);
-    colourSelector->setName (String(T("color")));
+    colourSelector->setName (String("color"));
     colourSelector->setCurrentColour (getFilter()->bgcolor);
     colourSelector->addChangeListener (this);
 
@@ -155,11 +155,11 @@ void CpuRamEditor::updateParametersFromFilter()
 	float cpu = CPULoad();
 	graph->addPoint(cpu*0.01f);
 	if (getFilter()->showGraph)
-		infoLabel->setText(String(T("CPU Load: ")) + String(cpu,1)+String(T("%")),false);
+		infoLabel->setText(String("CPU Load: ") + String(cpu,1)+String("%"),false);
 	else 
-		infoLabel->setText(String(T("CPU: ")) + String(cpu,1)+String(T("%")),false);
+		infoLabel->setText(String("CPU: ") + String(cpu,1)+String("%"),false);
 
-    memLabel2->setText(String(T("Free RAM: ")) + String((int)RAMLoad().ullAvailPhys/1048576)+String(T("MB")),false);
+    memLabel2->setText(String("Free RAM: ") + String((int)RAMLoad().ullAvailPhys/1048576)+String("MB"),false);
 
 	infoLabel->setColour(Label::textColourId,filter->bgcolor.contrasting(0.8f));
 	memLabel2->setColour(Label::textColourId,filter->bgcolor.contrasting(0.8f));

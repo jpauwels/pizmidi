@@ -115,10 +115,10 @@ midiPads::midiPads()
 	programs = new MidiPadsPrograms();
 
 	if (!loadXmlBank(File(pluginPath + File::separatorString 
-		+ File::getSpecialLocation(File::currentApplicationFile).getFileNameWithoutExtension() + T(".mpadb"))))
+		+ File::getSpecialLocation(File::currentApplicationFile).getFileNameWithoutExtension() + ".mpadb")))
 	{
 		if (!loadFxb(File(pluginPath + File::separatorString 
-			+ File::getSpecialLocation(File::currentApplicationFile).getFileNameWithoutExtension() + T(".fxb"))))
+			+ File::getSpecialLocation(File::currentApplicationFile).getFileNameWithoutExtension() + ".fxb")))
 		{
 			loadDefaultPrograms();
 		}
@@ -177,19 +177,19 @@ void midiPads::setParameter (int index, float newValue)
 const String midiPads::getParameterName (int index) 
 {
 	for (int i=0;i<numPads;i++) {
-		if (index == i+xpos) return T("x pos ") + String(i+1);
-		else if (index == i+ypos) return T("y pos ") + String(i+1);
+		if (index == i+xpos) return "x pos " + String(i+1);
+		else if (index == i+ypos) return "y pos " + String(i+1);
 	}
-	if      (index == kVelOffset) return T("velocity");
-	else if (index == kCCOffset) return T("ccvalue");
-	else if (index == kChOut) return T("out channel");
-	else if (index == kMono) return T("mono mode");
-	else if (index == kUseTrigger) return T("use trigger");
-	else if (index == kNoteOnTrig) return T("ext noteon trig");
-	else if (index == kUseVel) return T("use trig vel");
-	else if (index == kChIn) return T("in channel");
-	else if (index == kThru) return T("midi thru");
-	else if (index == kSendAft) return T("send aftertouch");
+	if      (index == kVelOffset) return "velocity";
+	else if (index == kCCOffset) return "ccvalue";
+	else if (index == kChOut) return "out channel";
+	else if (index == kMono) return "mono mode";
+	else if (index == kUseTrigger) return "use trigger";
+	else if (index == kNoteOnTrig) return "ext noteon trig";
+	else if (index == kUseVel) return "use trig vel";
+	else if (index == kChIn) return "in channel";
+	else if (index == kThru) return "midi thru";
+	else if (index == kSendAft) return "send aftertouch";
 	else return String::empty;
 }
 
@@ -639,23 +639,23 @@ void midiPads::setCurrentProgramStateInformation (const void* data, int sizeInBy
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            changeProgramName(getCurrentProgram(),xmlState->getStringAttribute (T("progname"), T("Default")));
+            changeProgramName(getCurrentProgram(),xmlState->getStringAttribute ("progname", "Default"));
             for (int i=0;i<kNumGlobalParams;i++) {
                 param[i] = (float) xmlState->getDoubleAttribute (String(i), param[i]);
             }
-            lastUIWidth = xmlState->getIntAttribute (T("uiWidth"), lastUIWidth);
-            lastUIHeight = xmlState->getIntAttribute (T("uiHeight"), lastUIHeight);
-            bghue = (float) xmlState->getDoubleAttribute (T("Hue"), bghue);
-            bgsat = (float) xmlState->getDoubleAttribute (T("Sat"), bgsat);
-            bgbri = (float) xmlState->getDoubleAttribute (T("Bri"), bgbri);
-            contrast = (float) xmlState->getDoubleAttribute (T("Contrast"), contrast);
-            squares = xmlState->getIntAttribute (T("squares"), squares);
-            editmode = xmlState->getBoolAttribute (T("editmode"), editmode);
-            hex = xmlState->getBoolAttribute (T("hex"), hex);
-            usemouseup = xmlState->getBoolAttribute (T("usemouseup"), usemouseup);
+            lastUIWidth = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+            lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
+            bghue = (float) xmlState->getDoubleAttribute ("Hue", bghue);
+            bgsat = (float) xmlState->getDoubleAttribute ("Sat", bgsat);
+            bgbri = (float) xmlState->getDoubleAttribute ("Bri", bgbri);
+            contrast = (float) xmlState->getDoubleAttribute ("Contrast", contrast);
+            squares = xmlState->getIntAttribute ("squares", squares);
+            editmode = xmlState->getBoolAttribute ("editmode", editmode);
+            hex = xmlState->getBoolAttribute ("hex", hex);
+            usemouseup = xmlState->getBoolAttribute ("usemouseup", usemouseup);
 			if (hex) setLayout(curProgram,hexagonpads);
 			else {
 				switch(squares)
@@ -681,30 +681,30 @@ void midiPads::setCurrentProgramStateInformation (const void* data, int sizeInBy
             for (int i=0;i<squares;i++) {
 				centeredText[i] = false;
 				iconsize[i] = 0.5f;
-				roundness[i] = (float) xmlState->getDoubleAttribute (T("roundness"), roundness[i]);
-				showdots[i] = xmlState->getBoolAttribute (T("showdots"), showdots[i]);
-				showdots[i] = xmlState->getBoolAttribute (T("showdots")+String(i), showdots[i]);
-				showvalues[i] = xmlState->getBoolAttribute (T("showvalues")+String(i), showvalues[i]);
-                icon[i] = xmlState->getStringAttribute (T("icon")+String(i), icon[i]);
-                text[i] = xmlState->getStringAttribute (T("text")+String(i), text[i]);
-				padcolor[i] = Colour(xmlState->getIntAttribute (T("padcolor")+String(i), padcolor[i].getARGB()));
-                Ydata1[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Ydata1")+String(i), Ydata1[i]*midiScaler));
-                Ycc[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Ycc")+String(i), Ycc[i]*midiScaler));
-                Ytype[i] = roundToInt( xmlState->getDoubleAttribute (T("Ytype")+String(i), Ytype[i]));
-                Ydata2[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Ydata2")+String(i), Ydata2[i]*midiScaler));
-                Yoff[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Yoff")+String(i), Yoff[i]*midiScaler));
-                trigger[i] = (int)(127.1* xmlState->getDoubleAttribute (T("trigger")+String(i), trigger[i]*midiScaler));
-                Xcc[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Xcc")+String(i), Xcc[i]*midiScaler));
-                Xoff[i] = (int)(127.1* xmlState->getDoubleAttribute (T("Xoff")+String(i), Xoff[i]*midiScaler));
-                SendOff[i] = xmlState->getBoolAttribute (T("SendOff")+String(i), SendOff[i]);
-                UseX[i] = xmlState->getDoubleAttribute (T("UseX")+String(i), UseX[i])>=0.5f;
-                UseY[i] = xmlState->getDoubleAttribute (T("UseY")+String(i), UseY[i])>=0.5f;
-                UseYCC[i] = xmlState->getBoolAttribute (T("UseYCC")+String(i), UseYCC[i]);
-                UseXPB[i] = xmlState->getBoolAttribute (T("UseXPB")+String(i), UseXPB[i]);
-                lastx[i] = xmlState->getIntAttribute (T("lastx")+String(i), lastx[i]);
-                lasty[i] = xmlState->getIntAttribute (T("lasty")+String(i), lasty[i]);
-                toggle[i] = xmlState->getBoolAttribute (T("toggle")+String(i), toggle[i]);
-                togglestate[i] = xmlState->getBoolAttribute (T("togglestate")+String(i), togglestate[i]);
+				roundness[i] = (float) xmlState->getDoubleAttribute ("roundness", roundness[i]);
+				showdots[i] = xmlState->getBoolAttribute ("showdots", showdots[i]);
+				showdots[i] = xmlState->getBoolAttribute ("showdots"+String(i), showdots[i]);
+				showvalues[i] = xmlState->getBoolAttribute ("showvalues"+String(i), showvalues[i]);
+                icon[i] = xmlState->getStringAttribute ("icon"+String(i), icon[i]);
+                text[i] = xmlState->getStringAttribute ("text"+String(i), text[i]);
+				padcolor[i] = Colour(xmlState->getIntAttribute ("padcolor"+String(i), padcolor[i].getARGB()));
+                Ydata1[i] = (int)(127.1* xmlState->getDoubleAttribute ("Ydata1"+String(i), Ydata1[i]*midiScaler));
+                Ycc[i] = (int)(127.1* xmlState->getDoubleAttribute ("Ycc"+String(i), Ycc[i]*midiScaler));
+                Ytype[i] = roundToInt( xmlState->getDoubleAttribute ("Ytype"+String(i), Ytype[i]));
+                Ydata2[i] = (int)(127.1* xmlState->getDoubleAttribute ("Ydata2"+String(i), Ydata2[i]*midiScaler));
+                Yoff[i] = (int)(127.1* xmlState->getDoubleAttribute ("Yoff"+String(i), Yoff[i]*midiScaler));
+                trigger[i] = (int)(127.1* xmlState->getDoubleAttribute ("trigger"+String(i), trigger[i]*midiScaler));
+                Xcc[i] = (int)(127.1* xmlState->getDoubleAttribute ("Xcc"+String(i), Xcc[i]*midiScaler));
+                Xoff[i] = (int)(127.1* xmlState->getDoubleAttribute ("Xoff"+String(i), Xoff[i]*midiScaler));
+                SendOff[i] = xmlState->getBoolAttribute ("SendOff"+String(i), SendOff[i]);
+                UseX[i] = xmlState->getDoubleAttribute ("UseX"+String(i), UseX[i])>=0.5f;
+                UseY[i] = xmlState->getDoubleAttribute ("UseY"+String(i), UseY[i])>=0.5f;
+                UseYCC[i] = xmlState->getBoolAttribute ("UseYCC"+String(i), UseYCC[i]);
+                UseXPB[i] = xmlState->getBoolAttribute ("UseXPB"+String(i), UseXPB[i]);
+                lastx[i] = xmlState->getIntAttribute ("lastx"+String(i), lastx[i]);
+                lasty[i] = xmlState->getIntAttribute ("lasty"+String(i), lasty[i]);
+                toggle[i] = xmlState->getBoolAttribute ("toggle"+String(i), toggle[i]);
+                togglestate[i] = xmlState->getBoolAttribute ("togglestate"+String(i), togglestate[i]);
             }        
             sendChangeMessage ();
         }
@@ -725,23 +725,23 @@ void midiPads::setStateInformation (const void* data, int sizeInBytes)
     XmlElement* const xmlState (getXmlFromBinary (data, sizeInBytes));
     if (xmlState != 0)
     {
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             for (int p=0;p<getNumPrograms();p++) {
-                String prefix = T("P") + String(p) + T("."); 
+                String prefix = "P" + String(p) + "."; 
                 for (int i=0;i<kNumGlobalParams;i++) {
 					programs->set(p,getGlobalParamValueName(i),(float) xmlState->getDoubleAttribute (prefix+String(i), programs->get(p,getGlobalParamValueName(i))));
                 }
-                programs->set(p,"lastUIWidth",xmlState->getIntAttribute (prefix+T("uiWidth"), programs->get(p,"lastUIWidth")));
-                programs->set(p,"lastUIHeight",xmlState->getIntAttribute (prefix+T("uiHeight"), programs->get(p,"lastUIHeight")));
-                programs->set(p,"bghue",(float) xmlState->getDoubleAttribute (prefix+T("Hue"), programs->get(p,"bghue")));
-                programs->set(p,"bgsat",(float) xmlState->getDoubleAttribute (prefix+T("Sat"), programs->get(p,"bgsat")));
-                programs->set(p,"bgbri",(float) xmlState->getDoubleAttribute (prefix+T("Bri"), programs->get(p,"bgbri")));
-                programs->set(p,"contrast",(float) xmlState->getDoubleAttribute (prefix+T("Contrast"), programs->get(p,"contrast")));
-                programs->set(p,"squares",xmlState->getIntAttribute (prefix+T("squares"), programs->get(p,"squares")));
-                programs->set(p,"editmode",xmlState->getBoolAttribute (prefix+T("editmode"), programs->get(p,"editmode")));
-                programs->set(p,"hex",xmlState->getBoolAttribute (prefix+T("hex"), programs->get(p,"hex")));
-                programs->set(p,"usemouseup",xmlState->getBoolAttribute (prefix+T("usemouseup"), programs->get(p,"usemouseup")));
+                programs->set(p,"lastUIWidth",xmlState->getIntAttribute (prefix+"uiWidth", programs->get(p,"lastUIWidth")));
+                programs->set(p,"lastUIHeight",xmlState->getIntAttribute (prefix+"uiHeight", programs->get(p,"lastUIHeight")));
+                programs->set(p,"bghue",(float) xmlState->getDoubleAttribute (prefix+"Hue", programs->get(p,"bghue")));
+                programs->set(p,"bgsat",(float) xmlState->getDoubleAttribute (prefix+"Sat", programs->get(p,"bgsat")));
+                programs->set(p,"bgbri",(float) xmlState->getDoubleAttribute (prefix+"Bri", programs->get(p,"bgbri")));
+                programs->set(p,"contrast",(float) xmlState->getDoubleAttribute (prefix+"Contrast", programs->get(p,"contrast")));
+                programs->set(p,"squares",xmlState->getIntAttribute (prefix+"squares", programs->get(p,"squares")));
+                programs->set(p,"editmode",xmlState->getBoolAttribute (prefix+"editmode", programs->get(p,"editmode")));
+                programs->set(p,"hex",xmlState->getBoolAttribute (prefix+"hex", programs->get(p,"hex")));
+                programs->set(p,"usemouseup",xmlState->getBoolAttribute (prefix+"usemouseup", programs->get(p,"usemouseup")));
 				if (programs->get(p,"hex")) 
 					setLayout(p,hexagonpads);
 				else {
@@ -765,39 +765,39 @@ void midiPads::setStateInformation (const void* data, int sizeInBytes)
 					}
 				}
                 for (int i=0;i<(int)(programs->get(p,"squares"));i++) {
-					programs->setForPad(p,i,"showdots",xmlState->getBoolAttribute (prefix+T("showdots"), programs->getForPad(p,i,"showdots")));
-					programs->setForPad(p,i,"showdots",xmlState->getBoolAttribute (prefix+T("showdots")+String(i), programs->getForPad(p,i,"showdots")));
-					programs->setForPad(p,i,"showvalues",xmlState->getBoolAttribute (prefix+T("showvalues")+String(i), programs->getForPad(p,i,"showvalues")));
+					programs->setForPad(p,i,"showdots",xmlState->getBoolAttribute (prefix+"showdots", programs->getForPad(p,i,"showdots")));
+					programs->setForPad(p,i,"showdots",xmlState->getBoolAttribute (prefix+"showdots"+String(i), programs->getForPad(p,i,"showdots")));
+					programs->setForPad(p,i,"showvalues",xmlState->getBoolAttribute (prefix+"showvalues"+String(i), programs->getForPad(p,i,"showvalues")));
 					programs->setForPad(p,i,"iconsize",0.5f);
 					programs->setForPad(p,i,"centeredText",false);
-					programs->setForPad(p,i,"roundness",(float) xmlState->getDoubleAttribute (prefix+T("roundness"), programs->getForPad(p,i,"roundness")));
-                    programs->setForPad(p,i,"icon",xmlState->getStringAttribute (prefix+T("icon")+String(i), programs->getForPad(p,i,"icon")));
-                    programs->setForPad(p,i,"text",xmlState->getStringAttribute (prefix+T("text")+String(i), programs->getForPad(p,i,"text")));
+					programs->setForPad(p,i,"roundness",(float) xmlState->getDoubleAttribute (prefix+"roundness", programs->getForPad(p,i,"roundness")));
+                    programs->setForPad(p,i,"icon",xmlState->getStringAttribute (prefix+"icon"+String(i), programs->getForPad(p,i,"icon")));
+                    programs->setForPad(p,i,"text",xmlState->getStringAttribute (prefix+"text"+String(i), programs->getForPad(p,i,"text")));
 					programs->setForPad(p,i,"padcolor",
-						Colour(xmlState->getIntAttribute(prefix+T("padcolor")+String(i),Colour::fromString(programs->getForPad(p,i,"padcolor")).getARGB())).toString()
+						Colour(xmlState->getIntAttribute(prefix+"padcolor"+String(i),Colour::fromString(programs->getForPad(p,i,"padcolor")).getARGB())).toString()
 						);
-                    programs->setForPad(p,i,"Ydata1",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Ydata1")+String(i), programs->getForPad(p,i,"Ydata1"))));
-                    programs->setForPad(p,i,"Ycc",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Ycc")+String(i), programs->getForPad(p,i,"Ycc"))));
-                    programs->setForPad(p,i,"Ytype",roundToInt( xmlState->getDoubleAttribute (prefix+T("Ytype")+String(i), programs->getForPad(p,i,"Ytype"))));
-                    programs->setForPad(p,i,"Ydata2",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Ydata2")+String(i), programs->getForPad(p,i,"Ydata2"))));
-                    programs->setForPad(p,i,"Yoff",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Yoff")+String(i), programs->getForPad(p,i,"Yoff"))));
-                    programs->setForPad(p,i,"trigger",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("trigger")+String(i), programs->getForPad(p,i,"trigger"))));
-                    programs->setForPad(p,i,"Xcc",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Xcc")+String(i), programs->getForPad(p,i,"Xcc"))));
-                    programs->setForPad(p,i,"Xoff",(int)(127.1* xmlState->getDoubleAttribute (prefix+T("Xoff")+String(i), programs->getForPad(p,i,"Xoff"))));
-                    programs->setForPad(p,i,"SendOff",xmlState->getBoolAttribute (prefix+T("SendOff")+String(i), programs->getForPad(p,i,"SendOff")));
-                    programs->setForPad(p,i,"UseX",xmlState->getDoubleAttribute (prefix+T("UseX")+String(i), programs->getForPad(p,i,"UseX"))>=0.5f);
-                    programs->setForPad(p,i,"UseY",xmlState->getDoubleAttribute (prefix+T("UseY")+String(i), programs->getForPad(p,i,"UseY"))>=0.5f);
-                    programs->setForPad(p,i,"UseYCC",xmlState->getBoolAttribute (prefix+T("UseYCC")+String(i), programs->getForPad(p,i,"UseYCC")));
-                    programs->setForPad(p,i,"UseXPB",xmlState->getBoolAttribute (prefix+T("UseXPB")+String(i), programs->getForPad(p,i,"UseXPB")));
-                    programs->setForPad(p,i,"lastx",xmlState->getIntAttribute (prefix+T("lastx")+String(i), programs->getForPad(p,i,"lastx")));
-                    programs->setForPad(p,i,"lasty",xmlState->getIntAttribute (prefix+T("lasty")+String(i), programs->getForPad(p,i,"lasty")));
-                    programs->setForPad(p,i,"toggle",xmlState->getBoolAttribute (prefix+T("toggle")+String(i), programs->getForPad(p,i,"toggle")));
-                    programs->setForPad(p,i,"togglestate",xmlState->getBoolAttribute (prefix+T("togglestate")+String(i), programs->getForPad(p,i,"togglestate")));
+                    programs->setForPad(p,i,"Ydata1",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Ydata1"+String(i), programs->getForPad(p,i,"Ydata1"))));
+                    programs->setForPad(p,i,"Ycc",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Ycc"+String(i), programs->getForPad(p,i,"Ycc"))));
+                    programs->setForPad(p,i,"Ytype",roundToInt( xmlState->getDoubleAttribute (prefix+"Ytype"+String(i), programs->getForPad(p,i,"Ytype"))));
+                    programs->setForPad(p,i,"Ydata2",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Ydata2"+String(i), programs->getForPad(p,i,"Ydata2"))));
+                    programs->setForPad(p,i,"Yoff",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Yoff"+String(i), programs->getForPad(p,i,"Yoff"))));
+                    programs->setForPad(p,i,"trigger",(int)(127.1* xmlState->getDoubleAttribute (prefix+"trigger"+String(i), programs->getForPad(p,i,"trigger"))));
+                    programs->setForPad(p,i,"Xcc",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Xcc"+String(i), programs->getForPad(p,i,"Xcc"))));
+                    programs->setForPad(p,i,"Xoff",(int)(127.1* xmlState->getDoubleAttribute (prefix+"Xoff"+String(i), programs->getForPad(p,i,"Xoff"))));
+                    programs->setForPad(p,i,"SendOff",xmlState->getBoolAttribute (prefix+"SendOff"+String(i), programs->getForPad(p,i,"SendOff")));
+                    programs->setForPad(p,i,"UseX",xmlState->getDoubleAttribute (prefix+"UseX"+String(i), programs->getForPad(p,i,"UseX"))>=0.5f);
+                    programs->setForPad(p,i,"UseY",xmlState->getDoubleAttribute (prefix+"UseY"+String(i), programs->getForPad(p,i,"UseY"))>=0.5f);
+                    programs->setForPad(p,i,"UseYCC",xmlState->getBoolAttribute (prefix+"UseYCC"+String(i), programs->getForPad(p,i,"UseYCC")));
+                    programs->setForPad(p,i,"UseXPB",xmlState->getBoolAttribute (prefix+"UseXPB"+String(i), programs->getForPad(p,i,"UseXPB")));
+                    programs->setForPad(p,i,"lastx",xmlState->getIntAttribute (prefix+"lastx"+String(i), programs->getForPad(p,i,"lastx")));
+                    programs->setForPad(p,i,"lasty",xmlState->getIntAttribute (prefix+"lasty"+String(i), programs->getForPad(p,i,"lasty")));
+                    programs->setForPad(p,i,"toggle",xmlState->getBoolAttribute (prefix+"toggle"+String(i), programs->getForPad(p,i,"toggle")));
+                    programs->setForPad(p,i,"togglestate",xmlState->getBoolAttribute (prefix+"togglestate"+String(i), programs->getForPad(p,i,"togglestate")));
                 }
-				programs->set(p,"name",xmlState->getStringAttribute (prefix+T("progname"), programs->get(p,"name")));
+				programs->set(p,"name",xmlState->getStringAttribute (prefix+"progname", programs->get(p,"name")));
             }
             init=true;
-            setCurrentProgram(xmlState->getIntAttribute(T("program"), 0));
+            setCurrentProgram(xmlState->getIntAttribute("program", 0));
         }
 		delete xmlState;
     }
@@ -1690,7 +1690,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,foursliders);
 			break;
 		case 3:
-			programs->set(i,"name",T("Big X-Y Pad"));
+			programs->set(i,"name","Big X-Y Pad");
 			programs->set(i,"squares",1);
 			programs->set(i,"lastUIWidth",400);
 			programs->set(i,"lastUIHeight",400);
@@ -1708,30 +1708,30 @@ void midiPads::loadDefaultPrograms()
 		case 4: 
 			programs->set(i,"lastUIWidth",400);
 			programs->set(i,"lastUIHeight",400);
-			programs->set(i,"name",T("Mighty Pea"));
+			programs->set(i,"name","Mighty Pea");
 			programs->set(i,"contrast",0.1f);
 			programs->set(i,"bgbri",0.3f);
 			programs->set(i,"bgsat",0.0f);
 			for (int pad=0;pad<16;pad++) {
 				programs->setForPad(i,pad,"roundness",0.3f);
 				String padicon=String::empty;
-				padicon << T("Mighty Pea") << File::separatorString << 
-					String(pad+1) << T(".svg");
+				padicon << "Mighty Pea" << File::separatorString << 
+					String(pad+1) << ".svg";
 				programs->setForPad(i,pad,"icon",padicon);
 				programs->setForPad(i,pad,"padcolor",Colour(0xFFFFFFFF).toString());
 			}
-			programs->setForPad(i,0,"text",T("Kick"));
-			programs->setForPad(i,1,"text",T("Snare"));
-			programs->setForPad(i,2,"text",T("HiHat C"));
-			programs->setForPad(i,3,"text",T("HiHat O"));
-			programs->setForPad(i,4,"text",T("Ride"));
-			programs->setForPad(i,5,"text",T("Crash"));
-			programs->setForPad(i,6,"text",T("Cowbell"));
-			programs->setForPad(i,7,"text",T("Bell"));
-			programs->setForPad(i,8,"text",T("Tom 3"));
-			programs->setForPad(i,9,"text",T("Tom 2"));
-			programs->setForPad(i,10,"text",T("Tom 1"));
-			programs->setForPad(i,11,"text",T("Clap"));
+			programs->setForPad(i,0,"text","Kick");
+			programs->setForPad(i,1,"text","Snare");
+			programs->setForPad(i,2,"text","HiHat C");
+			programs->setForPad(i,3,"text","HiHat O");
+			programs->setForPad(i,4,"text","Ride");
+			programs->setForPad(i,5,"text","Crash");
+			programs->setForPad(i,6,"text","Cowbell");
+			programs->setForPad(i,7,"text","Bell");
+			programs->setForPad(i,8,"text","Tom 3");
+			programs->setForPad(i,9,"text","Tom 2");
+			programs->setForPad(i,10,"text","Tom 1");
+			programs->setForPad(i,11,"text","Clap");
 			programs->setForPad(i,12,"text",String::empty);
 			programs->setForPad(i,13,"text",String::empty);
 			programs->setForPad(i,14,"text",String::empty);
@@ -1739,7 +1739,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,sixteenpads);
 			break;
 		case 5:
-			programs->set(i,"name",T("64 Pads"));
+			programs->set(i,"name","64 Pads");
 			programs->set(i,"squares",64);
 			for (int pad=0;pad<64;pad++) {
 				programs->setForPad(i,pad,"roundness",0.05f);
@@ -1750,7 +1750,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,sixtyfourpads);
 			break;
 		case 6:
-			programs->set(i,"name",T("hexagons"));
+			programs->set(i,"name","hexagons");
 			programs->set(i,"squares",40);
 			programs->set(i,"hex",true);
 			for (int pad=0;pad<40;pad++) {
@@ -1761,7 +1761,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,hexagonpads);
 			break;
 		case 7: 
-			programs->set(i,"name",T("8 Channel Mixer"));
+			programs->set(i,"name","8 Channel Mixer");
 			programs->set(i,"squares",33);
 			programs->set(i,"lastUIHeight",550);
 			programs->set(i,"lastUIWidth",550);
@@ -1773,13 +1773,13 @@ void midiPads::loadDefaultPrograms()
 					programs->setForPad(i,pad,"toggle",true);
 					programs->setForPad(i,pad,"SendOff",true);
 					programs->setForPad(i,pad,"padcolor",Colour(0xFFFF0000).toString());
-					programs->setForPad(i,pad,"text",T("Mute"));
+					programs->setForPad(i,pad,"text","Mute");
 				}
 				else if (pad<16) {
 					programs->setForPad(i,pad,"toggle",true);
 					programs->setForPad(i,pad,"SendOff",true);
 					programs->setForPad(i,pad,"padcolor",Colour(0xFF00FF00).toString());
-					programs->setForPad(i,pad,"text",T("Solo"));
+					programs->setForPad(i,pad,"text","Solo");
 				}
 				else if (pad<24) {
 					programs->setForPad(i,pad,"UseX",true);
@@ -1787,8 +1787,8 @@ void midiPads::loadDefaultPrograms()
 					programs->setForPad(i,pad,"Ydata2",63);
 					programs->setForPad(i,pad,"Xcc",programs->getForPad(i,pad,"Ycc"));
 					programs->setForPad(i,pad,"Ycc",1);
-					programs->setForPad(i,pad,"text",T("Pan"));
-					programs->setForPad(i,pad,"icon",String(T("pancenter.svg")));
+					programs->setForPad(i,pad,"text","Pan");
+					programs->setForPad(i,pad,"icon",String("pancenter.svg"));
 				}
 				else {
 					programs->setForPad(i,pad,"UseX",false);
@@ -1800,7 +1800,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,mixerpads);
 			break;
 		case 8:
-			programs->set(i,"name",String(T("KVR")));
+			programs->set(i,"name",String("KVR"));
 			programs->set(i,"squares",16);
 			programs->set(i,"bgsat",0.0f);
 			programs->set(i,"bgbri",0.198275864f);
@@ -1808,7 +1808,7 @@ void midiPads::loadDefaultPrograms()
 			for (int pad=0;pad<16;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);
 				programs->setForPad(i,pad,"showdots",false);
-				programs->setForPad(i,pad,"icon",String(T("hihi.svg")));
+				programs->setForPad(i,pad,"icon",String("hihi.svg"));
 				programs->setForPad(i,pad,"text",String::empty);
 				if (pad<4) programs->setForPad(i,pad,"padcolor",Colour(0xFF304050).toString());
 				else if (pad<8) programs->setForPad(i,pad,"padcolor",Colour(0xFF304060).toString());
@@ -1818,7 +1818,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,sixteenpads);
 			break;
 		case 9:
-			programs->set(i,"name",String(T("2 Pads, 12 Sliders")));
+			programs->set(i,"name",String("2 Pads, 12 Sliders"));
 			programs->set(i,"squares",14);
 			for (int pad=0;pad<14;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);
@@ -1836,7 +1836,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,twelvepads);
 			break;
 		case 10:
-			programs->set(i,"name",String(T("2/5/21")));
+			programs->set(i,"name",String("2/5/21"));
 			programs->set(i,"squares",28);
 			for (int pad=0;pad<28;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);
@@ -1854,7 +1854,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,arrangeit28);
 			break;
 		case 11:
-			programs->set(i,"name",String(T("2/12/25")));
+			programs->set(i,"name",String("2/12/25"));
 			programs->set(i,"squares",46);
 			for (int pad=0;pad<39;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);
@@ -1872,7 +1872,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,arrangeit39);
 			break;
 		case 12:
-			programs->set(i,"name",String(T("2/49")));
+			programs->set(i,"name",String("2/49"));
 			programs->set(i,"squares",52);
 			for (int pad=0;pad<51;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);
@@ -1890,7 +1890,7 @@ void midiPads::loadDefaultPrograms()
 			setLayout(i,arrangeit51);
 			break;
 		case 13:
-			programs->set(i,"name",String(T("6 Mixer Blocks")));
+			programs->set(i,"name",String("6 Mixer Blocks"));
 			programs->set(i,"squares",48);
 			for (int pad=0;pad<48;pad++) {
 				programs->setForPad(i,pad,"roundness",0.1f);

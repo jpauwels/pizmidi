@@ -27,13 +27,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audiotocc", "audiotocc\buil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiPBCurve", "midiPBCurve\build\VST_Win32\midiPBCurve.vcxproj", "{4BBB4F9B-E48C-4215-950B-D2CD5E2F6937}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiPCGUI", "midiPCGUI\Builds\VisualStudio2008\midiPCGUI.vcxproj", "{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiKeyboard", "midiKeyboard\build\VST_Win32\midiKeyboard.vcxproj", "{FADCFC56-C0D8-4663-A443-C7351B05CC01}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiStep", "midiStep\build\VST_Win32\midiStep.vcxproj", "{602E7544-A288-45CF-AC97-36C36030027F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KVRBrowser", "KVRBrowser\build\VST_Win32\KVRBrowser.vcxproj", "{0903C79F-A326-4AD3-8533-AAF18FD30A8F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiPCGUI", "midiPCGUI\Builds\VisualStudio2010\midiPCGUI.vcxproj", "{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -200,18 +200,6 @@ Global
 		{4BBB4F9B-E48C-4215-950B-D2CD5E2F6937}.Standalone|Win32.Build.0 = Standalone|Win32
 		{4BBB4F9B-E48C-4215-950B-D2CD5E2F6937}.Standalone|x64.ActiveCfg = Standalone|x64
 		{4BBB4F9B-E48C-4215-950B-D2CD5E2F6937}.Standalone|x64.Build.0 = Standalone|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|Win32.Build.0 = Debug|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|x64.ActiveCfg = Debug|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|x64.Build.0 = Debug|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|Win32.ActiveCfg = Release|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|Win32.Build.0 = Release|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|x64.ActiveCfg = Release|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|x64.Build.0 = Release|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|Win32.ActiveCfg = Release|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|Win32.Build.0 = Release|Win32
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|x64.ActiveCfg = Release|x64
-		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|x64.Build.0 = Release|x64
 		{FADCFC56-C0D8-4663-A443-C7351B05CC01}.Debug|Win32.ActiveCfg = Debug|Win32
 		{FADCFC56-C0D8-4663-A443-C7351B05CC01}.Debug|Win32.Build.0 = Debug|Win32
 		{FADCFC56-C0D8-4663-A443-C7351B05CC01}.Debug|x64.ActiveCfg = Debug|x64
@@ -248,6 +236,17 @@ Global
 		{0903C79F-A326-4AD3-8533-AAF18FD30A8F}.Standalone|Win32.Build.0 = Standalone|Win32
 		{0903C79F-A326-4AD3-8533-AAF18FD30A8F}.Standalone|x64.ActiveCfg = Standalone|x64
 		{0903C79F-A326-4AD3-8533-AAF18FD30A8F}.Standalone|x64.Build.0 = Standalone|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|Win32.Build.0 = Debug|Win32
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|x64.ActiveCfg = Debug|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Debug|x64.Build.0 = Debug|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|Win32.ActiveCfg = Release|Win32
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|Win32.Build.0 = Release|Win32
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|x64.ActiveCfg = Release|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Release|x64.Build.0 = Release|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|Win32.ActiveCfg = Release|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|x64.ActiveCfg = Release|x64
+		{AAA0A308-F6D3-C7F9-5B2E-DF7BDE3E72AE}.Standalone|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,10 +16,10 @@ JuceProgram::JuceProgram ()
     param[kHostIn] = 1.0f;
 	param[kChannel] = 0.f;
 
-    icon = String(T(""));   // icon filename
+    icon = String("");   // icon filename
 
     //program name
-	name = T("Default");
+	name = "Default";
 }
 
 //==============================================================================
@@ -91,20 +91,20 @@ void MidiInFilter::setActiveDevice(String name)
 
 const String MidiInFilter::getParameterName (int index)
 {
-    if (index == kPower) return T("Power");
-    if (index == kHostIn) return T("HostIn");
+    if (index == kPower) return "Power";
+    if (index == kHostIn) return "HostIn";
     return String::empty;
 }
 
 const String MidiInFilter::getParameterText (int index)
 {
     if (index == kPower) {
-         if (param[kPower]>0.f) return String(T("On"));
-        else return String(T("Off"));
+         if (param[kPower]>0.f) return String("On");
+        else return String("Off");
     }
     if (index == kHostIn) {
-        if (param[kHostIn]>=0.5) return String(T("On"));
-        else return String(T("Off"));
+        if (param[kHostIn]>=0.5) return String("On");
+        else return String("Off");
     }
     return String::empty;
 }
@@ -214,20 +214,20 @@ void MidiInFilter::getCurrentProgramStateInformation (MemoryBlock& destData)
     // params as XML..
 
     // create an outer XML element..
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
+    XmlElement xmlState ("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    xmlState.setAttribute (T("pluginVersion"), 1);
+    xmlState.setAttribute ("pluginVersion", 1);
 
-    xmlState.setAttribute (T("program"), getCurrentProgram());
-    xmlState.setAttribute (T("progname"), getProgramName(getCurrentProgram()));
+    xmlState.setAttribute ("program", getCurrentProgram());
+    xmlState.setAttribute ("progname", getProgramName(getCurrentProgram()));
 
     for (int i=0;i<getNumParameters();i++) {
         xmlState.setAttribute (String(i), param[i]);
     }
 
-    xmlState.setAttribute (T("icon"), icon);
-	xmlState.setAttribute (T("device"), activeDevice);
+    xmlState.setAttribute ("icon", icon);
+	xmlState.setAttribute ("device", activeDevice);
 
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (xmlState, destData);
@@ -236,17 +236,17 @@ void MidiInFilter::getStateInformation(MemoryBlock &destData) {
     // make sure the non-parameter settings are copied to the current program
     programs[curProgram].icon = icon;
 
-    XmlElement xmlState (T("MYPLUGINSETTINGS"));
-    xmlState.setAttribute (T("pluginVersion"), 1);
-    xmlState.setAttribute (T("program"), getCurrentProgram());
+    XmlElement xmlState ("MYPLUGINSETTINGS");
+    xmlState.setAttribute ("pluginVersion", 1);
+    xmlState.setAttribute ("program", getCurrentProgram());
     for (int p=0;p<getNumPrograms();p++) {
-        String prefix = T("P") + String(p) + T(".");
-        xmlState.setAttribute (prefix+T("progname"), programs[p].name);
+        String prefix = "P" + String(p) + ".";
+        xmlState.setAttribute (prefix+"progname", programs[p].name);
         for (int i=0;i<getNumParameters();i++) {
             xmlState.setAttribute (prefix+String(i), programs[p].param[i]);
         }
-        xmlState.setAttribute (prefix+T("icon"), programs[p].icon);
-		xmlState.setAttribute (prefix+T("device"), programs[p].device);
+        xmlState.setAttribute (prefix+"icon", programs[p].icon);
+		xmlState.setAttribute (prefix+"device", programs[p].device);
     }
     copyXmlToBinary (xmlState, destData);
 }
@@ -259,15 +259,15 @@ void MidiInFilter::setCurrentProgramStateInformation (const void* data, int size
     if (xmlState != 0)
     {
         // check that it's the right type of xml..
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             // ok, now pull out our parameters..
-            changeProgramName(getCurrentProgram(),xmlState->getStringAttribute (T("progname"), T("Default")));
+            changeProgramName(getCurrentProgram(),xmlState->getStringAttribute ("progname", "Default"));
             for (int i=0;i<getNumParameters();i++) {
                 param[i] = (float) xmlState->getDoubleAttribute (String(i), param[i]);
             }
-            icon = xmlState->getStringAttribute (T("icon"), icon);
-			setActiveDevice(xmlState->getStringAttribute (T("device"), activeDevice));
+            icon = xmlState->getStringAttribute ("icon", icon);
+			setActiveDevice(xmlState->getStringAttribute ("device", activeDevice));
 
             sendChangeMessage ();
         }
@@ -279,19 +279,19 @@ void MidiInFilter::setStateInformation (const void* data, int sizeInBytes) {
 
     if (xmlState != 0)
     {
-        if (xmlState->hasTagName (T("MYPLUGINSETTINGS")))
+        if (xmlState->hasTagName ("MYPLUGINSETTINGS"))
         {
             for (int p=0;p<getNumPrograms();p++) {
-                String prefix = T("P") + String(p) + T(".");
+                String prefix = "P" + String(p) + ".";
                 for (int i=0;i<getNumParameters();i++) {
                     programs[p].param[i] = (float) xmlState->getDoubleAttribute (prefix+String(i), programs[p].param[i]);
                 }
-                programs[p].icon = xmlState->getStringAttribute (prefix+T("icon"), programs[p].icon);
-				programs[p].device = xmlState->getStringAttribute (prefix+T("device"), programs[p].device);
-                programs[p].name = xmlState->getStringAttribute (prefix+T("progname"), programs[p].name);
+                programs[p].icon = xmlState->getStringAttribute (prefix+"icon", programs[p].icon);
+				programs[p].device = xmlState->getStringAttribute (prefix+"device", programs[p].device);
+                programs[p].name = xmlState->getStringAttribute (prefix+"progname", programs[p].name);
             }
             init=true;
-            setCurrentProgram(xmlState->getIntAttribute(T("program"), 0));
+            setCurrentProgram(xmlState->getIntAttribute("program", 0));
         }
     }
 }

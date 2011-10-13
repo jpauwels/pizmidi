@@ -4,7 +4,7 @@
 CC = g++
 DYN = .so
 VST = ../vstsdk2.4/
-OUT = release/
+OUT = ../Release/
 SDK = $(VST)public.sdk/source/vst2.x/
 FFLAGS = -fmessage-length=0 -finline-functions -fvisibility=hidden -fPIC -fno-exceptions -fno-rtti
 CFLAGS = -Wall -Wno-multichar -Os -c $(FFLAGS) -I$(VST)
@@ -15,12 +15,16 @@ LFLAGS = -Wall -s -shared
 #========================================
 # (common)
 #----------------------------------------
+OBJP = PizMidi
 OBJM = vstplugmain
 OBJA = audioeffect
 OBJX = audioeffectx
-OBJC = $(OBJM).o $(OBJA).o $(OBJX).o
+OBJC = $(OBJP).o $(OBJM).o $(OBJA).o $(OBJX).o
 
-$(OBJM).o : $(SDK)$(OBJM).cpp
+$(OBJP).o : common/$(OBJP).cpp
+	$(CC) $(CFLAGS) common/$(OBJP).cpp
+
+$(OBJM).o : common/$(OBJM).cpp
 	$(CC) $(CFLAGS) common/$(OBJM).cpp
 	
 $(OBJX).o : $(SDK)$(OBJX).cpp

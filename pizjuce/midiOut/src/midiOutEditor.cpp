@@ -107,7 +107,7 @@ MidiOutEditor::MidiOutEditor (MidiOutFilter* const ownerFilter)
     StringArray devices = ownerFilter->devices;
 
     comboBox->setMouseClickGrabsKeyboardFocus(false);
-    comboBox->addItem(String(T("--")),1);
+    comboBox->addItem(String("--"),1);
     for (int i=0;i<devices.size();i++) {
         comboBox->addItem(devices.joinIntoString("",i,1),i+2);
     }
@@ -242,20 +242,20 @@ void MidiOutEditor::buttonStateChanged (Button* buttonThatWasClicked) {
         ModifierKeys mousebutton = ModifierKeys::getCurrentModifiers();
         if (mousebutton.isPopupMenu()) {
             PopupMenu m, sub1;
-            //m.addItem(0,T("Text:"),false);
+            //m.addItem(0,"Text:",false);
             //m.addCustomItem (1, textEditor, 200 , 24, false);
             //m.addSeparator();
 
-            m.addItem(66,T("Clear Image"));
+            m.addItem(66,"Clear Image");
             //sub1.addCustomItem (1234, colourSelector, 300, 300, false);
-            //m.addSubMenu (T("Color"), sub1);
+            //m.addSubMenu ("Color", sub1);
             m.addSeparator();
 
             int result = m.show();
             if (result != 0)
             {
                 if (result==66) {
-                    getFilter()->icon = String(T(""));
+                    getFilter()->icon = String("");
 					imagepad->clearIcon();
                 }
             }

@@ -57,57 +57,57 @@ midiPadsEditor::midiPadsEditor (midiPads* const ownerFilter)
 		lastx[i]=0;
 		lasty[i]=0;
 	}
-	padEditor->addAndMakeVisible (vSlider = new Slider (T("new slider")));
+	padEditor->addAndMakeVisible (vSlider = new Slider ("new slider"));
 	vSlider->setRange (0, 127, 1);
 	vSlider->setSliderStyle (Slider::LinearBar);
 	vSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	vSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (nSlider = new Slider (T("note slider")));
+	padEditor->addAndMakeVisible (nSlider = new Slider ("note slider"));
 	nSlider->setRange (0, 127, 1);
 	nSlider->setSliderStyle (Slider::LinearBar);
 	nSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	nSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (ySlider = new Slider (T("y-cc slider")));
+	padEditor->addAndMakeVisible (ySlider = new Slider ("y-cc slider"));
 	ySlider->setRange (0, 127, 1);
 	ySlider->setSliderStyle (Slider::LinearBar);
 	ySlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	ySlider->addListener (this);
 
-	padEditor->addAndMakeVisible (oSlider = new Slider (T("new slider")));
+	padEditor->addAndMakeVisible (oSlider = new Slider ("new slider"));
 	oSlider->setRange (0, 127, 1);
 	oSlider->setSliderStyle (Slider::LinearBar);
 	oSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	oSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (triggerSlider = new Slider (T("new slider")));
+	padEditor->addAndMakeVisible (triggerSlider = new Slider ("new slider"));
 	triggerSlider->setRange (0, 127, 1);
 	triggerSlider->setSliderStyle (Slider::LinearBar);
 	triggerSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	triggerSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (xSlider = new Slider (T("new slider")));
+	padEditor->addAndMakeVisible (xSlider = new Slider ("new slider"));
 	xSlider->setRange (0, 127, 1);
 	xSlider->setSliderStyle (Slider::LinearBar);
 	xSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	xSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (xoSlider = new Slider (T("new slider")));
+	padEditor->addAndMakeVisible (xoSlider = new Slider ("new slider"));
 	xoSlider->setRange (0, 127, 1);
 	xoSlider->setSliderStyle (Slider::LinearBar);
 	xoSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	xoSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (roundnessSlider = new Slider (T("Pad Roundness")));
+	padEditor->addAndMakeVisible (roundnessSlider = new Slider ("Pad Roundness"));
 	roundnessSlider->setRange (0, 0.5, 0);
 	roundnessSlider->setSliderStyle (Slider::LinearBar);
 	roundnessSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-	roundnessSlider->setTooltip (T("Pad Roundness"));
+	roundnessSlider->setTooltip ("Pad Roundness");
 	roundnessSlider->setMouseClickGrabsKeyboardFocus (false);
 	roundnessSlider->addListener (this);
 
-	padEditor->addAndMakeVisible (textEditor = new TextEditor (T("text editor")));
+	padEditor->addAndMakeVisible (textEditor = new TextEditor ("text editor"));
 	textEditor->setMultiLine (true);
 	textEditor->setReturnKeyStartsNewLine (true);
 	textEditor->setReadOnly (false);
@@ -122,92 +122,92 @@ midiPadsEditor::midiPadsEditor (midiPads* const ownerFilter)
 	colourSelector1->setName ("Pad Color");
 	colourSelector1->addChangeListener (this);
 
-	padEditor->addAndMakeVisible (iconSizeSlider = new Slider (T("Icon Size")));
+	padEditor->addAndMakeVisible (iconSizeSlider = new Slider ("Icon Size"));
 	iconSizeSlider->setRange (0.1, 1.0, 0);
 	iconSizeSlider->setSliderStyle (Slider::LinearBar);
 	iconSizeSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
-	iconSizeSlider->setTooltip (T("Icon Size"));
+	iconSizeSlider->setTooltip ("Icon Size");
 	iconSizeSlider->setMouseClickGrabsKeyboardFocus (false);
 	iconSizeSlider->addListener (this);
 
-	container->addAndMakeVisible (hueSlider = new Slider (T("Hue")));
-	hueSlider->setTooltip (T("Hue"));
+	container->addAndMakeVisible (hueSlider = new Slider ("Hue"));
+	hueSlider->setTooltip ("Hue");
 	hueSlider->setRange (0, 1, 0);
 	hueSlider->setSliderStyle (Slider::LinearBar);
 	hueSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	hueSlider->addListener (this);
 	hueSlider->setMouseClickGrabsKeyboardFocus (false);
 
-	container->addAndMakeVisible (saturationSlider = new Slider (T("Saturation")));
-	saturationSlider->setTooltip (T("Saturation"));
+	container->addAndMakeVisible (saturationSlider = new Slider ("Saturation"));
+	saturationSlider->setTooltip ("Saturation");
 	saturationSlider->setRange (0, 1, 0);
 	saturationSlider->setSliderStyle (Slider::LinearBar);
 	saturationSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	saturationSlider->addListener (this);
 	saturationSlider->setMouseClickGrabsKeyboardFocus (false);
 
-	container->addAndMakeVisible (brigtnessSlider = new Slider (T("Brightness")));
-	brigtnessSlider->setTooltip (T("Brightness"));
+	container->addAndMakeVisible (brigtnessSlider = new Slider ("Brightness"));
+	brigtnessSlider->setTooltip ("Brightness");
 	brigtnessSlider->setRange (0, 1, 0);
 	brigtnessSlider->setSliderStyle (Slider::LinearBar);
 	brigtnessSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	brigtnessSlider->addListener (this);
 	brigtnessSlider->setMouseClickGrabsKeyboardFocus (false);
 
-	container->addAndMakeVisible (padOpacitySlider = new Slider (T("Pad Opacity")));
-	padOpacitySlider->setTooltip (T("Pad Opacity"));
+	container->addAndMakeVisible (padOpacitySlider = new Slider ("Pad Opacity"));
+	padOpacitySlider->setTooltip ("Pad Opacity");
 	padOpacitySlider->setRange (0, 1, 0);
 	padOpacitySlider->setSliderStyle (Slider::LinearBar);
 	padOpacitySlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	padOpacitySlider->addListener (this);
 	padOpacitySlider->setMouseClickGrabsKeyboardFocus (false);
 
-	container->addAndMakeVisible (globalRoundnessSlider = new Slider (T("Pad Roundness")));
-	globalRoundnessSlider->setTooltip (T("Pad Roundness"));
+	container->addAndMakeVisible (globalRoundnessSlider = new Slider ("Pad Roundness"));
+	globalRoundnessSlider->setTooltip ("Pad Roundness");
 	globalRoundnessSlider->setRange (0, 0.5, 0);
 	globalRoundnessSlider->setSliderStyle (Slider::LinearBar);
 	globalRoundnessSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	globalRoundnessSlider->setMouseClickGrabsKeyboardFocus (false);
 	globalRoundnessSlider->addListener (this);
 
-	container->addAndMakeVisible (globalIconSizeSlider = new Slider (T("Icon Size")));
-	globalIconSizeSlider->setTooltip (T("Icon Size"));
+	container->addAndMakeVisible (globalIconSizeSlider = new Slider ("Icon Size"));
+	globalIconSizeSlider->setTooltip ("Icon Size");
 	globalIconSizeSlider->setRange (0.1, 1.0, 0);
 	globalIconSizeSlider->setSliderStyle (Slider::LinearBar);
 	globalIconSizeSlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
 	globalIconSizeSlider->setMouseClickGrabsKeyboardFocus (false);
 	globalIconSizeSlider->addListener (this);
 
-	container->addAndMakeVisible (velocitySlider = new Slider (T("Velocity Scale")));
-	velocitySlider->setTooltip (T("Velocity Scale Factor"));
+	container->addAndMakeVisible (velocitySlider = new Slider ("Velocity Scale"));
+	velocitySlider->setTooltip ("Velocity Scale Factor");
 	velocitySlider->setRange (0, 2, 0.01);
 	velocitySlider->setSliderStyle (Slider::LinearBar);
 	velocitySlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	velocitySlider->setMouseClickGrabsKeyboardFocus (false);
 	velocitySlider->addListener (this);
 
-	container->addAndMakeVisible (valueSlider = new Slider (T("CC Value Scale")));
-	valueSlider->setTooltip (T("CC Value Scale Factor"));
+	container->addAndMakeVisible (valueSlider = new Slider ("CC Value Scale"));
+	valueSlider->setTooltip ("CC Value Scale Factor");
 	valueSlider->setRange (0, 2, 0.01);
 	valueSlider->setSliderStyle (Slider::LinearBar);
 	valueSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	valueSlider->setMouseClickGrabsKeyboardFocus (false);
 	valueSlider->addListener (this);
 
-	container->addAndMakeVisible (menuButton = new TextButton(T("Menu Button")));
-	menuButton->setButtonText (T("menu"));
+	container->addAndMakeVisible (menuButton = new TextButton("Menu Button"));
+	menuButton->setButtonText ("menu");
 	menuButton->addListener (this);
 	menuButton->setTriggeredOnMouseDown(true);
 	menuButton->setMouseClickGrabsKeyboardFocus (false);
 
-	container->addAndMakeVisible (icSlider = new Slider (T("new slider")));
+	container->addAndMakeVisible (icSlider = new Slider ("new slider"));
 	icSlider->setRange (1, 16, 1);
 	icSlider->setSliderStyle (Slider::LinearBar);
 	icSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 	icSlider->setMouseClickGrabsKeyboardFocus (false);
 	icSlider->addListener (this);
 
-	container->addAndMakeVisible (cSlider = new Slider (T("new slider")));
+	container->addAndMakeVisible (cSlider = new Slider ("new slider"));
 	cSlider->setRange (1, 16, 1);
 	cSlider->setSliderStyle (Slider::LinearBar);
 	cSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
@@ -600,48 +600,48 @@ void midiPadsEditor::buttonStateChanged (Button* buttonThatWasClicked) //mousedo
 				m.addSectionHeader("Pad Text:");
 				m.addCustomItem (1, textEditor, 200 , 72, false);
 				m.addSeparator();
-				m.addItem(66,T("Clear Icon"));
+				m.addItem(66,"Clear Icon");
 				m.addSubMenu("Icon",icons);
 				sub1.addCustomItem (1234, colourSelector1, 300, 300, false);
-				m.addSubMenu (T("Color"), sub1);
+				m.addSubMenu ("Color", sub1);
 				m.addItem (10, "Show Dot", true, showdots[i]);
 				m.addItem (11, "Show Values", true, showvalues[i]);
 				m.addItem (12, "Centered Text", true, centered);
-				m.addItem (-1,T("Pad Roundness:"),false);
+				m.addItem (-1,"Pad Roundness:",false);
 				m.addCustomItem (-1, roundnessSlider, 64, 16, false);
-				m.addItem (-1,T("Icon Size:"),false);
+				m.addItem (-1,"Icon Size:",false);
 				m.addCustomItem (-1, iconSizeSlider, 64, 16, false);
 				m.addSeparator();
 
-				m.addItem (2,String(T("Note")),true,!iscc);
-				m.addItem (3,String(T("CC")),true,iscc);
-				m.addItem (4, String(T("Use Y-Position")), true, usey);
-				m.addItem (7, String(T("Send Y-CC with Note")), true, useycc);
-				m.addItem (5, String(T("Use X-Position")), true, usex);
-				m.addItem (8, String(T("X is Pitch Bend")), usex, usexpb);
-				m.addItem (6, String(T("Send Off Values")), true, useoff);
-				m.addItem (9, String(T("Toggle Mode")), true, toggle);
-				sub2.addItem (-1,T("Note #:"),false);
+				m.addItem (2,String("Note"),true,!iscc);
+				m.addItem (3,String("CC"),true,iscc);
+				m.addItem (4, String("Use Y-Position"), true, usey);
+				m.addItem (7, String("Send Y-CC with Note"), true, useycc);
+				m.addItem (5, String("Use X-Position"), true, usex);
+				m.addItem (8, String("X is Pitch Bend"), usex, usexpb);
+				m.addItem (6, String("Send Off Values"), true, useoff);
+				m.addItem (9, String("Toggle Mode"), true, toggle);
+				sub2.addItem (-1,"Note #:",false);
 				sub2.addCustomItem (-1, nSlider, 64, 16, false);
-				sub2.addItem (-1,T("Y-CC #:"),false);
+				sub2.addItem (-1,"Y-CC #:",false);
 				sub2.addCustomItem (-1, ySlider, 64, 16, false);
-				sub2.addItem (-1,T("On Value:"),false);
+				sub2.addItem (-1,"On Value:",false);
 				sub2.addCustomItem (-1, vSlider, 64, 16, false);
-				sub2.addItem (-1,T("Off Value:"),false);
+				sub2.addItem (-1,"Off Value:",false);
 				sub2.addCustomItem (-1, oSlider, 64, 16, false);
-				sub2.addItem (-1,T("X-CC #:"),false);
+				sub2.addItem (-1,"X-CC #:",false);
 				sub2.addCustomItem (-1, xSlider, 64, 16, false);
-				sub2.addItem (-1,T("X-CC Off Value:"),false);
+				sub2.addItem (-1,"X-CC Off Value:",false);
 				sub2.addCustomItem (-1, xoSlider, 64, 16, false);
-				sub2.addItem (-1,T("Trigger Note #:"),false);
+				sub2.addItem (-1,"Trigger Note #:",false);
 				sub2.addCustomItem (-1, triggerSlider, 64, 16, false);
-				m.addSubMenu(T("Values"), sub2);
-				sub3.addItem (88, T("Learn Note/Y-CC"));
-				sub3.addItem (89, T("Learn Y-Off"));
-				sub3.addItem (90, T("Learn X-CC"));
-				sub3.addItem (91, T("Learn X-Off"));
-				sub3.addItem (92, T("Learn Trigger"));
-				m.addSubMenu(T("Learn"),sub3);
+				m.addSubMenu("Values", sub2);
+				sub3.addItem (88, "Learn Note/Y-CC");
+				sub3.addItem (89, "Learn Y-Off");
+				sub3.addItem (90, "Learn X-CC");
+				sub3.addItem (91, "Learn X-Off");
+				sub3.addItem (92, "Learn Trigger");
+				m.addSubMenu("Learn",sub3);
 				m.addSeparator();
 
 				int result = m.show();
@@ -676,7 +676,7 @@ void midiPadsEditor::buttonStateChanged (Button* buttonThatWasClicked) //mousedo
 						if (iscc) {
 							getFilter()->Ytype[i]=0;
 							midiPad[i]->setYInt(getFilter()->Ydata2[i]);
-							midiPad[i]->setButtonText(T("CC ") + String(getFilter()->Ydata1[i]));
+							midiPad[i]->setButtonText("CC " + String(getFilter()->Ydata1[i]));
 						}
 						else {
 							getFilter()->Ytype[i]=1;
@@ -888,66 +888,66 @@ void midiPadsEditor::buttonClicked (Button* buttonThatWasClicked) //mouseup
 		presets.clear();
 		fileMenu.clear();
 
-		m.addItem (1001, String(T("Full Screen")), true, fullscreen);
-		m.addItem (33, String(T("Edit Mode")), true, editmode);
+		m.addItem (1001, String("Full Screen"), true, fullscreen);
+		m.addItem (33, String("Edit Mode"), true, editmode);
 		m.addSeparator();
 		for (int i=0;i<layoutFiles.size();i++)
 			layout.addItem(100000+i,layoutFiles[i].getFileNameWithoutExtension());
 #ifdef _DEBUG
-		layout.addItem (18, String(T("1 Pad")), true);
-		layout.addItem (17, String(T("4 Pads")), true);
-		layout.addItem (19, String(T("4 Sliders")), true);
-		layout.addItem (10, String(T("10 Pads")), true);
-		layout.addItem (14, String(T("2 Pads, 12 Sliders")), true);
-		layout.addItem (20, String(T("16 Pads")), true);
-		layout.addItem (21, String(T("16 Sliders")), true);
-		layout.addItem (22, String(T("64 Pads")), true);
-		layout.addItem (23, String(T("8 Ch Mixer")), true);
-		layout.addItem (24, String(T("Hexagons")), true);
-		layout.addItem (28, String(T("2 XY, 5 Sliders, 21 Buttons")));
-		layout.addItem (52, String(T("2 XY, 49 Buttons")), true);
-		layout.addItem (46, String(T("12 Sliders, 2 XY, 25 Buttons")));
-		layout.addItem (48, String(T("6 Mixer Blocks")), true);
-		layout.addItem (64, String(T("8 Mixer Blocks w/sends")), true);
-		layout.addItem (55, String(T("1 XY, 6 Sliders, 48 Buttons")), true);
+		layout.addItem (18, String("1 Pad"), true);
+		layout.addItem (17, String("4 Pads"), true);
+		layout.addItem (19, String("4 Sliders"), true);
+		layout.addItem (10, String("10 Pads"), true);
+		layout.addItem (14, String("2 Pads, 12 Sliders"), true);
+		layout.addItem (20, String("16 Pads"), true);
+		layout.addItem (21, String("16 Sliders"), true);
+		layout.addItem (22, String("64 Pads"), true);
+		layout.addItem (23, String("8 Ch Mixer"), true);
+		layout.addItem (24, String("Hexagons"), true);
+		layout.addItem (28, String("2 XY, 5 Sliders, 21 Buttons"));
+		layout.addItem (52, String("2 XY, 49 Buttons"), true);
+		layout.addItem (46, String("12 Sliders, 2 XY, 25 Buttons"));
+		layout.addItem (48, String("6 Mixer Blocks"), true);
+		layout.addItem (64, String("8 Mixer Blocks w/sends"), true);
+		layout.addItem (55, String("1 XY, 6 Sliders, 48 Buttons"), true);
 #endif
-		layout.addItem (9998, String(T("Load...")), true);
-		layout.addItem (9999, String(T("Save...")), true);
+		layout.addItem (9998, String("Load..."), true);
+		layout.addItem (9999, String("Save..."), true);
 		m.addSubMenu("Layout",layout);
 		m.addItem(111,"Clear all icons");
-		m.addItem (7, String(T("Show Dots")), true, showalldots);
-		m.addItem (77, String(T("Show Values")), true, showallvalues);
+		m.addItem (7, String("Show Dots"), true, showalldots);
+		m.addItem (77, String("Show Values"), true, showallvalues);
 		m.addItem (33333, "Centered Text", true, centeredNames);
 
-		m.addItem (-1,T("Pad Roundness:"),false);
+		m.addItem (-1,"Pad Roundness:",false);
 		m.addCustomItem (-1, globalRoundnessSlider, 64, 16, false);
-		m.addItem (-1,T("Icon Size:"),false);
+		m.addItem (-1,"Icon Size:",false);
 		m.addCustomItem (-1, globalIconSizeSlider, 64, 16, false);
 		m.addSeparator();
 
-		m.addItem (1, String(T("Send off values")), true, sendoffvalue);
-		m.addItem (2, String(T("Use Midi Triggering")), true, triggering);
-		m.addItem (3, String(T("Use Input Velocity")), triggering, useinvel);
-		//m.addItem (222, String(T("Piezo Mode")), triggering, noteontrig);
-		m.addItem (4, String(T("Use Y-Position")), true, useyvalue);
-		m.addItem (5, String(T("Use X-Position")), true, usexvalue);
-		m.addItem (6, String(T("Send Aftertouch")), true, useaft);
-		m.addItem (8, String(T("Mono Mode")), true, monomode);
-		m.addItem (9, String(T("Use mouseup anywhere")), true, usemouseup);
-		m.addItem (50, String(T("Midi Thru")), true, thru);
+		m.addItem (1, String("Send off values"), true, sendoffvalue);
+		m.addItem (2, String("Use Midi Triggering"), true, triggering);
+		m.addItem (3, String("Use Input Velocity"), triggering, useinvel);
+		//m.addItem (222, String("Piezo Mode"), triggering, noteontrig);
+		m.addItem (4, String("Use Y-Position"), true, useyvalue);
+		m.addItem (5, String("Use X-Position"), true, usexvalue);
+		m.addItem (6, String("Send Aftertouch"), true, useaft);
+		m.addItem (8, String("Mono Mode"), true, monomode);
+		m.addItem (9, String("Use mouseup anywhere"), true, usemouseup);
+		m.addItem (50, String("Midi Thru"), true, thru);
 		m.addSeparator();
-		m.addItem (-1,T("In Channel:"),false);
+		m.addItem (-1,"In Channel:",false);
 		m.addCustomItem (-1, icSlider, 64, 16, false);
-		m.addItem (-1,T("Out Channel:"),false);
+		m.addItem (-1,"Out Channel:",false);
 		m.addCustomItem (-1, cSlider, 64, 16, false);
 		m.addSeparator();
 		for (int i=0;i<presetFiles.size();i++)
 			presets.addItem(200000+i,presetFiles[i].getFileNameWithoutExtension());
 		m.addSubMenu("Presets",presets);
-		fileMenu.addItem (5473, String(T("Save Bank...")));
-		fileMenu.addItem (54731, String(T("Save Patch...")));
-		fileMenu.addItem (9999, String(T("Save Layout...")));
-		fileMenu.addItem (1042, String(T("Load Bank/Patch...")));
+		fileMenu.addItem (5473, String("Save Bank..."));
+		fileMenu.addItem (54731, String("Save Patch..."));
+		fileMenu.addItem (9999, String("Save Layout..."));
+		fileMenu.addItem (1042, String("Load Bank/Patch..."));
 		m.addSubMenu("Save/Load",fileMenu);
 		m.addItem (-1, String("- midiPads ") + String(JucePlugin_VersionString) + String(" -"), false);
 
@@ -1751,7 +1751,7 @@ void midiPadsEditor::updateParametersFromFilter()
 			}
 		}
 		if (newMidiType[i]==1) 
-			midiPad[i]->setButtonText(T("CC ") + String(newMidiData[i]));
+			midiPad[i]->setButtonText("CC " + String(newMidiData[i]));
 		else 
 			midiPad[i]->setButtonText(MidiMessage::getMidiNoteName(newMidiData[i],true,true,3));
 	}

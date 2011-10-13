@@ -28,7 +28,7 @@
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //==============================================================================
 bool MyBrowser::pageAboutToLoad(const String& newURL) {
-	if (!newURL.contains(T("googleads"))) {
+	if (!newURL.contains("googleads")) {
         lastURL=newURL;
     }
     sendChangeMessage();
@@ -185,7 +185,7 @@ void WebBrowserPluginEditor::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == homeButton)
     {
         //[UserButtonCode_homeButton] -- add your button handler code here..
-        wb->goToURL(T("http://www.kvraudio.com/"));
+        wb->goToURL("http://www.kvraudio.com/");
         //[/UserButtonCode_homeButton]
     }
     else if (buttonThatWasClicked == stopButton)

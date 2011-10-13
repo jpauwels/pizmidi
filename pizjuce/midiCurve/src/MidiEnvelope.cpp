@@ -12,8 +12,8 @@ MidiEnvelope::MidiEnvelope (const int envelopeType_,
 	labelX(0),
 	labelY(0)
 {
-    addAndMakeVisible (labelX = new Label (T("x label"),
-		T("x: --")));
+    addAndMakeVisible (labelX = new Label ("x label",
+		"x: --"));
     labelX->setFont (Font (15.0000f, Font::plain));
     labelX->setJustificationType (Justification::centredLeft);
     labelX->setEditable (false, false, false);
@@ -22,8 +22,8 @@ MidiEnvelope::MidiEnvelope (const int envelopeType_,
 	labelX->setOpaque(false);
 	labelX->setInterceptsMouseClicks(false,false);
 
-    addAndMakeVisible (labelY = new Label (T("y label"),
-		T("y: --")));
+    addAndMakeVisible (labelY = new Label ("y label",
+		"y: --"));
     labelY->setFont (Font (15.0000f, Font::plain));
     labelY->setJustificationType (Justification::centredLeft);
     labelY->setEditable (false, false, false);
@@ -178,8 +178,8 @@ void MidiEnvelope::mouseDown (const MouseEvent& e)
 		else {
 			labelX->setColour(Label::textColourId,Colours::red);
 			labelY->setColour(Label::textColourId,Colours::red);
-			labelX->setText(T("x: ")+String(roundFloatToInt(127.f*points[draggingPoint][0])),false);
-			labelY->setText(T("y: ")+String(roundFloatToInt(127.f*(1.f-points[draggingPoint][1]))),false);
+			labelX->setText("x: "+String(roundFloatToInt(127.f*points[draggingPoint][0])),false);
+			labelY->setText("y: "+String(roundFloatToInt(127.f*(1.f-points[draggingPoint][1]))),false);
 		}
     }
 	else {
@@ -270,8 +270,8 @@ void MidiEnvelope::mouseDrag (const MouseEvent& e)
 
 		labelX->setColour(Label::textColourId,Colours::red);
 		labelY->setColour(Label::textColourId,Colours::red);
-		labelX->setText(T("x: ")+String(roundFloatToInt(127.f*points[draggingPoint][0])),false);
-		labelY->setText(T("y: ")+String(roundFloatToInt(127.f*(1.f-points[draggingPoint][1]))),false);
+		labelX->setText("x: "+String(roundFloatToInt(127.f*points[draggingPoint][0])),false);
+		labelY->setText("y: "+String(roundFloatToInt(127.f*(1.f-points[draggingPoint][1]))),false);
 
 		repaint ();
     }
@@ -324,16 +324,16 @@ void MidiEnvelope::mouseMove(const MouseEvent& e)
 		//labelY->setTopLeftPosition(x,y+labelX->getHeight());
 		labelX->setColour(Label::textColourId,Colours::green);
 		labelY->setColour(Label::textColourId,Colours::green);
-		labelX->setText(T("x: ")+String(roundFloatToInt(127.f*points[hoveringPoint][0])),false);
-		labelY->setText(T("y: ")+String(roundFloatToInt(127.f*(1.f-points[hoveringPoint][1]))),false);
+		labelX->setText("x: "+String(roundFloatToInt(127.f*points[hoveringPoint][0])),false);
+		labelY->setText("y: "+String(roundFloatToInt(127.f*(1.f-points[hoveringPoint][1]))),false);
 	}
 	else {
 		//labelX->setTopLeftPosition(e.x+16,e.y);
 		//labelY->setTopLeftPosition(e.x+16,e.y+labelX->getHeight());
 		labelX->setColour(Label::textColourId,Colours::black);
 		labelY->setColour(Label::textColourId,Colours::black);
-		labelX->setText(T("x: ")+String(roundFloatToInt(127.f*(float)e.x/(float)getWidth())),false);
-		labelY->setText(T("y: ")+String(roundFloatToInt(127.f*(1.f-(float)e.y/(float)getHeight()))),false);
+		labelX->setText("x: "+String(roundFloatToInt(127.f*(float)e.x/(float)getWidth())),false);
+		labelY->setText("y: "+String(roundFloatToInt(127.f*(1.f-(float)e.y/(float)getHeight()))),false);
 	}
 
     repaint ();
