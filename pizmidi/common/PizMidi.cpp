@@ -26,9 +26,10 @@ PizMidi::PizMidi(audioMasterCallback audioMaster, VstInt32 numPrograms, VstInt32
 
 #if !PLUG_FORCE_EFFECT
     if (inst) isSynth();
-#else if PLUG_FORCE_INST
+#elif PLUG_FORCE_INST
 	isSynth();
 #endif
+	
 #if PLUG_AUDIO_INPUTS
 	numinputs = PLUG_AUDIO_INPUTS;
 #endif
