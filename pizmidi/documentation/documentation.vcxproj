@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B190632B-DC2F-4CD2-A84F-3E707BBB802E}</ProjectGuid>
+    <RootNamespace>documentation</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\..\Release\doc\midi16CCRouter.txt" />
+    <None Include="..\..\Release\doc\midi2qwerty16.txt" />
+    <None Include="..\..\Release\doc\midiAlias.txt" />
+    <None Include="..\..\Release\doc\midiAudioToCC.txt" />
+    <None Include="..\..\Release\doc\midiBlackKeyFilter.txt" />
+    <None Include="..\..\Release\doc\midiCCModulator.txt" />
+    <None Include="..\..\Release\doc\midiCCReset.txt" />
+    <None Include="..\..\Release\doc\midiCCStepper.txt" />
+    <None Include="..\..\Release\doc\midiCCToggle.txt" />
+    <None Include="..\..\Release\doc\midiChannelFilter.txt" />
+    <None Include="..\..\Release\doc\midiChannelize.txt" />
+    <None Include="..\..\Release\doc\midiChordSplit.txt" />
+    <None Include="..\..\Release\doc\midiChs_noGUI.txt" />
+    <None Include="..\..\Release\doc\midiConverter3.txt" />
+    <None Include="..\..\Release\doc\midiDelay.txt" />
+    <None Include="..\..\Release\doc\midiDuplicateBlocker.txt" />
+    <None Include="..\..\Release\doc\midiExactDelay.txt" />
+    <None Include="..\..\Release\doc\midiFingered.txt" />
+    <None Include="..\..\Release\doc\midiForceToKey.txt" />
+    <None Include="..\..\Release\doc\midiForceToRange.txt" />
+    <None Include="..\..\Release\doc\midiInvertNotes.txt" />
+    <None Include="..\..\Release\doc\midiKeySplit.txt" />
+    <None Include="..\..\Release\doc\midiKeySplit4.txt" />
+    <None Include="..\..\Release\doc\midiNotchFilter.txt" />
+    <None Include="..\..\Release\doc\midiNoteGroups.txt" />
+    <None Include="..\..\Release\doc\midiNotesToCC.txt" />
+    <None Include="..\..\Release\doc\midiNoteToggle.txt" />
+    <None Include="..\..\Release\doc\midiNRPNConverter.txt" />
+    <None Include="..\..\Release\doc\midiOverlappingNoteKiller.txt" />
+    <None Include="..\..\Release\doc\midiPitchBendQuantize.txt" />
+    <None Include="..\..\Release\doc\midiPitchBendToNotes.txt" />
+    <None Include="..\..\Release\doc\midiPolyphony.txt" />
+    <None Include="..\..\Release\doc\midiProbability.txt" />
+    <None Include="..\..\Release\doc\midiProgramChange.txt" />
+    <None Include="..\..\Release\doc\midiScaleChanger.txt" />
+    <None Include="..\..\Release\doc\midiSimpleLFO.txt" />
+    <None Include="..\..\Release\doc\midiSostenuto.txt" />
+    <None Include="..\..\Release\doc\midiStrum.txt" />
+    <None Include="..\..\Release\doc\midiStuckNoteKiller.txt" />
+    <None Include="..\..\Release\doc\midiSwing.txt" />
+    <None Include="..\..\Release\doc\midiTranspose.txt" />
+    <None Include="..\..\Release\doc\midiTriggerList.txt" />
+    <None Include="..\..\Release\doc\midiVelocityScale.txt" />
+    <None Include="..\..\Release\pizmidi.ini" />
+    <None Include="..\..\Release\pizmidi.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

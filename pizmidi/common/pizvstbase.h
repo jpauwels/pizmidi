@@ -1,5 +1,5 @@
-#ifndef MidiAliasBASEH
-#define MidiAliasBASEH
+#ifndef PIZVSTBASE_H
+#define PIZVSTBASE_H
 
 #include "public.sdk/source/vst2.x/audioeffectx.h"
 #include <iostream>

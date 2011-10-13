@@ -255,87 +255,92 @@ void PizMidi::preProcess(void)
 
 void PizMidi::postProcess(void) 
 {
-    VstInt32 left = (VstInt32)_midiEventsOut[0].size();
-    VstInt32 count = 0;
-    while(left>0) 
+	if (PLUG_MIDI_OUTPUTS)
 	{
-        if (left<MAX_EVENTS_PER_TIMESLICE) _vstEventsToHost->numEvents = left;
-        else _vstEventsToHost->numEvents = MAX_EVENTS_PER_TIMESLICE;
-        for (int i=0;i<_vstEventsToHost->numEvents;i++) 
+		VstInt32 left = (VstInt32)_midiEventsOut[0].size();
+		VstInt32 count = 0;
+		while(left>0) 
 		{
-            VstInt32 j = i+count;
-            _vstMidiEventsToHost[i].type            = kVstMidiType;
-            _vstMidiEventsToHost[i].byteSize        = 24;
-            _vstMidiEventsToHost[i].deltaFrames     = _midiEventsOut[0][i].deltaFrames;
-            _vstMidiEventsToHost[i].flags           = 0;
-            _vstMidiEventsToHost[i].noteLength      = 0;
-            _vstMidiEventsToHost[i].noteOffset      = 0;
-            _vstMidiEventsToHost[i].midiData[0]     = _midiEventsOut[0][i].midiData[0];
-            _vstMidiEventsToHost[i].midiData[1]     = _midiEventsOut[0][i].midiData[1];
-            _vstMidiEventsToHost[i].midiData[2]     = _midiEventsOut[0][i].midiData[2];
-            _vstMidiEventsToHost[i].midiData[3]     = 0;
-            _vstMidiEventsToHost[i].detune          = _midiEventsOut[0][i].detune;
+			if (left<MAX_EVENTS_PER_TIMESLICE) _vstEventsToHost->numEvents = left;
+			else _vstEventsToHost->numEvents = MAX_EVENTS_PER_TIMESLICE;
+			for (int i=0;i<_vstEventsToHost->numEvents;i++) 
+			{
+				VstInt32 j = i+count;
+				_vstMidiEventsToHost[i].type            = kVstMidiType;
+				_vstMidiEventsToHost[i].byteSize        = 24;
+				_vstMidiEventsToHost[i].deltaFrames     = _midiEventsOut[0][j].deltaFrames;
+				_vstMidiEventsToHost[i].flags           = 0;
+				_vstMidiEventsToHost[i].noteLength      = 0;
+				_vstMidiEventsToHost[i].noteOffset      = 0;
+				_vstMidiEventsToHost[i].midiData[0]     = _midiEventsOut[0][j].midiData[0];
+				_vstMidiEventsToHost[i].midiData[1]     = _midiEventsOut[0][j].midiData[1];
+				_vstMidiEventsToHost[i].midiData[2]     = _midiEventsOut[0][j].midiData[2];
+				_vstMidiEventsToHost[i].midiData[3]     = 0;
+				_vstMidiEventsToHost[i].detune          = _midiEventsOut[0][j].detune;
 
-            _vstEventsToHost->events[i] = (VstEvent*) &_vstMidiEventsToHost[i];
-        }
-        _vstEventsToHost->reserved  = 0;
-		if (_vstEventsToHost->numEvents > 0) sendVstEventsToHost((VstEvents*)_vstEventsToHost);
-        left -= _vstEventsToHost->numEvents;
-        count += _vstEventsToHost->numEvents;
-    }
+				_vstEventsToHost->events[i] = (VstEvent*) &_vstMidiEventsToHost[i];
+			}
+			_vstEventsToHost->reserved  = 0;
+			if (_vstEventsToHost->numEvents > 0) sendVstEventsToHost((VstEvents*)_vstEventsToHost);
+			left -= _vstEventsToHost->numEvents;
+			count += _vstEventsToHost->numEvents;
+		}
 
-	left = (VstInt32)_midiSysexEventsOut[0].size();
-	count = 0;
-    while(left>0) 
-	{
-        if (left<MAX_EVENTS_PER_TIMESLICE) _vstEventsToHost->numEvents = left;
-        else _vstEventsToHost->numEvents = MAX_EVENTS_PER_TIMESLICE;
-        for (int i=0;i<_vstEventsToHost->numEvents;i++) 
+		left = (VstInt32)_midiSysexEventsOut[0].size();
+		count = 0;
+		while(left>0) 
 		{
-            VstInt32 j = i+count;
-            _vstSysexEventsToHost[i].type            = kVstSysExType;
-			_vstSysexEventsToHost[i].byteSize        = _midiSysexEventsOut[0][i].byteSize;
-            _vstSysexEventsToHost[i].deltaFrames     = _midiSysexEventsOut[0][i].deltaFrames;
-            _vstSysexEventsToHost[i].flags           = 0;
-			_vstSysexEventsToHost[i].dumpBytes       = _midiSysexEventsOut[0][i].dumpBytes;
-			_vstSysexEventsToHost[i].resvd1          = 0;
-			_vstSysexEventsToHost[i].sysexDump		 = _midiSysexEventsOut[0][i].sysexDump;
-			_vstSysexEventsToHost[i].resvd2          = 0;
+			if (left<MAX_EVENTS_PER_TIMESLICE) _vstEventsToHost->numEvents = left;
+			else _vstEventsToHost->numEvents = MAX_EVENTS_PER_TIMESLICE;
+			for (int i=0;i<_vstEventsToHost->numEvents;i++) 
+			{
+				VstInt32 j = i+count;
+				_vstSysexEventsToHost[i].type            = kVstSysExType;
+				_vstSysexEventsToHost[i].byteSize        = _midiSysexEventsOut[0][j].byteSize;
+				_vstSysexEventsToHost[i].deltaFrames     = _midiSysexEventsOut[0][j].deltaFrames;
+				_vstSysexEventsToHost[i].flags           = 0;
+				_vstSysexEventsToHost[i].dumpBytes       = _midiSysexEventsOut[0][j].dumpBytes;
+				_vstSysexEventsToHost[i].resvd1          = 0;
+				_vstSysexEventsToHost[i].sysexDump		 = _midiSysexEventsOut[0][j].sysexDump;
+				_vstSysexEventsToHost[i].resvd2          = 0;
 
-            _vstEventsToHost->events[i] = (VstEvent*) &_vstSysexEventsToHost[i];
-        }
-        _vstEventsToHost->reserved  = 0;
-        if (_midiSysexEventsOut[0].size() > 0) sendVstEventsToHost((VstEvents*)_vstEventsToHost);
-        left -= _vstEventsToHost->numEvents;
-        count += _vstEventsToHost->numEvents;
-    }
-    //flushing Midi Input Buffers before they are filled
+				_vstEventsToHost->events[i] = (VstEvent*) &_vstSysexEventsToHost[i];
+			}
+			_vstEventsToHost->reserved  = 0;
+			if (_midiSysexEventsOut[0].size() > 0) sendVstEventsToHost((VstEvents*)_vstEventsToHost);
+			left -= _vstEventsToHost->numEvents;
+			count += _vstEventsToHost->numEvents;
+		}
+		//flushing Midi Input Buffers before they are filled
+	}
     _cleanMidiInBuffers();
 }
 
 VstInt32 PizMidi::processEvents (VstEvents* ev)
 {
-    VstEvents * evts = (VstEvents*)ev;
-
-	for (int i = 0; i < evts->numEvents; i++)
+	if (PLUG_MIDI_INPUTS)
 	{
-		if ((evts->events[i])->type == kVstMidiType)
-		{
-	        VstMidiEvent * e = (VstMidiEvent*)evts->events[i];
-			_midiEventsIn[0].push_back(*e);
-		}
-		else if ((evts->events[i])->type == kVstSysExType)
-		{
-	        VstMidiSysexEvent * e = (VstMidiSysexEvent*)evts->events[i];
-			_midiSysexEventsIn[0].push_back(*e);
-		}
-    }
+		VstEvents * evts = (VstEvents*)ev;
 
-    //if the host doesnt sort the incoming MIDI events (dumb)
-	//sortMidiEvents(_midiEventsIn[0]);
-	//sortMidiEvents(_midiSysexEventsIn[0]);
+		for (int i = 0; i < evts->numEvents; i++)
+		{
+			if ((evts->events[i])->type == kVstMidiType)
+			{
+				VstMidiEvent * e = (VstMidiEvent*)evts->events[i];
+				_midiEventsIn[0].push_back(*e);
+			}
+			else if ((evts->events[i])->type == kVstSysExType)
+			{
+				VstMidiSysexEvent * e = (VstMidiSysexEvent*)evts->events[i];
+				_midiSysexEventsIn[0].push_back(*e);
+			}
+		}
 
-	return true;
+		//if the host doesnt sort the incoming MIDI events (dumb)
+		//sortMidiEvents(_midiEventsIn[0]);
+		//sortMidiEvents(_midiSysexEventsIn[0]);
+	}
+	return 1;
 }
 
 //-----------------------------------------------------------------------------------------
