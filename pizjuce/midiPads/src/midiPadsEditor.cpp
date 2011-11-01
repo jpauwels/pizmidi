@@ -37,6 +37,7 @@ midiPadsEditor::midiPadsEditor (midiPads* const ownerFilter)
 		midiPad[i]->addListener (this);
 		midiPad[i]->addMouseListener (this, true);
 		midiPad[i]->setToggleState(getFilter()->togglestate[i],false); 
+		sending[i] = false;
 
 		midiPad[i]->showdot=getFilter()->toggle[i];
 		if (!usex[i]) {
@@ -785,7 +786,7 @@ void midiPadsEditor::buttonStateChanged (Button* buttonThatWasClicked) //mousedo
 			}
 		}
 		//send midi
-		else if (!mousebutton.isAltDown())
+		else if (!mousebutton.isAltDown() && !sending[i])
 		{
 			if (mousebutton.isShiftDown()) { //shift-click: toggle
 				getFilter()->lastxccvalue[i]=-1;
@@ -804,10 +805,13 @@ void midiPadsEditor::buttonStateChanged (Button* buttonThatWasClicked) //mousedo
 }
 
 void midiPadsEditor::sendMidi(int i, bool shiftclicked) {
+	if (sending[i]) return;
+	sending[i]=true;
 	if (getFilter()->togglestate[i]) {
 		getFilter()->togglestate[i] = false;
 		midiPad[i]->setToggleState(false,false);
 		sendMidiOff(i);
+		sending[i]=false;
 		return;
 	}
 	if (getFilter()->getParameter(kMono)>=0.5f) {
@@ -848,6 +852,7 @@ void midiPadsEditor::sendMidi(int i, bool shiftclicked) {
 		getFilter()->send[i] = 1.0f;
 		lasty[i]=(int)(fy*127.1);
 	}
+	sending[i]=false;
 }
 
 void midiPadsEditor::buttonClicked (Button* buttonThatWasClicked) //mouseup

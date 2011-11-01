@@ -31,7 +31,6 @@ public:
 		{
 			if (midiNoteNumber >= baseOctave*12 && midiNoteNumber < 32+baseOctave*12) {
 				int n = midiNoteNumber - baseOctave*12;
-				//const String keymap("zsxdcvgbhnjmq2w3er5t6y7ui9o0p[=]");
 				String key = String::charToString(keymap[n]);
 				g.setColour(Colours::white.withMultipliedAlpha(0.5f));
 				if (midiNoteNumber/12 == baseOctave && midiNoteNumber%12==0) {
@@ -41,15 +40,21 @@ public:
 				g.drawText(key,x+w/4,y+h-w,w/2,w/2,Justification::centred,false);
 			}
 		}
+		if (drawNoteNumber) {
+			Font f (jmin (12.0f, w * 0.9f));
+			f.setHorizontalScale (0.8f);
+			g.setFont (f);
+			g.setColour (Colours::white);
+			g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 4, Justification::centredBottom, 1);
+		}
 	}
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
-		MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,textColour);
+		MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,drawNoteNumber ? Colours::transparentWhite : textColour);
 		if (hasKeyboardFocus(false) || drawQwerty)
 		{
 			if (midiNoteNumber >= baseOctave*12 && midiNoteNumber < 32+baseOctave*12) {
 				int n =  midiNoteNumber - baseOctave*12;
-				//const String keymap("zsxdcvgbhnjmq2w3er5t6y7ui9o0p[=]");
 				String key = String::charToString(keymap[n]);
 				g.setColour(Colours::grey.withMultipliedAlpha(0.5f));
 				if (midiNoteNumber/12 == baseOctave && midiNoteNumber%12==0) {
@@ -59,7 +64,16 @@ public:
 				g.drawText(key,x+w/4,y+h-3*w/4,w/2,w/2,Justification::centred,false);
 			}
 		}
+		if (drawNoteNumber) {
+			Font f (jmin (12.0f, w * 0.9f));
+			f.setHorizontalScale (0.8f);
+			//f.setBold (midiNoteNumber%12==0);
+			g.setFont (f);
+			g.setColour (textColour);
+			g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 4, Justification::centredBottom, 1);
+		}
 	}
+
 	void focusLost(Component::FocusChangeType cause)
 	{
 		repaint();
@@ -71,6 +85,12 @@ public:
 		repaint();
 	}
 
+	void setDrawNoteNumber(bool shouldDraw)
+	{
+		drawNoteNumber = shouldDraw;
+		repaint();
+	}
+
 private:
 	int baseOctave;
     Array<KeyPress> _keyPresses;
@@ -79,6 +99,7 @@ private:
     bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e);
     MidiKeyboardState* s;
 	bool drawQwerty;
+	bool drawNoteNumber;
 
 	bool isBlackKey(int noteNumber)
 	{

@@ -331,122 +331,159 @@ void midiPads::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages
 				setCurrentProgram(midi_message.getProgramChangeNumber());
 		}
 		for (int i=0;i<numPads;i++) {
-			//midi learn y
-			if (midilisten[i]==1.0f) {
-				if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
-					midilisten[i] = 0;
-					Ydata1[i]=midi_message.getNoteNumber();
-					Ytype[i]=0;
-					Ydata2[i]=midi_message.getVelocity();
-					sendChangeMessage();
-				}
-				else if (midi_message.isController()) {
-					midilisten[i] = 0;
-					Ycc[i]=midi_message.getControllerNumber();
-					Ytype[i]=1;
-					Ydata2[i]=midi_message.getControllerValue();
-					sendChangeMessage();
-				}
-			}
-			// learn y-off
-			if (midilisten[i]==0.9f) {
-				if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
-					midilisten[i] = 0;
-					Yoff[i]=midi_message.getVelocity();
-					sendChangeMessage();
-				}
-				else if (midi_message.isController()) {
-					midilisten[i] = 0;
-					Yoff[i]=midi_message.getControllerValue();
-					sendChangeMessage();
-				}
-			}
-			// learn x
-			else if (midilisten[i]==0.8f) {
-				if (midi_message.isController()) {
-					midilisten[i] = 0;
-					Xcc[i]=midi_message.getControllerNumber();
-					sendChangeMessage();
-				}
-				else if (midi_message.isPitchWheel()) {
-					midilisten[i] = 0;
-					UseXPB[i] = true;
-					sendChangeMessage();
-				}
-			}
-			// learn x-off
-			else if (midilisten[i]==0.7f) {
-				if (midi_message.isController()) {
-					midilisten[i] = 0;
-					Xoff[i]=midi_message.getControllerValue();
-					sendChangeMessage();
-				}
-			}
-			// learn trigger
-			if (midilisten[i]==0.6f) {
-				if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
-					midilisten[i] = 0;
-					trigger[i]=midi_message.getNoteNumber();
-					sendChangeMessage();
-				}
-				//else if (midi_message.isController()) {
-				//    midilisten[i] = 0;
-				//    trigger[i]=midi_message.getControllerNumber();
-				//    sendChangeMessage(this);
-				//}
-			}
-			//midi triggering
-			else if (param[kUseTrigger]>=0.5f) {
-				int inch = 1+(int)(param[kChIn]*15.1f);
-				if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1) && midi_message.isForChannel(inch)) {        
-					if (param[kNoteOnTrig]>=0.5f) {
-						trig = true;
-						triggervel = midi_message.getVelocity();
+			if (isPadVisible(i))
+			{
+				//midi learn y
+				if (midilisten[i]==1.0f) {
+					if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
+						midilisten[i] = 0;
+						Ydata1[i]=midi_message.getNoteNumber();
+						Ytype[i]=0;
+						Ydata2[i]=midi_message.getVelocity();
 						sendChangeMessage();
 					}
-					else if (midi_message.getNoteNumber() == trigger[i]) {
-						int note = Ydata1[i];
-						if (Ytype[i]==0) {
-							// note on
-							if (isplaying[note]) {
-								midiout.addEvent(MidiMessage(0x80|outch,note,Yoff[i],0),0); //noteoff
-							}
-							int vel;
-							if (param[kUseVel]>=0.5f) vel=(int)( (float)((midi_message.getVelocity())*(getParameter(kVelOffset)*2)) );
-							else vel = jlimit(1,127,(int)(Ydata2[i]*(getParameter(kVelOffset)*2)));
-							midiout.addEvent(MidiMessage(0x90|outch,note,vel,0),sample_number); 
-							isplaying[note] = true;
-							discard = true; //kill trigger message
-						}
-						else {
-							// cc on
-							int value = jlimit(0,127,(int)(Ydata2[i]*(getParameter(kCCOffset)*2)));
-							midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],value,0),sample_number); 
-							discard = true; //kill trigger message
-						}
-						triggered[i]=true;
-						trig=true;
+					else if (midi_message.isController()) {
+						midilisten[i] = 0;
+						Ycc[i]=midi_message.getControllerNumber();
+						Ytype[i]=1;
+						Ydata2[i]=midi_message.getControllerValue();
 						sendChangeMessage();
 					}
 				}
-				else if ((midi_message.isNoteOff() || (midi_message.getVelocity()==0)) && midi_message.isForChannel(inch)) {
-					if (midi_message.getNoteNumber() == trigger[i]) {
-						if (param[kNoteOnTrig]<0.5f) {
+				// learn y-off
+				if (midilisten[i]==0.9f) {
+					if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
+						midilisten[i] = 0;
+						Yoff[i]=midi_message.getVelocity();
+						sendChangeMessage();
+					}
+					else if (midi_message.isController()) {
+						midilisten[i] = 0;
+						Yoff[i]=midi_message.getControllerValue();
+						sendChangeMessage();
+					}
+				}
+				// learn x
+				else if (midilisten[i]==0.8f) {
+					if (midi_message.isController()) {
+						midilisten[i] = 0;
+						Xcc[i]=midi_message.getControllerNumber();
+						sendChangeMessage();
+					}
+					else if (midi_message.isPitchWheel()) {
+						midilisten[i] = 0;
+						UseXPB[i] = true;
+						sendChangeMessage();
+					}
+				}
+				// learn x-off
+				else if (midilisten[i]==0.7f) {
+					if (midi_message.isController()) {
+						midilisten[i] = 0;
+						Xoff[i]=midi_message.getControllerValue();
+						sendChangeMessage();
+					}
+				}
+				// learn trigger
+				if (midilisten[i]==0.6f) {
+					if (midi_message.isNoteOn() && (midi_message.getVelocity() > 1)) {
+						midilisten[i] = 0;
+						trigger[i]=midi_message.getNoteNumber();
+						sendChangeMessage();
+					}
+					//else if (midi_message.isController()) {
+					//    midilisten[i] = 0;
+					//    trigger[i]=midi_message.getControllerNumber();
+					//    sendChangeMessage(this);
+					//}
+				}
+				//midi triggering
+				else if (param[kUseTrigger]>=0.5f) {
+					int inch = 1+(int)(param[kChIn]*15.1f);
+					if (midi_message.isNoteOn() && midi_message.isForChannel(inch)) {        
+						if (param[kNoteOnTrig]>=0.5f) {
+							trig = true;
+							triggervel = midi_message.getVelocity();
+							sendChangeMessage();
+						}
+						else if (midi_message.getNoteNumber() == trigger[i]) {
+							int note = Ydata1[i];
 							if (Ytype[i]==0) {
-								// note off
-								midiout.addEvent(MidiMessage(0x80|outch,Ydata1[i],Yoff[i],0),sample_number);
-								isplaying[Ydata1[i]]=false;
-								discard = true; //kill trigger message                    
+								// note on
+								int vel;
+								if (param[kUseVel]>=0.5f) vel=(int)( (float)((midi_message.getVelocity())*(getParameter(kVelOffset)*2)) );
+								else vel = jlimit(1,127,(int)(Ydata2[i]*(getParameter(kVelOffset)*2)));
+								if (toggle[i]) {
+									if (togglestate[i]) {
+										if (isplaying[note]) {
+											midiout.addEvent(MidiMessage(0x80|outch,note,Yoff[i],0),0); //noteoff
+											isplaying[note] = false;
+										}
+										togglestate[i] = false;
+									}
+									else {
+										if (!isplaying[note]) {
+											midiout.addEvent(MidiMessage(0x90|outch,note,vel,0),sample_number); 
+											isplaying[note] = true;
+										}
+										togglestate[i] = true;
+									}
+								}
+								else {
+									if (isplaying[note]) {
+										midiout.addEvent(MidiMessage(0x80|outch,note,Yoff[i],0),0); //noteoff
+									}
+									midiout.addEvent(MidiMessage(0x90|outch,note,vel,0),sample_number); 
+									isplaying[note] = true;
+									triggered[i]=true;
+									trig=true;
+								}
+								discard = true; //kill trigger message
 							}
 							else {
-								if (SendOff[i]) { // if sending cc off value
-									midiout.addEvent(MidiMessage(0xB0|outch,Ydata1[i],Yoff[i],0),sample_number);
-									discard = true; //kill trigger message
+								// cc on
+								int value = jlimit(0,127,(int)(Ydata2[i]*(getParameter(kCCOffset)*2)));
+								if (toggle[i]) {
+									if (togglestate[i]) {
+										midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],Yoff[i],0),0);
+										togglestate[i] = false;
+									}
+									else {
+										midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],value,0),sample_number); 
+										togglestate[i] = true;
+									}
+								}
+								else {
+									midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],value,0),sample_number); 
+									triggered[i]=true;
+									trig=true;
+								}
+								discard = true; //kill trigger message
+							}
+							sendChangeMessage();
+						}
+					}
+					else if (midi_message.isNoteOff() && midi_message.isForChannel(inch)) {
+						if (midi_message.getNoteNumber() == trigger[i]) {
+							discard = true;
+							if (!toggle[i]) 
+							{
+								if (param[kNoteOnTrig]<0.5f) {
+									if (Ytype[i]==0) {
+										// note off
+										midiout.addEvent(MidiMessage(0x80|outch,Ydata1[i],Yoff[i],0),sample_number);
+										isplaying[Ydata1[i]]=false;                 
+									}
+									else {
+										if (SendOff[i]) { // if sending cc off value
+											midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],Yoff[i],0),sample_number);
+										}
+									}
+									triggered[i]=false;
+									trig=true;
+									sendChangeMessage();
 								}
 							}
-							triggered[i]=false;
-							trig=true;
-							sendChangeMessage();
 						}
 					}
 				}
@@ -562,7 +599,7 @@ void midiPads::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages
 				isplaying[note]=false;
 			}
 			else {
-				if (SendOff[i] && ((!UseX[i]) || UseY[i]))
+				if ((SendOff[i] || toggle[i]) && ((!UseX[i]) || UseY[i]))
 					midiout.addEvent(MidiMessage(0xB0|outch,Ycc[i],Yoff[i],0),0); //y-off value
 			}
 		}

@@ -89,6 +89,7 @@ private:
 	bool showvalues[numPads];
     void sendMidi(int i, bool shiftclicked=false);
     void sendMidiOff(int i);
+	bool sending[numPads];
     bool dontsend;
 	bool fullscreen;
     bool ignore;

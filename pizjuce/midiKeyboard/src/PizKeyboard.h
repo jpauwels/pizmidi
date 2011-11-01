@@ -15,6 +15,7 @@ enum parameters {
 	kUseProgCh,
 	kSendHeldNotes,
 	kClearHeldNotes,
+	kShowNumbers,
 
     numParams
 };
@@ -110,6 +111,7 @@ private:
 	bool usepc;
 	bool sendHeldNotes;
 	bool clearHeldNotes;
+	bool showNumbers;
 
 	bool qwertyState[32]; //32==keymapLength
 	bool ccqwertyState[2];

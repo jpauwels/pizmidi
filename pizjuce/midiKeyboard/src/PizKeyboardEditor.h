@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 9:03:18am
+  Creation date:  31 Oct 2011 7:13:02am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_DA8A2427__
-#define __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_DA8A2427__
+#ifndef __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_B0E33023__
+#define __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_B0E33023__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "PizKeyboard.h"
@@ -94,6 +94,7 @@ private:
     ToggleButton* useProgCh;
     ToggleButton* useCapsLock;
     TextButton* sendState;
+    ToggleButton* showNumbersButton;
 
 
     //==============================================================================
@@ -103,4 +104,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_DA8A2427__
+#endif   // __JUCER_HEADER_MIDIKEYBOARDEDITOR_PIZKEYBOARDEDITOR_B0E33023__

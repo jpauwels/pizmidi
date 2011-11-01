@@ -2,7 +2,9 @@
 #include "PizKeyboardComponent.h"
 
 PizKeyboardComponent::PizKeyboardComponent(MidiKeyboardState &state, const Orientation orientation)
-    : MidiKeyboardComponent(state,orientation)
+    : MidiKeyboardComponent(state,orientation),
+	drawQwerty(false),
+	drawNoteNumber(false)
 {
     s = &state;
     for (int i = String (keymap).length(); --i >= 0;)

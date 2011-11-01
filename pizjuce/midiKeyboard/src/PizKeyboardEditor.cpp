@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 9:03:18am
+  Creation date:  31 Oct 2011 7:13:02am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -44,7 +44,8 @@ midiKeyboardEditor::midiKeyboardEditor (PizKeyboard* const ownerFilter)
       aboutBox (0),
       useProgCh (0),
       useCapsLock (0),
-      sendState (0)
+      sendState (0),
+      showNumbersButton (0)
 {
     addAndMakeVisible (keyWidthSlider = new Slider (L"keyWidthSlider"));
     keyWidthSlider->setTooltip (L"Key Width");
@@ -112,7 +113,7 @@ midiKeyboardEditor::midiKeyboardEditor (PizKeyboard* const ownerFilter)
     aboutBox->setCaretVisible (false);
     aboutBox->setPopupMenuEnabled (false);
     aboutBox->setColour (TextEditor::backgroundColourId, Colour (0xdce9e79b));
-    aboutBox->setText (L"Insert Piz Here-> midiKeyboard 1.3\n- Right-click to hold note\n- Ctrl-click or Middle-click to end all notes\n- Shift-click to set QWERTY octave\n- Alt-click to show/hide editing panel\n- Default settings load from midiKeyboard.fxb");
+    aboutBox->setText (L"Insert Piz Here-> midiKeyboard 1.4\n- Right-click to hold note\n- Ctrl-click or Middle-click to end all notes\n- Shift-click to set QWERTY octave\n- Alt-click to show/hide editing panel\n- Default settings load from midiKeyboard.fxb");
 
     addAndMakeVisible (useProgCh = new ToggleButton (L"Use ProgCh Button"));
     useProgCh->setTooltip (L"Use Program Change");
@@ -128,6 +129,11 @@ midiKeyboardEditor::midiKeyboardEditor (PizKeyboard* const ownerFilter)
     sendState->setTooltip (L"Send current keyboard state");
     sendState->setButtonText (L"Send Current State");
     sendState->addListener (this);
+
+    addAndMakeVisible (showNumbersButton = new ToggleButton (L"ShowNumbers Button"));
+    showNumbersButton->setTooltip (L"Show MIDI note numbers on keys");
+    showNumbersButton->setButtonText (L"Show Note Numbers");
+    showNumbersButton->addListener (this);
 
 
     //[UserPreSize]
@@ -150,7 +156,9 @@ midiKeyboardEditor::midiKeyboardEditor (PizKeyboard* const ownerFilter)
 	useProgCh->setMouseClickGrabsKeyboardFocus(false);
     useCapsLock->setVisible(false);
 	useCapsLock->setMouseClickGrabsKeyboardFocus(false);
-    resizer->setMouseClickGrabsKeyboardFocus(false);
+    showNumbersButton->setVisible(false);
+	showNumbersButton->setMouseClickGrabsKeyboardFocus(false);
+	resizer->setMouseClickGrabsKeyboardFocus(false);
     midiKeyboard->setMouseClickGrabsKeyboardFocus(false);
     const int ch = roundFloatToInt(ownerFilter->getParameter(kChannel)*15.f);
     midiKeyboard->setMidiChannel(ch+1);
@@ -199,6 +207,7 @@ midiKeyboardEditor::~midiKeyboardEditor()
     deleteAndZero (useProgCh);
     deleteAndZero (useCapsLock);
     deleteAndZero (sendState);
+    deleteAndZero (showNumbersButton);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -246,10 +255,11 @@ void midiKeyboardEditor::resized()
     hideButton->setBounds (498, 1, 14, 14);
     resizer->setBounds (getWidth() - 16, getHeight() - 16, 16, 16);
     midiKeyboard->setBounds (4, 16, getWidth() - 8, getHeight() - 20);
-    aboutBox->setBounds (proportionOfWidth (0.5000f) - ((418) / 2), proportionOfHeight (0.5000f) - ((92) / 2), 418, 92);
-    useProgCh->setBounds ((proportionOfWidth (0.5000f) - ((418) / 2)) + 265, (proportionOfHeight (0.5000f) - ((92) / 2)) + 7, 147, 18);
-    useCapsLock->setBounds ((proportionOfWidth (0.5000f) - ((418) / 2)) + 265, (proportionOfHeight (0.5000f) - ((92) / 2)) + 26, 147, 18);
-    sendState->setBounds ((proportionOfWidth (0.5000f) - ((418) / 2)) + 268, (proportionOfHeight (0.5000f) - ((92) / 2)) + 47, 140, 21);
+    aboutBox->setBounds (proportionOfWidth (0.5000f) - ((450) / 2), proportionOfHeight (0.5000f) - ((92) / 2), 450, 92);
+    useProgCh->setBounds ((proportionOfWidth (0.5000f) - ((450) / 2)) + 288, (proportionOfHeight (0.5000f) - ((92) / 2)) + 7, 147, 18);
+    useCapsLock->setBounds ((proportionOfWidth (0.5000f) - ((450) / 2)) + 288, (proportionOfHeight (0.5000f) - ((92) / 2)) + 26, 147, 18);
+    sendState->setBounds ((proportionOfWidth (0.5000f) - ((450) / 2)) + 291, (proportionOfHeight (0.5000f) - ((92) / 2)) + 65, 140, 21);
+    showNumbersButton->setBounds ((proportionOfWidth (0.5000f) - ((450) / 2)) + 288, (proportionOfHeight (0.5000f) - ((92) / 2)) + 45, 147, 18);
     //[UserResized] Add your own custom resize handling here..
     //int topbar = jmax(14,getHeight()/20);
 	if (getFilter()->getParameter(kHidePanel)>=0.5f)
@@ -313,6 +323,7 @@ void midiKeyboardEditor::buttonClicked (Button* buttonThatWasClicked)
         useProgCh->setVisible(aboutBox->isVisible());
         useCapsLock->setVisible(aboutBox->isVisible());
         sendState->setVisible(aboutBox->isVisible());
+		showNumbersButton->setVisible(aboutBox->isVisible());
         //[/UserButtonCode_aboutButton]
     }
     else if (buttonThatWasClicked == hideButton)
@@ -338,6 +349,12 @@ void midiKeyboardEditor::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_sendState] -- add your button handler code here..
 		getFilter()->setParameter(kSendHeldNotes,1.f);
         //[/UserButtonCode_sendState]
+    }
+    else if (buttonThatWasClicked == showNumbersButton)
+    {
+        //[UserButtonCode_showNumbersButton] -- add your button handler code here..
+		getFilter()->setParameterNotifyingHost(kShowNumbers, buttonThatWasClicked->getToggleState()?1.f:0.f);
+        //[/UserButtonCode_showNumbersButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -398,6 +415,7 @@ void midiKeyboardEditor::updateParametersFromFilter()
 	const bool qwerty = filter->getParameter(kQwertyAnywhere)>=0.5f;
 	const bool capslock = filter->getParameter(kCapsLock)>=0.5f;
 	const bool progch = filter->getParameter(kUseProgCh)>=0.5f;
+	const bool showNumbers = filter->getParameter(kShowNumbers)>=0.5f;
     const int w = filter->lastUIWidth;
     const int h = filter->lastUIHeight;
 	const int keyPos = filter->keyPosition;
@@ -408,6 +426,8 @@ void midiKeyboardEditor::updateParametersFromFilter()
 	useProgCh->setToggleState(progch,false);
 	useCapsLock->setToggleState(capslock,false);
 	grabQwertyButton->setToggleState(qwerty,false);
+	showNumbersButton->setToggleState(showNumbers,false);
+	midiKeyboard->setDrawNoteNumber(showNumbers);
 	midiKeyboard->setDrawQwerty(qwerty);
 	if (qwerty) midiKeyboard->grabKeyboardFocus();
     midiKeyboard->setMidiChannelsToDisplay(1<<ch);
@@ -508,25 +528,30 @@ BEGIN_JUCER_METADATA
                     explicitFocusOrder="0" pos="4 16 8M 20M" class="PizKeyboardComponent"
                     params="ownerFilter-&gt;editorKbState, MidiKeyboardComponent::horizontalKeyboard"/>
   <TEXTEDITOR name="Instructions" id="736835cb60c73832" memberName="aboutBox"
-              virtualName="" explicitFocusOrder="0" pos="50%c 50%c 418 92"
-              bkgcol="dce9e79b" initialText="Insert Piz Here-&gt; midiKeyboard 1.3&#10;- Right-click to hold note&#10;- Ctrl-click or Middle-click to end all notes&#10;- Shift-click to set QWERTY octave&#10;- Alt-click to show/hide editing panel&#10;- Default settings load from midiKeyboard.fxb"
+              virtualName="" explicitFocusOrder="0" pos="50%c 50%c 450 92"
+              bkgcol="dce9e79b" initialText="Insert Piz Here-&gt; midiKeyboard 1.4&#10;- Right-click to hold note&#10;- Ctrl-click or Middle-click to end all notes&#10;- Shift-click to set QWERTY octave&#10;- Alt-click to show/hide editing panel&#10;- Default settings load from midiKeyboard.fxb"
               multiline="1" retKeyStartsLine="0" readonly="1" scrollbars="0"
               caret="0" popupmenu="0"/>
   <TOGGLEBUTTON name="Use ProgCh Button" id="1365fbab3aebb877" memberName="useProgCh"
-                virtualName="" explicitFocusOrder="0" pos="265 7 147 18" posRelativeX="736835cb60c73832"
+                virtualName="" explicitFocusOrder="0" pos="288 7 147 18" posRelativeX="736835cb60c73832"
                 posRelativeY="736835cb60c73832" tooltip="Use Program Change"
                 buttonText="Use Program Change" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="UseCapsLock Button" id="6c30f5345f3575b" memberName="useCapsLock"
-                virtualName="" explicitFocusOrder="0" pos="265 26 147 18" posRelativeX="736835cb60c73832"
+                virtualName="" explicitFocusOrder="0" pos="288 26 147 18" posRelativeX="736835cb60c73832"
                 posRelativeY="736835cb60c73832" tooltip="Respond to QWERTY only when Caps Lock is on"
                 buttonText="Use Caps Lock" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TEXTBUTTON name="send state" id="a9dbe441fdb14035" memberName="sendState"
-              virtualName="" explicitFocusOrder="0" pos="268 47 140 21" posRelativeX="736835cb60c73832"
+              virtualName="" explicitFocusOrder="0" pos="291 65 140 21" posRelativeX="736835cb60c73832"
               posRelativeY="736835cb60c73832" tooltip="Send current keyboard state"
               buttonText="Send Current State" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
+  <TOGGLEBUTTON name="ShowNumbers Button" id="d5b687b5b62b72bc" memberName="showNumbersButton"
+                virtualName="" explicitFocusOrder="0" pos="288 45 147 18" posRelativeX="736835cb60c73832"
+                posRelativeY="736835cb60c73832" tooltip="Show MIDI note numbers on keys"
+                buttonText="Show Note Numbers" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

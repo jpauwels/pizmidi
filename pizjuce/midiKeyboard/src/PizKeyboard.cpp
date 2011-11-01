@@ -87,7 +87,8 @@ float PizKeyboard::getParameter (int index)
 	case kUseProgCh: return usepc ? 1.f : 0.f;
 	case kSendHeldNotes: return 0.f;
 	case kClearHeldNotes: return 0.f;
-    default: return 0.0f;
+	case kShowNumbers: return showNumbers ? 1.f : 0.f;
+	default: return 0.0f;
     }
 }
 
@@ -142,10 +143,18 @@ void PizKeyboard::setParameter (int index, float newValue)
         sendChangeMessage();
     }
 	else if (index==kSendHeldNotes)
+	{
 		if (newValue) sendHeldNotes=true;
-
+	}
 	else if (index==kClearHeldNotes)
+	{
 		if (newValue) clearHeldNotes=true;
+	}
+    else if (index==kShowNumbers)
+    {
+        showNumbers = newValue>=0.5f;
+        sendChangeMessage();
+    }
 }
 
 const String PizKeyboard::getParameterName (int index)
@@ -172,7 +181,9 @@ const String PizKeyboard::getParameterName (int index)
 		return "SendHeldNotes";
 	if (index == kClearHeldNotes)
 		return "Reset";
-    return String::empty;
+	if (index == kShowNumbers)
+		return "ShowNumbers";
+	return String::empty;
 }
 
 const String PizKeyboard::getParameterText (int index)
@@ -199,7 +210,9 @@ const String PizKeyboard::getParameterText (int index)
 		return "--->";
 	if (index == kClearHeldNotes)
 		return "--->";
-    return String::empty;
+    if (index == kShowNumbers)
+        return showNumbers ? "Yes" : "No";
+	return String::empty;
 }
 
 const String PizKeyboard::getInputChannelName (const int channelIndex) const
@@ -425,6 +438,7 @@ void PizKeyboard::getStateInformation (MemoryBlock& destData)
     xmlState.setAttribute ("toggle", toggle);
     xmlState.setAttribute ("hide", hide);
     xmlState.setAttribute ("usepc", usepc);
+    xmlState.setAttribute ("showNumbers", showNumbers);
 
     xmlState.setAttribute ("qwerty", qwerty);
     xmlState.setAttribute ("octave", octave);
@@ -458,6 +472,7 @@ void PizKeyboard::setStateInformation (const void* data, int sizeInBytes)
             toggle = xmlState->getBoolAttribute ("toggle", toggle);
             hide = xmlState->getBoolAttribute ("hide", hide);
             usepc = xmlState->getBoolAttribute ("usepc", usepc);
+            showNumbers = xmlState->getBoolAttribute ("showNumbers", showNumbers);
             qwerty = xmlState->getBoolAttribute ("qwerty", qwerty);
 			keyPosition = xmlState->getIntAttribute ("keyPosition", keyPosition);
             octave = xmlState->getIntAttribute ("octave", octave);
