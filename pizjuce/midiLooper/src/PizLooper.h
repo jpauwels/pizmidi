@@ -27,6 +27,7 @@ enum parameters {
 	kParamsToHost,
 	kPlayCC,
 	kRecCC,
+	kMonitor,
 
 	numGlobalParams,
 
@@ -35,6 +36,7 @@ enum parameters {
     kTranspose, //live transposition by semitone
     kOctave,    //live transposition by octave
     kVelocity,  //live velocity offset
+    kVeloSens,  //velocity sensitivity for note triggering
     kLoopStart, //loop start offset
     kLoopEnd,   //loop end offset
     kShift,     //beat shift
@@ -395,6 +397,7 @@ private:
 		~TransposeRules() {}		
 		
 		int trignote[polyphony];
+		float velscale[polyphony];
 		struct Rules {
 			int semitones;
 			int octaves;
@@ -409,14 +412,16 @@ private:
 
 		int getSlot() const {return slot;}
 
-		void trigger(int note, int voice)
+		void trigger(int note, float vel, int voice)
 		{
 			trignote[voice] = note;
+			velscale[voice] = vel;
 		}
 
 		void release(int voice)
 		{
 			trignote[voice] = -1;
+			velscale[voice] = 1.f;
 		}
 
 		bool update(bool initialize=false) //return true if changed
@@ -684,6 +689,7 @@ private:
 	PianoRollSettings defaultPRSettings;
 
 	double getStretchMultiplier(int slot);
+	bool isNoteTriggeringAnySlot(MidiMessage const &message);
 	bool processTriggerNote(const int slot, MidiMessage &message, int root, MidiBuffer &midiout,
 							const int sample, const double ppqOfNextBar, const double ppqPerSample,
 							const double ppqOfLastStep, const double looplengthstep);

@@ -32,7 +32,7 @@ MidiOutFilter::MidiOutFilter()
     programs = new JuceProgram[getNumPrograms()];
 
     devices = MidiOutput::getDevices();
-    midiOutput = NULL;
+    midiOutput = 0;
 	loadDefaultFxb();
     curProgram=0;
     init=true;
@@ -54,7 +54,7 @@ MidiOutFilter::~MidiOutFilter()
 {
     if (midiOutput) {
 		midiOutput->stopBackgroundThread();
-		delete midiOutput;
+		deleteAndZero(midiOutput);
 	}
 }
 
@@ -80,8 +80,10 @@ void MidiOutFilter::setParameter (int index, float newValue)
                 setActiveDevice(activeDevice);
             }
             else {
-				if (midiOutput) midiOutput->stopBackgroundThread();
-                midiOutput=NULL;
+				if (midiOutput) {
+					midiOutput->stopBackgroundThread();
+					deleteAndZero(midiOutput);
+				}
             }
         }
         sendChangeMessage();
@@ -93,13 +95,22 @@ void MidiOutFilter::setActiveDevice(String name)
 	activeDevice = programs[curProgram].device = name;	
 	int index = devices.indexOf(name);
 	if (index==-1) {
-		if (midiOutput) midiOutput->stopBackgroundThread();
-		midiOutput = NULL;
+		if (midiOutput) 
+		{
+			midiOutput->stopBackgroundThread();
+			deleteAndZero(midiOutput);
+		}
 	}
 	else {
-		if (midiOutput) midiOutput->stopBackgroundThread();
+		if (midiOutput) {
+			midiOutput->stopBackgroundThread();
+			deleteAndZero(midiOutput);
+		}
 		midiOutput = MidiOutput::openDevice(index);
-		midiOutput->startBackgroundThread();
+		if (midiOutput)
+			midiOutput->startBackgroundThread();
+		else 
+			setParameter(kPower,0);
 	}
 }
 

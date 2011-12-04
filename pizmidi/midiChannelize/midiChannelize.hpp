@@ -43,6 +43,8 @@ public:
 
 protected:
 	float fChannel;
+
+	int lastChannel[16][128];
 	
 	virtual void processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outputs, VstInt32 sampleFrames);
 

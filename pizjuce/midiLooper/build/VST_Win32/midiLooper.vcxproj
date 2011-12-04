@@ -523,6 +523,9 @@
     <ClCompile Include="..\..\src\juce_LibrarySource.cpp" />
     <ClCompile Include="..\..\..\common\juce_VstWrapper_piz.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\fromKVRthread.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

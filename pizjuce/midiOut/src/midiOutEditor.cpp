@@ -100,9 +100,8 @@ MidiOutEditor::MidiOutEditor (MidiOutFilter* const ownerFilter)
 
 
     //[UserPreSize]
-	static OldSchoolLookAndFeel* MyLook = 0;
-	if (MyLook == 0) MyLook = new OldSchoolLookAndFeel();
-	OldSchoolLookAndFeel::setDefaultLookAndFeel (MyLook);
+	static OldSchoolLookAndFeel Look;
+	LookAndFeel::setDefaultLookAndFeel (&Look);
 	setMouseClickGrabsKeyboardFocus(false);
     StringArray devices = ownerFilter->devices;
 
@@ -298,7 +297,7 @@ void MidiOutEditor::updateParametersFromFilter()
     hostButton->setToggleState(hostout>=0.5f,false);
 
     String fullpath = icon;
-    if (!File(fullpath).existsAsFile())
+    if (!File::getCurrentWorkingDirectory().getChildFile(fullpath).existsAsFile())
         fullpath = ((File::getSpecialLocation(File::currentExecutableFile)).getParentDirectory()).getFullPathName()
                    + File::separatorString + icon;
     Drawable* image = Drawable::createFromImageFile(File(fullpath));

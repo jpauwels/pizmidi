@@ -233,6 +233,49 @@
 		3F032B5012C4DF8800D83FB5 /* audioeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F19321110CC0600DD158F /* audioeffect.cpp */; };
 		3F032B5112C4DF8800D83FB5 /* audioeffectx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F19341110CC0600DD158F /* audioeffectx.cpp */; };
 		3F032B5B12C4DFD800D83FB5 /* midiChordSplit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F032B2012C4DD4200D83FB5 /* midiChordSplit.cpp */; };
+		3F05908F14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909014472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909114472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909214472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909314472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909414472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909514472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909614472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909714472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909814472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909914472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909A14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909B14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909C14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909D14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909E14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F05909F14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A014472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A114472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A214472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A314472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A414472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A514472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A614472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A714472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A814472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590A914472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AA14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AB14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AC14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AD14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AE14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590AF14472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B014472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B114472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B214472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B314472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B414472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B514472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B614472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B714472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B814472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
+		3F0590B914472ADC00954B09 /* PizMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F05908E14472ADC00954B09 /* PizMidi.cpp */; };
 		3FB91E4912CCD413005FB6FA /* vstplugmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F18A31110C99000DD158F /* vstplugmain.cpp */; };
 		3FB91E4A12CCD413005FB6FA /* audioeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F19321110CC0600DD158F /* audioeffect.cpp */; };
 		3FB91E4B12CCD413005FB6FA /* audioeffectx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F19341110CC0600DD158F /* audioeffectx.cpp */; };
@@ -664,7 +707,7 @@
 		06AF89700CB41201006181A3 /* midiCCToTempo.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiCCToTempo.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		06D325600F6D6A3C0064AC1E /* midiTriggerList.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiTriggerList.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		06D3257D0F6D6AF80064AC1E /* midiNoteGroups.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiNoteGroups.vst; sourceTree = BUILT_PRODUCTS_DIR; };
-		06F2FE780EE84C8C0075E198 /* midiSwing.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiSwing.vst; sourceTree = BUILT_PRODUCTS_DIR; };
+		06F2FE780EE84C8C0075E198 /* midiDuplicateBlocker.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiDuplicateBlocker.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		06FEFBB90D56AC9100EA0344 /* midiNoteToggle.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiNoteToggle.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		06FFBFC20CF8F9E300C72E13 /* midi16CCRouter.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midi16CCRouter.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -679,6 +722,8 @@
 		3F032B3612C4DE7300D83FB5 /* midiAlias.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiAlias.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F032B4712C4DEFC00D83FB5 /* midiScaleChanger.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiScaleChanger.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F032B5712C4DF8800D83FB5 /* midiChordSplit.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiChordSplit.vst; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F05908E14472ADC00954B09 /* PizMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PizMidi.cpp; sourceTree = "<group>"; };
+		3F0590BA14472AE600954B09 /* PizMidi.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PizMidi.h; sourceTree = "<group>"; };
 		3FB91E4212CCD3E4005FB6FA /* midiTranspose.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = midiTranspose.cpp; sourceTree = "<group>"; };
 		3FB91E4312CCD3E4005FB6FA /* midiTranspose.hpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.h; path = midiTranspose.hpp; sourceTree = "<group>"; };
 		3FB91E5112CCD413005FB6FA /* midiTranspose.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = midiTranspose.vst; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1021,6 +1066,8 @@
 		068F1A141110CE4700DD158F /* common */ = {
 			isa = PBXGroup;
 			children = (
+				3F0590BA14472AE600954B09 /* PizMidi.h */,
+				3F05908E14472ADC00954B09 /* PizMidi.cpp */,
 				068F1A151110CE4700DD158F /* CVSTHost.cpp */,
 				068F1A161110CE4700DD158F /* CVSTHost.h */,
 				068F1A171110CE4700DD158F /* MIDI.h */,
@@ -1469,7 +1516,7 @@
 				0640A5D30EA06CF000B1DE94 /* midiStrum.vst */,
 				0640A5E20EA06D1E00B1DE94 /* midiStuckNoteKiller.vst */,
 				0640A5F10EA06D4800B1DE94 /* midiSwing.vst */,
-				06F2FE780EE84C8C0075E198 /* midiSwing.vst */,
+				06F2FE780EE84C8C0075E198 /* midiDuplicateBlocker.vst */,
 				06D325600F6D6A3C0064AC1E /* midiTriggerList.vst */,
 				06D3257D0F6D6AF80064AC1E /* midiNoteGroups.vst */,
 				061829E910D19C99002622DB /* midi2qwerty16.vst */,
@@ -2197,7 +2244,7 @@
 			name = midiDuplicateBlocker;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = "vst 2.4 examples";
-			productReference = 06F2FE780EE84C8C0075E198 /* midiSwing.vst */;
+			productReference = 06F2FE780EE84C8C0075E198 /* midiDuplicateBlocker.vst */;
 			productType = "com.apple.product-type.bundle";
 		};
 		06FEFBAD0D56AC9100EA0344 /* midiNoteToggle */ = {
@@ -2679,6 +2726,7 @@
 				068F19391110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F193A1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A971110CF0000DD158F /* midi2qwerty16.cpp in Sources */,
+				3F0590B014472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2690,6 +2738,7 @@
 				068F195B1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F195C1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA81110CFA700DD158F /* midiCCModulator.cpp in Sources */,
+				3F05909E14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2701,6 +2750,7 @@
 				068F19591110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F195A1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA71110CF9E00DD158F /* midiCCReset.cpp in Sources */,
+				3F0590A014472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2712,6 +2762,7 @@
 				068F19571110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19581110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA61110CF9800DD158F /* midiCCStepper.cpp in Sources */,
+				3F0590A114472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2723,6 +2774,7 @@
 				068F19551110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19561110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA51110CF9200DD158F /* midiCCToggle.cpp in Sources */,
+				3F0590A214472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2734,6 +2786,7 @@
 				068F19531110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19541110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA41110CF8400DD158F /* midiDelay.cpp in Sources */,
+				3F0590A314472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2745,6 +2798,7 @@
 				068F19511110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19521110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA31110CF7C00DD158F /* midiExactDelay.cpp in Sources */,
+				3F0590A414472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2756,6 +2810,7 @@
 				068F194F1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19501110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA21110CF7300DD158F /* midiFingered.cpp in Sources */,
+				3F0590A514472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2767,6 +2822,7 @@
 				068F194D1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F194E1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA11110CF6B00DD158F /* midiKeySplit.cpp in Sources */,
+				3F0590A714472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2778,6 +2834,7 @@
 				068F194B1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F194C1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA01110CF6500DD158F /* midiPolyphony.cpp in Sources */,
+				3F0590A614472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2789,6 +2846,7 @@
 				068F19491110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F194A1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9F1110CF5B00DD158F /* midiProbability.cpp in Sources */,
+				3F0590A814472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2800,6 +2858,7 @@
 				068F19471110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19481110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9E1110CF5600DD158F /* midiProgramChange.cpp in Sources */,
+				3F0590A914472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2811,6 +2870,7 @@
 				068F19451110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19461110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9D1110CF5000DD158F /* midiStrum.cpp in Sources */,
+				3F0590AA14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2822,6 +2882,7 @@
 				068F19431110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19441110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9C1110CF4700DD158F /* midiStuckNoteKiller.cpp in Sources */,
+				3F0590AB14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2833,6 +2894,7 @@
 				068F19411110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19421110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9B1110CF3100DD158F /* midiSwing.cpp in Sources */,
+				3F0590AC14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2844,6 +2906,7 @@
 				068F19691110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F196A1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AAF1110CFE300DD158F /* midiSimpleLFO.cpp in Sources */,
+				3F05909814472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2855,6 +2918,7 @@
 				068F19671110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19681110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AAE1110CFD600DD158F /* midiAudioToCC.cpp in Sources */,
+				3F05909914472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2866,6 +2930,7 @@
 				068F19651110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19661110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AAD1110CFD000DD158F /* midiNotesToCC.cpp in Sources */,
+				3F05909A14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2877,6 +2942,7 @@
 				068F19631110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19641110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AAC1110CFCB00DD158F /* midiChs_noGUI.cpp in Sources */,
+				3F05909F14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2888,6 +2954,7 @@
 				068F18B91110C99000DD158F /* vstplugmain.cpp in Sources */,
 				068F195F1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19601110CC0600DD158F /* audioeffectx.cpp in Sources */,
+				3F05909C14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2899,6 +2966,7 @@
 				068F19351110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19361110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A201110CE8800DD158F /* midiKeySplit4.cpp in Sources */,
+				3F0590B114472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2910,6 +2978,7 @@
 				068F19371110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19381110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A961110CEF100DD158F /* midiPitchBendQuantize.cpp in Sources */,
+				3F0590B214472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2921,6 +2990,7 @@
 				068F197D1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F197E1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A951110CEE800DD158F /* midiBlackKeyFilter.cpp in Sources */,
+				3F0590B314472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2932,6 +3002,7 @@
 				068F197F1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19801110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A941110CEE000DD158F /* midiOverlappingNotekiller.cpp in Sources */,
+				3F0590B414472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2943,6 +3014,7 @@
 				068F19811110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19821110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A1F1110CE7B00DD158F /* midiChordHold.cpp in Sources */,
+				3F0590B514472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2954,6 +3026,7 @@
 				068F197B1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F197C1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB81110D03D00DD158F /* midiChannelize.cpp in Sources */,
+				3F05908F14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2965,6 +3038,7 @@
 				068F19791110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F197A1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB71110D02E00DD158F /* midiForceToKey.cpp in Sources */,
+				3F05909014472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2976,6 +3050,7 @@
 				068F19771110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19781110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB61110D02800DD158F /* midiForceToRange.cpp in Sources */,
+				3F05909114472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2987,6 +3062,7 @@
 				068F19751110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19761110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB51110D01E00DD158F /* midiNotchFilter.cpp in Sources */,
+				3F05909214472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2998,6 +3074,7 @@
 				068F19731110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19741110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				3F0329F012C4639C00D83FB5 /* midiConverter3.cpp in Sources */,
+				3F05909314472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3009,6 +3086,7 @@
 				068F19711110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19721110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB31110D01100DD158F /* midiInvertNotes.cpp in Sources */,
+				3F05909414472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3020,6 +3098,7 @@
 				068F196F1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19701110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB21110D00900DD158F /* midiSostenuto.cpp in Sources */,
+				3F05909514472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3031,6 +3110,7 @@
 				068F196D1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F196E1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AB11110D00100DD158F /* midiVelocityScale.cpp in Sources */,
+				3F05909614472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3041,6 +3121,7 @@
 				068F18BF1110C99000DD158F /* vstplugmain.cpp in Sources */,
 				068F196B1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F196C1110CC0600DD158F /* audioeffectx.cpp in Sources */,
+				3F05909714472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3052,6 +3133,7 @@
 				068F193D1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F193E1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A991110CF2600DD158F /* midiTriggerList.cpp in Sources */,
+				3F0590AE14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3063,6 +3145,7 @@
 				068F193B1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F193C1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A981110CF1D00DD158F /* midiNoteGroups.cpp in Sources */,
+				3F0590AF14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3074,6 +3157,7 @@
 				068F193F1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19401110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1A9A1110CF2B00DD158F /* midiDuplicateBlocker.cpp in Sources */,
+				3F0590AD14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3085,6 +3169,7 @@
 				068F195D1110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F195E1110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AA91110CFAD00DD158F /* midiNoteToggle.cpp in Sources */,
+				3F05909D14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3096,6 +3181,7 @@
 				068F19611110CC0600DD158F /* audioeffect.cpp in Sources */,
 				068F19621110CC0600DD158F /* audioeffectx.cpp in Sources */,
 				068F1AAB1110CFC100DD158F /* midi16CCRouter.cpp in Sources */,
+				3F05909B14472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3107,6 +3193,7 @@
 				3F032B2F12C4DE7300D83FB5 /* audioeffect.cpp in Sources */,
 				3F032B3012C4DE7300D83FB5 /* audioeffectx.cpp in Sources */,
 				3F032B3A12C4DEDD00D83FB5 /* midiAlias.cpp in Sources */,
+				3F0590B614472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3118,6 +3205,7 @@
 				3F032B4012C4DEFC00D83FB5 /* audioeffect.cpp in Sources */,
 				3F032B4112C4DEFC00D83FB5 /* audioeffectx.cpp in Sources */,
 				3F032B4B12C4DF6700D83FB5 /* midiScaleChanger.cpp in Sources */,
+				3F0590B714472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3129,6 +3217,7 @@
 				3F032B5012C4DF8800D83FB5 /* audioeffect.cpp in Sources */,
 				3F032B5112C4DF8800D83FB5 /* audioeffectx.cpp in Sources */,
 				3F032B5B12C4DFD800D83FB5 /* midiChordSplit.cpp in Sources */,
+				3F0590B914472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3140,6 +3229,7 @@
 				3FB91E4A12CCD413005FB6FA /* audioeffect.cpp in Sources */,
 				3FB91E4B12CCD413005FB6FA /* audioeffectx.cpp in Sources */,
 				3FB91E5712CCD482005FB6FA /* midiTranspose.cpp in Sources */,
+				3F0590B814472ADC00954B09 /* PizMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3379,6 +3469,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midi2qwerty16;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3402,6 +3493,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiCCModulator;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3425,6 +3517,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiCCReset;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3448,6 +3541,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiCCStepper;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3471,6 +3565,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiCCToggle;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3494,6 +3589,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiDelay;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3517,6 +3613,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiExactDelay;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3540,6 +3637,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiFingered;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3563,6 +3661,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiKeySplit;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3586,6 +3685,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiPolyphony;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3609,6 +3709,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiProbability;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3632,6 +3733,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiProgramChange;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3655,6 +3757,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiStrum;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3678,6 +3781,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiStuckNoteKiller;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3701,6 +3805,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiSwing;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3724,6 +3829,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiSimpleLFO;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3747,6 +3853,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiAudioToCC;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3771,6 +3878,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiNotesToCC;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3794,6 +3902,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiChs_noGUI;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3817,6 +3926,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiNRPNConverter;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3840,6 +3950,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiKeySplit4;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3863,6 +3974,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiPitchBendQuantize;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3886,6 +3998,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiBlackKeyFilter;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3909,6 +4022,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiOverlappingNoteKiller;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3932,6 +4046,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiChordHold;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3955,6 +4070,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiChannelize;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -3978,6 +4094,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiForceToKey;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4001,6 +4118,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiForceToRange;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4024,6 +4142,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiNotchFilter;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4047,6 +4166,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiConverter3;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4070,6 +4190,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiInvertNotes;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4093,6 +4214,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiSostenuto;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4116,6 +4238,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiVelocityScale;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4140,6 +4263,7 @@
 				);
 				HEADER_SEARCH_PATHS = /users/deborahbrandon/Desktop/VSTdev/vstsdk2.3/source/common;
 				PRODUCT_NAME = midiCCToTempo;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4185,6 +4309,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiTriggerList;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4208,6 +4333,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiNoteGroups;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4230,7 +4356,8 @@
 					ppc,
 					i386,
 				);
-				PRODUCT_NAME = midiSwing;
+				PRODUCT_NAME = midiDuplicateBlocker;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4254,6 +4381,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiNoteToggle;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4277,6 +4405,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midi16CCRouter;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4300,6 +4429,7 @@
 					i386,
 				);
 				PRODUCT_NAME = midiAlias;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4324,6 +4454,7 @@
 				);
 				INFOPLIST_FILE = ./common/pizmidiinfo.plist;
 				PRODUCT_NAME = midiScaleChanger;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4348,6 +4479,7 @@
 				);
 				INFOPLIST_FILE = ./common/pizmidiinfo.plist;
 				PRODUCT_NAME = midiChordSplit;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};
@@ -4372,6 +4504,7 @@
 				);
 				INFOPLIST_FILE = ./common/pizmidiinfo.plist;
 				PRODUCT_NAME = midiTranspose;
+				USER_HEADER_SEARCH_PATHS = ./;
 			};
 			name = Release;
 		};

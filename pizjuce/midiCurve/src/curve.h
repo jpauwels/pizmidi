@@ -20,28 +20,30 @@ enum parameters {
 	kAftertouch,
 	kChannel,
 	kPitchBend,
-    kNumParams
+    kNumParams,
+	kNumPrograms = 128
 };
 
-class JuceProgram {	
+class MidiCurvePrograms : ValueTree {	
 friend class MidiCurve;
 public:
-	JuceProgram ();
-	~JuceProgram () {}
-private:
-    float param[kNumParams];
-
-    int lastUIWidth, lastUIHeight;
-	String name;
+	MidiCurvePrograms ();
+	~MidiCurvePrograms () {};
+	void set(int prog, const var::identifier &name, const var &newValue)
+	{
+		this->getChild(prog).setProperty(name,newValue,0);
+	}
+	const var get(int prog, const var::identifier &name)
+	{
+		return this->getChild(prog).getProperty(name);
+	}
+	MidiCurvePrograms(ValueTree& tree)
+	{
+		this->getChild(0).getParent() = tree.createCopy();
+	}
 };
 
-
 //==============================================================================
-/**
-    A simple plugin filter that just applies a gain change to the audio
-    passing through it.
-
-*/
 class MidiCurve  : public PizAudioProcessor,
                    public ChangeBroadcaster
 {
@@ -54,8 +56,7 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock);
     void releaseResources();
 
-	void processBlock (AudioSampleBuffer& buffer,
-                                     MidiBuffer& midiMessages);
+	void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages);
 
     //==============================================================================
     AudioProcessorEditor* createEditor();
@@ -95,7 +96,7 @@ public:
 
     //==============================================================================
 
-    int getNumPrograms()      { return 128; }
+    int getNumPrograms()      { return kNumPrograms; }
     int getCurrentProgram();
     void setCurrentProgram (int index);
     const String getProgramName (int index);
@@ -109,12 +110,6 @@ public:
 
 
     //==============================================================================
-    // These properties are public so that our editor component can access them
-    //  - a bit of a hacky way to do it, but it's only a demo!
-
-    // these are used to persist the UI's size - the values are stored along with the
-    // filter's other parameters, and the UI component will update them when it gets
-    // resized.
     int lastUIWidth, lastUIHeight;
 	class LastMsgToDisplay : public ChangeBroadcaster
 	{
@@ -128,7 +123,7 @@ public:
 	bool isPointControl(int point);
 	int getPrevActivePoint(int currentPoint);
 	int getNextActivePoint(int currentPoint);
-	void resetPoints();
+	void resetPoints(bool copyToProgram=true);
 	Path path;
 
     //==============================================================================
@@ -167,11 +162,12 @@ private:
 	Array<midiPoint> points;
 	void updatePath();
 
-    JuceProgram *programs;
+    MidiCurvePrograms *programs;
     int curProgram;
     
     bool init;
 
+	void copySettingsToProgram(int index);
 	float findValue(float input);
 	double linearInterpolate(double x,double y1,double y2,double x1,double x2);
 	int findPBValue(int input);

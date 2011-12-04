@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 10:44:47am
+  Creation date:  3 Dec 2011 4:38:03pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -156,6 +156,7 @@ CurveEditor::CurveEditor (MidiCurve* const ownerFilter)
     //[Constructor] You can add your own custom stuff here..
 #endif
 	ownerFilter->addChangeListener (this);
+	ownerFilter->lastMsg.addChangeListener (this);
 	this->updateParameters();
     //[/Constructor]
 }
@@ -164,6 +165,7 @@ CurveEditor::~CurveEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
 	getFilter()->removeChangeListener (this);
+	getFilter()->lastMsg.removeChangeListener (this);
     //[/Destructor_pre]
 
     deleteAndZero (curve);

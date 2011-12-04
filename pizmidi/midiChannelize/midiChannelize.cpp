@@ -39,6 +39,11 @@ MidiChannelize::MidiChannelize(audioMasterCallback audioMaster)
 		setProgram (0);
 	}
 
+	for (int c=0;c<16;c++)
+	{
+		for (int i=0;i<128;i++) lastChannel[c][i] = c;
+	}
+
 	init();
 }
 
@@ -127,21 +132,25 @@ void MidiChannelize::getParameterDisplay(VstInt32 index, char *text){
 //-----------------------------------------------------------------------------------------
 void MidiChannelize::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outputs, VstInt32 sampleFrames)
 {
+	const int out_channel = FLOAT_TO_CHANNEL(fChannel);
 	// process incoming events
 	for (unsigned int i=0;i<inputs[0].size();i++) {
 		//copying event "i" from input (with all its fields)
 		VstMidiEvent tomod = inputs[0][i];
-		short status     = tomod.midiData[0] & 0xf0;   // scraping  channel
-		short in_channel    = (tomod.midiData[0] & 0x0f) + 1;  // isolating channel (1-16)
-		//short data1      = tomod.midiData[1] & 0x7f;
-		//short data2		 = tomod.midiData[2] & 0x7f;
-		short out_channel = FLOAT_TO_CHANNEL016(fChannel);
-		if (status < 0xF0 ) {
-			if (out_channel == 0) {
+		const int status     = tomod.midiData[0] & 0xf0;  // scraping  channel
+		const int in_channel = tomod.midiData[0] & 0x0f;  // isolating channel (0-15)
+		const int data1      = tomod.midiData[1] & 0x7f;
+		//const int data2	 = tomod.midiData[2] & 0x7f;
+		if (tomod.midiData[0] < 0xF0 ) {
+			if (isNoteOff(tomod)) {
+				tomod.midiData[0] = status | lastChannel[in_channel][data1];
 			}
-			else if (in_channel != out_channel) { 
-				tomod.midiData[0] = status | (out_channel - 1);
+			else if (out_channel >= 0) { 
+				tomod.midiData[0] = status | out_channel;
 			}
+
+			if (isNoteOn(tomod)) 
+				lastChannel[in_channel][data1] = out_channel;
 		}
 		outputs[0].push_back(tomod);
 	}

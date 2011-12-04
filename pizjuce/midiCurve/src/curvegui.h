@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 10:44:47am
+  Creation date:  3 Dec 2011 4:38:03pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_CURVEEDITOR_CURVEGUI_8A2BAF5A__
-#define __JUCER_HEADER_CURVEEDITOR_CURVEGUI_8A2BAF5A__
+#ifndef __JUCER_HEADER_CURVEEDITOR_CURVEGUI_303E085F__
+#define __JUCER_HEADER_CURVEEDITOR_CURVEGUI_303E085F__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "curve.h"
@@ -97,4 +97,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_CURVEEDITOR_CURVEGUI_8A2BAF5A__
+#endif   // __JUCER_HEADER_CURVEEDITOR_CURVEGUI_303E085F__

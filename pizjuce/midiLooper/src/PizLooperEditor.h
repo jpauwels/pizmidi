@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 9:03:36am
+  Creation date:  1 Dec 2011 11:06:41am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_729B2ECE__
-#define __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_729B2ECE__
+#ifndef __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_E1BDD1BF__
+#define __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_E1BDD1BF__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "PizLooper.h"
@@ -366,6 +366,9 @@ private:
     ToggleButton* b_KeepLength;
     VSTSlider* s_RecCC;
     VSTSlider* s_PlayCC;
+    VSTSlider* s_VelocitySens;
+    Label* label24;
+    TextButton* b_Monitor;
     Image cachedImage_piznew40_png;
 
 
@@ -376,4 +379,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_729B2ECE__
+#endif   // __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_E1BDD1BF__

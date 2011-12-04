@@ -428,6 +428,7 @@ void PizLooper::setActiveDevice(String name)
 
 const String PizLooper::getParameterName (int index) {
 	if (index==kThru) return String("MidiThru");
+	if (index==kMonitor) return String("Monitor");
 	if (index==kFile) return String("File");
 	if (index==kSave) return String("Save");
 	if (index==kSync) return String("SyncMode");
@@ -454,6 +455,7 @@ const String PizLooper::getParameterName (int index) {
 		case kTranspose: return String("Transpose")+String(i+1);
 		case kOctave: return String("OctaveShift")+String(i+1);
 		case kVelocity: return String("VelocityScale")+String(i+1);
+		case kVeloSens: return String("VelocitySens")+String(i+1);
 		case kShift: return String("BeatShift")+String(i+1);
 		case kLoopStart: return String("LoopStart")+String(i+1);
 		case kLoopEnd: return String("LoopEnd")+String(i+1);
@@ -506,7 +508,11 @@ const String PizLooper::getParameterText (int index) {
         if (getParameter(index)<0.5f) return String("Off");
         return String("On");
     }
-    if (index==kSingleLoop)  {
+    if (index==kMonitor)  {
+        if (getParameter(index)<0.5f) return String("Off");
+        return String("On");
+    }
+	if (index==kSingleLoop)  {
         if (getParameter(index)<0.5f) return String("Multi");
         return String("Single");
     }
@@ -625,6 +631,7 @@ const String PizLooper::getParameterText (int index) {
 			if (value<1) return String(value);
 			return String("+") + String(value);
 		case kVelocity:
+		case kVeloSens:
 			return String(roundToInt(getParameter(index)*200.f)) + String("%");
 		case kShift:
 			value = roundToInt(getParameter(index)*16.0f)-8;

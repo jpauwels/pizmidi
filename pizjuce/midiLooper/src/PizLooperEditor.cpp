@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  14 Sep 2011 9:03:36am
+  Creation date:  1 Dec 2011 11:06:41am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -254,6 +254,9 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
       b_KeepLength (0),
       s_RecCC (0),
       s_PlayCC (0),
+      s_VelocitySens (0),
+      label24 (0),
+      b_Monitor (0),
       cachedImage_piznew40_png (0)
 {
     addAndMakeVisible (label = new Label (L"new label",
@@ -1724,6 +1727,31 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     s_PlayCC->setColour (Slider::textBoxTextColourId, Colours::white);
     s_PlayCC->addListener (this);
 
+    addAndMakeVisible (s_VelocitySens = new VSTSlider (L"Velocity Sensitivity"));
+    s_VelocitySens->setTooltip (L"Velocity Sensitivity (Input Velocity -> Output Velocity)");
+    s_VelocitySens->setRange (0, 200, 1);
+    s_VelocitySens->setSliderStyle (Slider::LinearBar);
+    s_VelocitySens->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    s_VelocitySens->setColour (Slider::backgroundColourId, Colour (0x1e000000));
+    s_VelocitySens->setColour (Slider::thumbColourId, Colours::black);
+    s_VelocitySens->setColour (Slider::textBoxTextColourId, Colours::white);
+    s_VelocitySens->addListener (this);
+
+    addAndMakeVisible (label24 = new Label (L"new label",
+                                            L"VeloSens"));
+    label24->setFont (Font (12.0000f, Font::plain));
+    label24->setJustificationType (Justification::centred);
+    label24->setEditable (false, false, false);
+    label24->setColour (Label::textColourId, Colours::white);
+    label24->setColour (TextEditor::textColourId, Colours::black);
+    label24->setColour (TextEditor::backgroundColourId, Colour (0x0));
+
+    addAndMakeVisible (b_Monitor = new TextButton (L"MIDI_Monitor"));
+    b_Monitor->setTooltip (L"Monitor input MIDI through active slot\'s channel");
+    b_Monitor->setButtonText (L"Monitor");
+    b_Monitor->addListener (this);
+    b_Monitor->setColour (TextButton::buttonColourId, Colour (0xff999999));
+
     cachedImage_piznew40_png = ImageCache::getFromMemory (piznew40_png, piznew40_pngSize);
 
     //[UserPreSize]
@@ -1802,6 +1830,9 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
 	b_RemoveBar->setMouseClickGrabsKeyboardFocus(false);
     s_RecCC->setMouseClickGrabsKeyboardFocus(false);
     s_PlayCC->setMouseClickGrabsKeyboardFocus(false);
+    s_VelocitySens->setMouseClickGrabsKeyboardFocus(false);
+    b_Monitor->setMouseClickGrabsKeyboardFocus(false);
+	b_Monitor->setVisible(false);
 
 	s_Stretch->setOwner(getAudioProcessor(),kStretch);
     s_High->setOwner(getAudioProcessor(),kNHigh);
@@ -1825,6 +1856,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     s_NextSlot->setOwner(getAudioProcessor(),kNextSlot);
     s_RecCC->setOwner(getAudioProcessor(),kRecCC);
     s_PlayCC->setOwner(getAudioProcessor(),kPlayCC);
+    s_VelocitySens->setOwner(getAudioProcessor(),kVeloSens);
 
 	s_NumLoops->addMouseListener(this,true);
 	s_NextSlot->addMouseListener(this,true);
@@ -1838,6 +1870,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
 	s_End->addMouseListener(this,true);
 	s_Shift->addMouseListener(this,true);
 	s_Velocity->addMouseListener(this,true);
+	s_VelocitySens->addMouseListener(this,true);
 	s_MasterVelocity->addMouseListener(this,true);
 	s_MasterTranspose->addMouseListener(this,true);
 	s_NumLoops->setDoubleClickReturnValue(true,0);
@@ -1851,7 +1884,8 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
 	s_Start->setDoubleClickReturnValue(true,0);
 	s_End->setDoubleClickReturnValue(true,0);
 	s_Shift->setDoubleClickReturnValue(true,0);
-	s_Velocity->setDoubleClickReturnValue(true,0);
+	s_Velocity->setDoubleClickReturnValue(true,100);
+	s_VelocitySens->setDoubleClickReturnValue(true,0);
 	s_MasterVelocity->setDoubleClickReturnValue(true,0);
 	s_MasterTranspose->setDoubleClickReturnValue(true,0);
 
@@ -2168,6 +2202,9 @@ PizLooperEditor::~PizLooperEditor()
     deleteAndZero (b_KeepLength);
     deleteAndZero (s_RecCC);
     deleteAndZero (s_PlayCC);
+    deleteAndZero (s_VelocitySens);
+    deleteAndZero (label24);
+    deleteAndZero (b_Monitor);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -2371,7 +2408,7 @@ void PizLooperEditor::resized()
     s_Velocity->setBounds (306, 283, 72, 20);
     label3->setBounds (146, 267, 72, 16);
     label4->setBounds (226, 267, 72, 16);
-    label5->setBounds (306, 267, 72, 16);
+    label5->setBounds (301, 267, 80, 16);
     s_Start->setBounds (66, 367, 72, 20);
     label6->setBounds (66, 351, 72, 16);
     s_End->setBounds (146, 367, 72, 20);
@@ -2379,7 +2416,7 @@ void PizLooperEditor::resized()
     s_Stretch->setBounds (306, 367, 72, 20);
     label8->setBounds (306, 351, 72, 16);
     loopmodeBox->setBounds (175, 144, 110, 16);
-    notetriggerBox->setBounds (163, 402, 120, 16);
+    notetriggerBox->setBounds (146, 402, 106, 16);
     syncmodeBox->setBounds (159, 15, 99, 16);
     s_Root->setBounds (76, 174, 64, 20);
     label9->setBounds (15, 176, 64, 16);
@@ -2409,7 +2446,7 @@ void PizLooperEditor::resized()
     b_Filt->setBounds (314, 440, 64, 20);
     viewport->setBounds (415, 105, getWidth() - 415, getHeight() - 105);
     resizer->setBounds (getWidth() - 16, getHeight() - 16, 16, 16);
-    b_NoteToggle->setBounds (235, 440, 57, 20);
+    b_NoteToggle->setBounds (257, 402, 40, 16);
     s_PlayGroup->setBounds (312, 136, 64, 20);
     label13->setBounds (313, 119, 64, 16);
     s_MuteGroup->setBounds (312, 174, 64, 20);
@@ -2565,6 +2602,9 @@ void PizLooperEditor::resized()
     b_KeepLength->setBounds (520, -2, 83, 16);
     s_RecCC->setBounds (11, 149, 64, 20);
     s_PlayCC->setBounds (81, 149, 64, 20);
+    s_VelocitySens->setBounds (234, 440, 64, 20);
+    label24->setBounds (225, 424, 80, 16);
+    b_Monitor->setBounds (678, 33, 55, 20);
     //[UserResized] Add your own custom resize handling here..
     internalPath1.clear();
     internalPath1.startNewSubPath (141.0f, 294.0f);
@@ -2969,6 +3009,17 @@ void PizLooperEditor::buttonClicked (Button* buttonThatWasClicked)
 		}
         //[/UserButtonCode_b_KeepLength]
     }
+    else if (buttonThatWasClicked == b_Monitor)
+    {
+        //[UserButtonCode_b_Monitor] -- add your button handler code here..
+        if (getFilter()->getParamForActiveSlot(kMonitor)>=0.5f) {
+            getFilter()->setParameter(kMonitor,0.0f);
+        }
+        else {
+            getFilter()->setParameter(kMonitor,1.0f);
+        }
+        //[/UserButtonCode_b_Monitor]
+    }
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
@@ -3358,6 +3409,18 @@ void PizLooperEditor::sliderValueChanged (Slider* sliderThatWasMoved)
 		getFilter()->notifyHostForActiveSlot(kPlayCC,slider->mapToVSTRange());
         //[/UserSliderCode_s_PlayCC]
     }
+    else if (sliderThatWasMoved == s_VelocitySens)
+    {
+        //[UserSliderCode_s_VelocitySens] -- add your slider handling code here..
+        if (ModifierKeys::getCurrentModifiers().isCommandDown())
+		{
+			for (int i=0;i<numSlots;i++)
+				getFilter()->notifyHost(kVeloSens,i,slider->mapToVSTRange());
+		}
+		else
+			getFilter()->notifyHostForActiveSlot(kVeloSens,slider->mapToVSTRange());
+        //[/UserSliderCode_s_VelocitySens]
+    }
 
     //[UsersliderValueChanged_Post]
     //[/UsersliderValueChanged_Post]
@@ -3501,7 +3564,7 @@ void PizLooperEditor::mouseUp (const MouseEvent& e)
 		}
     }
 	else if (p==s_Stretch || p==s_Transpose || p==s_Octave || p==s_Start || p==s_End
-		|| p==s_Shift || p==s_Velocity || p==s_MasterVelocity || p==s_MasterTranspose
+		|| p==s_Shift || p==s_Velocity || p==s_VelocitySens || p==s_MasterVelocity || p==s_MasterTranspose
 		|| p==s_PlayGroup || p==s_MuteGroup || p==s_Channel || p==s_NumLoops || p==s_NextSlot)
 	{
 		if (e.mods.isPopupMenu()) {
@@ -3607,6 +3670,9 @@ void PizLooperEditor::updateControls(int param, float value, bool forCurProgram)
 	case kThru:
 		b_Thru->setToggleState(value>=0.5f,false);
 		break;
+	case kMonitor:
+		b_Monitor->setToggleState(value>=0.5f,false);
+		break;
 	case kSync:
 		syncmodeBox->setText(getFilter()->getCurrentSlotParameterText(kSync),true);
 		break;
@@ -3669,6 +3735,10 @@ void PizLooperEditor::updateControls(int param, float value, bool forCurProgram)
 	case kVelocity:
 		s_Velocity->setIndex(lastActiveLoop*numParamsPerSlot+kVelocity);
 	    s_Velocity->setVSTSlider(value);
+		break;
+	case kVeloSens:
+		s_VelocitySens->setIndex(lastActiveLoop*numParamsPerSlot+kVeloSens);
+	    s_VelocitySens->setVSTSlider(value);
 		break;
 	case kShift:
 		s_Shift->setIndex(lastActiveLoop*numParamsPerSlot+kShift);
@@ -4320,7 +4390,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="12" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="93b1b361c9cc0086" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="306 267 72 16" textCol="ffffffff"
+         explicitFocusOrder="0" pos="301 267 80 16" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="Velocity" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="12" bold="0" italic="0" justification="36"/>
@@ -4361,7 +4431,7 @@ BEGIN_JUCER_METADATA
             editable="0" layout="33" items="Loop after rec&#10;Sync loop&#10;Unsync 1-shot&#10;Unsync loop"
             textWhenNonSelected="Unsync 1-shot" textWhenNoItems="(no choices)"/>
   <COMBOBOX name="Note Trigger" id="3db6b8a47a703b85" memberName="notetriggerBox"
-            virtualName="" explicitFocusOrder="0" pos="163 402 120 16" tooltip="For &quot;Transpose&quot; modes, pattern will be transposed relative to &quot;Root Note&quot;"
+            virtualName="" explicitFocusOrder="0" pos="146 402 106 16" tooltip="For &quot;Transpose&quot; modes, pattern will be transposed relative to &quot;Root Note&quot;"
             editable="0" layout="33" items="Off&#10;Mono (Transpose)&#10;Poly (Transpose)&#10;Mono (Orig. Key)&#10;"
             textWhenNonSelected="Mono (Transposed)" textWhenNoItems="(no choices)"/>
   <COMBOBOX name="Sync" id="32c39e356a406b40" memberName="syncmodeBox" virtualName=""
@@ -4504,7 +4574,7 @@ BEGIN_JUCER_METADATA
                     explicitFocusOrder="0" pos="16R 16R 16 16" class="ResizableCornerComponent"
                     params="this, &amp;resizeLimits"/>
   <TEXTBUTTON name="new button" id="d48ae418cc5b8c13" memberName="b_NoteToggle"
-              virtualName="" explicitFocusOrder="0" pos="235 440 57 20" tooltip="When enabled, Note On events will toggle playback, ignoring Note Off events; otherwise Note Off will stop playback"
+              virtualName="" explicitFocusOrder="0" pos="257 402 40 16" tooltip="When enabled, Note On events will toggle playback, ignoring Note Off events; otherwise Note Off will stop playback"
               bgColOff="ff999999" buttonText="Toggle" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
   <SLIDER name="TriggerChannel" id="19f62893eab0e18d" memberName="s_PlayGroup"
@@ -5041,6 +5111,21 @@ BEGIN_JUCER_METADATA
           bkgcol="1e000000" thumbcol="ff000000" textboxtext="ffffffff"
           min="-2" max="127" int="1" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <SLIDER name="Velocity Sensitivity" id="56077b1f3eddabf4" memberName="s_VelocitySens"
+          virtualName="VSTSlider" explicitFocusOrder="0" pos="234 440 64 20"
+          tooltip="Velocity Sensitivity (Input Velocity -&gt; Output Velocity)"
+          bkgcol="1e000000" thumbcol="ff000000" textboxtext="ffffffff"
+          min="0" max="200" int="1" style="LinearBar" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <LABEL name="new label" id="56dd185855bc67b0" memberName="label24" virtualName=""
+         explicitFocusOrder="0" pos="225 424 80 16" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="VeloSens" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="12" bold="0" italic="0" justification="36"/>
+  <TEXTBUTTON name="MIDI_Monitor" id="9b82f84d650b5d48" memberName="b_Monitor"
+              virtualName="" explicitFocusOrder="0" pos="678 33 55 20" tooltip="Monitor input MIDI through active slot's channel"
+              bgColOff="ff999999" buttonText="Monitor" connectedEdges="0" needsCallback="1"
+              radioGroupId="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

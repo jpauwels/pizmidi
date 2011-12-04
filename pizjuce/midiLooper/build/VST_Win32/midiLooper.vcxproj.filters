@@ -86,4 +86,7 @@
       <Filter>Source Files\wrapper_code</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\fromKVRthread.txt" />
+  </ItemGroup>
 </Project>

@@ -7,6 +7,13 @@ class MidiIndicator : public Component
 {
 friend class MidiEnvelope;
 public:
+	MidiIndicator()
+	{
+		inmsg = -1;
+		outmsg = -1;
+	}
+	~MidiIndicator() {}
+
 	void paint (Graphics &g)
 	{
 		const int dotSize = MAX_ENVELOPE_DOT_SIZE;

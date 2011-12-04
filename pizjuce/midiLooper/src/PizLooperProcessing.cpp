@@ -246,7 +246,7 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 							currentPoly[slot]++;
 							polytrigger[slot][0]=root;
 						}
-						tRules[slot]->trigger(root,0);
+						tRules[slot]->trigger(root,1.f,0);
 					}
 					//if looplength isn't exactly an integer number of looplengthsteps,
 					//move the end so length is a whole number of steps
@@ -514,6 +514,10 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 			{
 				discard = dontrecord = played[message_number] = true;
 			}
+			if (isNoteTriggeringAnySlot(midi_message))
+			{
+				discard = true;
+			}
 			if (isForChannel && !dontrecord) {
 				recordMessage(midi_message,slot,playing,ppq,eventoffset,ppqPerSample,sample_number);
 				if (overdub && isSlotPlaying(slot)) {
@@ -522,21 +526,26 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 			}
 			//transpose using current slot settings
 			if (midi_message.isNoteOn() && param[kThru]>=0.5f) {
-				midi_message.setNoteNumber(tRules[curProgram]->getTransposedNote(notenum,0,discard,midi_message.getChannel()));
 				if (discard)
 					inputNoteTransposition[eventchan][notenum] = -1;
-				else
+				else {
+					midi_message.setNoteNumber(tRules[curProgram]->getTransposedNote(notenum,0,discard,midi_message.getChannel()));
 					inputNoteTransposition[eventchan][notenum] = midi_message.getNoteNumber();
+				}
 			}
 			else if (midi_message.isNoteOff() && param[kThru]>=0.5f) {
-				midi_message.setNoteNumber(inputNoteTransposition[eventchan][notenum]);
 				if (inputNoteTransposition[eventchan][notenum]==-1)
 					discard=true;
+				else
+					midi_message.setNoteNumber(inputNoteTransposition[eventchan][notenum]);
 			}
 			//if thru is on, copy original message
 			if (!discard && !played[message_number]) 
 			{
 				played[message_number]=true;
+				const int curChannel = roundToInt(getParameterForSlot(kChannel,curProgram)*16.0f);
+				if(curChannel>0 && param[kMonitor]>=0.5f) 
+					midi_message.setChannel(curChannel);
 				midiout.addEvent(midi_message,sample_number);
 				DBG("event thru");
 			}
@@ -597,7 +606,7 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 				else measurePlayFromHere[slot][0] = ppq;
 				if (!waitForBar) {
 					barTriggerSample[slot][0] = 0;
-					tRules[slot]->trigger(root,0);
+					tRules[slot]->trigger(root,1.f,0);
 				}
 				else {
 					barTriggerSample[slot][0] = (int)((ppqOfNextBar)/ppqPerSample);
@@ -883,6 +892,33 @@ void PizLooper::processNoteOffBuffer(int slot, MidiBuffer &midiout, int numSampl
 	}
 }
 
+bool PizLooper::isNoteTriggeringAnySlot(MidiMessage const &message)
+{
+	if (message.isNoteOnOrOff()) 
+	{
+		const int notenum = message.getNoteNumber();
+		if (param[kSingleLoop]>=0.5f)
+		{
+			//for "play active slot only" only trigger settings for current slot matter
+			if (getParameterForSlot(kNoteTrig,curProgram) > 0.f
+				&& notenum >= floatToMidi(getParameterForSlot(kNLow,curProgram)) 
+				&& notenum <= floatToMidi(getParameterForSlot(kNHigh,curProgram))
+			)
+				return true;
+			return false;
+		}
+		for (int slot=0; slot<numSlots; slot++)
+		{
+			if (getParameterForSlot(kNoteTrig,slot) > 0.f 
+				&& notenum >= floatToMidi(getParameterForSlot(kNLow,slot)) 
+				&& notenum <= floatToMidi(getParameterForSlot(kNHigh,slot))
+			)
+				return true;
+		}
+	}
+	return false;
+}
+
 bool PizLooper::processTriggerNote(const int slot, MidiMessage &message, int root, MidiBuffer &midiout,
 								   const int sample, const double ppqOfNextBar, const double ppqPerSample, 
 								   const double ppqOfLastStep, const double looplengthstep)
@@ -890,8 +926,13 @@ bool PizLooper::processTriggerNote(const int slot, MidiMessage &message, int roo
 	if (!message.isForChannel(roundToInt(getParameterForSlot(kTrigChan,slot)*15.0f)+1)) 
 		return false;
 
-	const float noteTrig = getParameterForSlot(kNoteTrig,slot);
+	if (param[kSingleLoop]>=0.5f && curProgram!=slot)
+		return false;
+
+	const float velosens = getParameterForSlot(kVeloSens,slot);
+	const float veloscale = velosens*message.getFloatVelocity()*2.f + (1.f-velosens);
 	const int notenum = message.getNoteNumber();
+	const float noteTrig = getParameterForSlot(kNoteTrig,slot);
 	const bool waitForBar = getParameterForSlot(kWaitForBar,slot)>=0.5;
 	bool usedNote = false;
 	if (message.isNoteOn()) 
@@ -983,11 +1024,11 @@ bool PizLooper::processTriggerNote(const int slot, MidiMessage &message, int roo
 
 					if (!waitForBar) {
 						barTriggerSample[slot][use]=(int)((lastPosInfo.ppqPosition)/ppqPerSample);
-						tRules[slot]->trigger(notenum,use);
+						tRules[slot]->trigger(notenum,veloscale,use);
 					}
 					else {
 						barTriggerSample[slot][use] = (int)((ppqOfNextBar)/ppqPerSample);
-						tRules[slot]->trigger(notenum,use);
+						tRules[slot]->trigger(notenum,veloscale,use);
 						measurePlayFromHere[slot][use] = ppqOfNextBar;
 					}	
 				}
@@ -1064,11 +1105,12 @@ void PizLooper::playLoopEvent(int slot, int instance, int eventindex, int channe
 						+ String(noteOffBuffer[slot].size()));
 				}
 				int newNote = tRules[slot]->getTransposedNote(note,instance,kill,outputchannel);
+				const float velscale = tRules[slot]->velscale[instance];
 				if (!kill)
 				{
 					msgout.setChannel(outputchannel);
 					msgout.setNoteNumber(newNote);
-					msgout.multiplyVelocity(getParameterForSlot(kVelocity,slot)*2.0f*getParameter(kMasterVelocity)*2.0f);
+					msgout.multiplyVelocity(velscale*getParameterForSlot(kVelocity,slot)*2.0f*getParameter(kMasterVelocity)*2.0f);
 					int noteOffSample = samplepos+(int)(samplesPerPpq*(loop->getTimeOfMatchingKeyUp(eventindex)-loop->getEventTime(eventindex))/(stretch*960.0));
 					jassert(noteOffSample>samplepos);
 					if (loop->getIndexOfMatchingKeyUp(eventindex)==-1) {

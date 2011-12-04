@@ -11,7 +11,7 @@
 #ifndef __PLUGINCHARACTERISTICS_JJSENAUIU__
 #define __PLUGINCHARACTERISTICS_JJSENAUIU__
 
-#define JucePlugin_Build_VST    0  // (If you change this value, you'll also need to re-export the projects using the Jucer)
+#define JucePlugin_Build_VST    1  // (If you change this value, you'll also need to re-export the projects using the Jucer)
 #define JucePlugin_Build_AU     0  // (If you change this value, you'll also need to re-export the projects using the Jucer)
 #define JucePlugin_Build_RTAS   0  // (If you change this value, you'll also need to re-export the projects using the Jucer)
 #define JucePlugin_Build_VSTMA	1

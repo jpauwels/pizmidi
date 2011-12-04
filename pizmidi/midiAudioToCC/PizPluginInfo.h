@@ -9,7 +9,7 @@
 #define PLUG_FORCE_EFFECT	1
 #define PLUG_FORCE_INST		0
 #define PLUG_NAME			"midiAudioToCC"
-#define PLUG_IDENT			'mAli'
+#define PLUG_IDENT			'mACC'
 #define PLUG_VENDOR			"Insert Piz Here"
 #define PLUG_VERSION		0x10100
 
