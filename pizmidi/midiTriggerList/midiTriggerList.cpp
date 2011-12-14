@@ -193,7 +193,8 @@ void MidiTriggerList::getParameterDisplay(VstInt32 index, char *text){
                 }
                 else if (index==kOutputNum+i*3) {
                     if (param[kOutputType+i*3]<0.25f) strcpy(text, "Waiting...");
-                    else if (param[kOutputType+i*3]<0.5f) sprintf(text, "%s (%d)", getNoteName(FLOAT_TO_MIDI(v),bottomOctave),FLOAT_TO_MIDI(v));
+					else if (param[kOutputType+i*3]<0.5f) strcpy(text, "--");
+                    else if (param[kOutputType+i*3]<0.75f) sprintf(text, "%s (%d)", getNoteName(FLOAT_TO_MIDI(v),bottomOctave),FLOAT_TO_MIDI(v));
                     else sprintf(text, "%d", FLOAT_TO_MIDI(v));
                 }
                 else if (index==kOutputVal+i*3) {
@@ -238,12 +239,13 @@ void MidiTriggerList::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec
             else {
                 for (int i=0;i<kNumSlots;i++) {
                     if (param[kOutputType+i*3]<0.25f) {
-                        if (status == MIDI_CONTROLCHANGE) setParameterAutomated(kOutputType+i*3, 0.6f);
-                        else if (status == MIDI_NOTEON) setParameterAutomated(kOutputType+i*3, 0.4f);
+                        if (status == MIDI_CONTROLCHANGE) setParameterAutomated(kOutputType+i*3, 1.f);
+                        else if (status == MIDI_NOTEON) setParameterAutomated(kOutputType+i*3, 0.6f);
                         if (param[kOutputType+i*3]>=0.25f) {
                             setParameterAutomated(kOutputNum+i*3, MIDI_TO_FLOAT(data1));
                             setParameterAutomated(kOutputVal+i*3, MIDI_TO_FLOAT(data2));
                         }
+						break;
                     }
                 }
             }
@@ -254,11 +256,11 @@ void MidiTriggerList::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec
                         if (param[kThru]>=0.33333f) discard=true;
                         if ((param[kTriggerType]>=0.75f && data2>0) || data2==127) {
                             for (int i=0;i<kNumSlots;i++) {
-                                if (param[kOutputType+i*3]>=0.25f) {
+                                if (param[kOutputType+i*3]>=0.5f) {
                                     int outval = FLOAT_TO_MIDI_X(param[kOutputVal+i*3]);
                                     if (outval==-1) outval=data2;
                                     int outnum = FLOAT_TO_MIDI(param[kOutputNum+i*3]);
-                                    bool isNote = param[kOutputType+i*3]<0.5f;
+                                    bool isNote = param[kOutputType+i*3]<0.75f;
                                     if (isNote && notesPlaying[outnum]) {
                                         //kill if playing
                                         VstMidiEvent m = tomod;
@@ -278,9 +280,9 @@ void MidiTriggerList::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec
                         }
                         else if (data2==0) {
                             for (int i=0;i<kNumSlots;i++) {
-                                if (param[kOutputType+i*3]>=0.25f) {
+                                if (param[kOutputType+i*3]>=0.5f) {
                                     int outnum = FLOAT_TO_MIDI(param[kOutputNum+i*3]);
-                                    bool isNote = param[kOutputType+i*3]<0.5f;
+                                    bool isNote = param[kOutputType+i*3]<0.75f;
                                     if (isNote && notesPlaying[outnum]) {
                                         //kill if playing
                                         VstMidiEvent m = tomod;
@@ -304,9 +306,9 @@ void MidiTriggerList::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec
                     if (param[kTriggerType]<0.5f && data1==FLOAT_TO_MIDI(param[kTriggerNum])) {
                         if (param[kThru]>=0.33333f) discard=true;
                         for (int i=0;i<kNumSlots;i++) {
-                            if (param[kOutputType+i*3]>=0.25f) {
+                            if (param[kOutputType+i*3]>=0.5f) {
                                 int outnum = FLOAT_TO_MIDI(param[kOutputNum+i*3]);
-                                bool isNote = param[kOutputType+i*3]<0.5f;
+                                bool isNote = param[kOutputType+i*3]<0.75f;
                                 int outval = FLOAT_TO_MIDI_X(param[kOutputVal+i*3]);
                                 if (outval==-1) outval=data2;
                                 if (isNote && notesPlaying[outnum]) {
@@ -331,9 +333,9 @@ void MidiTriggerList::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec
                     if (param[kTriggerType]<0.5f && data1==FLOAT_TO_MIDI(param[kTriggerNum])) {
                         if (param[kThru]>0.33333f) discard=true;
                         for (int i=0;i<kNumSlots;i++) {
-                            if (param[kOutputType+i*3]>=0.25f) {
+                            if (param[kOutputType+i*3]>=0.5f) {
                                 int outnum = FLOAT_TO_MIDI(param[kOutputNum+i*3]);
-                                bool isNote = param[kOutputType+i*3]<0.5f;
+                                bool isNote = param[kOutputType+i*3]<0.75f;
                                 VstMidiEvent m = tomod;
                                 m.midiData[0] = (isNote ? MIDI_NOTEOFF : MIDI_CONTROLCHANGE) | channel;
                                 m.midiData[1] = outnum;

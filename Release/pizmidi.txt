@@ -5,6 +5,12 @@ Change log
 
 
 ----------------------------
+changes 20111213:
+
+* Fixed midiTriggerList
+* Fixed midiDelay
+
+----------------------------
 changes 20111103:
 
 * Added hanging note protection to midiChannelize

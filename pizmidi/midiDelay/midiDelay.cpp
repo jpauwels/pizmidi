@@ -279,6 +279,187 @@ void MidiDelay::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
     VstInt32 delay = roundToInt((float)samplesPerBeat * stepsize);
     if (param[kSync]<0.5f) delay = roundToInt(((1.f-param[kTime])*1.98f+0.02f)*sampleRate);
 
+    //process incoming events-------------------------------------------------------
+    for (unsigned int i=0;i<inputs[0].size();i++) {
+        //copying event "i" from input (with all its fields)
+        VstMidiEvent tomod = inputs[0][i];
+
+        int status    = tomod.midiData[0] & 0xf0;   // scraping  channel
+        int channel   = tomod.midiData[0] & 0x0f;   // isolating channel (0-15)
+        int data1     = tomod.midiData[1] & 0x7f;
+        int data2	    = tomod.midiData[2] & 0x7f;
+
+        dbg("incoming midi event, i=" << i << " status=" << status << " ch=" << channel);
+
+        //make 0-velocity notes into "real" noteoffs for simplicity
+        if (status==MIDI_NOTEON && data2==0) {
+            status=MIDI_NOTEOFF;
+            tomod.midiData[0] = MIDI_NOTEOFF | channel;
+        }
+
+        bool discard = false;
+
+        //only look at the selected channel
+        if (channel == listenchannel || listenchannel == -1 && param[kMode]>0.f)
+        {
+            //incoming NoteOff--------------------------------------------------------------
+            if (status == MIDI_NOTEOFF) {
+                if (param[kWet]>0.f) {
+                    VstMidiEvent delayed = tomod;
+                    if (samples - delayed.deltaFrames - delay > 0)
+                    {
+                        // delayed note is within the current block, don't need counter
+                        delayed.deltaFrames += delay;
+                        dbg("delay noteoff within block, deltaFrames=" << delayed.deltaFrames);
+                        delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
+                        if (!noteKilled[data1][channel]) {
+                            outputs[0].push_back(delayed);
+                            notePlaying[data1][channel] = false;
+                        }
+                        else noteKilled[data1][channel]=false;
+                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
+                        if (samples - delayed.deltaFrames - delay <= 0) {
+                            delayed.midiData[3]=127;
+                            delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+                            if (param[kLimit]==0.0f) delayed.flags=127;
+                            midiDelayBuffer.push_back(delayed);
+                        }
+                    }
+                    else {
+                        expectingDelayedNoteOff[data1][channel]++;
+                        // delayed note is in a future block, so start counter:
+                        discard=true; //takes the event out of the current block
+                        delayed.deltaFrames = (delay - (samples-delayed.deltaFrames));
+                        delayed.midiData[3]=127;
+                        delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+                        if (param[kLimit]==0.0f) delayed.flags=127;
+                        midiDelayBuffer.push_back(delayed);
+                        dbg("delay noteoff in later block, counter=" << delayed.deltaFrames);
+                    }
+                }
+                if (param[kDry]>0.f) {
+                    int dryvel = roundToInt((float)data2*param[kDry]);
+                    dbg("dry note off");
+                    tomod.midiData[2]=dryvel;
+                    if (!noteKilled[data1][channel]) {
+						discard = true;
+                        outputs[0].push_back(tomod);
+                        notePlaying[data1][channel]=false;
+                    }
+                    else noteKilled[data1][channel]=false;
+                }
+				else discard = true;
+            }
+            //Incoming NoteOn---------------------------------------------------------------
+            else if (status == MIDI_NOTEON)
+            {
+                if (param[kWet]>0.f) {
+                    VstMidiEvent delayed = tomod;
+                    delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
+					if (delayed.midiData[2]>0)
+					{
+						if (samples - delayed.deltaFrames - delay > 0)
+						{
+							// delayed note is within the current block, don't need counter
+							delayed.deltaFrames += delay;
+							if (notePlaying[data1][channel]) {
+								VstMidiEvent kill;
+								kill.midiData[0] = MIDI_NOTEOFF + channel;
+								kill.midiData[1] = data1;
+								kill.midiData[2] = 0;
+								kill.deltaFrames = delayed.deltaFrames;
+								kill.detune = 0;
+								outputs[0].push_back(kill);
+								noteKilled[data1][channel]=true;
+								dbg("killed note " << data1);
+							}
+							dbg("delay noteon within block, deltaFrames=" << tomod.deltaFrames);
+							notePlaying[data1][channel] = true;
+							outputs[0].push_back(delayed);
+							delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
+							//if (samples - delayed.deltaFrames - delay <= 0) {
+								delayed.midiData[3]=127;
+								delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+								if (param[kLimit]==0.0f) delayed.flags=127;
+								midiDelayBuffer.push_back(delayed);
+							//}
+						}
+						else {
+							expectingDelayedNoteOn[data1][channel]++;
+							// delayed note is in a future block, so start counter:
+							discard=true; //takes the event out of the current block
+							delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
+							delayed.midiData[3]=127;
+							delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+							if (param[kLimit]==0.0f) delayed.flags=127;
+							midiDelayBuffer.push_back(delayed);
+							dbg("delay noteoff in later block, counter=" << delayed.deltaFrames);
+						}
+					}
+                }
+                if (param[kDry]>0.f) {
+                    int dryvel = roundToInt((float)data2*param[kDry]);
+					if (dryvel==0) dryvel = 1;
+                    if (notePlaying[data1][channel]) {
+                        VstMidiEvent kill;
+                        kill.midiData[0] = MIDI_NOTEOFF + channel;
+                        kill.midiData[1] = data1;
+                        kill.midiData[2] = 0;
+                        kill.deltaFrames = tomod.deltaFrames;
+                        kill.detune = 0;
+                        outputs[0].push_back(kill);
+                        noteKilled[data1][channel]=true;
+                        dbg("killed note " << data1);
+                    }
+                    dbg("dry note on");
+                    tomod.midiData[2]=dryvel;
+					discard = true;
+                    outputs[0].push_back(tomod);
+                    notePlaying[data1][channel]=true;
+                }
+				else {
+					notePlaying[data1][channel]=false;
+					discard = true;
+				}
+            }
+            else if (status==MIDI_CONTROLCHANGE && param[kMode]>=0.5f) {
+                if (param[kDry]>0.f) {
+                    tomod.midiData[2]=roundToInt(param[kDry]*(float)data2);
+                    outputs[0].push_back(tomod);
+                    lastout[data1][channel]=-1;
+                }
+				else discard = true;
+                if (param[kWet]>0.f) {
+                    VstMidiEvent delayed = tomod;
+                    if (samples - delayed.deltaFrames - delay > 0)
+                    {
+                        // delayed note is within the current block, don't need counter
+                        delayed.deltaFrames += delay;
+                        delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
+                        outputs[0].push_back(delayed);
+                        lastout[data1][channel]=delayed.midiData[2];
+                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
+                        //if (samples - delayed.deltaFrames - delay <= 0) {
+                            delayed.midiData[3]=127;
+                            delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+                            if (param[kLimit]==0.0f) delayed.flags=127;
+                            midiDelayBuffer.push_back(delayed);
+                        //}
+                    }
+                    else {
+                        discard=true; //takes the event out of the current block
+                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
+                        delayed.midiData[3]=127;
+                        delayed.flags=roundToInt(param[kLimit]*15.f)+1;
+                        if (param[kLimit]==0.0f) delayed.flags=127;
+                        midiDelayBuffer.push_back(delayed);
+                    }
+                }
+            }
+        } // if listenchannel==channel
+        if (!discard) outputs[0].push_back(tomod);
+    } //for() inputs loop
+
     //process delay buffer----------------------------------------------------------
     VstMidiEventVec newBuffer;
     newBuffer.clear();
@@ -350,8 +531,11 @@ void MidiDelay::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
             if (param[kFeedback]>0.f) {
                 if (param[kFeedback]<1.f) {
                     event.midiData[2] = roundToInt((float)data2*param[kFeedback])-1;
-                    if (event.midiData[2]<1) event.midiData[2]=1;
-                }
+                    if (status==MIDI_NOTEON && event.midiData[2]<1) 
+						event.midiData[2]=1;
+					else if (event.midiData[2]<0)
+						event.midiData[2]=0;
+				}
                 if (samples - event.deltaFrames - delay > 0)
                 {
                     event.deltaFrames += delay;
@@ -366,21 +550,25 @@ void MidiDelay::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                         else noteKilled[data1][channel]=false;
                     }
                     else if (status==MIDI_NOTEON) {
-                        if (notePlaying[data1][channel]) {
-                            VstMidiEvent kill;
-                            kill.midiData[0] = MIDI_NOTEOFF + channel;
-                            kill.midiData[1] = data1;
-                            kill.midiData[2] = 0;
-                            kill.deltaFrames = event.deltaFrames;
-                            kill.detune = 0;
-                            outputs[0].push_back(kill);
-                            noteKilled[data1][channel]=true;
-                            dbg("killed note " << data1);
-                        }
-                        notePlaying[data1][channel]=true;
                         VstMidiEvent out1 = event;
                         out1.midiData[2] = roundToInt((float)event.midiData[2]*param[kWet]);
-                        outputs[0].push_back(out1);
+						if (out1.midiData[2]>0) {
+							if (notePlaying[data1][channel]) {
+								VstMidiEvent kill;
+								kill.midiData[0] = MIDI_NOTEOFF + channel;
+								kill.midiData[1] = data1;
+								kill.midiData[2] = 0;
+								kill.deltaFrames = event.deltaFrames;
+								kill.detune = 0;
+								outputs[0].push_back(kill);
+								noteKilled[data1][channel]=true;
+								dbg("killed note " << data1);
+							}
+							notePlaying[data1][channel]=true;
+							outputs[0].push_back(out1);
+						}
+						else
+							notePlaying[data1][channel]=false;
                         event.flags--;
                     }
                     else if (status==MIDI_CONTROLCHANGE && param[kMode]>=0.5f) {
@@ -427,175 +615,6 @@ void MidiDelay::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
     }
     midiDelayBuffer.clear();
     midiDelayBuffer=newBuffer;
-
-    //process incoming events-------------------------------------------------------
-    for (unsigned int i=0;i<inputs[0].size();i++) {
-        //copying event "i" from input (with all its fields)
-        VstMidiEvent tomod = inputs[0][i];
-
-        int status    = tomod.midiData[0] & 0xf0;   // scraping  channel
-        int channel   = tomod.midiData[0] & 0x0f;   // isolating channel (0-15)
-        int data1     = tomod.midiData[1] & 0x7f;
-        int data2	    = tomod.midiData[2] & 0x7f;
-
-        dbg("incoming midi event, i=" << i << " status=" << status << " ch=" << channel);
-
-        //make 0-velocity notes into "real" noteoffs for simplicity
-        if (status==MIDI_NOTEON && data2==0) {
-            status=MIDI_NOTEOFF;
-            tomod.midiData[0] = MIDI_NOTEOFF | channel;
-        }
-
-        bool discard = false;
-
-        //only look at the selected channel
-        if (channel == listenchannel || listenchannel == -1 && param[kMode]>0.f)
-        {
-            //incoming NoteOff--------------------------------------------------------------
-            if (status == MIDI_NOTEOFF) {
-                if (param[kWet]>0.f) {
-                    VstMidiEvent delayed = tomod;
-                    if (samples - delayed.deltaFrames - delay > 0)
-                    {
-                        // delayed note is within the current block, don't need counter
-                        delayed.deltaFrames += delay;
-                        dbg("delay noteoff within block, deltaFrames=" << delayed.deltaFrames);
-                        delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
-                        if (!noteKilled[data1][channel]) {
-                            outputs[0].push_back(delayed);
-                            notePlaying[data1][channel] = false;
-                        }
-                        else noteKilled[data1][channel]=false;
-                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
-                        if (samples - delayed.deltaFrames - delay <= 0) {
-                            delayed.midiData[3]=127;
-                            delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                            if (param[kLimit]==0.0f) delayed.flags=127;
-                            midiDelayBuffer.push_back(delayed);
-                        }
-                    }
-                    else {
-                        expectingDelayedNoteOff[data1][channel]++;
-                        // delayed note is in a future block, so start counter:
-                        discard=true; //takes the event out of the current block
-                        delayed.deltaFrames = (delay - (samples-delayed.deltaFrames));
-                        delayed.midiData[3]=127;
-                        delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                        if (param[kLimit]==0.0f) delayed.flags=127;
-                        midiDelayBuffer.push_back(delayed);
-                        dbg("delay noteoff in later block, counter=" << delayed.deltaFrames);
-                    }
-                }
-                if (param[kDry]>0.f) {
-                    int dryvel = roundToInt((float)data2*param[kDry]);
-                    dbg("dry note off");
-                    tomod.midiData[2]=dryvel;
-                    if (!noteKilled[data1][channel]) {
-                        outputs[0].push_back(tomod);
-                        notePlaying[data1][channel]=false;
-                    }
-                    else noteKilled[data1][channel]=false;
-                }
-            }
-            //Incoming NoteOn---------------------------------------------------------------
-            else if (status == MIDI_NOTEON)
-            {
-                if (param[kWet]>0.f) {
-                    VstMidiEvent delayed = tomod;
-                    if (samples - delayed.deltaFrames - delay > 0)
-                    {
-                        // delayed note is within the current block, don't need counter
-                        delayed.deltaFrames += delay;
-                        if (notePlaying[data1][channel]) {
-                            VstMidiEvent kill;
-                            kill.midiData[0] = MIDI_NOTEOFF + channel;
-                            kill.midiData[1] = data1;
-                            kill.midiData[2] = 0;
-                            kill.deltaFrames = delayed.deltaFrames;
-                            kill.detune = 0;
-                            outputs[0].push_back(kill);
-                            noteKilled[data1][channel]=true;
-                            dbg("killed note " << data1);
-                        }
-                        dbg("delay noteon within block, deltaFrames=" << tomod.deltaFrames);
-                        notePlaying[data1][channel] = true;
-                        delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
-                        outputs[0].push_back(delayed);
-                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
-                        if (samples - delayed.deltaFrames - delay <= 0) {
-                            delayed.midiData[3]=127;
-                            delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                            if (param[kLimit]==0.0f) delayed.flags=127;
-                            midiDelayBuffer.push_back(delayed);
-                        }
-                    }
-                    else {
-                        expectingDelayedNoteOn[data1][channel]++;
-                        // delayed note is in a future block, so start counter:
-                        discard=true; //takes the event out of the current block
-                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
-                        delayed.midiData[3]=127;
-                        delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                        if (param[kLimit]==0.0f) delayed.flags=127;
-                        midiDelayBuffer.push_back(delayed);
-                        dbg("delay noteoff in later block, counter=" << delayed.deltaFrames);
-                    }
-                }
-                if (param[kDry]>0.f) {
-                    int dryvel = roundToInt((float)data2*param[kDry]);
-                    if (notePlaying[data1][channel]) {
-                        VstMidiEvent kill;
-                        kill.midiData[0] = MIDI_NOTEOFF + channel;
-                        kill.midiData[1] = data1;
-                        kill.midiData[2] = 0;
-                        kill.deltaFrames = tomod.deltaFrames;
-                        kill.detune = 0;
-                        outputs[0].push_back(kill);
-                        noteKilled[data1][channel]=true;
-                        dbg("killed note " << data1);
-                    }
-                    dbg("dry note on");
-                    tomod.midiData[2]=dryvel;
-                    outputs[0].push_back(tomod);
-                    notePlaying[data1][channel]=true;
-                }
-            }
-            else if (status==MIDI_CONTROLCHANGE && param[kMode]>=0.5f) {
-                if (param[kDry]>0.f) {
-                    tomod.midiData[2]=roundToInt(param[kDry]*(float)data2);
-                    outputs[0].push_back(tomod);
-                    lastout[data1][channel]=-1;
-                }
-                if (param[kWet]>0.f) {
-                    VstMidiEvent delayed = tomod;
-                    if (samples - delayed.deltaFrames - delay > 0)
-                    {
-                        // delayed note is within the current block, don't need counter
-                        delayed.deltaFrames += delay;
-                        delayed.midiData[2] = roundToInt((float)data2*param[kWet]);
-                        outputs[0].push_back(delayed);
-                        lastout[data1][channel]=delayed.midiData[2];
-                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
-                        if (samples - delayed.deltaFrames - delay <= 0) {
-                            delayed.midiData[3]=127;
-                            delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                            if (param[kLimit]==0.0f) delayed.flags=127;
-                            midiDelayBuffer.push_back(delayed);
-                        }
-                    }
-                    else {
-                        discard=true; //takes the event out of the current block
-                        delayed.deltaFrames = (delay - (samples-tomod.deltaFrames));
-                        delayed.midiData[3]=127;
-                        delayed.flags=roundToInt(param[kLimit]*15.f)+1;
-                        if (param[kLimit]==0.0f) delayed.flags=127;
-                        midiDelayBuffer.push_back(delayed);
-                    }
-                }
-            }
-        } // if listenchannel==channel
-        if (!discard) outputs[0].push_back(tomod);
-    } //for() inputs loop
 
     sortMidiEvents(outputs[0]);
 

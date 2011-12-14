@@ -39,6 +39,7 @@ PizKeyboard::PizKeyboard()
 		usepc = false;
 		qwerty = false;
 		capslock = false;
+		showNumbers = false;
 		//sendnotesonpc = true;
 		lastUIWidth = 560;
 		lastUIHeight = 140;
