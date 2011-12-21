@@ -50,6 +50,9 @@
       <Filter>Source Files\wrapper_code</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\JucePluginCharacteristics.h" />
+    <ClInclude Include="..\..\..\common\midistuff.h">
+      <Filter>Source Files\filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\common\LookAndFeel.cpp">

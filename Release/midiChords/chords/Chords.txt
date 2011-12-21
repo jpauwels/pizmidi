@@ -1,0 +1,26 @@
+; Chord shapes are defined as the difference in semitones from the trigger note,
+; in a space-separated list. Everything to the left of the colon is the chord
+; name displayed in the menu.
+; 
+; ; comment
+; # Section header
+; -- separator
+
+#Triads
+Major: 0 4 7
+Minor: 0 3 7
+Diminished: 0 3 6
+Augmented: 0 4 8
+
+#Sixths
+Major 6: 0 4 7 9
+Minor 6: 0 3 7 8
+
+#Sevenths
+Dominant 7: 0 4 7 10
+Major 7: 0 4 7 11
+Minor 7: 0 3 7 10
+Major/Minor 7: 0 4 7 10
+Half Diminished 7: 0 3 6 10
+Diminished 7: 0 3 6 9
+--

@@ -1,0 +1,13 @@
+; Chords saved from the plugin GUI are added here.
+;
+; Chord shapes are defined as the difference in semitones from the trigger note,
+; in a space-separated list. Everything to the left of the colon is the chord
+; name displayed in the menu.
+; Example:
+;
+; Major Triad: 0 4 7
+; 
+; ; comment
+; # Section header
+; -- separator
+;
