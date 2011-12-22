@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  21 Dec 2011 8:20:57am
+  Creation date:  22 Dec 2011 3:52:25pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -61,7 +61,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       chordMenuButton (0),
       presetNameLabel (0),
       presetMenuButton (0),
-      textEditor (0)
+      textEditor (0),
+      copyButton (0),
+      pasteButton (0),
+      previewButton (0),
+      chordEditor (0),
+      pcButton (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -83,7 +88,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     addAndMakeVisible (chordLearnButton = new TextButton (L"chordLearn"));
     chordLearnButton->setTooltip (L"Learn next input chord");
-    chordLearnButton->setButtonText (L"Learn Chord");
+    chordLearnButton->setButtonText (L"Learn");
     chordLearnButton->setConnectedEdges (Button::ConnectedOnBottom);
     chordLearnButton->addListener (this);
 
@@ -222,7 +227,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     transposeChordDownButton2->addListener (this);
 
     addAndMakeVisible (chordMenuButton = new TextButton (L"chordMenu"));
-    chordMenuButton->setButtonText (L"Chords");
+    chordMenuButton->setButtonText (L"Menu");
     chordMenuButton->setConnectedEdges (Button::ConnectedOnBottom);
     chordMenuButton->addListener (this);
 
@@ -253,6 +258,35 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     textEditor->setPopupMenuEnabled (true);
     textEditor->setColour (TextEditor::outlineColourId, Colours::black);
     textEditor->setText (String::empty);
+
+    addAndMakeVisible (copyButton = new TextButton (L"copy"));
+    copyButton->setButtonText (L"Copy");
+    copyButton->setConnectedEdges (Button::ConnectedOnRight | Button::ConnectedOnTop);
+    copyButton->addListener (this);
+
+    addAndMakeVisible (pasteButton = new TextButton (L"paste"));
+    pasteButton->setButtonText (L"Paste");
+    pasteButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnTop);
+    pasteButton->addListener (this);
+
+    addAndMakeVisible (previewButton = new TextButton (L"play"));
+    previewButton->setButtonText (L"Play Chord");
+    previewButton->setColour (TextButton::buttonColourId, Colour (0xff7ca17c));
+
+    addAndMakeVisible (chordEditor = new Label (L"new label",
+                                                L"chord"));
+    chordEditor->setFont (Font (15.0000f, Font::plain));
+    chordEditor->setJustificationType (Justification::centred);
+    chordEditor->setEditable (false, true, false);
+    chordEditor->setColour (Label::backgroundColourId, Colours::white);
+    chordEditor->setColour (Label::outlineColourId, Colour (0xb3000000));
+    chordEditor->setColour (TextEditor::textColourId, Colours::black);
+    chordEditor->setColour (TextEditor::backgroundColourId, Colour (0x0));
+    chordEditor->addListener (this);
+
+    addAndMakeVisible (pcButton = new ToggleButton (L"new toggle button"));
+    pcButton->setButtonText (L"Use ProgCh");
+    pcButton->addListener (this);
 
 
     //[UserPreSize]
@@ -291,6 +325,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
 	pizButton->addListener(this);
 	pizButton->setTooltip("http://thepiz.org/plugins");
+
+	previewButton->addMouseListener(this,false);
 
 	velocitySlider->setVisible(false);
 	variationSlider->setVisible(false);
@@ -349,6 +385,11 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (presetNameLabel);
     deleteAndZero (presetMenuButton);
     deleteAndZero (textEditor);
+    deleteAndZero (copyButton);
+    deleteAndZero (pasteButton);
+    deleteAndZero (previewButton);
+    deleteAndZero (chordEditor);
+    deleteAndZero (pcButton);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -371,7 +412,7 @@ void MidiChordsEditor::paint (Graphics& g)
     g.fillRect (0, 0, 640, 100);
 
     g.setColour (Colours::black);
-    g.fillRoundedRectangle (568.0f, 64.0f, 66.0f, 106.0f, 10.0000f);
+    g.fillRoundedRectangle (568.0f, 76.0f, 66.0f, 106.0f, 10.0000f);
 
     g.setGradientFill (ColourGradient (Colours::black,
                                        0.0f, 336.0f,
@@ -389,7 +430,7 @@ void MidiChordsEditor::paint (Graphics& g)
     g.setColour (Colours::black);
     g.setFont (Font (15.0000f, Font::plain));
     g.drawText (L"Channel:",
-                14, 307, 59, 24,
+                14, 318, 59, 24,
                 Justification::centred, true);
 
     g.setColour (Colours::black);
@@ -407,17 +448,17 @@ void MidiChordsEditor::paint (Graphics& g)
     g.setColour (Colours::black);
     g.setFont (Font (15.0000f, Font::plain));
     g.drawText (L"Trigger Mode:",
-                318, 306, 138, 24,
+                318, 318, 138, 24,
                 Justification::centred, true);
 
     g.setColour (Colours::black);
-    g.fillRect (6, 213, getWidth() - 12, 93);
+    g.fillRect (6, 225, getWidth() - 12, 93);
 
     g.setColour (Colours::black);
-    g.fillRect (6, 85, getWidth() - 12, 93);
+    g.fillRect (6, 97, getWidth() - 12, 93);
 
     g.setColour (Colours::black);
-    g.fillRoundedRectangle (540.0f, 190.0f, 94.0f, 106.0f, 10.0000f);
+    g.fillRoundedRectangle (540.0f, 202.0f, 94.0f, 106.0f, 10.0000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -425,37 +466,42 @@ void MidiChordsEditor::paint (Graphics& g)
 
 void MidiChordsEditor::resized()
 {
-    toggleButton->setBounds (369, 40, 150, 24);
-    chordNameLabel->setBounds (369, 60, 144, 26);
-    chordKeyboard->setBounds (8, 87, getWidth() - 16, 89);
-    triggerKeyboard->setBounds (8, 215, getWidth() - 16, 89);
-    chordLearnButton->setBounds (6, 64, 80, 21);
-    triggerLearnButton->setBounds (6, 192, 80, 21);
-    channelSlider->setBounds (80, 312, 104, 16);
-    outputLabel->setBounds (573, 64, 54, 24);
+    toggleButton->setBounds (372, 50, 150, 24);
+    chordNameLabel->setBounds (375, 72, 144, 26);
+    chordKeyboard->setBounds (8, 99, getWidth() - 16, 89);
+    triggerKeyboard->setBounds (8, 227, getWidth() - 16, 89);
+    chordLearnButton->setBounds (6, 76, 45, 21);
+    triggerLearnButton->setBounds (6, 204, 80, 21);
+    channelSlider->setBounds (80, 324, 104, 16);
+    outputLabel->setBounds (573, 76, 54, 24);
     pizButton->setBounds (8, 10, 74, 40);
-    triggerLabel->setBounds (544, 191, 86, 24);
-    clearChordButton->setBounds (174, 64, 40, 21);
-    resetChordButton->setBounds (214, 64, 40, 21);
+    triggerLabel->setBounds (544, 203, 86, 24);
+    clearChordButton->setBounds (291, 76, 40, 21);
+    resetChordButton->setBounds (331, 76, 40, 21);
     clearAllButton->setBounds (8, 368, 64, 24);
     resetAllButton->setBounds (72, 368, 64, 24);
     transposeUpButton->setBounds (173, 368, 32, 24);
     transposeDownButton->setBounds (144, 368, 29, 24);
-    transposeChordUpButton->setBounds (306, 64, 23, 21);
-    transposeChordDownButton->setBounds (283, 64, 23, 21);
+    transposeChordUpButton->setBounds (239, 76, 23, 21);
+    transposeChordDownButton->setBounds (216, 76, 23, 21);
     transposeSlider->setBounds (528, 376, 104, 16);
-    velocitySlider->setBounds (169, 338, 104, 16);
-    variationSlider->setBounds (281, 338, 104, 16);
-    normalButton->setBounds (442, 306, 64, 24);
-    octaveButton->setBounds (506, 306, 64, 24);
-    globalButton->setBounds (570, 306, 64, 24);
-    flatsButton->setBounds (513, 64, 48, 24);
-    transposeChordUpButton2->setBounds (329, 64, 25, 21);
-    transposeChordDownButton2->setBounds (258, 64, 25, 21);
-    chordMenuButton->setBounds (90, 64, 80, 21);
-    presetNameLabel->setBounds (414, 9, 191, 26);
-    presetMenuButton->setBounds (605, 9, 25, 26);
+    velocitySlider->setBounds (226, 351, 104, 16);
+    variationSlider->setBounds (338, 351, 104, 16);
+    normalButton->setBounds (442, 318, 64, 24);
+    octaveButton->setBounds (506, 318, 64, 24);
+    globalButton->setBounds (570, 318, 64, 24);
+    flatsButton->setBounds (519, 76, 48, 24);
+    transposeChordUpButton2->setBounds (262, 76, 25, 21);
+    transposeChordDownButton2->setBounds (191, 76, 25, 21);
+    chordMenuButton->setBounds (55, 76, 52, 21);
+    presetNameLabel->setBounds (414, 12, 191, 26);
+    presetMenuButton->setBounds (605, 12, 25, 26);
     textEditor->setBounds (82, -35, 150, 24);
+    copyButton->setBounds (111, 73, 38, 21);
+    pasteButton->setBounds (149, 73, 38, 21);
+    previewButton->setBounds (258, 196, 143, 24);
+    chordEditor->setBounds (78, 54, 144, 20);
+    pcButton->setBounds (320, 372, 98, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -625,6 +671,31 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		}
         //[/UserButtonCode_presetMenuButton]
     }
+    else if (buttonThatWasClicked == copyButton)
+    {
+        //[UserButtonCode_copyButton] -- add your button handler code here..
+		const int t = getFilter()->getCurrentTrigger();
+		String chordString = String(t) + ":";
+		for (int n=0;n<128;n++)
+		{
+			if (getFilter()->chordKbState.isNoteOn(1,n))
+				chordString += " " + String(n-t);
+		}
+		SystemClipboard::copyTextToClipboard(chordString);
+        //[/UserButtonCode_copyButton]
+    }
+    else if (buttonThatWasClicked == pasteButton)
+    {
+        //[UserButtonCode_pasteButton] -- add your button handler code here..
+		chordFromString(SystemClipboard::getTextFromClipboard());
+        //[/UserButtonCode_pasteButton]
+    }
+    else if (buttonThatWasClicked == pcButton)
+    {
+        //[UserButtonCode_pcButton] -- add your button handler code here..
+		getFilter()->setParameterNotifyingHost(kUseProgCh,pcButton->getToggleState() ? 1.f : 0.f);
+        //[/UserButtonCode_pcButton]
+    }
 
     //[UserbuttonClicked_Post]
     else if (buttonThatWasClicked == pizButton)
@@ -678,6 +749,12 @@ void MidiChordsEditor::labelTextChanged (Label* labelThatHasChanged)
 		getFilter()->updateHostDisplay();
         //[/UserLabelCode_presetNameLabel]
     }
+    else if (labelThatHasChanged == chordEditor)
+    {
+        //[UserLabelCode_chordEditor] -- add your label text handling code here..
+		chordFromString(chordEditor->getText());
+        //[/UserLabelCode_chordEditor]
+    }
 
     //[UserlabelTextChanged_Post]
     //[/UserlabelTextChanged_Post]
@@ -686,6 +763,48 @@ void MidiChordsEditor::labelTextChanged (Label* labelThatHasChanged)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+
+void MidiChordsEditor::mouseDown(const MouseEvent& e)
+{
+	if (e.eventComponent==previewButton)
+		getFilter()->playCurrentChord(true);
+}
+
+void MidiChordsEditor::mouseUp (const MouseEvent& e)
+{
+	if (e.eventComponent==previewButton)
+		getFilter()->playCurrentChord(false);
+}
+
+void MidiChordsEditor::chordFromString(String chordString)
+{
+	const int root = chordString.upToFirstOccurrenceOf(":",false,false).getIntValue();
+	const int t = getFilter()->getCurrentTrigger();
+	StringArray sa;
+	if(chordString.contains(":"))
+		chordString = chordString.fromLastOccurrenceOf(":",false,false);
+	if (chordString.containsAnyOf("abcdefgABCDEFGmMrRopP#+") || !chordString.contains("0"))
+		chordString = getIntervalStringFromNoteNames(t,chordString);
+	sa.addTokens(chordString," ,",String::empty);
+	if (sa.size()>0)
+		getFilter()->clearChord(t);
+	if (ModifierKeys::getCurrentModifiers().isCommandDown())
+	{
+		for(int i=0;i<sa.size();i++)
+		{
+			//absolute
+			getFilter()->selectChordNote(t,root+sa[i].getIntValue(),true);
+		}
+	}
+	else {
+		for(int i=0;i<sa.size();i++)
+		{
+			//relative
+			getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+		}
+	}
+}
+
 void MidiChordsEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
 	if (source==getFilter())
@@ -702,12 +821,23 @@ void MidiChordsEditor::updateParametersFromFilter()
 	channelSlider->setValue(filter->getParameter(kChannel)*16.f,false);
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
 	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
+	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
 
 	normalButton->setToggleState(newMode==Normal,false);
 	octaveButton->setToggleState(newMode==Octave,false);
 	globalButton->setToggleState(newMode==Global,false);
 
 	chordNameLabel->setText(getCurrentChordName(),false);
+
+
+	const int t = getFilter()->getCurrentTrigger();
+	String chordString;// = String(t) + ":";
+	for (int n=0;n<128;n++)
+	{
+		if (getFilter()->chordKbState.isNoteOn(1,n))
+			chordString += String(n-t)+" ";
+	}
+	chordEditor->setText(chordString.trimEnd(),false);
 
 	if (mode!=newMode)
 	{
@@ -876,52 +1006,51 @@ BEGIN_JUCER_METADATA
   <BACKGROUND backgroundColour="ffd8d8d8">
     <RECT pos="0 0 640 100" fill="linear: 61 -31, 61 23, 0=ffffffff, 1=e7e7e7"
           hasStroke="0"/>
-    <ROUNDRECT pos="568 64 66 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
+    <ROUNDRECT pos="568 76 66 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
     <RECT pos="0 360 100% 40" fill="linear: 0 336, 0 376, 0=ff000000, 1=ff828282"
           hasStroke="0"/>
     <TEXT pos="85 24 248 30" fill="solid: ff000000" hasStroke="0" text="midiChords"
           fontname="OCR A Std" fontsize="35.7" bold="0" italic="0" justification="36"/>
-    <TEXT pos="14 307 59 24" fill="solid: ff000000" hasStroke="0" text="Channel:"
+    <TEXT pos="14 318 59 24" fill="solid: ff000000" hasStroke="0" text="Channel:"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
     <TEXT pos="85 0 248 30" fill="solid: ff000000" hasStroke="0" text="Insert Piz Here&#8212;&gt;"
           fontname="OCR A Std" fontsize="15" bold="0" italic="0" justification="36"/>
     <TEXT pos="440 376 80 16" fill="solid: ff000000" hasStroke="0" text="Transpose:"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
-    <TEXT pos="318 306 138 24" fill="solid: ff000000" hasStroke="0" text="Trigger Mode:"
+    <TEXT pos="318 318 138 24" fill="solid: ff000000" hasStroke="0" text="Trigger Mode:"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-    <RECT pos="6 213 12M 93" fill="solid: ff000000" hasStroke="0"/>
-    <RECT pos="6 85 12M 93" fill="solid: ff000000" hasStroke="0"/>
-    <ROUNDRECT pos="540 190 94 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
+    <RECT pos="6 225 12M 93" fill="solid: ff000000" hasStroke="0"/>
+    <RECT pos="6 97 12M 93" fill="solid: ff000000" hasStroke="0"/>
+    <ROUNDRECT pos="540 202 94 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
   </BACKGROUND>
   <TOGGLEBUTTON name="new toggle button" id="58723bf0e9d70b49" memberName="toggleButton"
-                virtualName="" explicitFocusOrder="0" pos="369 40 150 24" buttonText="Guess chord name"
+                virtualName="" explicitFocusOrder="0" pos="372 50 150 24" buttonText="Guess chord name"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="new label" id="84701c0c650fe2e" memberName="chordNameLabel"
-         virtualName="" explicitFocusOrder="0" pos="369 60 144 26" bkgCol="279a3c3c"
+         virtualName="" explicitFocusOrder="0" pos="375 72 144 26" bkgCol="279a3c3c"
          outlineCol="b3000000" edTextCol="ff000000" edBkgCol="0" labelText="chord name"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="1" italic="0" justification="36"/>
   <GENERICCOMPONENT name="" id="8e79ee27297830eb" memberName="chordKeyboard" virtualName=""
-                    explicitFocusOrder="0" pos="8 87 16M 89" class="ChordsKeyboardComponent"
+                    explicitFocusOrder="0" pos="8 99 16M 89" class="ChordsKeyboardComponent"
                     params="ownerFilter-&gt;chordKbState, ownerFilter"/>
   <GENERICCOMPONENT name="" id="c10b054d27a5aad0" memberName="triggerKeyboard" virtualName=""
-                    explicitFocusOrder="0" pos="8 215 16M 89" class="TriggerKeySelectorKeyboard"
+                    explicitFocusOrder="0" pos="8 227 16M 89" class="TriggerKeySelectorKeyboard"
                     params="ownerFilter-&gt;triggerKbState, ownerFilter"/>
   <TEXTBUTTON name="chordLearn" id="79a1c0e1c1db8e39" memberName="chordLearnButton"
-              virtualName="" explicitFocusOrder="0" pos="6 64 80 21" tooltip="Learn next input chord"
-              buttonText="Learn Chord" connectedEdges="8" needsCallback="1"
-              radioGroupId="0"/>
+              virtualName="" explicitFocusOrder="0" pos="6 76 45 21" tooltip="Learn next input chord"
+              buttonText="Learn" connectedEdges="8" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="triggerLearn" id="99ff483968f1f65d" memberName="triggerLearnButton"
-              virtualName="" explicitFocusOrder="0" pos="6 192 80 21" tooltip="When on, displayed trigger note follows input note"
+              virtualName="" explicitFocusOrder="0" pos="6 204 80 21" tooltip="When on, displayed trigger note follows input note"
               buttonText="Follow Input" connectedEdges="8" needsCallback="1"
               radioGroupId="0"/>
   <SLIDER name="channel" id="c08fa2a5fc963392" memberName="channelSlider"
-          virtualName="ChannelSlider" explicitFocusOrder="0" pos="80 312 104 16"
+          virtualName="ChannelSlider" explicitFocusOrder="0" pos="80 324 104 16"
           tooltip="Input/output channel" bkgcol="ffffffff" min="0" max="16"
           int="1" style="LinearBar" textBoxPos="TextBoxLeft" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="53b1a84fa5d6099" memberName="outputLabel"
-         virtualName="" explicitFocusOrder="0" pos="573 64 54 24" textCol="ffffffff"
+         virtualName="" explicitFocusOrder="0" pos="573 76 54 24" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="Output" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="34"/>
@@ -929,15 +1058,15 @@ BEGIN_JUCER_METADATA
              explicitFocusOrder="0" pos="8 10 74 40" sourceFile="../../common/PizButton.cpp"
              constructorParams=""/>
   <LABEL name="new label" id="9c19fc858eab3133" memberName="triggerLabel"
-         virtualName="" explicitFocusOrder="0" pos="544 191 86 24" textCol="ffffffff"
+         virtualName="" explicitFocusOrder="0" pos="544 203 86 24" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="Trigger Note" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="clear" id="729ec8a8b3111b3" memberName="clearChordButton"
-              virtualName="" explicitFocusOrder="0" pos="174 64 40 21" tooltip="Clear current chord"
+              virtualName="" explicitFocusOrder="0" pos="291 76 40 21" tooltip="Clear current chord"
               buttonText="Clear" connectedEdges="10" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="reset" id="706edfe98019c25d" memberName="resetChordButton"
-              virtualName="" explicitFocusOrder="0" pos="214 64 40 21" tooltip="Reset current chord to just the trigger note"
+              virtualName="" explicitFocusOrder="0" pos="331 76 40 21" tooltip="Reset current chord to just the trigger note"
               buttonText="Reset" connectedEdges="9" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="clear" id="ee6085145dcb39d2" memberName="clearAllButton"
               virtualName="" explicitFocusOrder="0" pos="8 368 64 24" buttonText="Clear All"
@@ -952,10 +1081,10 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="144 368 29 24" buttonText="&lt;-"
               connectedEdges="2" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="b392a950edbb9665" memberName="transposeChordUpButton"
-              virtualName="" explicitFocusOrder="0" pos="306 64 23 21" tooltip="Shift chord up one semitone"
+              virtualName="" explicitFocusOrder="0" pos="239 76 23 21" tooltip="Shift chord up one semitone"
               buttonText="&gt;" connectedEdges="11" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="330f12de98d7240c" memberName="transposeChordDownButton"
-              virtualName="" explicitFocusOrder="0" pos="283 64 23 21" tooltip="Shift chord down one semitone"
+              virtualName="" explicitFocusOrder="0" pos="216 76 23 21" tooltip="Shift chord down one semitone"
               buttonText="&lt;" connectedEdges="11" needsCallback="1" radioGroupId="0"/>
   <SLIDER name="transpose" id="e04428ac0ed97dc9" memberName="transposeSlider"
           virtualName="" explicitFocusOrder="0" pos="528 376 104 16" tooltip="Transpose output by semitones"
@@ -963,47 +1092,65 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="velocity" id="d173a9d6025fabc0" memberName="velocitySlider"
-          virtualName="" explicitFocusOrder="0" pos="169 338 104 16" min="-10"
+          virtualName="" explicitFocusOrder="0" pos="226 351 104 16" min="-10"
           max="10" int="0.1" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="Variation" id="992cbb80661db8e9" memberName="variationSlider"
-          virtualName="" explicitFocusOrder="0" pos="281 338 104 16" min="0"
+          virtualName="" explicitFocusOrder="0" pos="338 351 104 16" min="0"
           max="100" int="0.1" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="new button" id="ea513687ce233abe" memberName="normalButton"
-              virtualName="" explicitFocusOrder="0" pos="442 306 64 24" tooltip="Full mode: a separate chord is defined for every input note"
+              virtualName="" explicitFocusOrder="0" pos="442 318 64 24" tooltip="Full mode: a separate chord is defined for every input note"
               buttonText="Full" connectedEdges="6" needsCallback="1" radioGroupId="1"/>
   <TEXTBUTTON name="new button" id="5d77a8c6aac13eed" memberName="octaveButton"
-              virtualName="" explicitFocusOrder="0" pos="506 306 64 24" tooltip="Octave mode: 12 chords are defined which are transposed to every octave"
+              virtualName="" explicitFocusOrder="0" pos="506 318 64 24" tooltip="Octave mode: 12 chords are defined which are transposed to every octave"
               buttonText="Octave" connectedEdges="7" needsCallback="1" radioGroupId="1"/>
   <TEXTBUTTON name="new button" id="4ec8d27f5555ec05" memberName="globalButton"
-              virtualName="" explicitFocusOrder="0" pos="570 306 64 24" tooltip="Global mode: one defined chord is transposed relative to the root note"
+              virtualName="" explicitFocusOrder="0" pos="570 318 64 24" tooltip="Global mode: one defined chord is transposed relative to the root note"
               buttonText="Global" connectedEdges="5" needsCallback="1" radioGroupId="1"/>
   <TOGGLEBUTTON name="new toggle button" id="fb8f2d76e48f6291" memberName="flatsButton"
-                virtualName="" explicitFocusOrder="0" pos="513 64 48 24" buttonText="flats"
+                virtualName="" explicitFocusOrder="0" pos="519 76 48 24" buttonText="flats"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <TEXTBUTTON name="transpose" id="9c9792c55f67c803" memberName="transposeChordUpButton2"
-              virtualName="" explicitFocusOrder="0" pos="329 64 25 21" tooltip="Shift chord up one octave"
+              virtualName="" explicitFocusOrder="0" pos="262 76 25 21" tooltip="Shift chord up one octave"
               buttonText="&gt;&gt;" connectedEdges="9" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="1f97de47eccc1b3c" memberName="transposeChordDownButton2"
-              virtualName="" explicitFocusOrder="0" pos="258 64 25 21" tooltip="Shift chord down one octave"
+              virtualName="" explicitFocusOrder="0" pos="191 76 25 21" tooltip="Shift chord down one octave"
               buttonText="&lt;&lt;" connectedEdges="10" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="chordMenu" id="384cb651e909e8bd" memberName="chordMenuButton"
-              virtualName="" explicitFocusOrder="0" pos="90 64 80 21" buttonText="Chords"
+              virtualName="" explicitFocusOrder="0" pos="55 76 52 21" buttonText="Menu"
               connectedEdges="8" needsCallback="1" radioGroupId="0"/>
   <LABEL name="new label" id="4ef6103879c88f80" memberName="presetNameLabel"
-         virtualName="" explicitFocusOrder="0" pos="414 9 191 26" tooltip="Preset Name"
+         virtualName="" explicitFocusOrder="0" pos="414 12 191 26" tooltip="Preset Name"
          bkgCol="27a1b404" outlineCol="b3000000" edTextCol="ff000000"
          edBkgCol="0" labelText="preset name" editableSingleClick="1"
          editableDoubleClick="1" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="1" italic="0" justification="36"/>
   <TEXTBUTTON name="presets" id="fdd2c5f83e8c75c9" memberName="presetMenuButton"
-              virtualName="" explicitFocusOrder="0" pos="605 9 25 26" tooltip="Preset Menu"
+              virtualName="" explicitFocusOrder="0" pos="605 12 25 26" tooltip="Preset Menu"
               buttonText="&gt;" connectedEdges="1" needsCallback="1" radioGroupId="0"/>
   <TEXTEDITOR name="new text editor" id="fbf538174362a2ae" memberName="textEditor"
               virtualName="" explicitFocusOrder="0" pos="82 -35 150 24" outlinecol="ff000000"
               initialText="" multiline="0" retKeyStartsLine="0" readonly="0"
               scrollbars="1" caret="1" popupmenu="1"/>
+  <TEXTBUTTON name="copy" id="7eadb69efd0e274e" memberName="copyButton" virtualName=""
+              explicitFocusOrder="0" pos="111 73 38 21" buttonText="Copy" connectedEdges="6"
+              needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="paste" id="c6429d9f9bdc84d1" memberName="pasteButton" virtualName=""
+              explicitFocusOrder="0" pos="149 73 38 21" buttonText="Paste"
+              connectedEdges="5" needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="play" id="92127eade5a319e5" memberName="previewButton"
+              virtualName="" explicitFocusOrder="0" pos="258 196 143 24" bgColOff="ff7ca17c"
+              buttonText="Play Chord" connectedEdges="0" needsCallback="0"
+              radioGroupId="0"/>
+  <LABEL name="new label" id="5bdae6a44eaf90fa" memberName="chordEditor"
+         virtualName="" explicitFocusOrder="0" pos="78 54 144 20" bkgCol="ffffffff"
+         outlineCol="b3000000" edTextCol="ff000000" edBkgCol="0" labelText="chord"
+         editableSingleClick="0" editableDoubleClick="1" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <TOGGLEBUTTON name="new toggle button" id="985f12fa947001cc" memberName="pcButton"
+                virtualName="" explicitFocusOrder="0" pos="320 372 98 24" buttonText="Use ProgCh"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

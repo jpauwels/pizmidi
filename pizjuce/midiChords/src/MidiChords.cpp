@@ -28,11 +28,11 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("Root",60,0);
 		progv.setProperty("Guess",true,0);
 		progv.setProperty("Flats",false,0);
+		progv.setProperty("UsePC",false,0);
 
-		//progv.setProperty("UsePC",false,0);
 		//progv.setProperty("Velocity",0.f,0);
 
-		progv.setProperty("Name","Default",0);
+		progv.setProperty("Name","Program "+ String(p+1),0);
 		progv.setProperty("lastUIWidth",600,0);
 		progv.setProperty("lastUIHeight",400,0);
 		progv.setProperty("lastTrigger",60,0);
@@ -83,6 +83,8 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 			outputNote[c][i]=-1;
 	learn = false;
 	learning = 0;
+	playFromGUI = playingFromGUI = false;
+	playButtonTrigger = curTrigger;
 	init = true;
 	setCurrentProgram(0);
 }
@@ -301,11 +303,66 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
                                 MidiBuffer& midiMessages)
 {
 	MidiBuffer output;
+	if (playFromGUI!=playingFromGUI)
+	{
+		int ch = jmax(channel,1);
+		if(playFromGUI)
+		{
+			for (int n=0;n<128;n++)
+			{
+				if (progKbState[curProgram][curTrigger].isNoteOn(1,n)) {
+					int newNote = n+transpose;
+					if (chordNotePlaying[ch][newNote]) {
+						ignoreNextNoteOff.add(newNote);
+						playingChord[curTrigger].add(newNote);
+					}
+					else if (newNote < 128 && newNote >= 0) 
+					{
+						output.addEvent(MidiMessage::noteOn(ch,newNote,1.f),0);
+						playingChord[curTrigger].add(newNote);
+						chordNotePlaying[ch][newNote]=true;
+					}
+				}
+			}
+			notePlaying[ch][curTrigger]=true;
+			playingFromGUI = true;
+			playButtonTrigger = curTrigger;
+
+		}
+		else {
+			int numNotes = playingChord[playButtonTrigger].size();
+			if (numNotes==0) {
+				if (outputNote[ch][curTrigger]!=-1) {
+					output.addEvent(MidiMessage::noteOff(ch,outputNote[ch][playButtonTrigger]),0);
+					outputNote[ch][playButtonTrigger]=-1;
+				}
+			}
+			else {
+				for (int i = 0; i<numNotes; i++) {
+					const int chordNote = playingChord[playButtonTrigger][i];
+					if (!ignoreNextNoteOff.contains(chordNote)) {
+						output.addEvent(MidiMessage::noteOff(ch,chordNote),0);
+						chordNotePlaying[ch][chordNote]=false;
+					}
+					else
+						ignoreNextNoteOff.removeValue(chordNote);
+				}
+				playingChord[playButtonTrigger].clear();
+			}
+			notePlaying[ch][playButtonTrigger]=false;
+			playingFromGUI = false;
+		}
+		playingFromGUI = playFromGUI;
+	}
 	MidiBuffer::Iterator mid_buffer_iter(midiMessages);
 	MidiMessage m(0xf0);
 	int sample;
 	while(mid_buffer_iter.getNextEvent(m,sample)) 
 	{
+		if (m.isProgramChange() && usepc) {// && (m.isForChannel(channel) || channel==0)) {
+			if (m.getProgramChangeNumber()<getNumPrograms()) 
+				setCurrentProgram(m.getProgramChangeNumber());
+		}
 		if (channel==0 || m.isForChannel(channel))
 		{
 			if (m.isNoteOn()) {
@@ -403,6 +460,8 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			else
 				output.addEvent(m,sample);
 		}
+		else
+			output.addEvent(m,sample);
 	}
 
 	midiMessages.clear();
@@ -425,7 +484,12 @@ void MidiChords::getStateInformation (MemoryBlock& destData)
 {
 	copySettingsToProgram(curProgram);
 	programs->writeToStream(MemoryOutputStream(destData,false));
-	//DBG(programs->createXml()->createDocument(""));
+}
+
+void MidiChords::getCurrentProgramStateInformation (MemoryBlock& destData)
+{
+	copySettingsToProgram(curProgram);
+	programs->getChild(curProgram).writeToStream(MemoryOutputStream(destData,false));
 }
 
 void MidiChords::setStateInformation (const void* data, int sizeInBytes)
@@ -441,6 +505,15 @@ void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 	}
 	init=true;
 	setCurrentProgram(vt.getProperty("lastProgram",0));
+}
+
+void MidiChords::setCurrentProgramStateInformation (const void* data, int sizeInBytes)
+{
+	programs->removeChild(programs->getChild(curProgram),0);
+	programs->addChild(ValueTree::readFromStream(MemoryInputStream(data,sizeInBytes,false)),curProgram,0);
+	programs->getChild(curProgram).setProperty("progIndex",curProgram,0);
+	init=true;
+	setCurrentProgram(curProgram);
 }
 
 void MidiChords::selectTrigger(int index)

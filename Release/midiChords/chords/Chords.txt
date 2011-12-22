@@ -20,7 +20,7 @@ Minor 6: 0 3 7 8
 Dominant 7: 0 4 7 10
 Major 7: 0 4 7 11
 Minor 7: 0 3 7 10
-Major/Minor 7: 0 4 7 10
+Minor/Major 7: 0 3 7 11
 Half Diminished 7: 0 3 6 10
 Diminished 7: 0 3 6 9
 --

@@ -14,12 +14,12 @@ enum parameters {
 	kRoot,
 	kGuess,
 	kFlats,
+	kUseProgCh,
 
     numParams,
 	kVelocity,
 	kVariation,
-	kUseProgCh,
-	numProgs = 1
+	numProgs = 128
 };
 
 enum ChordModes {Normal, Octave, Global, numModes};
@@ -150,6 +150,8 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData);
     void setStateInformation (const void* data, int sizeInBytes);
+    void getCurrentProgramStateInformation (MemoryBlock& destData);
+    void setCurrentProgramStateInformation (const void* data, int sizeInBytes);
 
     //==============================================================================
 	MidiKeyboardState progKbState[numProgs][128];
@@ -168,6 +170,13 @@ public:
 	void transposeCurrentChordByOctave(bool up);
 	String getCurrentChordName();
 	void savePreset(String name);
+	void playCurrentChord(bool on) 
+	{
+		if (playingFromGUI!=on)
+		{
+			playFromGUI=on;
+		}
+	}
 
 	int lastUIWidth, lastUIHeight;
     //==============================================================================
@@ -192,6 +201,8 @@ private:
 	bool guess;
 	bool flats;
 
+	bool playingFromGUI, playFromGUI;
+	int playButtonTrigger;
 	int learning;
 	bool notePlaying[16][128]; //trigger note
 	int outputNote[16][128];

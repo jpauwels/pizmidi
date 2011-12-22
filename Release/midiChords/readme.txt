@@ -1,8 +1,26 @@
 Insert Piz Here-> midiChords
+(See http://thepiz.org/plugins for links to source code and other plugins)
 
+midiChords:
 Allows mapping of every input MIDI note to 0 or more output notes.
 
-Chord shape definitions:
+Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not discussed here may or may not be documented in GUI tooltips.
+
+The copy/paste buttons use the same format as the saved chords/mappings, so
+you can copy from the GUI and paste into a text file and vice-versa.
+Ctrl-click on Paste uses the same pitches as the copied chord, otherwise
+it's relative to the new trigger note. 
+
+There is also a text box to type in chords directly. It can read three different formats:
+- note names, like "C E G Bb D" for the C9 chord pictured
+- interval names, like "1 3 5 b7 9" or "Root Maj3 P5 Min7 Maj9" etc.
+- semitone offset from trigger note "0 4 7 10 14" (default, see below) 
+
+The "Paste" button can also use any of these formats directly, if you copied
+them from a website or other source (so you don't have to paste them into the
+text box first).
+
+Saved chord shape menu:
 The "Chords" menu is built from plain text files in the "chords" folder.
 Chord shapes are defined as the difference in semitones from the trigger note,
 in a space-separated list. Everything to the left of the colon is the chord

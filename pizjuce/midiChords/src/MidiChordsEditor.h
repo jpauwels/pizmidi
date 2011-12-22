@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  21 Dec 2011 8:20:57am
+  Creation date:  22 Dec 2011 3:52:25pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_E94B1310__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_E94B1310__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -164,6 +164,8 @@ public:
     void textEditorEscapeKeyPressed(TextEditor&);
     void textEditorFocusLost(TextEditor&);
 	void changeListenerCallback (ChangeBroadcaster* source);
+    void mouseDown (const MouseEvent& e);
+    void mouseUp (const MouseEvent& e);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -187,6 +189,7 @@ private:
 	void loadChord(String chorddef);
 	void saveChord(String name);
 	void loadPreset(String filename);
+	void chordFromString(String chordString);
 
     MidiChords* getFilter() const throw()       { return (MidiChords*) getAudioProcessor(); }
 	int mode;
@@ -224,6 +227,11 @@ private:
     Label* presetNameLabel;
     TextButton* presetMenuButton;
     TextEditor* textEditor;
+    TextButton* copyButton;
+    TextButton* pasteButton;
+    TextButton* previewButton;
+    Label* chordEditor;
+    ToggleButton* pcButton;
 
 
     //==============================================================================
@@ -233,4 +241,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_E94B1310__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
