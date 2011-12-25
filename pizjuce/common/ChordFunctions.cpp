@@ -282,12 +282,12 @@ String getIntervalName(int semitones)
 	switch(semitones)
 	{
 	case  0: return "Unison";
-	case  1: return "Flat 2nd";
-	case  2: return "2nd";
+	case  1: return "Minor 2nd";
+	case  2: return "Major 2nd";
 	case  3: return "Minor 3rd";
 	case  4: return "Major 3rd";
 	case  5: return "Perfect 4th";
-	case  6: return "Flat 5th";
+	case  6: return "Tritone";
 	case  7: return "Perfect 5th";
 	case  8: return "Minor 6th (or #5)";
 	case  9: return "Major 6th";

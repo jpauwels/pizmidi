@@ -4,7 +4,7 @@
 class ChannelSlider : public Slider
 {
 public:
-	ChannelSlider(String name) : Slider(name)
+	ChannelSlider(String name) : Slider(name), allText("Any")
 	{
 		this->setRange(0,16,1);
 	};
@@ -12,15 +12,23 @@ public:
 
 	const String getTextFromValue(double value)
 	{
-		if (value<0.5) return String("Any");
+		if (value<0.5) return allText;
 		return String((int)value);
 	}
 
 	double getValueFromText(const String &text)
 	{
-		if (!text.compareIgnoreCase("Any")) return 0;
+		if (!text.compareIgnoreCase(allText)) return 0;
 		return text.getDoubleValue();
 	}
+
+	void setAllText(String text)
+	{
+		allText = text;
+		updateText();
+	}
+private:
+	String allText;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  22 Dec 2011 3:52:25pm
+  Creation date:  25 Dec 2011 7:34:47am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -41,7 +41,31 @@ public:
 	}
 	void drawBlackNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& textColour)
 	{
-		MidiKeyboardComponent::drawBlackNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,textColour);
+		Colour c (textColour);
+
+		if (isDown)
+			c = c.overlaidWith (findColour (keyDownOverlayColourId));
+		else if (s->isNoteOnForChannels(0xffff,midiNoteNumber))
+			c = c.overlaidWith(Colours::brown.withAlpha(0.4f));
+
+		if (isOver)
+			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+
+		g.setColour (c);
+		g.fillRect (x, y, w, h);
+
+		if (isDown)
+		{
+			g.setColour (textColour);
+			g.drawRect (x, y, w, h);
+		}
+		else
+		{
+			const int xIndent = jmax (1, jmin (w, h) / 8);
+
+			g.setColour (c.brighter());
+			g.fillRect (x + xIndent, y, w - xIndent * 2, 7 * h / 8);
+		}
 		Font f (jmin (12.0f, w * 0.9f));
 		f.setHorizontalScale (0.8f);
 		g.setFont (f);
@@ -50,13 +74,49 @@ public:
 	}
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
-		MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,textColour);
-		Font f (jmin (12.0f, w * 0.9f));
+		const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
+		Colour c (Colours::transparentWhite);
+		if (isDown)
+			c = findColour (keyDownOverlayColourId);
+		else if (s->isNoteOnForChannels(0xffff,midiNoteNumber))
+			c = Colours::brown.withAlpha(0.4f);
+		if (isOver)
+			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+
+		g.setColour (c);
+		g.fillRect (x, y, w, h);
+
+		g.setColour (textColour);
+
+		Font f (jmin (12.0f, getKeyWidth() * 0.9f));
 		f.setHorizontalScale (0.8f);
 		f.setBold (midiNoteNumber==60);
 		g.setFont (f);
-		g.setColour (textColour);
+		Justification justification (Justification::centredBottom);
+
 		g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 16, Justification::centredBottom, 1);
+
+		const String text (getWhiteNoteText (midiNoteNumber));
+		if (! text.isEmpty())
+			g.drawFittedText (text, x + 2, y + 2, w - 4, h - 4, justification, 1);
+		g.setColour (lineColour);
+		g.fillRect (x, y, 1, h);
+
+		if (midiNoteNumber == getRangeEnd())
+		{
+			g.fillRect (x + w, y, 1, h);
+		}
+
+
+
+		//MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,textColour);
+		//this->getMidiChannelsToDisplay()
+		//Font f (jmin (12.0f, w * 0.9f));
+		//f.setHorizontalScale (0.8f);
+		//f.setBold (midiNoteNumber==60);
+		//g.setFont (f);
+		//g.setColour (textColour);
+		//g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 16, Justification::centredBottom, 1);
 	}
 
 private:
@@ -64,13 +124,53 @@ private:
     MidiKeyboardState* s;
 
 	bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e) {
-		if (s->isNoteOn(this->getMidiChannel(),midiNoteNumber)) {
-			s->noteOff(this->getMidiChannel(),midiNoteNumber);
-			owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false);
+		if (e.mods.isPopupMenu())
+		{
+			PopupMenu m;
+			m.addSectionHeader(getNoteName(midiNoteNumber)+ " (" + String(midiNoteNumber)+")");
+			for (int i=1;i<=16;i++)
+			{
+				m.addItem(i,"Ch "+String(i),true,s->isNoteOn(i,midiNoteNumber));
+			}
+			int result = m.show();
+			if (result!=0)
+			{
+				if (s->isNoteOn(result,midiNoteNumber)) {
+					s->noteOff(result,midiNoteNumber);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,result);
+				}
+				else {
+					s->noteOn(result,midiNoteNumber,127);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,result);
+				}
+			}
 		}
-		else {
-			s->noteOn(this->getMidiChannel(),midiNoteNumber,128);
-			owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true);
+		else
+		{
+			const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
+			if (chordChan==0)
+			{
+				if (s->isNoteOnForChannels(0xffff,midiNoteNumber))
+				{
+					for (int c=1;c<=16;c++)
+					{
+						if (s->isNoteOn(c,midiNoteNumber))
+							owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,c);
+					}
+				}
+				else
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,1);
+			}
+			else {
+				if (s->isNoteOn(chordChan,midiNoteNumber)) {
+					//s->noteOff(this->getMidiChannel(),midiNoteNumber);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,chordChan);
+				}
+				else {
+					//s->noteOn(this->getMidiChannel(),midiNoteNumber,1.f);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,chordChan);
+				}
+			}
 		}
 		return false;
 	}
@@ -89,7 +189,40 @@ public:
 	}
 	void drawBlackNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& textColour)
 	{
-		MidiKeyboardComponent::drawBlackNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,textColour);
+		const int mode = roundToInt(owner->getParameter(kMode)*(numModes-1));
+		Colour c (textColour);
+
+		if (isDown) {
+			c = c.overlaidWith (findColour (keyDownOverlayColourId));
+		}
+
+		if (isOver)
+			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+
+		if (mode==Octave) {
+			int n=midiNoteNumber%12;
+			while (n<128) {
+				if (owner->isTriggerNotePlaying(n))
+					c = c.overlaidWith (Colours::green.withAlpha(0.6f));
+				n += 12;
+			}
+		}
+
+		g.setColour (c);
+		g.fillRect (x, y, w, h);
+
+		if (isDown)
+		{
+			g.setColour (textColour);
+			g.drawRect (x, y, w, h);
+		}
+		else
+		{
+			const int xIndent = jmax (1, jmin (w, h) / 8);
+
+			g.setColour (c.brighter());
+			g.fillRect (x + xIndent, y, w - xIndent * 2, 7 * h / 8);
+		}
 		if (roundToInt(owner->getParameter(kMode)*(numModes-1))!=Octave) {
 			Font f (jmin (12.0f, w * 0.9f));
 			f.setHorizontalScale (0.8f);
@@ -100,19 +233,52 @@ public:
 	}
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
-		if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Octave)
-			MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,Colours::transparentBlack);
-		else {
-			if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
-				MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,Colours::red,textColour);
-			else
-				MidiKeyboardComponent::drawWhiteNote(midiNoteNumber,g,x,y,w,h,isDown,isOver,lineColour,textColour);
-			Font f (jmin (12.0f, w * 0.9f));
+		const int mode = roundToInt(owner->getParameter(kMode)*(numModes-1));
+		Colour c (Colours::transparentWhite);
+
+		if (isDown)
+			c = findColour (keyDownOverlayColourId);
+		if (isOver)
+			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+		if (mode==Octave) {
+			int n=midiNoteNumber%12;
+			while (n<128) {
+				if (owner->isTriggerNotePlaying(n))
+					c = c.overlaidWith (Colours::green.withAlpha(0.6f));
+				n += 12;
+			}
+		}
+
+		g.setColour (c);
+		g.fillRect (x, y, w, h);
+
+		if (mode!=Octave) {
+
+			g.setColour (textColour);
+
+			Font f (jmin (12.0f, getKeyWidth() * 0.9f));
 			f.setHorizontalScale (0.8f);
 			f.setBold (midiNoteNumber==60);
 			g.setFont (f);
-			g.setColour (textColour);
+			Justification justification (Justification::centredBottom);
+
 			g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 16, Justification::centredBottom, 1);
+
+			const String text (getWhiteNoteText (midiNoteNumber));
+			if (! text.isEmpty())
+				g.drawFittedText (text, x + 2, y + 2, w - 4, h - 4, justification, 1);
+		}
+
+		if (mode==Global)
+			g.setColour (Colours::red);
+		else
+			g.setColour (lineColour);
+
+		g.fillRect (x, y, 1, h);
+
+		if (midiNoteNumber == getRangeEnd())
+		{
+			g.fillRect (x + w, y, 1, h);
 		}
 	}
 
@@ -146,6 +312,7 @@ private:
 class MidiChordsEditor  : public AudioProcessorEditor,
                           public ChangeListener,
                           public TextEditorListener,
+                          public FileDragAndDropTarget,
                           public ButtonListener,
                           public SliderListener,
                           public LabelListener
@@ -164,6 +331,8 @@ public:
     void textEditorEscapeKeyPressed(TextEditor&);
     void textEditorFocusLost(TextEditor&);
 	void changeListenerCallback (ChangeBroadcaster* source);
+    bool isInterestedInFileDrag (const StringArray& files);
+    void filesDropped (const StringArray& filenames, int mouseX, int mouseY);
     void mouseDown (const MouseEvent& e);
     void mouseUp (const MouseEvent& e);
     //[/UserMethods]
@@ -232,6 +401,11 @@ private:
     TextButton* previewButton;
     Label* chordEditor;
     ToggleButton* pcButton;
+    TextButton* nextButton;
+    TextButton* prevButton;
+    Label* triggerNoteLabel;
+    ChannelSlider* learnChanSlider;
+    Label* demoLabel;
 
 
     //==============================================================================
@@ -241,4 +415,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BDD9D3A8__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__

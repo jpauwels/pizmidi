@@ -4,6 +4,7 @@
 #include "../../common/PizAudioProcessor.h"
 #include "../../common/midistuff.h"
 #include "../../common/ChordFunctions.h"
+#include "../../common/key.h"
 
 enum parameters {
     kChannel, 
@@ -15,6 +16,7 @@ enum parameters {
 	kGuess,
 	kFlats,
 	kUseProgCh,
+	kLearnChannel,
 
     numParams,
 	kVelocity,
@@ -23,6 +25,23 @@ enum parameters {
 };
 
 enum ChordModes {Normal, Octave, Global, numModes};
+
+struct ChordNote
+{
+	ChordNote(int channel, int note)
+	{
+		c = channel;
+		n = note;
+	}
+	ChordNote()
+	{
+		c=n=-1;
+	}
+	~ChordNote(){}
+
+	int c;
+	int n;
+};
 
 class MidiChordsPrograms : ValueTree {
 public:
@@ -35,34 +54,45 @@ public:
 		this->getChild(prog).setProperty(name,newValue,0);
 	}
 
-	void setChordNote(int prog, int trigger, int note, const bool &newValue)
+	void clearNoteMatrix(int prog, int trigger)
 	{
+		getChild(prog).getChild(trigger).removeAllProperties(0);
+	}
+
+	void setChordNote(int prog, int trigger, int channel, int note, const bool &newValue)
+	{
+		channel-=1;
+		if (!getChild(prog).getChild(channel).isValid())
+		{
+			ValueTree noteMatrix("NoteMatrix"+String(channel+1));
+			getChild(prog).addChild(noteMatrix,channel,0);
+		}
 		if (note<32) {
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_0-31");
+			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_0-31",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(0).setProperty("T"+String(trigger)+"_0-31",state,0);
+			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_0-31",state,0);
 		}
 		else if (note<64) {
 			note -= 32;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_32-63");
+			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_32-63",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(0).setProperty("T"+String(trigger)+"_32-63",state,0);
+			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_32-63",state,0);
 		}
 		else if (note<96) {
 			note -= 64;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_64-95");
+			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_64-95",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(0).setProperty("T"+String(trigger)+"_64-95",state,0);
+			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_64-95",state,0);
 		}
 		else if (note<128) {
 			note -= 96;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_96-127");
+			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_96-127",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(0).setProperty("T"+String(trigger)+"_96-127",state,0);
+			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_96-127",state,0);
 		}
 	}
 
@@ -71,25 +101,28 @@ public:
 		return this->getChild(prog).getProperty(name);
 	}
 
-	bool getChordNote(int prog, int trigger, int note)
+	bool getChordNote(int prog, int trigger, int ch, int note)
 	{
+		ch-=1;
+		if (!getChild(prog).getChild(ch).isValid())
+			return false;
 		if (note<32) {
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_0-31");
+			int state = getChild(prog).getChild(ch).getProperty("T"+String(trigger)+"_0-31",0);
 			return (state & (1 << note)) != 0;
 		}
 		else if (note<64) {
 			note -= 32;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_32-63");
+			int state = getChild(prog).getChild(ch).getProperty("T"+String(trigger)+"_32-63",0);
 			return (state & (1 << note)) != 0;
 		}
 		else if (note<96) {
 			note -= 64;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_64-95");
+			int state = getChild(prog).getChild(ch).getProperty("T"+String(trigger)+"_64-95",0);
 			return (state & (1 << note)) != 0;
 		}
 		else if (note<128) {
 			note -= 96;
-			int state = getChild(prog).getChild(0).getProperty("T"+String(trigger)+"_96-127");
+			int state = getChild(prog).getChild(ch).getProperty("T"+String(trigger)+"_96-127",0);
 			return (state & (1 << note)) != 0;
 		}
 		return false;
@@ -158,9 +191,14 @@ public:
 	MidiKeyboardState chordKbState;
 	MidiKeyboardState triggerKbState;
 	void selectTrigger(int index);
-	void selectChordNote(int index, int note, bool on);
+	void selectChordNote(int index, int note, bool on, int ch=-1);
 	int getCurrentTrigger() {return curTrigger;}
 	bool isTriggerNotePlaying(int channel, int note) {return notePlaying[channel][note];}
+	bool isTriggerNotePlaying(int note) {
+		for (int i=0;i<16;i++)
+			if (notePlaying[i][note]) return true;
+		return false;
+	}
 	void clearAllChords();
 	void resetAllChords();
 	void clearChord(int trigger);
@@ -178,6 +216,9 @@ public:
 		}
 	}
 
+	bool readKeyFile(File file=File::nonexistent);
+	bool demo;
+
 	int lastUIWidth, lastUIHeight;
     //==============================================================================
     juce_UseDebuggingNewOperator
@@ -191,6 +232,7 @@ private:
 	bool init;
 
     int channel;
+	int learnchan;
 	bool learn;
 	bool follow;
 	bool usepc;
@@ -207,9 +249,10 @@ private:
 	bool notePlaying[16][128]; //trigger note
 	int outputNote[16][128];
 	int numChordNotes[numProgs][128];
-	Array<int> playingChord[128];
+
+	Array<ChordNote> playingChord[128];
 	bool chordNotePlaying[16][128];
-	Array<int> ignoreNextNoteOff;
+	Array<int> ignoreNextNoteOff[16];
 
 	void copySettingsToProgram(int index);
 };

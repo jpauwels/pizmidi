@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  22 Dec 2011 3:52:25pm
+  Creation date:  25 Dec 2011 7:34:47am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -66,7 +66,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       pasteButton (0),
       previewButton (0),
       chordEditor (0),
-      pcButton (0)
+      pcButton (0),
+      nextButton (0),
+      prevButton (0),
+      triggerNoteLabel (0),
+      learnChanSlider (0),
+      demoLabel (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -99,7 +104,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     triggerLearnButton->addListener (this);
 
     addAndMakeVisible (channelSlider = new ChannelSlider (L"channel"));
-    channelSlider->setTooltip (L"Input/output channel");
+    channelSlider->setTooltip (L"Trigger channel");
     channelSlider->setRange (0, 16, 1);
     channelSlider->setSliderStyle (Slider::LinearBar);
     channelSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
@@ -117,9 +122,9 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     addAndMakeVisible (pizButton = new PizButton());
     addAndMakeVisible (triggerLabel = new Label (L"new label",
-                                                 L"Trigger Note"));
+                                                 L"Trigger Note:"));
     triggerLabel->setFont (Font (15.0000f, Font::plain));
-    triggerLabel->setJustificationType (Justification::centred);
+    triggerLabel->setJustificationType (Justification::centredRight);
     triggerLabel->setEditable (false, false, false);
     triggerLabel->setColour (Label::textColourId, Colours::white);
     triggerLabel->setColour (TextEditor::textColourId, Colours::black);
@@ -233,7 +238,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     addAndMakeVisible (presetNameLabel = new Label (L"new label",
                                                     L"preset name"));
-    presetNameLabel->setTooltip (L"Preset Name");
+    presetNameLabel->setTooltip (L"Preset Name (double-click to edit)");
     presetNameLabel->setFont (Font (15.0000f, Font::bold));
     presetNameLabel->setJustificationType (Justification::centred);
     presetNameLabel->setEditable (true, true, false);
@@ -275,6 +280,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     addAndMakeVisible (chordEditor = new Label (L"new label",
                                                 L"chord"));
+    chordEditor->setTooltip (L"Double-click to type a chord");
     chordEditor->setFont (Font (15.0000f, Font::plain));
     chordEditor->setJustificationType (Justification::centred);
     chordEditor->setEditable (false, true, false);
@@ -288,6 +294,45 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     pcButton->setButtonText (L"Use ProgCh");
     pcButton->addListener (this);
 
+    addAndMakeVisible (nextButton = new TextButton (L"next"));
+    nextButton->setTooltip (L"Select next higher trigger note");
+    nextButton->setButtonText (L">");
+    nextButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnBottom);
+    nextButton->addListener (this);
+
+    addAndMakeVisible (prevButton = new TextButton (L"prev"));
+    prevButton->setTooltip (L"Select previous trigger note");
+    prevButton->setButtonText (L"<");
+    prevButton->setConnectedEdges (Button::ConnectedOnRight | Button::ConnectedOnBottom);
+    prevButton->addListener (this);
+
+    addAndMakeVisible (triggerNoteLabel = new Label (L"new label",
+                                                     L"G8 (127)"));
+    triggerNoteLabel->setTooltip (L"Currently displayed trigger note (double-click to edit)");
+    triggerNoteLabel->setFont (Font (15.0000f, Font::bold));
+    triggerNoteLabel->setJustificationType (Justification::centredLeft);
+    triggerNoteLabel->setEditable (false, true, false);
+    triggerNoteLabel->setColour (Label::textColourId, Colours::white);
+    triggerNoteLabel->setColour (TextEditor::textColourId, Colours::black);
+    triggerNoteLabel->setColour (TextEditor::backgroundColourId, Colours::white);
+    triggerNoteLabel->addListener (this);
+
+    addAndMakeVisible (learnChanSlider = new ChannelSlider (L"channel"));
+    learnChanSlider->setTooltip (L"Chord Input Channel");
+    learnChanSlider->setRange (0, 16, 1);
+    learnChanSlider->setSliderStyle (Slider::LinearBar);
+    learnChanSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    learnChanSlider->setColour (Slider::backgroundColourId, Colours::white);
+    learnChanSlider->addListener (this);
+
+    addAndMakeVisible (demoLabel = new Label (L"new label",
+                                              L"UNREGISTERED\nDEMO VERSION"));
+    demoLabel->setFont (Font (L"OCR A Extended", 10.0000f, Font::plain));
+    demoLabel->setJustificationType (Justification::centredRight);
+    demoLabel->setEditable (false, false, false);
+    demoLabel->setColour (TextEditor::textColourId, Colours::black);
+    demoLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
+
 
     //[UserPreSize]
 	this->setMouseClickGrabsKeyboardFocus(false);
@@ -296,6 +341,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	chordLearnButton->setMouseClickGrabsKeyboardFocus(false);
 	triggerLearnButton->setMouseClickGrabsKeyboardFocus(false);
 	channelSlider->setMouseClickGrabsKeyboardFocus(false);
+	learnChanSlider->setMouseClickGrabsKeyboardFocus(false);
 	outputLabel->setMouseClickGrabsKeyboardFocus(false);
 	pizButton->setMouseClickGrabsKeyboardFocus(false);
 	triggerLabel->setMouseClickGrabsKeyboardFocus(false);
@@ -320,6 +366,9 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     presetNameLabel->setMouseClickGrabsKeyboardFocus(false);
     presetMenuButton->setMouseClickGrabsKeyboardFocus(false);
 
+	//channelSlider->setAllText("All");
+	learnChanSlider->setAllText("All");
+
 	textEditor->addListener(this);
 	textEditor->setTextToShowWhenEmpty("Add chord",Colours::grey);
 
@@ -334,6 +383,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	//transposeChordUpButton->setVisible(false);
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
+
 	static NonShinyLookAndFeel Look;
 	LookAndFeel::setDefaultLookAndFeel (&Look);
 	mode = Normal;
@@ -344,6 +394,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     //[Constructor] You can add your own custom stuff here..
 	ownerFilter->addChangeListener(this);
+	if (!ownerFilter->demo)
+		demoLabel->setVisible(false);
 	updateParametersFromFilter();
     //[/Constructor]
 }
@@ -390,6 +442,11 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (previewButton);
     deleteAndZero (chordEditor);
     deleteAndZero (pcButton);
+    deleteAndZero (nextButton);
+    deleteAndZero (prevButton);
+    deleteAndZero (triggerNoteLabel);
+    deleteAndZero (learnChanSlider);
+    deleteAndZero (demoLabel);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -424,19 +481,19 @@ void MidiChordsEditor::paint (Graphics& g)
     g.setColour (Colours::black);
     g.setFont (Font (L"OCR A Std", 35.7000f, Font::plain));
     g.drawText (L"midiChords",
-                85, 24, 248, 30,
+                110, 24, 248, 30,
                 Justification::centred, true);
 
     g.setColour (Colours::black);
     g.setFont (Font (15.0000f, Font::plain));
-    g.drawText (L"Channel:",
-                14, 318, 59, 24,
+    g.drawText (L"Trigger Channel:",
+                14, 319, 103, 24,
                 Justification::centred, true);
 
     g.setColour (Colours::black);
     g.setFont (Font (L"OCR A Std", 15.0000f, Font::plain));
     g.drawText (L"Insert Piz Here\x2014>",
-                85, 0, 248, 30,
+                110, 0, 248, 30,
                 Justification::centred, true);
 
     g.setColour (Colours::black);
@@ -458,7 +515,7 @@ void MidiChordsEditor::paint (Graphics& g)
     g.fillRect (6, 97, getWidth() - 12, 93);
 
     g.setColour (Colours::black);
-    g.fillRoundedRectangle (540.0f, 202.0f, 94.0f, 106.0f, 10.0000f);
+    g.fillRoundedRectangle (462.0f, 202.0f, 172.0f, 36.0f, 10.0000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -472,10 +529,10 @@ void MidiChordsEditor::resized()
     triggerKeyboard->setBounds (8, 227, getWidth() - 16, 89);
     chordLearnButton->setBounds (6, 76, 45, 21);
     triggerLearnButton->setBounds (6, 204, 80, 21);
-    channelSlider->setBounds (80, 324, 104, 16);
+    channelSlider->setBounds (123, 323, 66, 16);
     outputLabel->setBounds (573, 76, 54, 24);
-    pizButton->setBounds (8, 10, 74, 40);
-    triggerLabel->setBounds (544, 203, 86, 24);
+    pizButton->setBounds (28, 10, 74, 40);
+    triggerLabel->setBounds (464, 203, 97, 24);
     clearChordButton->setBounds (291, 76, 40, 21);
     resetChordButton->setBounds (331, 76, 40, 21);
     clearAllButton->setBounds (8, 368, 64, 24);
@@ -499,9 +556,14 @@ void MidiChordsEditor::resized()
     textEditor->setBounds (82, -35, 150, 24);
     copyButton->setBounds (111, 73, 38, 21);
     pasteButton->setBounds (149, 73, 38, 21);
-    previewButton->setBounds (258, 196, 143, 24);
+    previewButton->setBounds (230, 196, 143, 24);
     chordEditor->setBounds (78, 54, 144, 20);
     pcButton->setBounds (320, 372, 98, 24);
+    nextButton->setBounds (113, 204, 23, 21);
+    prevButton->setBounds (90, 204, 23, 21);
+    triggerNoteLabel->setBounds (558, 203, 73, 24);
+    learnChanSlider->setBounds (10, 56, 38, 16);
+    demoLabel->setBounds (275, 50, 81, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -678,8 +740,11 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		String chordString = String(t) + ":";
 		for (int n=0;n<128;n++)
 		{
-			if (getFilter()->chordKbState.isNoteOn(1,n))
-				chordString += " " + String(n-t);
+			for (int c=1;c<=16;c++)
+			{
+				if (getFilter()->chordKbState.isNoteOn(c,n))
+					chordString += " " + String(n-t)+"."+String(c);
+			}
 		}
 		SystemClipboard::copyTextToClipboard(chordString);
         //[/UserButtonCode_copyButton]
@@ -696,11 +761,23 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		getFilter()->setParameterNotifyingHost(kUseProgCh,pcButton->getToggleState() ? 1.f : 0.f);
         //[/UserButtonCode_pcButton]
     }
+    else if (buttonThatWasClicked == nextButton)
+    {
+        //[UserButtonCode_nextButton] -- add your button handler code here..
+		getFilter()->selectTrigger(getFilter()->getCurrentTrigger()+1);
+        //[/UserButtonCode_nextButton]
+    }
+    else if (buttonThatWasClicked == prevButton)
+    {
+        //[UserButtonCode_prevButton] -- add your button handler code here..
+		getFilter()->selectTrigger(getFilter()->getCurrentTrigger()-1);
+        //[/UserButtonCode_prevButton]
+    }
 
     //[UserbuttonClicked_Post]
     else if (buttonThatWasClicked == pizButton)
     {
-		URL("http://thepiz.org/plugins").launchInDefaultBrowser();
+		URL("http://thepiz.org/plugins/?p=midiChords").launchInDefaultBrowser();
 	}
     //[/UserbuttonClicked_Post]
 }
@@ -732,6 +809,12 @@ void MidiChordsEditor::sliderValueChanged (Slider* sliderThatWasMoved)
         //[UserSliderCode_variationSlider] -- add your slider handling code here..
         //[/UserSliderCode_variationSlider]
     }
+    else if (sliderThatWasMoved == learnChanSlider)
+    {
+        //[UserSliderCode_learnChanSlider] -- add your slider handling code here..
+		getFilter()->setParameterNotifyingHost(kLearnChannel,(float)learnChanSlider->getValue()/16.f);
+        //[/UserSliderCode_learnChanSlider]
+    }
 
     //[UsersliderValueChanged_Post]
     //[/UsersliderValueChanged_Post]
@@ -754,6 +837,12 @@ void MidiChordsEditor::labelTextChanged (Label* labelThatHasChanged)
         //[UserLabelCode_chordEditor] -- add your label text handling code here..
 		chordFromString(chordEditor->getText());
         //[/UserLabelCode_chordEditor]
+    }
+    else if (labelThatHasChanged == triggerNoteLabel)
+    {
+        //[UserLabelCode_triggerNoteLabel] -- add your label text handling code here..
+		getFilter()->selectTrigger(triggerNoteLabel->getText().getIntValue());
+        //[/UserLabelCode_triggerNoteLabel]
     }
 
     //[UserlabelTextChanged_Post]
@@ -785,22 +874,29 @@ void MidiChordsEditor::chordFromString(String chordString)
 		chordString = chordString.fromLastOccurrenceOf(":",false,false);
 	if (chordString.containsAnyOf("abcdefgABCDEFGmMrRopP#+") || !chordString.contains("0"))
 		chordString = getIntervalStringFromNoteNames(t,chordString);
+
 	sa.addTokens(chordString," ,",String::empty);
 	if (sa.size()>0)
 		getFilter()->clearChord(t);
 	if (ModifierKeys::getCurrentModifiers().isCommandDown())
 	{
+		//absolute
 		for(int i=0;i<sa.size();i++)
 		{
-			//absolute
-			getFilter()->selectChordNote(t,root+sa[i].getIntValue(),true);
+			if(sa[i].contains("."))
+				getFilter()->selectChordNote(t,root+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+			else
+				getFilter()->selectChordNote(t,root+sa[i].getIntValue(),true);
 		}
 	}
 	else {
 		for(int i=0;i<sa.size();i++)
 		{
 			//relative
-			getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+			if(sa[i].contains("."))
+				getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+			else
+				getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
 		}
 	}
 }
@@ -815,13 +911,18 @@ void MidiChordsEditor::updateParametersFromFilter()
 {
 	MidiChords* const filter = getFilter();
 	const int newMode = roundToInt(filter->getParameter(kMode)*(numModes-1));
+	const int chordChan = roundToInt(filter->getParameter(kLearnChannel)*16.f);
 
 	chordLearnButton->setToggleState(filter->getParameter(kLearnChord)>0,false);
 	triggerLearnButton->setToggleState(filter->getParameter(kFollowInput)>0,false);
 	channelSlider->setValue(filter->getParameter(kChannel)*16.f,false);
+	learnChanSlider->setValue(chordChan,false);
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
 	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
 	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
+
+	if (chordChan==0) chordKeyboard->setMidiChannelsToDisplay(0xffff);
+	else chordKeyboard->setMidiChannelsToDisplay(1<<(chordChan-1));
 
 	normalButton->setToggleState(newMode==Normal,false);
 	octaveButton->setToggleState(newMode==Octave,false);
@@ -832,34 +933,45 @@ void MidiChordsEditor::updateParametersFromFilter()
 
 	const int t = getFilter()->getCurrentTrigger();
 	String chordString;// = String(t) + ":";
-	for (int n=0;n<128;n++)
-	{
-		if (getFilter()->chordKbState.isNoteOn(1,n))
-			chordString += String(n-t)+" ";
+	for (int n=0;n<128;n++) {
+		for (int c=1;c<=16;c++) {
+			if (getFilter()->chordKbState.isNoteOn(c,n))
+				chordString += String(n-t)/*+"."+String(c)*/+" ";
+		}
 	}
 	chordEditor->setText(chordString.trimEnd(),false);
 
 	if (mode!=newMode)
 	{
 		if (newMode==Global) {
-			triggerLabel->setText("Root Note",false);
+			triggerLabel->setText("Root Note:",false);
 			triggerKeyboard->setKeyWidth(16.f);
 			triggerKeyboard->setAvailableRange(0,127);
 			triggerKeyboard->setLowestVisibleKey(36);
+			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
 		}
 		else if (newMode==Octave) {
-			triggerLabel->setText("Trigger Note",false);
+			triggerLabel->setText("Trigger Note:",false);
 			triggerKeyboard->setAvailableRange(60,71);
 			triggerKeyboard->setKeyWidth((float)triggerKeyboard->getWidth()/7.f);
+			triggerNoteLabel->setText(getNoteNameWithoutOctave(t),false);
 		}
 		else {
-			triggerLabel->setText("Trigger Note",false);
+			triggerLabel->setText("Trigger Note:",false);
 			triggerKeyboard->setKeyWidth(16.f);
 			triggerKeyboard->setAvailableRange(0,127);
 			triggerKeyboard->setLowestVisibleKey(36);
+			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
 		}
 		mode = newMode;
 	}
+	else {
+		if (newMode!=Octave)
+			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
+		else
+			triggerNoteLabel->setText(getNoteNameWithoutOctave(t),false);
+	}
+
 	if (presetNameLabel->getText() != getFilter()->getProgramName(getFilter()->getCurrentProgram()))
 		presetNameLabel->setText(getFilter()->getProgramName(getFilter()->getCurrentProgram()),false);
 
@@ -874,8 +986,11 @@ String const MidiChordsEditor::getCurrentChordName()
 	Array<int> chord;
 	for (int n=0;n<128;n++)
 	{
-		if (getFilter()->chordKbState.isNoteOn(1,n))
-			chord.add(n);
+		for (int c=0;c<=16;c++)
+		{
+			if (getFilter()->chordKbState.isNoteOn(c,n))
+				chord.add(n);
+		}
 	}
 	return getFirstRecognizedChord(chord,getFilter()->getParameter(kFlats)>0.f);
 }
@@ -920,7 +1035,10 @@ void MidiChordsEditor::loadChord(String chorddef)
 	sa.addTokens(chorddef.fromLastOccurrenceOf(":",false,true)," ",String::empty);
 	for(int i=0;i<sa.size();i++)
 	{
-		getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+		if(sa[i].contains("."))
+			getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+		else
+			getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
 	}
 }
 
@@ -939,13 +1057,29 @@ void MidiChordsEditor::loadPreset(String filename)
 	{
 		if (!lines[ln].startsWithChar(';'))
 		{
-			int t = lines[ln].upToFirstOccurrenceOf(":",false,false).getIntValue();
-			//getFilter()->clearChord(t);
-			StringArray sa;
-			sa.addTokens(lines[ln].fromLastOccurrenceOf(":",false,true)," ",String::empty);
-			for(int i=0;i<sa.size();i++)
+			if (lines[ln].upToFirstOccurrenceOf(":",false,false).equalsIgnoreCase("Mode"))
 			{
-				getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+				String s = lines[ln].fromLastOccurrenceOf(":",false,true);
+				if (s.equalsIgnoreCase("Full"))
+					getFilter()->setParameterNotifyingHost(kMode,((float)Normal)/(float)(numModes-1));
+				if (s.equalsIgnoreCase("Octave"))
+					getFilter()->setParameterNotifyingHost(kMode,((float)Octave)/(float)(numModes-1));
+				if (s.equalsIgnoreCase("Global"))
+					getFilter()->setParameterNotifyingHost(kMode,((float)Global)/(float)(numModes-1));
+			}
+			else
+			{
+				int t = lines[ln].upToFirstOccurrenceOf(":",false,false).getIntValue();
+				//getFilter()->clearChord(t);
+				StringArray sa;
+				sa.addTokens(lines[ln].fromLastOccurrenceOf(":",false,true)," ",String::empty);
+				for(int i=0;i<sa.size();i++)
+				{
+					if(sa[i].contains("."))
+						getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+					else
+						getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+				}
 			}
 		}
 	}
@@ -958,10 +1092,12 @@ void MidiChordsEditor::saveChord(String name)
 {
 	const int t = getFilter()->getCurrentTrigger();
 	String chordString = name + ":";
-	for (int n=0;n<128;n++)
-	{
-		if (getFilter()->chordKbState.isNoteOn(1,n))
-			chordString += " " + String(t-n);
+	for (int c=1;c<=16;c++) {
+		for (int n=0;n<128;n++)
+		{
+			if (getFilter()->chordKbState.isNoteOn(1,n))
+				chordString += " " + String(t-n) + "." + String(c);
+		}
 	}
 	File chordFile(getFilter()->getCurrentPath()+File::separatorString
 		+"midiChords"+File::separatorString+"chords"+File::separatorString+"User.txt");
@@ -987,6 +1123,24 @@ void MidiChordsEditor::textEditorEscapeKeyPressed(TextEditor &editor) {
 void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 
 }
+
+void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, int mouseY)
+{
+	if (File(filenames[0]).getFileName() == "midiChordsKey.txt") {
+		getFilter()->readKeyFile(File(filenames[0]));
+		if (!getFilter()->demo) {
+			demoLabel->setVisible(false);
+		}
+	}
+}
+
+bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
+    File file = File(files[0]);
+    //if ( file.hasFileExtension("mid") ) return true;
+	if ( file.getFileName() == "midiChordsKey.txt" ) return true;
+    return false;
+}
+
 //[/MiscUserCode]
 
 
@@ -999,7 +1153,7 @@ void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MidiChordsEditor" componentName=""
-                 parentClasses="public AudioProcessorEditor, public ChangeListener, public TextEditorListener"
+                 parentClasses="public AudioProcessorEditor, public ChangeListener, public TextEditorListener, public FileDragAndDropTarget"
                  constructorParams="MidiChords* const ownerFilter" variableInitialisers="AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="0" snapShown="1" overlayOpacity="0.330000013"
                  fixedSize="1" initialWidth="640" initialHeight="400">
@@ -1009,11 +1163,11 @@ BEGIN_JUCER_METADATA
     <ROUNDRECT pos="568 76 66 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
     <RECT pos="0 360 100% 40" fill="linear: 0 336, 0 376, 0=ff000000, 1=ff828282"
           hasStroke="0"/>
-    <TEXT pos="85 24 248 30" fill="solid: ff000000" hasStroke="0" text="midiChords"
+    <TEXT pos="110 24 248 30" fill="solid: ff000000" hasStroke="0" text="midiChords"
           fontname="OCR A Std" fontsize="35.7" bold="0" italic="0" justification="36"/>
-    <TEXT pos="14 318 59 24" fill="solid: ff000000" hasStroke="0" text="Channel:"
+    <TEXT pos="14 319 103 24" fill="solid: ff000000" hasStroke="0" text="Trigger Channel:"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-    <TEXT pos="85 0 248 30" fill="solid: ff000000" hasStroke="0" text="Insert Piz Here&#8212;&gt;"
+    <TEXT pos="110 0 248 30" fill="solid: ff000000" hasStroke="0" text="Insert Piz Here&#8212;&gt;"
           fontname="OCR A Std" fontsize="15" bold="0" italic="0" justification="36"/>
     <TEXT pos="440 376 80 16" fill="solid: ff000000" hasStroke="0" text="Transpose:"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
@@ -1021,7 +1175,7 @@ BEGIN_JUCER_METADATA
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
     <RECT pos="6 225 12M 93" fill="solid: ff000000" hasStroke="0"/>
     <RECT pos="6 97 12M 93" fill="solid: ff000000" hasStroke="0"/>
-    <ROUNDRECT pos="540 202 94 106" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
+    <ROUNDRECT pos="462 202 172 36" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
   </BACKGROUND>
   <TOGGLEBUTTON name="new toggle button" id="58723bf0e9d70b49" memberName="toggleButton"
                 virtualName="" explicitFocusOrder="0" pos="372 50 150 24" buttonText="Guess chord name"
@@ -1045,8 +1199,8 @@ BEGIN_JUCER_METADATA
               buttonText="Follow Input" connectedEdges="8" needsCallback="1"
               radioGroupId="0"/>
   <SLIDER name="channel" id="c08fa2a5fc963392" memberName="channelSlider"
-          virtualName="ChannelSlider" explicitFocusOrder="0" pos="80 324 104 16"
-          tooltip="Input/output channel" bkgcol="ffffffff" min="0" max="16"
+          virtualName="ChannelSlider" explicitFocusOrder="0" pos="123 323 66 16"
+          tooltip="Trigger channel" bkgcol="ffffffff" min="0" max="16"
           int="1" style="LinearBar" textBoxPos="TextBoxLeft" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="53b1a84fa5d6099" memberName="outputLabel"
@@ -1055,13 +1209,13 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="34"/>
   <JUCERCOMP name="" id="bad9b853cca3ec4a" memberName="pizButton" virtualName=""
-             explicitFocusOrder="0" pos="8 10 74 40" sourceFile="../../common/PizButton.cpp"
+             explicitFocusOrder="0" pos="28 10 74 40" sourceFile="../../common/PizButton.cpp"
              constructorParams=""/>
   <LABEL name="new label" id="9c19fc858eab3133" memberName="triggerLabel"
-         virtualName="" explicitFocusOrder="0" pos="544 203 86 24" textCol="ffffffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="Trigger Note" editableSingleClick="0"
+         virtualName="" explicitFocusOrder="0" pos="464 203 97 24" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="Trigger Note:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
+         fontsize="15" bold="0" italic="0" justification="34"/>
   <TEXTBUTTON name="clear" id="729ec8a8b3111b3" memberName="clearChordButton"
               virtualName="" explicitFocusOrder="0" pos="291 76 40 21" tooltip="Clear current chord"
               buttonText="Clear" connectedEdges="10" needsCallback="1" radioGroupId="0"/>
@@ -1121,7 +1275,7 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="55 76 52 21" buttonText="Menu"
               connectedEdges="8" needsCallback="1" radioGroupId="0"/>
   <LABEL name="new label" id="4ef6103879c88f80" memberName="presetNameLabel"
-         virtualName="" explicitFocusOrder="0" pos="414 12 191 26" tooltip="Preset Name"
+         virtualName="" explicitFocusOrder="0" pos="414 12 191 26" tooltip="Preset Name (double-click to edit)"
          bkgCol="27a1b404" outlineCol="b3000000" edTextCol="ff000000"
          edBkgCol="0" labelText="preset name" editableSingleClick="1"
          editableDoubleClick="1" focusDiscardsChanges="0" fontname="Default font"
@@ -1140,17 +1294,39 @@ BEGIN_JUCER_METADATA
               explicitFocusOrder="0" pos="149 73 38 21" buttonText="Paste"
               connectedEdges="5" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="play" id="92127eade5a319e5" memberName="previewButton"
-              virtualName="" explicitFocusOrder="0" pos="258 196 143 24" bgColOff="ff7ca17c"
+              virtualName="" explicitFocusOrder="0" pos="230 196 143 24" bgColOff="ff7ca17c"
               buttonText="Play Chord" connectedEdges="0" needsCallback="0"
               radioGroupId="0"/>
   <LABEL name="new label" id="5bdae6a44eaf90fa" memberName="chordEditor"
-         virtualName="" explicitFocusOrder="0" pos="78 54 144 20" bkgCol="ffffffff"
-         outlineCol="b3000000" edTextCol="ff000000" edBkgCol="0" labelText="chord"
-         editableSingleClick="0" editableDoubleClick="1" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="78 54 144 20" tooltip="Double-click to type a chord"
+         bkgCol="ffffffff" outlineCol="b3000000" edTextCol="ff000000"
+         edBkgCol="0" labelText="chord" editableSingleClick="0" editableDoubleClick="1"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
   <TOGGLEBUTTON name="new toggle button" id="985f12fa947001cc" memberName="pcButton"
                 virtualName="" explicitFocusOrder="0" pos="320 372 98 24" buttonText="Use ProgCh"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
+  <TEXTBUTTON name="next" id="112bbd95115b0fee" memberName="nextButton" virtualName=""
+              explicitFocusOrder="0" pos="113 204 23 21" tooltip="Select next higher trigger note"
+              buttonText="&gt;" connectedEdges="9" needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="prev" id="fec45c7b44c486c2" memberName="prevButton" virtualName=""
+              explicitFocusOrder="0" pos="90 204 23 21" tooltip="Select previous trigger note"
+              buttonText="&lt;" connectedEdges="10" needsCallback="1" radioGroupId="0"/>
+  <LABEL name="new label" id="f9ca130084b6577" memberName="triggerNoteLabel"
+         virtualName="" explicitFocusOrder="0" pos="558 203 73 24" tooltip="Currently displayed trigger note (double-click to edit)"
+         textCol="ffffffff" edTextCol="ff000000" edBkgCol="ffffffff" labelText="G8 (127)"
+         editableSingleClick="0" editableDoubleClick="1" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="1" italic="0" justification="33"/>
+  <SLIDER name="channel" id="51b00c0c435d1b05" memberName="learnChanSlider"
+          virtualName="ChannelSlider" explicitFocusOrder="0" pos="10 56 38 16"
+          tooltip="Chord Input Channel" bkgcol="ffffffff" min="0" max="16"
+          int="1" style="LinearBar" textBoxPos="TextBoxLeft" textBoxEditable="1"
+          textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <LABEL name="new label" id="b13bd78310d4145" memberName="demoLabel"
+         virtualName="" explicitFocusOrder="0" pos="275 50 81 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="UNREGISTERED&#10;DEMO VERSION" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="OCR A Extended"
+         fontsize="10" bold="0" italic="0" justification="34"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

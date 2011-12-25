@@ -4,7 +4,8 @@ Insert Piz Here-> midiChords
 midiChords:
 Allows mapping of every input MIDI note to 0 or more output notes.
 
-Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not discussed here may or may not be documented in GUI tooltips.
+Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not 
+discussed here may or may not be documented in GUI tooltips.
 
 The copy/paste buttons use the same format as the saved chords/mappings, so
 you can copy from the GUI and paste into a text file and vice-versa.
@@ -19,6 +20,11 @@ There is also a text box to type in chords directly. It can read three different
 The "Paste" button can also use any of these formats directly, if you copied
 them from a website or other source (so you don't have to paste them into the
 text box first).
+
+Each chord may contain notes for multiple channels. Right-clicking notes on the chord 
+keyboard allows you to choose which channels each note is sent on. The channel slider 
+above the Learn button lets you filter which input channel(s) are learned. This setting 
+is also used for setting chord notes with left-click.
 
 Saved chord shape menu:
 The "Chords" menu is built from plain text files in the "chords" folder.
