@@ -29,6 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{17519BF5-2658-4A2E-9360-9E4014CE0F57}</ProjectGuid>
     <RootNamespace>JuceAudioPlugin Demo</RootNamespace>
+    <ProjectName>AudioToCC</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Standalone|Win32'" Label="Configuration">

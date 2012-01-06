@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  25 Dec 2011 7:34:47am
+  Creation date:  6 Jan 2012 10:22:59am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -183,9 +183,11 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     transposeSlider->addListener (this);
 
     addAndMakeVisible (velocitySlider = new Slider (L"velocity"));
-    velocitySlider->setRange (-10, 10, 0.1);
-    velocitySlider->setSliderStyle (Slider::LinearBar);
-    velocitySlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    velocitySlider->setTooltip (L"Velocity for \"Play Chord\" button");
+    velocitySlider->setRange (1, 127, 1);
+    velocitySlider->setSliderStyle (Slider::RotaryVerticalDrag);
+    velocitySlider->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
+    velocitySlider->setColour (Slider::rotarySliderFillColourId, Colour (0x7f000000));
     velocitySlider->addListener (this);
 
     addAndMakeVisible (variationSlider = new Slider (L"Variation"));
@@ -275,6 +277,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     pasteButton->addListener (this);
 
     addAndMakeVisible (previewButton = new TextButton (L"play"));
+    previewButton->setTooltip (L"Plays currently displayed chord");
     previewButton->setButtonText (L"Play Chord");
     previewButton->setColour (TextButton::buttonColourId, Colour (0xff7ca17c));
 
@@ -366,21 +369,17 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     presetNameLabel->setMouseClickGrabsKeyboardFocus(false);
     presetMenuButton->setMouseClickGrabsKeyboardFocus(false);
 
-	//channelSlider->setAllText("All");
+	//channelSlider->setAllText("Any");
 	learnChanSlider->setAllText("All");
-
 	textEditor->addListener(this);
 	textEditor->setTextToShowWhenEmpty("Add chord",Colours::grey);
-
 	pizButton->addListener(this);
 	pizButton->setTooltip("http://thepiz.org/plugins");
-
 	previewButton->addMouseListener(this,false);
+	velocitySlider->setPopupDisplayEnabled(true,this);
+	velocitySlider->setDoubleClickReturnValue(true,100);
 
-	velocitySlider->setVisible(false);
 	variationSlider->setVisible(false);
-	//transposeChordDownButton->setVisible(false);
-	//transposeChordUpButton->setVisible(false);
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
 
@@ -517,6 +516,13 @@ void MidiChordsEditor::paint (Graphics& g)
     g.setColour (Colours::black);
     g.fillRoundedRectangle (462.0f, 202.0f, 172.0f, 36.0f, 10.0000f);
 
+    g.setGradientFill (ColourGradient (Colour (0xff666666),
+                                       248.0f, 183.0f,
+                                       Colour (0xffbfbfbf),
+                                       248.0f, 215.0f,
+                                       false));
+    g.fillRoundedRectangle (230.0f, 195.0f, 173.0f, 26.0f, 12.0000f);
+
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -542,7 +548,7 @@ void MidiChordsEditor::resized()
     transposeChordUpButton->setBounds (239, 76, 23, 21);
     transposeChordDownButton->setBounds (216, 76, 23, 21);
     transposeSlider->setBounds (528, 376, 104, 16);
-    velocitySlider->setBounds (226, 351, 104, 16);
+    velocitySlider->setBounds (376, 197, 22, 22);
     variationSlider->setBounds (338, 351, 104, 16);
     normalButton->setBounds (442, 318, 64, 24);
     octaveButton->setBounds (506, 318, 64, 24);
@@ -802,6 +808,7 @@ void MidiChordsEditor::sliderValueChanged (Slider* sliderThatWasMoved)
     else if (sliderThatWasMoved == velocitySlider)
     {
         //[UserSliderCode_velocitySlider] -- add your slider handling code here..
+		getFilter()->setParameterNotifyingHost(kVelocity,(float)(velocitySlider->getValue()-1)/126.f);
         //[/UserSliderCode_velocitySlider]
     }
     else if (sliderThatWasMoved == variationSlider)
@@ -912,11 +919,13 @@ void MidiChordsEditor::updateParametersFromFilter()
 	MidiChords* const filter = getFilter();
 	const int newMode = roundToInt(filter->getParameter(kMode)*(numModes-1));
 	const int chordChan = roundToInt(filter->getParameter(kLearnChannel)*16.f);
+	const int previewVel = roundToInt(filter->getParameter(kVelocity)*126.f)+1;
 
-	chordLearnButton->setToggleState(filter->getParameter(kLearnChord)>0,false);
-	triggerLearnButton->setToggleState(filter->getParameter(kFollowInput)>0,false);
 	channelSlider->setValue(filter->getParameter(kChannel)*16.f,false);
 	learnChanSlider->setValue(chordChan,false);
+	velocitySlider->setValue(previewVel,false);
+	chordLearnButton->setToggleState(filter->getParameter(kLearnChord)>0,false);
+	triggerLearnButton->setToggleState(filter->getParameter(kFollowInput)>0,false);
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
 	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
 	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
@@ -1176,6 +1185,8 @@ BEGIN_JUCER_METADATA
     <RECT pos="6 225 12M 93" fill="solid: ff000000" hasStroke="0"/>
     <RECT pos="6 97 12M 93" fill="solid: ff000000" hasStroke="0"/>
     <ROUNDRECT pos="462 202 172 36" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
+    <ROUNDRECT pos="230 195 173 26" cornerSize="12" fill="linear: 248 183, 248 215, 0=ff666666, 1=ffbfbfbf"
+               hasStroke="0"/>
   </BACKGROUND>
   <TOGGLEBUTTON name="new toggle button" id="58723bf0e9d70b49" memberName="toggleButton"
                 virtualName="" explicitFocusOrder="0" pos="372 50 150 24" buttonText="Guess chord name"
@@ -1246,9 +1257,10 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="velocity" id="d173a9d6025fabc0" memberName="velocitySlider"
-          virtualName="" explicitFocusOrder="0" pos="226 351 104 16" min="-10"
-          max="10" int="0.1" style="LinearBar" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+          virtualName="" explicitFocusOrder="0" pos="376 197 22 22" tooltip="Velocity for &quot;Play Chord&quot; button"
+          rotarysliderfill="7f000000" min="1" max="127" int="1" style="RotaryVerticalDrag"
+          textBoxPos="NoTextBox" textBoxEditable="1" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="Variation" id="992cbb80661db8e9" memberName="variationSlider"
           virtualName="" explicitFocusOrder="0" pos="338 351 104 16" min="0"
           max="100" int="0.1" style="LinearBar" textBoxPos="TextBoxLeft"
@@ -1294,9 +1306,9 @@ BEGIN_JUCER_METADATA
               explicitFocusOrder="0" pos="149 73 38 21" buttonText="Paste"
               connectedEdges="5" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="play" id="92127eade5a319e5" memberName="previewButton"
-              virtualName="" explicitFocusOrder="0" pos="230 196 143 24" bgColOff="ff7ca17c"
-              buttonText="Play Chord" connectedEdges="0" needsCallback="0"
-              radioGroupId="0"/>
+              virtualName="" explicitFocusOrder="0" pos="230 196 143 24" tooltip="Plays currently displayed chord"
+              bgColOff="ff7ca17c" buttonText="Play Chord" connectedEdges="0"
+              needsCallback="0" radioGroupId="0"/>
   <LABEL name="new label" id="5bdae6a44eaf90fa" memberName="chordEditor"
          virtualName="" explicitFocusOrder="0" pos="78 54 144 20" tooltip="Double-click to type a chord"
          bkgCol="ffffffff" outlineCol="b3000000" edTextCol="ff000000"

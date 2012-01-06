@@ -17,9 +17,9 @@ enum parameters {
 	kFlats,
 	kUseProgCh,
 	kLearnChannel,
+	kVelocity,
 
     numParams,
-	kVelocity,
 	kVariation,
 	numProgs = 128
 };
@@ -56,43 +56,46 @@ public:
 
 	void clearNoteMatrix(int prog, int trigger)
 	{
-		getChild(prog).getChild(trigger).removeAllProperties(0);
+		if(getChild(prog).getChild(trigger).isValid())
+			getChild(prog).getChild(trigger).removeAllProperties(0);
 	}
 
 	void setChordNote(int prog, int trigger, int channel, int note, const bool &newValue)
 	{
 		channel-=1;
-		if (!getChild(prog).getChild(channel).isValid())
+		if (!getChild(prog).getChild(trigger).isValid())
 		{
-			ValueTree noteMatrix("NoteMatrix"+String(channel+1));
-			getChild(prog).addChild(noteMatrix,channel,0);
+			ValueTree noteMatrix("NoteMatrix_T"+String(trigger));
+			getChild(prog).addChild(noteMatrix,trigger,0);
 		}
 		if (note<32) {
-			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_0-31",0);
-			if (newValue) state |= 1 << note;
-			else state &= ~(1<<note);
-			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_0-31",state,0);
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(channel)+"_0-31",0);
+			if (newValue) 
+				state |= 1 << note;
+			else 
+				state &= ~(1<<note);
+			getChild(prog).getChild(trigger).setProperty("Ch"+String(channel)+"_0-31",state,0);
 		}
 		else if (note<64) {
 			note -= 32;
-			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_32-63",0);
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(channel)+"_32-63",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_32-63",state,0);
+			getChild(prog).getChild(trigger).setProperty("Ch"+String(channel)+"_32-63",state,0);
 		}
 		else if (note<96) {
 			note -= 64;
-			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_64-95",0);
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(channel)+"_64-95",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_64-95",state,0);
+			getChild(prog).getChild(trigger).setProperty("Ch"+String(channel)+"_64-95",state,0);
 		}
 		else if (note<128) {
 			note -= 96;
-			int state = getChild(prog).getChild(channel).getProperty("T"+String(trigger)+"_96-127",0);
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(channel)+"_96-127",0);
 			if (newValue) state |= 1 << note;
 			else state &= ~(1<<note);
-			getChild(prog).getChild(channel).setProperty("T"+String(trigger)+"_96-127",state,0);
+			getChild(prog).getChild(trigger).setProperty("Ch"+String(channel)+"_96-127",state,0);
 		}
 	}
 
@@ -102,6 +105,33 @@ public:
 	}
 
 	bool getChordNote(int prog, int trigger, int ch, int note)
+	{
+		ch-=1;
+		if (!getChild(prog).getChild(trigger).isValid())
+			return false;
+		if (note<32) {
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(ch)+"_0-31",0);
+			return (state & (1 << note)) != 0;
+		}
+		else if (note<64) {
+			note -= 32;
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(ch)+"_32-63",0);
+			return (state & (1 << note)) != 0;
+		}
+		else if (note<96) {
+			note -= 64;
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(ch)+"_64-95",0);
+			return (state & (1 << note)) != 0;
+		}
+		else if (note<128) {
+			note -= 96;
+			int state = getChild(prog).getChild(trigger).getProperty("Ch"+String(ch)+"_96-127",0);
+			return (state & (1 << note)) != 0;
+		}
+		return false;
+	}
+
+	bool getChordNote_OLD(int prog, int trigger, int ch, int note)
 	{
 		ch-=1;
 		if (!getChild(prog).getChild(ch).isValid())
@@ -237,7 +267,7 @@ private:
 	bool follow;
 	bool usepc;
 	int transpose;
-	float velocity;
+	int previewVel;
 	int mode;
 	int root;
 	bool guess;

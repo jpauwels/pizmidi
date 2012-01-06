@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  25 Dec 2011 7:34:47am
+  Creation date:  6 Jan 2012 10:22:59am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -415,4 +415,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_BCDB8134__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
