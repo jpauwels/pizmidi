@@ -245,6 +245,7 @@ public:
 			playFromGUI=on;
 		}
 	}
+	bool isPreviewChordPlaying() {return playFromGUI;}
 
 	bool readKeyFile(File file=File::nonexistent);
 	bool demo;

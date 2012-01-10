@@ -204,14 +204,14 @@ void fillChordDatabase()
 	ChordNames.add(ChordName("+7"			, "c,e,g#,bb"));    //7(b13)
 	ChordNames.add(ChordName("7(#9)"        , "c,eb,e,bb"));             
 	ChordNames.add(ChordName("sus4"         , "c,f,g"));                 
-	ChordNames.add(ChordName("6/9"          , "c,e,g,a,d"));             
+	ChordNames.add(ChordName("6add9"        , "c,e,g,a,d"));             
 	ChordNames.add(ChordName("Maj9"         , "c,e,g,b,d"));             
 	ChordNames.add(ChordName("9"            , "c,e,g,bb,d"));            
 	ChordNames.add(ChordName("13"           , "c,e,g,bb,d,a"));          
 	ChordNames.add(ChordName("13"           , "c,e,g,bb,d,f,a"));          
 	ChordNames.add(ChordName("m6"           , "c,eb,g,a"));              
-	ChordNames.add(ChordName("m6/9"         , "c,eb,g,a,d"));            
-	ChordNames.add(ChordName("m6/9"         , "c,eb,a,d"));              
+	ChordNames.add(ChordName("m6add9"       , "c,eb,g,a,d"));            
+	ChordNames.add(ChordName("m6/9"			, "c,eb,a,d"));              
 	ChordNames.add(ChordName("m7add13"      , "c,eb,g,a,bb"));           
 	ChordNames.add(ChordName("m9"           , "c,eb,g,bb,d"));           
 	ChordNames.add(ChordName("m11"          , "c,eb,g,bb,d,f"));         
@@ -247,6 +247,20 @@ void fillChordDatabase()
 	ChordNames.add(ChordName("add11"		, "c,e,g,f"));
 	ChordNames.add(ChordName("Maj11"		, "c,e,g,b,d,f"));   
 	ChordNames.add(ChordName("Maj7add11" 	, "c,e,g,b,f"));   
+	ChordNames.add(ChordName("7add11"		, "c,e,g,bb,f"));  
+	ChordNames.add(ChordName("m7b9"         , "c,eb,g,bb,db")); 
+	ChordNames.add(ChordName("+Maj9"        , "c,e,g#,b,d")); 
+	ChordNames.add(ChordName("+9"           , "c,e,g#,bb,d"));
+	ChordNames.add(ChordName("mMaj11"       , "c,eb,g,b,d,f")); 
+	ChordNames.add(ChordName("+Maj11"       , "c,e,g#,b,d,f")); 
+	ChordNames.add(ChordName("+13"          , "c,e,g#,bb,d,f,a")); 
+	ChordNames.add(ChordName("+Maj13"       , "c,e,g#,b,d,f,a")); 
+	ChordNames.add(ChordName("Maj7sus4"		, "c,f,g,b"));        
+	ChordNames.add(ChordName("Maj9sus4"		, "c,f,g,b,d")); 
+	ChordNames.add(ChordName("7add13"		, "c,e,g,bb,a")); 
+	ChordNames.add(ChordName("mMaj7add11"	, "c,eb,g,b,f")); 
+	ChordNames.add(ChordName("7add11"		, "c,e,g,bb,f")); 
+
 	//ChordNames.add(ChordName("(It+6)"		, "ab,c,f#"));   
 	//ChordNames.add(ChordName("(Fr+6)"		, "ab,c,d,f#"));   
 	//ChordNames.add(ChordName("(Gr+6)"		, "ab,c,eb,f#"));   

@@ -9,18 +9,83 @@
 #Triads
 Major: 0 4 7
 Minor: 0 3 7
-Diminished: 0 3 6
 Augmented: 0 4 8
-
-#Sixths
-Major 6: 0 4 7 9
-Minor 6: 0 3 7 8
+Diminished: 0 3 6
 
 #Sevenths
-Dominant 7: 0 4 7 10
+Major 6: 0 4 7 9
 Major 7: 0 4 7 11
-Minor 7: 0 3 7 10
+Dominant 7: 0 4 7 10
+Dominant 7b5: 0 4 6 10
 Minor/Major 7: 0 3 7 11
-Half Diminished 7: 0 3 6 10
+Minor 6: 0 3 7 9
+Minor 7: 0 3 7 10
+Minor 7#5: 0 3 8 10
+Augmented Major 7: 0 4 8 11
+Augmented 7 (7#5): 0 4 8 10
+Half Diminished 7 (m7b5): 0 3 6 10
 Diminished 7: 0 3 6 9
+
+#Ninth
+Major 9: 0 4 7 11 14
+Dominant 9: 0 4 7 10 14
+Dominant 7b9: 0 4 7 10 13
+Dominant 7#9: 0 4 7 10 15
+Dominant 7#5b9: 0 4 8 10 13
+Minor/Major 9: 0 3 7 11 14
+Minor 9: 0 3 7 10 14
+Minor 7b9: 0 3 7 10 13
+;Augmented Major 9: 0 4 8 11 14
+;Augmented 9: 0 4 8 10 14
+;Half Diminished 9: 0 3 6 10 14
+;Half Dim Minor 9: 0 3 6 10 13
+;Diminished 9: 0 3 6 9 14
+;Diminished Minor 9: 0 3 6 9 13
+
+#Eleventh
+Major 11: 0 4 7 11 14 17
+Dominant 11: 0 4 7 10 14 17
+Dominant 9#11: 0 4 7 10 14 18
+Minor/Major 11: 0 3 7 11 14 17
+Minor 11: 0 3 7 10 14 17
+;Augmented Major 11: 0 4 8 11 14 17
+;Augmented 11: 0 4 8 10 14 17
+;Half Diminished 11: 0 3 6 10 13 17
+;Diminished 11: 0 3 6 9 13 16
+
+#Thirteenth
+Major 13: 0 4 7 11 14 17 21
+Dominant 13: 0 4 7 10 14 17 21
+Dominant 9b13: 0 4 7 10 14 20
+Minor/Major 13: 0 3 7 11 14 17 21
+Minor 13: 0 3 7 10 14 17 21
+;Augmented Major 13: 0 4 8 11 14 17 21
+;Augmented 13: 0 4 8 10 14 17 21
+;Half Diminished 13: 0 3 6 10 14 17 21
+
+#Added
+add9: 0 4 7 14
+madd9: 0 3 7 14
+6add9: 0 4 7 9 14
+m6add9: 0 3 7 9 14
+add11: 0 4 7 17
+madd11: 0 3 7 17
+7add11: 0 4 7 10 17
+m7add11: 0 3 7 10 17
+maj7add11: 0 4 7 11 17
+;mMaj7add11: 0 3 7 11 17
+7add13: 0 4 7 9 10
+m7add13: 0 3 7 9 10
+Maj7add13: 0 4 7 9 11
+;mMaj7add13: 0 3 7 9 11
+
+#Suspended
+Sus2: 0 2 7
+Sus4: 0 5 7
+6Sus4: 0 5 7 9
+7Sus4: 0 5 7 10
+Maj7Sus4: 0 5 7 11
+;7Sus4b9: 0 5 7 10 13
+;9Sus4: 0 5 7 10 14
+;Maj9Sus4: 0 5 7 11 14
 --

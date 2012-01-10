@@ -119,7 +119,7 @@ inline int getIntervalValue(String intervalName)
 	return result;
 }
 
-inline String getNoteName(int noteNumber, int baseOctave=-2) {
+inline String getNoteName(int noteNumber, int baseOctave/*=-2*/) {
     String Note = String::empty;
     switch (noteNumber%12) {
         case  0: Note="C" ; break;

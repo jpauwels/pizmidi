@@ -1,4 +1,4 @@
-#include "LookAndFeel.h"
+  #include "LookAndFeel.h"
 
 static const Colour createBaseColour (const Colour& buttonColour,
                                       const bool hasKeyboardFocus,
@@ -330,7 +330,7 @@ void NonShinyLookAndFeel::drawToggleButton (Graphics& g,
 //==============================================================================
 const Font NonShinyLookAndFeel::getPopupMenuFont()
 {
-    return Font (17.0f);
+    return Font (13.0f);
 }
 
 void NonShinyLookAndFeel::drawPopupMenuBackground (Graphics& g, int width, int height)

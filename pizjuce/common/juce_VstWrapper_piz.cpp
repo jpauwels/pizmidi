@@ -514,6 +514,8 @@ public:
             // like all other hosts do.
             result = -1;
         }
+		else if (strcmp (text, "hasCockosExtensions") == 0)
+			result = 0xbeef0000;
 
         DBG("canDo(" + String(text) + "): " + String(result));
         return result;
@@ -817,6 +819,17 @@ public:
 			midiEvents.clear();
 
 			setInitialDelay (filter->getLatencySamples());
+
+			if (filter->reaper) {
+				int szout = 0;
+				int reaperOctave = 0;
+				void* p = 0;
+				p = filter->get_config_var("midioctoffs",&szout);
+				if (p) {
+					reaperOctave = *(int*)p;
+					filter->bottomOctave = reaperOctave - 2;
+				}
+			}
 
 			AudioEffectX::resume();
 
@@ -1972,13 +1985,16 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 	if (hostname=="REAPER") {
 		filter->reaper = true;
 		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"TimeMap2_timeToBeats",0.0))
-			*(long *)&(filter->TimeMap2_timeToBeats) = (long)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"TimeMap2_timeToBeats",0.0);
+			*(VstIntPtr *)&(filter->TimeMap2_timeToBeats) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"TimeMap2_timeToBeats",0.0);
 		else filter->reaper = false;
 		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition",0.0))
-			*(long *)&(filter->GetPlayPosition) = (long)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition",0.0);
+			*(VstIntPtr *)&(filter->GetPlayPosition) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition",0.0);
 		else filter->reaper = false;
 		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetCursorPosition",0.0))
-			*(long *)&(filter->GetCursorPosition) = (long)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetCursorPosition",0.0);
+			*(VstIntPtr *)&(filter->GetCursorPosition) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetCursorPosition",0.0);
+		else filter->reaper = false;
+		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"get_config_var",0.0))
+			*(VstIntPtr *)&(filter->get_config_var) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"get_config_var",0.0);
 		else filter->reaper = false;
 	}
 

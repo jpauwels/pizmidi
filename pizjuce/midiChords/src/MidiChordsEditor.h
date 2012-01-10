@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  6 Jan 2012 10:22:59am
+  Creation date:  9 Jan 2012 12:18:43am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,12 +19,13 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
 #include "../../common/ChannelSlider.h"
+#include "../../common/GuitarNeckComponent.h"
 #include "../../common/LookAndFeel.h"
 
 class ChordsKeyboardComponent : public MidiKeyboardComponent
@@ -127,7 +128,7 @@ private:
 		if (e.mods.isPopupMenu())
 		{
 			PopupMenu m;
-			m.addSectionHeader(getNoteName(midiNoteNumber)+ " (" + String(midiNoteNumber)+")");
+			m.addSectionHeader(getNoteName(midiNoteNumber,owner->bottomOctave)+ " (" + String(midiNoteNumber)+")");
 			for (int i=1;i<=16;i++)
 			{
 				m.addItem(i,"Ch "+String(i),true,s->isNoteOn(i,midiNoteNumber));
@@ -354,10 +355,10 @@ private:
     void updateParametersFromFilter();
 	String const getCurrentChordName();
 	void listChordFiles(StringArray &list);
-	void listPresetFiles(StringArray &list);
+	void listPresetFiles(Array<File> &list);
 	void loadChord(String chorddef);
 	void saveChord(String name);
-	void loadPreset(String filename);
+	void loadPreset(File file);
 	void chordFromString(String chordString);
 
     MidiChords* getFilter() const throw()       { return (MidiChords*) getAudioProcessor(); }
@@ -406,6 +407,7 @@ private:
     Label* triggerNoteLabel;
     ChannelSlider* learnChanSlider;
     Label* demoLabel;
+    GuitarNeckComponent* guitar;
 
 
     //==============================================================================
@@ -415,4 +417,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_8AC45825__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__

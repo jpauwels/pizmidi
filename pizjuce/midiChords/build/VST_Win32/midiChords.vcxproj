@@ -454,6 +454,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\common\ChordFunctions.cpp" />
+    <ClCompile Include="..\..\..\common\GuitarNeckComponent.cpp" />
     <ClCompile Include="..\..\..\common\LookAndFeel.cpp" />
     <ClCompile Include="..\..\..\common\PizButton.cpp" />
     <ClCompile Include="..\..\src\MidiChordsEditor.cpp" />
@@ -463,6 +464,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\common\ChordFunctions.h" />
+    <ClInclude Include="..\..\..\common\GuitarNeckComponent.h" />
     <ClInclude Include="..\..\..\common\LookAndFeel.h" />
     <ClInclude Include="..\..\..\common\midistuff.h" />
     <ClInclude Include="..\..\..\common\PizButton.h" />

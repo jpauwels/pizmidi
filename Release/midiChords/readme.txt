@@ -7,13 +7,15 @@ Allows mapping of every input MIDI note to 0 or more output notes.
 Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not 
 discussed here may or may not be documented in GUI tooltips.
 
+To install: put "midiChords.dll" and the "midiChords" folder in your VST folder.
+
 The copy/paste buttons use the same format as the saved chords/mappings, so
 you can copy from the GUI and paste into a text file and vice-versa.
 Ctrl-click on Paste uses the same pitches as the copied chord, otherwise
 it's relative to the new trigger note. 
 
 There is also a text box to type in chords directly. It can read three different formats:
-- note names, like "C E G Bb D" for the C9 chord pictured
+- note names, like "C E G Bb D" for a C9 chord
 - interval names, like "1 3 5 b7 9" or "Root Maj3 P5 Min7 Maj9" etc.
 - semitone offset from trigger note "0 4 7 10 14" (default, see below) 
 

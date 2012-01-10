@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  6 Jan 2012 10:22:59am
+  Creation date:  9 Jan 2012 12:18:43am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -71,7 +71,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       prevButton (0),
       triggerNoteLabel (0),
       learnChanSlider (0),
-      demoLabel (0)
+      demoLabel (0),
+      guitar (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -336,8 +337,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     demoLabel->setColour (TextEditor::textColourId, Colours::black);
     demoLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
+    addAndMakeVisible (guitar = new GuitarNeckComponent (ownerFilter->chordKbState));
+    guitar->setName (L"new component");
+
 
     //[UserPreSize]
+	guitar->setVisible(false);
 	this->setMouseClickGrabsKeyboardFocus(false);
 	chordKeyboard->setMouseClickGrabsKeyboardFocus(false);
 	triggerKeyboard->setMouseClickGrabsKeyboardFocus(false);
@@ -382,6 +387,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	variationSlider->setVisible(false);
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
+	chordKeyboard->setOctaveForMiddleC(getFilter()->bottomOctave+5);
+	triggerKeyboard->setOctaveForMiddleC(getFilter()->bottomOctave+5);
 
 	static NonShinyLookAndFeel Look;
 	LookAndFeel::setDefaultLookAndFeel (&Look);
@@ -446,6 +453,7 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (triggerNoteLabel);
     deleteAndZero (learnChanSlider);
     deleteAndZero (demoLabel);
+    deleteAndZero (guitar);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -570,6 +578,7 @@ void MidiChordsEditor::resized()
     triggerNoteLabel->setBounds (558, 203, 73, 24);
     learnChanSlider->setBounds (10, 56, 38, 16);
     demoLabel->setBounds (275, 50, 81, 24);
+    guitar->setBounds (8, 99, getWidth() - 16, 89);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -717,16 +726,17 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == presetMenuButton)
     {
         //[UserButtonCode_presetMenuButton] -- add your button handler code here..
-		StringArray list;
+		//StringArray list;
+		Array<File> list;
 		listPresetFiles(list);
 		PopupMenu menu;
 		menu.addItem(-1,"Save...");
 		menu.addSeparator();
 		for (int i=0;i<list.size();i++)
 		{
-			if (list[i].isNotEmpty())
+			if (list[i].existsAsFile())
 			{
-				menu.addItem(i+1,list[i]);
+				menu.addItem(i+1,list[i].getFileNameWithoutExtension());
 			}
 		}
 		int result = menu.showAt(presetMenuButton);
@@ -862,14 +872,29 @@ void MidiChordsEditor::labelTextChanged (Label* labelThatHasChanged)
 
 void MidiChordsEditor::mouseDown(const MouseEvent& e)
 {
-	if (e.eventComponent==previewButton)
+	if (e.eventComponent==previewButton && !e.mods.isPopupMenu())
 		getFilter()->playCurrentChord(true);
 }
 
 void MidiChordsEditor::mouseUp (const MouseEvent& e)
 {
-	if (e.eventComponent==previewButton)
-		getFilter()->playCurrentChord(false);
+	if (e.eventComponent==previewButton) {
+		if (e.mods.isPopupMenu())
+		{	
+			if (getFilter()->isPreviewChordPlaying()) {
+				getFilter()->playCurrentChord(false);
+				previewButton->setToggleState(false,false);
+			}
+			else {
+				getFilter()->playCurrentChord(true);
+				previewButton->setToggleState(true,false);
+			}
+		}
+		else {
+			getFilter()->playCurrentChord(false);
+			previewButton->setToggleState(false,false);
+		}
+	}
 }
 
 void MidiChordsEditor::chordFromString(String chordString)
@@ -957,7 +982,7 @@ void MidiChordsEditor::updateParametersFromFilter()
 			triggerKeyboard->setKeyWidth(16.f);
 			triggerKeyboard->setAvailableRange(0,127);
 			triggerKeyboard->setLowestVisibleKey(36);
-			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
+			triggerNoteLabel->setText(getNoteName(t,getFilter()->bottomOctave)+" ("+String(t)+")",false);
 		}
 		else if (newMode==Octave) {
 			triggerLabel->setText("Trigger Note:",false);
@@ -970,13 +995,13 @@ void MidiChordsEditor::updateParametersFromFilter()
 			triggerKeyboard->setKeyWidth(16.f);
 			triggerKeyboard->setAvailableRange(0,127);
 			triggerKeyboard->setLowestVisibleKey(36);
-			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
+			triggerNoteLabel->setText(getNoteName(t,getFilter()->bottomOctave)+" ("+String(t)+")",false);
 		}
 		mode = newMode;
 	}
 	else {
 		if (newMode!=Octave)
-			triggerNoteLabel->setText(getNoteName(t)+" ("+String(t)+")",false);
+			triggerNoteLabel->setText(getNoteName(t,getFilter()->bottomOctave)+" ("+String(t)+")",false);
 		else
 			triggerNoteLabel->setText(getNoteNameWithoutOctave(t),false);
 	}
@@ -1024,7 +1049,7 @@ void MidiChordsEditor::listChordFiles(StringArray &list)
 	}
 }
 
-void MidiChordsEditor::listPresetFiles(StringArray &list)
+void MidiChordsEditor::listPresetFiles(Array<File> &list)
 {
 	File mappingsPath(getFilter()->getCurrentPath()+File::separatorString
 		+"midiChords"+File::separatorString+"mappings");
@@ -1032,7 +1057,8 @@ void MidiChordsEditor::listPresetFiles(StringArray &list)
 	mappingsPath.findChildFiles(files,File::findFiles,true);
 	for (int i=0;i<files.size();i++)
 	{
-		list.add(files[i].getFileNameWithoutExtension());
+		if (files[i].hasFileExtension("chords") || files[i].hasFileExtension("fxp"))
+			list.add(files[i]);
 	}
 }
 
@@ -1051,50 +1077,54 @@ void MidiChordsEditor::loadChord(String chorddef)
 	}
 }
 
-void MidiChordsEditor::loadPreset(String filename)
+void MidiChordsEditor::loadPreset(File file)
 {
-	String mappingsPath = getFilter()->getCurrentPath()+File::separatorString
-		+"midiChords"+File::separatorString+"mappings";
-
-	const int t = getFilter()->getCurrentTrigger();
-
-	getFilter()->clearAllChords();
-
-	StringArray lines;
-	lines.addLines(File(mappingsPath+File::separatorString+filename+".chords").loadFileAsString());
-	for(int ln=0;ln<lines.size();ln++)
+	if (file.hasFileExtension("fxp"))
+		getFilter()->loadFxpFile(file);
+	else if (file.hasFileExtension("fxb"))
+		getFilter()->loadFxbFile(file);
+	else
 	{
-		if (!lines[ln].startsWithChar(';'))
+		const int t = getFilter()->getCurrentTrigger();
+
+		getFilter()->clearAllChords();
+
+		StringArray lines;
+		lines.addLines(file.loadFileAsString());
+		for(int ln=0;ln<lines.size();ln++)
 		{
-			if (lines[ln].upToFirstOccurrenceOf(":",false,false).equalsIgnoreCase("Mode"))
+			if (!lines[ln].startsWithChar(';'))
 			{
-				String s = lines[ln].fromLastOccurrenceOf(":",false,true);
-				if (s.equalsIgnoreCase("Full"))
-					getFilter()->setParameterNotifyingHost(kMode,((float)Normal)/(float)(numModes-1));
-				if (s.equalsIgnoreCase("Octave"))
-					getFilter()->setParameterNotifyingHost(kMode,((float)Octave)/(float)(numModes-1));
-				if (s.equalsIgnoreCase("Global"))
-					getFilter()->setParameterNotifyingHost(kMode,((float)Global)/(float)(numModes-1));
-			}
-			else
-			{
-				int t = lines[ln].upToFirstOccurrenceOf(":",false,false).getIntValue();
-				//getFilter()->clearChord(t);
-				StringArray sa;
-				sa.addTokens(lines[ln].fromLastOccurrenceOf(":",false,true)," ",String::empty);
-				for(int i=0;i<sa.size();i++)
+				if (lines[ln].upToFirstOccurrenceOf(":",false,false).equalsIgnoreCase("Mode"))
 				{
-					if(sa[i].contains("."))
-						getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
-					else
-						getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+					String s = lines[ln].fromLastOccurrenceOf(":",false,true);
+					if (s.equalsIgnoreCase("Full"))
+						getFilter()->setParameterNotifyingHost(kMode,((float)Normal)/(float)(numModes-1));
+					if (s.equalsIgnoreCase("Octave"))
+						getFilter()->setParameterNotifyingHost(kMode,((float)Octave)/(float)(numModes-1));
+					if (s.equalsIgnoreCase("Global"))
+						getFilter()->setParameterNotifyingHost(kMode,((float)Global)/(float)(numModes-1));
+				}
+				else
+				{
+					int t = lines[ln].upToFirstOccurrenceOf(":",false,false).getIntValue();
+					//getFilter()->clearChord(t);
+					StringArray sa;
+					sa.addTokens(lines[ln].fromLastOccurrenceOf(":",false,true)," ",String::empty);
+					for(int i=0;i<sa.size();i++)
+					{
+						if(sa[i].contains("."))
+							getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+						else
+							getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+					}
 				}
 			}
 		}
+		presetNameLabel->setText(file.getFileNameWithoutExtension(),false);
+		getFilter()->changeProgramName(getFilter()->getCurrentProgram(),file.getFileNameWithoutExtension());
+		getFilter()->updateHostDisplay();
 	}
-	presetNameLabel->setText(filename,false);
-	getFilter()->changeProgramName(getFilter()->getCurrentProgram(),filename);
-	getFilter()->updateHostDisplay();
 }
 
 void MidiChordsEditor::saveChord(String name)
@@ -1135,7 +1165,10 @@ void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 
 void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, int mouseY)
 {
-	if (File(filenames[0]).getFileName() == "midiChordsKey.txt") {
+	File file = File(filenames[0]);
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb")) 
+		loadPreset(file);
+	else if (file.getFileName() == "midiChordsKey.txt") {
 		getFilter()->readKeyFile(File(filenames[0]));
 		if (!getFilter()->demo) {
 			demoLabel->setVisible(false);
@@ -1145,8 +1178,10 @@ void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, i
 
 bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
     File file = File(files[0]);
-    //if ( file.hasFileExtension("mid") ) return true;
-	if ( file.getFileName() == "midiChordsKey.txt" ) return true;
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb")) 
+		return true;
+	if ( file.getFileName() == "midiChordsKey.txt" ) 
+		return true;
     return false;
 }
 
@@ -1339,6 +1374,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="UNREGISTERED&#10;DEMO VERSION" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="OCR A Extended"
          fontsize="10" bold="0" italic="0" justification="34"/>
+  <GENERICCOMPONENT name="new component" id="fe343618ae664d49" memberName="guitar"
+                    virtualName="" explicitFocusOrder="0" pos="8 99 16M 89" class="GuitarNeckComponent"
+                    params="ownerFilter-&gt;chordKbState"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

@@ -52,13 +52,14 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		this->addChild(progv,p,0);
 	}
 
-	DBG(this->createXml()->createDocument(""));
+	//DBG(this->createXml()->createDocument(""));
 }
 
 //==============================================================================
 MidiChords::MidiChords() : programs(0), curProgram(0)
 {
 	DBG("MidiChords()");
+
 	demo = !readKeyFile();
 	fillChordDatabase();
 	programs = new MidiChordsPrograms();
@@ -320,7 +321,6 @@ bool MidiChords::isOutputChannelStereoPair (int index) const
 //==============================================================================
 void MidiChords::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-
 }
 
 void MidiChords::releaseResources()
@@ -580,6 +580,7 @@ void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 				programs->set(index,"Root",vt.getChild(index).getProperty("Root"));
 				programs->set(index,"Guess",vt.getChild(index).getProperty("Guess"));
 				programs->set(index,"Flats",vt.getChild(index).getProperty("Flats"));
+				programs->set(index,"Velocity",100);
 
 				for (int trigger=0;trigger<128;trigger++) {
 					for (int ch=0;ch<16;ch++) {	
@@ -640,6 +641,7 @@ void MidiChords::setCurrentProgramStateInformation (const void* data, int sizeIn
 		programs->set(curProgram,"Root",vt.getProperty("Root"));
 		programs->set(curProgram,"Guess",vt.getProperty("Guess"));
 		programs->set(curProgram,"Flats",vt.getProperty("Flats"));
+		programs->set(curProgram,"Velocity",100);
 
 		programs->getChild(curProgram).setProperty("progIndex",curProgram,0);
 		for (int trigger=0;trigger<128;trigger++) {
@@ -933,13 +935,20 @@ void MidiChords::savePreset(String name)
 	}
 	for (int t=0;t<128;t++)
 	{
+		bool usingTrigger = false;
 		for (int n=0;n<128;n++)	{
 			for (int c=1;c<=16;c++) {
 				if (progKbState[curProgram][t].isNoteOn(c,n)) {
-					contents += String(n) + ": " + String(t-n)+"."+String(c) + "\n";
+					if (!usingTrigger) {
+						contents += String(t) + ":";
+						usingTrigger = true;
+					}
+					contents += String(" ") + String(n-t)+"."+String(c);
 				}
 			}
 		}
+		if (usingTrigger)
+			contents += "\n";
 	}
 	File chordFile(getCurrentPath()+File::separatorString
 		+"midiChords"+File::separatorString+"mappings"+File::separatorString+name+".chords");
