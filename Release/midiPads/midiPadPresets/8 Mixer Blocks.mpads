@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ 
+<ProgValues progIndex="0">
+  <PadValues padIndex="0" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="1" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="2" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.189393938" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="3" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="4" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="5" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="6" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.199494943" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="7" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="8" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="9" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="10" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.191919193" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="11" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="12" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.202020198" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="13" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="14" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="15" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="16" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="17" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="18" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="19" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.199494943" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="20" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="21" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="22" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="23" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.202020198" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="24" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="25" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="26" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="27" Ydata1="60" Ycc="1" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="1" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="vslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="28" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.191919193" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="29" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="30" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="31" Ydata1="60" Ycc="3" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="32" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="33" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="34" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="35" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff257e16" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="36" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="37" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="38" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="39" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff882626" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="40" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="41" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="42" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="43" Ydata1="60" Ycc="0" Ytype="1" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="1" SendOff="1" icon="" text="" padcolor="ff153084" roundness="0.5"
+             iconsize="0.952857137" centeredText="0" lastx="64" lasty="0"
+             togglestate="0" showdots="0" showvalues="0"/>
+  <PadValues padIndex="44" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="45" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="46" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.191919193" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="47" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.204545453" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="48" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="49" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.202020198" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="50" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.199494943" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="51" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="52" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="53" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="54" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="55" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.202020198" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="56" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.199494943" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="57" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.199494943" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="58" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.196969703" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="59" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.194444448" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="60" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.204545453" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="61" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.202020198" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="62" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.204545453" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="63" Ydata1="60" Ycc="19" Ytype="1" Ydata2="63" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="1" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="hslider.svg" text="" padcolor="ff7b7d80"
+             roundness="0.204545453" iconsize="0.952857137" centeredText="0"
+             lastx="64" lasty="0" togglestate="0" showdots="1" showvalues="1"/>
+  <PadValues padIndex="64" Ydata1="60" Ycc="64" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\65.svg" text="Pad 65"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="65" Ydata1="60" Ycc="65" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\66.svg" text="Pad 66"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="66" Ydata1="60" Ycc="66" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\67.svg" text="Pad 67"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="67" Ydata1="60" Ycc="67" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\68.svg" text="Pad 68"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="68" Ydata1="60" Ycc="68" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\69.svg" text="Pad 69"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="69" Ydata1="60" Ycc="69" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\70.svg" text="Pad 70"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="70" Ydata1="60" Ycc="70" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\71.svg" text="Pad 71"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="71" Ydata1="60" Ycc="71" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\72.svg" text="Pad 72"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="72" Ydata1="60" Ycc="72" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\73.svg" text="Pad 73"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="73" Ydata1="60" Ycc="73" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\74.svg" text="Pad 74"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="74" Ydata1="60" Ycc="74" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\75.svg" text="Pad 75"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="75" Ydata1="60" Ycc="75" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\76.svg" text="Pad 76"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="76" Ydata1="60" Ycc="76" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\77.svg" text="Pad 77"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="77" Ydata1="60" Ycc="77" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\78.svg" text="Pad 78"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="78" Ydata1="60" Ycc="78" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\79.svg" text="Pad 79"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="79" Ydata1="60" Ycc="79" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\80.svg" text="Pad 80"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="80" Ydata1="60" Ycc="80" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\81.svg" text="Pad 81"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="81" Ydata1="60" Ycc="81" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\82.svg" text="Pad 82"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="82" Ydata1="60" Ycc="82" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\83.svg" text="Pad 83"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="83" Ydata1="60" Ycc="83" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\84.svg" text="Pad 84"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="84" Ydata1="60" Ycc="84" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\85.svg" text="Pad 85"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="85" Ydata1="60" Ycc="85" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\86.svg" text="Pad 86"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="86" Ydata1="60" Ycc="86" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\87.svg" text="Pad 87"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="87" Ydata1="60" Ycc="87" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\88.svg" text="Pad 88"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="88" Ydata1="60" Ycc="88" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\89.svg" text="Pad 89"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="89" Ydata1="60" Ycc="89" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\90.svg" text="Pad 90"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="90" Ydata1="60" Ycc="90" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\91.svg" text="Pad 91"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="91" Ydata1="60" Ycc="91" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\92.svg" text="Pad 92"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="92" Ydata1="60" Ycc="92" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\93.svg" text="Pad 93"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="93" Ydata1="60" Ycc="93" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\94.svg" text="Pad 94"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="94" Ydata1="60" Ycc="94" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\95.svg" text="Pad 95"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="95" Ydata1="60" Ycc="95" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\96.svg" text="Pad 96"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="96" Ydata1="60" Ycc="96" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\97.svg" text="Pad 97"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="97" Ydata1="60" Ycc="97" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\98.svg" text="Pad 98"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="98" Ydata1="60" Ycc="98" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\99.svg" text="Pad 99"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="99" Ydata1="60" Ycc="99" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\100.svg" text="Pad 100"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="100" Ydata1="60" Ycc="100" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\101.svg" text="Pad 101"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="101" Ydata1="60" Ycc="101" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\102.svg" text="Pad 102"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="102" Ydata1="60" Ycc="102" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\103.svg" text="Pad 103"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="103" Ydata1="60" Ycc="103" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\104.svg" text="Pad 104"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="104" Ydata1="60" Ycc="104" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\105.svg" text="Pad 105"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="105" Ydata1="60" Ycc="105" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\106.svg" text="Pad 106"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="106" Ydata1="60" Ycc="106" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\107.svg" text="Pad 107"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="107" Ydata1="60" Ycc="107" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\108.svg" text="Pad 108"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="108" Ydata1="60" Ycc="108" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\109.svg" text="Pad 109"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="109" Ydata1="60" Ycc="109" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\110.svg" text="Pad 110"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="110" Ydata1="60" Ycc="110" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\111.svg" text="Pad 111"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="111" Ydata1="60" Ycc="111" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\112.svg" text="Pad 112"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="112" Ydata1="60" Ycc="112" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\113.svg" text="Pad 113"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="113" Ydata1="60" Ycc="113" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\114.svg" text="Pad 114"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="114" Ydata1="60" Ycc="114" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\115.svg" text="Pad 115"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="115" Ydata1="60" Ycc="115" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\116.svg" text="Pad 116"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="116" Ydata1="60" Ycc="116" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\117.svg" text="Pad 117"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="117" Ydata1="60" Ycc="117" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\118.svg" text="Pad 118"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="118" Ydata1="60" Ycc="118" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\119.svg" text="Pad 119"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="119" Ydata1="60" Ycc="119" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\120.svg" text="Pad 120"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="120" Ydata1="60" Ycc="120" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\121.svg" text="Pad 121"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="121" Ydata1="60" Ycc="121" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\122.svg" text="Pad 122"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="122" Ydata1="60" Ycc="122" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\123.svg" text="Pad 123"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="123" Ydata1="60" Ycc="123" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\124.svg" text="Pad 124"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="124" Ydata1="60" Ycc="124" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\125.svg" text="Pad 125"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="125" Ydata1="60" Ycc="125" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\126.svg" text="Pad 126"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="126" Ydata1="60" Ycc="126" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\127.svg" text="Pad 127"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <PadValues padIndex="127" Ydata1="60" Ycc="127" Ytype="0" Ydata2="127" Yoff="0"
+             trigger="0" Xcc="1" Xoff="64" UseX="0" UseY="0" UseYCC="0" UseXPB="0"
+             toggle="0" SendOff="0" icon="midiPadIcons\128.svg" text="Pad 128"
+             padcolor="ff000000" roundness="0.400000006" iconsize="0.952857137"
+             centeredText="0" lastx="64" lasty="0" togglestate="0" showdots="1"
+             showvalues="1"/>
+  <GlobalValues VelOffset="0.5" CCOffset="0.5" ChIn="0" ChOut="0" UseTrigger="0"
+                NoteOnTrig="0" UseVel="1" Thru="1" UseAft="0" Mono="0" lastUIWidth="1014"
+                lastUIHeight="654" bghue="0.275862068" bgsat="0.18965517" bgbri="0.0775862038"
+                contrast="1" squares="64" editmode="0" usemouseup="1" hex="0"
+                name="6 Mixer Blocks"/>
+  <Layout name="6 Mixer Blocks">
+    <PadPosition visible="1" x="0.0732673258" y="0.177631572" w="0.041109968"
+                 h="0.0730434805"/>
+    <PadPosition visible="1" x="0.0164439883" y="0.153043479" w="0.04008222" h="0.340869576"/>
+    <PadPosition visible="1" x="0.268656731" y="0.0804248825" w="0.208955228"
+                 h="0.0606980287"/>
+    <PadPosition visible="1" x="0.0154162385" y="0.0817391276" w="0.208955228"
+                 h="0.0606980287"/>
+    <PadPosition visible="1" x="0.122772276" y="0.175986841" w="0.041109968" h="0.0730434805"/>
+    <PadPosition visible="1" x="0.172277227" y="0.175986841" w="0.041109968" h="0.0730434805"/>
+    <PadPosition visible="1" x="0.074257426" y="0.416118413" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.0732673258" y="0.279605269" w="0.142574251"
+                 h="0.0526315793"/>
+    <PadPosition visible="1" x="0.525186539" y="0.0804248825" w="0.208955228"
+                 h="0.0606980287"/>
+    <PadPosition visible="1" x="0.777052224" y="0.0804248825" w="0.208955228"
+                 h="0.0606980287"/>
+    <PadPosition visible="1" x="0.268778294" y="0.151197597" w="0.0401119404"
+                 h="0.341426402"/>
+    <PadPosition visible="1" x="0.525791883" y="0.151197597" w="0.0401119404"
+                 h="0.341426402"/>
+    <PadPosition visible="1" x="0.779185534" y="0.152694613" w="0.0401119404"
+                 h="0.341426402"/>
+    <PadPosition visible="1" x="0.326732665" y="0.177631572" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.585148513" y="0.177631572" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.835643589" y="0.177631572" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.376237631" y="0.179276317" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.632673264" y="0.179276317" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.884158432" y="0.175986841" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.0732673258" y="0.348684222" w="0.142574251"
+                 h="0.0526315793"/>
+    <PadPosition visible="1" x="0.426732659" y="0.179276317" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.681188107" y="0.180921048" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.932673275" y="0.175986841" w="0.0410447754"
+                 h="0.0728376359"/>
+    <PadPosition visible="1" x="0.325742573" y="0.279605269" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.0165898614" y="0.648333311" w="0.0398190059"
+                 h="0.341317356"/>
+    <PadPosition visible="1" x="0.268778294" y="0.646706581" w="0.0398190059"
+                 h="0.341317356"/>
+    <PadPosition visible="1" x="0.526696861" y="0.646706581" w="0.0398190059"
+                 h="0.341317356"/>
+    <PadPosition visible="1" x="0.779185534" y="0.646706581" w="0.0398190059"
+                 h="0.341317356"/>
+    <PadPosition visible="1" x="0.0153846154" y="0.574850321" w="0.209049776"
+                 h="0.0613772459"/>
+    <PadPosition visible="1" x="0.268778294" y="0.576347291" w="0.209049776" h="0.0613772459"/>
+    <PadPosition visible="1" x="0.525791883" y="0.574850321" w="0.209049776" h="0.0613772459"/>
+    <PadPosition visible="1" x="0.779185534" y="0.574850321" w="0.209049776" h="0.0613772459"/>
+    <PadPosition visible="1" x="0.0722772256" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.325742573" y="0.672697365" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.584158421" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.836199105" y="0.669161677" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.121782176" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.375247538" y="0.672697365" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.633663356" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.885148525" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.171287134" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.425742567" y="0.672697365" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.683168292" y="0.669407904" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.933663368" y="0.671052635" w="0.0407239832"
+                 h="0.0733532906"/>
+    <PadPosition visible="1" x="0.326732665" y="0.350328952" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.326732665" y="0.417763144" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.583168328" y="0.279605269" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.585148513" y="0.348684222" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.584158421" y="0.416118413" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.837623775" y="0.279605269" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.838613868" y="0.348684222" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.837623775" y="0.416118413" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.0732673258" y="0.773026288" w="0.142574251"
+                 h="0.0526315793"/>
+    <PadPosition visible="1" x="0.074257426" y="0.840460539" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.074257426" y="0.90625" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.327722758" y="0.773026288" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.328712881" y="0.840460539" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.328712881" y="0.90625" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.585148513" y="0.773026288" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.587128699" y="0.840460539" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.588118792" y="0.90625" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.836633682" y="0.773026288" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.837623775" y="0.840460539" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="1" x="0.838613868" y="0.90625" w="0.142574251" h="0.0526315793"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+    <PadPosition visible="0"/>
+  </Layout>
+</ProgValues>
