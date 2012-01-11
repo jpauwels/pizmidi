@@ -134,17 +134,17 @@ void PianoRoll::paint (Graphics& g)
 	float yinc = (float)getHeight()/128.f;
 
 	while (y>0) {
-		if (getNoteName(n).contains("#"))
+		if (getNoteNameWithoutOctave(n).contains("#"))
 			g.setColour(Colours::lightgrey);
 		else if (n==60) g.setColour(Colours::yellow);
 		else g.setColour(Colours::white);
 		g.fillRect(0.f,y-yinc,(float)getWidth(),yinc);
-		if (getNoteName(n).contains("F") && !getNoteName(n).contains("#"))
+		if (getNoteNameWithoutOctave(n).contains("F") && !getNoteNameWithoutOctave(n).contains("#"))
 		{
 			g.setColour(Colours::grey);
 			g.drawLine(0.f,y,(float)getWidth(),y,1);
 		}
-		if (getNoteName(n).contains("C") && !getNoteName(n).contains("#"))
+		if (getNoteNameWithoutOctave(n).contains("C") && !getNoteNameWithoutOctave(n).contains("#"))
 		{
 			g.setColour(Colours::black);
 			g.drawLine(0.f,y,(float)getWidth(),y,1);
