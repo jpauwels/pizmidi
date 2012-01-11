@@ -141,14 +141,14 @@ Array<int> getAsStackedChord(Array<int> &chord, bool reduce)
 	Array<PizChord> MinimumEnergyChordList;
 
 	PizChord tempChord0(temp);
-	DBG("permutation: " + tempChord0.getStringPattern());
+	//DBG("permutation: " + tempChord0.getStringPattern());
 	Minimum = tempChord0.getSum();
 	MinimumEnergyChordList.add(tempChord0);
 
 	while(std::next_permutation(temp.begin(),temp.end()))
 	{
 		PizChord tempChord(temp);
-		DBG("permutation: " + tempChord.getStringPattern());
+		//DBG("permutation: " + tempChord.getStringPattern());
 		int S = tempChord.getSum();
 		if (S < Minimum || Minimum == -1) 
 		{
@@ -169,7 +169,7 @@ Array<int> getAsStackedChord(Array<int> &chord, bool reduce)
 	//We need to sort on the interval patterns instead, but return the chord that corresponds to the pattern.
 	DefaultElementComparator<PizChord> sorter;
 	MinimumEnergyChordList.sort(sorter);
-	DBG("picked" + MinimumEnergyChordList.getFirst().getStringPattern());
+	//DBG("picked" + MinimumEnergyChordList.getFirst().getStringPattern());
 	return MinimumEnergyChordList.getFirst().getChord();
 }
 

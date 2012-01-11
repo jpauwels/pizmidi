@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  9 Jan 2012 12:18:43am
+  Creation date:  10 Jan 2012 4:47:43pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -72,7 +72,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       triggerNoteLabel (0),
       learnChanSlider (0),
       demoLabel (0),
-      guitar (0)
+      guitar (0),
+      versionLabel (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -337,8 +338,16 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     demoLabel->setColour (TextEditor::textColourId, Colours::black);
     demoLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
-    addAndMakeVisible (guitar = new GuitarNeckComponent (ownerFilter->chordKbState));
+    addAndMakeVisible (guitar = new ChordsGuitar (ownerFilter->chordKbState, ownerFilter));
     guitar->setName (L"new component");
+
+    addAndMakeVisible (versionLabel = new Label (L"new label",
+                                                 L"1.0.2"));
+    versionLabel->setFont (Font (12.0000f, Font::plain));
+    versionLabel->setJustificationType (Justification::centredLeft);
+    versionLabel->setEditable (false, false, false);
+    versionLabel->setColour (TextEditor::textColourId, Colours::black);
+    versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
 
     //[UserPreSize]
@@ -387,11 +396,15 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	variationSlider->setVisible(false);
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
-	chordKeyboard->setOctaveForMiddleC(getFilter()->bottomOctave+5);
-	triggerKeyboard->setOctaveForMiddleC(getFilter()->bottomOctave+5);
+
+	const int middleC = getFilter()->getBottomOctave()+5;
+	chordKeyboard->setOctaveForMiddleC(middleC);
+	triggerKeyboard->setOctaveForMiddleC(middleC);
+	guitar->setOctaveForMiddleC(middleC);
 
 	static NonShinyLookAndFeel Look;
 	LookAndFeel::setDefaultLookAndFeel (&Look);
+
 	mode = Normal;
     //[/UserPreSize]
 
@@ -399,6 +412,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
 
     //[Constructor] You can add your own custom stuff here..
+	versionLabel->setText(JucePlugin_VersionString,false);
 	ownerFilter->addChangeListener(this);
 	if (!ownerFilter->demo)
 		demoLabel->setVisible(false);
@@ -454,6 +468,7 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (learnChanSlider);
     deleteAndZero (demoLabel);
     deleteAndZero (guitar);
+    deleteAndZero (versionLabel);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -579,6 +594,7 @@ void MidiChordsEditor::resized()
     learnChanSlider->setBounds (10, 56, 38, 16);
     demoLabel->setBounds (275, 50, 81, 24);
     guitar->setBounds (8, 99, getWidth() - 16, 89);
+    versionLabel->setBounds (352, 28, 58, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -880,7 +896,7 @@ void MidiChordsEditor::mouseUp (const MouseEvent& e)
 {
 	if (e.eventComponent==previewButton) {
 		if (e.mods.isPopupMenu())
-		{	
+		{
 			if (getFilter()->isPreviewChordPlaying()) {
 				getFilter()->playCurrentChord(false);
 				previewButton->setToggleState(false,false);
@@ -1166,7 +1182,7 @@ void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, int mouseY)
 {
 	File file = File(filenames[0]);
-	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb")) 
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb"))
 		loadPreset(file);
 	else if (file.getFileName() == "midiChordsKey.txt") {
 		getFilter()->readKeyFile(File(filenames[0]));
@@ -1178,9 +1194,9 @@ void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, i
 
 bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
     File file = File(files[0]);
-	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb")) 
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb"))
 		return true;
-	if ( file.getFileName() == "midiChordsKey.txt" ) 
+	if ( file.getFileName() == "midiChordsKey.txt" )
 		return true;
     return false;
 }
@@ -1375,8 +1391,13 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="OCR A Extended"
          fontsize="10" bold="0" italic="0" justification="34"/>
   <GENERICCOMPONENT name="new component" id="fe343618ae664d49" memberName="guitar"
-                    virtualName="" explicitFocusOrder="0" pos="8 99 16M 89" class="GuitarNeckComponent"
-                    params="ownerFilter-&gt;chordKbState"/>
+                    virtualName="" explicitFocusOrder="0" pos="8 99 16M 89" class="ChordsGuitar"
+                    params="ownerFilter-&gt;chordKbState, ownerFilter"/>
+  <LABEL name="new label" id="9ec8a16d4577cd67" memberName="versionLabel"
+         virtualName="" explicitFocusOrder="0" pos="352 28 58 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="1.0.2" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="12"
+         bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

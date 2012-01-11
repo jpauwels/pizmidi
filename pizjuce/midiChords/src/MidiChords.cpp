@@ -561,6 +561,8 @@ void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 			programs->removeAllChildren(0);
 			for (int i=0;i<vt.getNumChildren();i++)
 			{
+				if ((int)vt.getChild(i).getProperty("Velocity")==0)
+					vt.getChild(i).setProperty("Velocity",100,0);
 				programs->addChild(vt.getChild(i).createCopy(),i,0);
 			}
 		}
@@ -621,6 +623,8 @@ void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 void MidiChords::setCurrentProgramStateInformation (const void* data, int sizeInBytes)
 {
 	ValueTree vt = ValueTree::readFromStream(MemoryInputStream(data,sizeInBytes,false));
+	if ((int)vt.getProperty("Velocity")==0)
+		vt.setProperty("Velocity",100,0);
 	if(vt.getChildWithName("NoteMatrix_T0").isValid())
 	{
 		programs->removeChild(programs->getChild(curProgram),0);

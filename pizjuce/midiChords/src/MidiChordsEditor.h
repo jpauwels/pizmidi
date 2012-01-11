@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  9 Jan 2012 12:18:43am
+  Creation date:  10 Jan 2012 4:47:43pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,14 +19,88 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
 #include "../../common/ChannelSlider.h"
 #include "../../common/GuitarNeckComponent.h"
 #include "../../common/LookAndFeel.h"
+
+class ChordsGuitar : public GuitarNeckComponent
+{
+public:
+	ChordsGuitar(MidiKeyboardState &state, MidiChords* ownerFilter)
+		: GuitarNeckComponent(state),
+		owner(0)
+	{
+		owner = ownerFilter;
+		s = &state;
+	}
+private:
+	MidiChords* owner;
+    MidiKeyboardState* s;
+
+	void mouseDraggedToKey(int fret, int string, const MouseEvent& e)
+	{
+	}
+
+	bool mouseDownOnKey(int fret, int string, const MouseEvent &e) {
+		FrettedNote n(fret,string);
+		int midiNoteNumber = getNote(n);
+		int oldNoteOnString = getNote(FrettedNote(getStringFret(string),string));
+		if (e.mods.isPopupMenu())
+		{
+			PopupMenu m;
+			m.addSectionHeader(getNoteName(midiNoteNumber,owner->bottomOctave)+ " (" + String(midiNoteNumber)+")");
+			for (int i=1;i<=16;i++)
+			{
+				m.addItem(i,"Ch "+String(i),true,s->isNoteOn(i,midiNoteNumber));
+			}
+			int result = m.show();
+			if (result!=0)
+			{
+				if (s->isNoteOn(result,midiNoteNumber)) {
+					s->noteOff(result,midiNoteNumber);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,result);
+				}
+				else {
+					s->noteOn(result,midiNoteNumber,127);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,result);
+				}
+			}
+		}
+		else
+		{
+			const int chordChan = 0;//roundToInt(owner->getParameter(kLearnChannel)*16.f);
+			if (chordChan==0)
+			{
+				if (s->isNoteOn(string+1,midiNoteNumber)) {
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,string+1);
+				}
+				else {
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,string+1);
+					if (oldNoteOnString>=0)
+						owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,string+1);
+				}
+			}
+			else {
+				if (s->isNoteOn(chordChan,midiNoteNumber)) {
+					//s->noteOff(this->getMidiChannel(),midiNoteNumber);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,chordChan);
+				}
+				else {
+					//s->noteOn(this->getMidiChannel(),midiNoteNumber,1.f);
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,chordChan);
+					if (oldNoteOnString>=0)
+						owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,chordChan);
+				}
+			}
+		}
+		return true;
+	}
+};
 
 class ChordsKeyboardComponent : public MidiKeyboardComponent
 {
@@ -208,6 +282,10 @@ public:
 				n += 12;
 			}
 		}
+		else {
+			if (owner->isTriggerNotePlaying(midiNoteNumber))
+				c = c.overlaidWith (Colours::green.withAlpha(0.6f));
+		}
 
 		g.setColour (c);
 		g.fillRect (x, y, w, h);
@@ -248,6 +326,10 @@ public:
 					c = c.overlaidWith (Colours::green.withAlpha(0.6f));
 				n += 12;
 			}
+		}
+		else {
+			if (owner->isTriggerNotePlaying(midiNoteNumber))
+				c = c.overlaidWith (Colours::green.withAlpha(0.6f));
 		}
 
 		g.setColour (c);
@@ -407,7 +489,8 @@ private:
     Label* triggerNoteLabel;
     ChannelSlider* learnChanSlider;
     Label* demoLabel;
-    GuitarNeckComponent* guitar;
+    ChordsGuitar* guitar;
+    Label* versionLabel;
 
 
     //==============================================================================
@@ -417,4 +500,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DAB71141__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
