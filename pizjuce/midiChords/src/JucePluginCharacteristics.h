@@ -32,7 +32,7 @@
 #define JucePlugin_SilenceInProducesSilenceOut      0
 #define JucePlugin_EditorRequiresKeyboardFocus      0
 #define JucePlugin_VersionCode              0x00010200
-#define JucePlugin_VersionString            "1.0.2"
+#define JucePlugin_VersionString            "1.0.3"
 
 //==============================================================================
 /*                                VST settings                                */

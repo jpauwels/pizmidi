@@ -501,9 +501,9 @@
     <ClInclude Include="..\..\..\common\midistuff.h" />
     <ClInclude Include="..\..\src\MidiLoop.h" />
     <ClInclude Include="..\..\src\PianoRoll.h" />
-    <ClInclude Include="..\..\src\piz_MidiMessageSequence.h" />
     <ClInclude Include="..\..\src\PizLooper.h" />
     <ClInclude Include="..\..\src\PizLooperEditor.h" />
+    <ClInclude Include="..\..\src\piz_MidiMessageSequence.h" />
     <ClInclude Include="..\..\src\VSTSlider.h" />
     <ClInclude Include="..\..\src\AppConfig.h" />
     <ClInclude Include="..\..\src\JuceHeader.h" />
@@ -515,10 +515,10 @@
     <ClCompile Include="..\..\..\common\LookAndFeel.cpp" />
     <ClCompile Include="..\..\src\MidiLoop.cpp" />
     <ClCompile Include="..\..\src\PianoRoll.cpp" />
-    <ClCompile Include="..\..\src\piz_MidiMessageSequence.cpp" />
     <ClCompile Include="..\..\src\PizLooper.cpp" />
     <ClCompile Include="..\..\src\PizLooperEditor.cpp" />
     <ClCompile Include="..\..\src\PizLooperProcessing.cpp" />
+    <ClCompile Include="..\..\src\piz_MidiMessageSequence.cpp" />
     <ClCompile Include="..\..\src\Timeline.cpp" />
     <ClCompile Include="..\..\src\VSTSlider.cpp" />
     <ClCompile Include="..\..\src\juce_LibrarySource.cpp" />

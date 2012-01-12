@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  10 Jan 2012 4:47:43pm
+  Creation date:  11 Jan 2012 9:23:36pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -491,6 +491,7 @@ private:
     Label* demoLabel;
     ChordsGuitar* guitar;
     Label* versionLabel;
+    ToggleButton* transposeInputButton;
 
 
     //==============================================================================
@@ -500,4 +501,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_2161ACA0__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__

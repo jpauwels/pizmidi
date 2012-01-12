@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  10 Jan 2012 4:47:43pm
+  Creation date:  11 Jan 2012 9:23:36pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -73,7 +73,8 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       learnChanSlider (0),
       demoLabel (0),
       guitar (0),
-      versionLabel (0)
+      versionLabel (0),
+      transposeInputButton (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -349,6 +350,10 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     versionLabel->setColour (TextEditor::textColourId, Colours::black);
     versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
+    addAndMakeVisible (transposeInputButton = new ToggleButton (L"new toggle button"));
+    transposeInputButton->setButtonText (L"Also Transpose Input");
+    transposeInputButton->addListener (this);
+
 
     //[UserPreSize]
 	guitar->setVisible(false);
@@ -469,6 +474,7 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (demoLabel);
     deleteAndZero (guitar);
     deleteAndZero (versionLabel);
+    deleteAndZero (transposeInputButton);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -595,6 +601,7 @@ void MidiChordsEditor::resized()
     demoLabel->setBounds (275, 50, 81, 24);
     guitar->setBounds (8, 99, getWidth() - 16, 89);
     versionLabel->setBounds (352, 28, 58, 24);
+    transposeInputButton->setBounds (524, 361, 107, 16);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -805,6 +812,12 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		getFilter()->selectTrigger(getFilter()->getCurrentTrigger()-1);
         //[/UserButtonCode_prevButton]
     }
+    else if (buttonThatWasClicked == transposeInputButton)
+    {
+        //[UserButtonCode_transposeInputButton] -- add your button handler code here..
+		getFilter()->setParameterNotifyingHost(kInputTranspose,transposeInputButton->getToggleState() ? 1.f : 0.f);
+        //[/UserButtonCode_transposeInputButton]
+    }
 
     //[UserbuttonClicked_Post]
     else if (buttonThatWasClicked == pizButton)
@@ -970,6 +983,7 @@ void MidiChordsEditor::updateParametersFromFilter()
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
 	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
 	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
+	transposeInputButton->setToggleState(filter->getParameter(kInputTranspose)>0,false);
 
 	if (chordChan==0) chordKeyboard->setMidiChannelsToDisplay(0xffff);
 	else chordKeyboard->setMidiChannelsToDisplay(1<<(chordChan-1));
@@ -1073,7 +1087,7 @@ void MidiChordsEditor::listPresetFiles(Array<File> &list)
 	mappingsPath.findChildFiles(files,File::findFiles,true);
 	for (int i=0;i<files.size();i++)
 	{
-		if (files[i].hasFileExtension("chords") || files[i].hasFileExtension("fxp"))
+		if (files[i].hasFileExtension("chords") || files[i].hasFileExtension("fxp") || files[i].hasFileExtension("xml"))
 			list.add(files[i]);
 	}
 }
@@ -1099,6 +1113,8 @@ void MidiChordsEditor::loadPreset(File file)
 		getFilter()->loadFxpFile(file);
 	else if (file.hasFileExtension("fxb"))
 		getFilter()->loadFxbFile(file);
+	else if (file.hasFileExtension("xml"))
+		getFilter()->readChorderPreset(file);
 	else
 	{
 		const int t = getFilter()->getCurrentTrigger();
@@ -1182,7 +1198,8 @@ void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, int mouseY)
 {
 	File file = File(filenames[0]);
-	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb"))
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb") 
+		|| file.hasFileExtension("xml"))
 		loadPreset(file);
 	else if (file.getFileName() == "midiChordsKey.txt") {
 		getFilter()->readKeyFile(File(filenames[0]));
@@ -1194,7 +1211,7 @@ void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, i
 
 bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
     File file = File(files[0]);
-	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb"))
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb") || file.hasFileExtension("xml"))
 		return true;
 	if ( file.getFileName() == "midiChordsKey.txt" )
 		return true;
@@ -1398,6 +1415,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="1.0.2" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="12"
          bold="0" italic="0" justification="33"/>
+  <TOGGLEBUTTON name="new toggle button" id="d3b81c8771f45be2" memberName="transposeInputButton"
+                virtualName="" explicitFocusOrder="0" pos="524 361 107 16" buttonText="Also Transpose Input"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

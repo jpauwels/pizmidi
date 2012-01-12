@@ -2,7 +2,7 @@ Insert Piz Here-> midiChords
 (See http://thepiz.org/plugins for links to source code and other plugins)
 
 midiChords:
-Allows mapping of every input MIDI note to 0 or more output notes.
+Allows mapping of every input MIDI note to 0 or more output notes. 
 
 Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not 
 discussed here may or may not be documented in GUI tooltips.
@@ -27,6 +27,11 @@ Each chord may contain notes for multiple channels. Right-clicking notes on the 
 keyboard allows you to choose which channels each note is sent on. The channel slider 
 above the Learn button lets you filter which input channel(s) are learned. This setting 
 is also used for setting chord notes with left-click.
+
+Presets menu:
+Presets are saved to and loaded from the "mappings" folder. Any files in .chords, .fxp, 
+or .xml (Steinerg Chorder presets) formats can be loaded. Presets can also be loaded by
+drag & drop.
 
 Saved chord shape menu:
 The "Chords" menu is built from plain text files in the "chords" folder.

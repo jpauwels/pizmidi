@@ -19,15 +19,6 @@
     <ClInclude Include="..\..\..\common\LookAndFeel.h">
       <Filter>Source Files\filter</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MidiLoop.h">
-      <Filter>Source Files\filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\PianoRoll.h">
-      <Filter>Source Files\filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\piz_MidiMessageSequence.h">
-      <Filter>Source Files\filter</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\PizLooper.h">
       <Filter>Source Files\filter</Filter>
     </ClInclude>
@@ -53,18 +44,18 @@
     <ClInclude Include="..\..\..\common\midistuff.h">
       <Filter>Source Files\filter</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\PianoRoll.h">
+      <Filter>Source Files\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\piz_MidiMessageSequence.h">
+      <Filter>Source Files\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\MidiLoop.h">
+      <Filter>Source Files\filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\common\LookAndFeel.cpp">
-      <Filter>Source Files\filter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\MidiLoop.cpp">
-      <Filter>Source Files\filter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\PianoRoll.cpp">
-      <Filter>Source Files\filter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\piz_MidiMessageSequence.cpp">
       <Filter>Source Files\filter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\PizLooper.cpp">
@@ -87,6 +78,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\common\juce_VstWrapper_piz.cpp">
       <Filter>Source Files\wrapper_code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\piz_MidiMessageSequence.cpp">
+      <Filter>Source Files\filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MidiLoop.cpp">
+      <Filter>Source Files\filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PianoRoll.cpp">
+      <Filter>Source Files\filter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

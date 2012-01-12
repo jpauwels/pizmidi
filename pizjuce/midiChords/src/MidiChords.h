@@ -18,6 +18,7 @@ enum parameters {
 	kUseProgCh,
 	kLearnChannel,
 	kVelocity,
+	kInputTranspose,
 
     numParams,
 	kVariation,
@@ -246,6 +247,8 @@ public:
 		}
 	}
 	bool isPreviewChordPlaying() {return playFromGUI;}
+	
+	void readChorderPreset(File file);
 
 	bool readKeyFile(File file=File::nonexistent);
 	bool demo;
@@ -273,6 +276,7 @@ private:
 	int root;
 	bool guess;
 	bool flats;
+	bool inputtranspose;
 
 	bool playingFromGUI, playFromGUI;
 	int playButtonTrigger;

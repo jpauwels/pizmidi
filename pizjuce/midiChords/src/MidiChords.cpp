@@ -32,6 +32,7 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("Flats",false,0);
 		progv.setProperty("UsePC",false,0);
 		progv.setProperty("Velocity",100,0);
+		progv.setProperty("InputTranspose",false,0);
 
 		progv.setProperty("Name","Program "+ String(p+1),0);
 		progv.setProperty("lastUIWidth",600,0);
@@ -75,6 +76,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 		root = 60;
 		guess = true;
 		flats = false;
+		inputtranspose = false;
 		previewVel = 100;
 		lastUIWidth = 600;
 		lastUIHeight = 400;
@@ -132,6 +134,7 @@ void MidiChords::setCurrentProgram (int index)
 	flats = programs->get(index,"Flats");
 	usepc = programs->get(index,"UsePC");
 	previewVel = programs->get(index,"Velocity");
+	inputtranspose = programs->get(index,"InputTranspose");
 
     lastUIWidth = programs->get(index,"lastUIWidth");
     lastUIHeight = programs->get(index,"lastUIHeight");
@@ -167,6 +170,7 @@ float MidiChords::getParameter (int index)
 	case kRoot: return (float)root/127.f;
 	case kGuess: return guess ? 1.f : 0.f;
 	case kFlats: return flats ? 1.f : 0.f;
+	case kInputTranspose: return inputtranspose ? 1.f : 0.f;
 	default: return 0.0f;
     }
 }
@@ -236,6 +240,11 @@ void MidiChords::setParameter (int index, float newValue)
         flats = newValue>0.f;
         sendChangeMessage();
     }
+    else if (index==kInputTranspose)
+    {
+        inputtranspose = newValue>0.f;
+        sendChangeMessage();
+    }
 }
 
 const String MidiChords::getParameterName (int index)
@@ -262,6 +271,8 @@ const String MidiChords::getParameterName (int index)
 		return "Flats";
 	if (index == kVelocity)
 		return "PreviewVelocity";
+	if (index == kInputTranspose)
+		return "TranspInput";
 	return String::empty;
 }
 
@@ -291,10 +302,11 @@ const String MidiChords::getParameterText (int index)
     if (index == kGuess)
         return guess ? "Yes" : "No";  
     if (index == kFlats)
-        return guess ? "Yes" : "No";  
+        return flats ? "Yes" : "No";  
 	if (index == kVelocity)
 		return String(previewVel);
-
+    if (index == kInputTranspose)
+        return inputtranspose ? "Yes" : "No";  
 	return String::empty;
 }
 
@@ -402,7 +414,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			if (m.isNoteOn()) {
 				blockOriginalEvent = true;
 				const int ch = m.getChannel();
-				const int tnote = m.getNoteNumber();
+				const int tnote = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
 				const uint8 v = m.getVelocity();
 				if (!learn)
 				{
@@ -445,7 +457,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			else if (m.isNoteOff()) {
 				blockOriginalEvent = true;
 				const int ch = m.getChannel();
-				const int note = m.getNoteNumber();
+				const int note = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
 				if (!learn)
 				{
 					int numNotes = playingChord[note].size();
@@ -739,6 +751,7 @@ void MidiChords::copySettingsToProgram(int index)
 	programs->set(index,"Guess",guess);
 	programs->set(index,"Flats",flats);
 	programs->set(index,"Velocity",previewVel);
+	programs->set(index,"InputTranspose",inputtranspose);
 
 	for (int i=0;i<128;i++) {
 		programs->clearNoteMatrix(index,i);
@@ -1004,3 +1017,65 @@ bool MidiChords::readKeyFile(File file)
 	return false;
 }
 
+void MidiChords::readChorderPreset(File file)
+{
+	XmlDocument xmlDoc(file);
+	ScopedPointer<XmlElement> e = xmlDoc.getDocumentElement();
+	if (e != 0)
+	{
+		MemoryBlock data;
+		data.loadFromHexString(e->getAllSubText());
+
+		struct ChorderMapping
+		{
+			uint32 header0;
+			uint8 kbSect0[16];
+			uint32 header1;
+			uint8 kbSect1[16];
+			uint32 header2;
+			uint8 kbSect2[16];
+			uint32 header3;
+			uint8 kbSect3[16];
+			uint32 header4;
+			uint8 kbSect4[16];
+			uint32 header5;
+			uint8 kbSect5[16];
+			uint32 header6;
+			uint8 kbSect6[16];
+			uint32 header7;
+			uint8 kbSect7[16];
+		};
+		
+		int ch = jmax(learnchan,1);
+		//chordKbState.reset();
+		ChorderMapping map;
+		for (int i=0;i<128;i++)
+		{
+			data.copyTo(&map,i*sizeof(map),sizeof(map));
+			progKbState[curProgram][i].reset();
+			programs->clearNoteMatrix(curProgram,i);
+			for (int m = 0; m<16; m++)
+			{
+				for (int n=0;n<8;n++) {
+					if (map.kbSect0[m] & (1<<n)) {
+						progKbState[curProgram][i].noteOn(ch,n + m*8,1.f);
+						//chordKbState.noteOn(ch,n+m*8,1.f);
+						programs->setChordNote(curProgram,i,ch,n+m*8,true);
+					}
+				}
+			}
+		}
+		int otherSettings[5]; // 0: ?, 1: mode, 2: Layer switch, 3: Thru, 4: Used Layers 
+		data.copyTo(&otherSettings,128*sizeof(map),sizeof(otherSettings));
+
+		if (otherSettings[1]==0)
+			mode = Normal;
+		else if (otherSettings[1]==1)
+			mode = Octave;
+		else if (otherSettings[1]==2)
+			mode = Global;
+		programs->set(curProgram,"ChordMode",mode);
+
+		selectTrigger(curTrigger);
+	}
+}

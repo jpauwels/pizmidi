@@ -374,6 +374,10 @@ void midiKeyboardEditor::mouseUp(const MouseEvent &e)
 	else if (e.eventComponent==aboutBox)
 	{
 		aboutBox->setVisible(false);
+        useProgCh->setVisible(false);
+        useCapsLock->setVisible(false);
+        sendState->setVisible(false);
+		showNumbersButton->setVisible(false);
 	}
 	else if (e.eventComponent==grabQwertyButton)
 	{
