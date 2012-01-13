@@ -93,6 +93,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "documentation", "documentat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiNoteRepeater", "midiNoteRepeater\midiNoteRepeater.vcxproj", "{15092A59-7DCF-4440-9D17-F3359135F5FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiNoteMap", "midiNoteMap\midiNoteMap.vcxproj", "{F25D6B76-A687-453C-9754-F25D338FB660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -652,6 +654,18 @@ Global
 		{15092A59-7DCF-4440-9D17-F3359135F5FD}.Release|Win32.Build.0 = Release|Win32
 		{15092A59-7DCF-4440-9D17-F3359135F5FD}.Release|x64.ActiveCfg = Release|x64
 		{15092A59-7DCF-4440-9D17-F3359135F5FD}.Release|x64.Build.0 = Release|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Debug|Win32.Build.0 = Debug|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Debug|x64.ActiveCfg = Debug|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Debug|x64.Build.0 = Debug|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Inst|Win32.ActiveCfg = Inst|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Inst|Win32.Build.0 = Inst|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Inst|x64.ActiveCfg = Inst|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Inst|x64.Build.0 = Inst|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Release|Win32.ActiveCfg = Release|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Release|Win32.Build.0 = Release|Win32
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Release|x64.ActiveCfg = Release|x64
+		{F25D6B76-A687-453C-9754-F25D338FB660}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

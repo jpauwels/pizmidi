@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  11 Jan 2012 9:23:36pm
+  Creation date:  13 Jan 2012 1:25:17pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,14 +19,32 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EE1EA6A9__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EE1EA6A9__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
 #include "../../common/ChannelSlider.h"
 #include "../../common/GuitarNeckComponent.h"
 #include "../../common/LookAndFeel.h"
+
+class ChordPresetFileFilter : public FileFilter
+{
+public:
+	ChordPresetFileFilter()
+		: FileFilter("midiChords presets") {}
+	~ChordPresetFileFilter() {}
+	virtual bool isFileSuitable (const File &file) const
+	{
+		return (file.hasFileExtension("chords")
+			|| file.hasFileExtension("fxp")
+			|| file.hasFileExtension("xml"));
+	}
+	virtual bool isDirectorySuitable (const File &file) const
+	{
+		return true;
+	}
+};
 
 class ChordsGuitar : public GuitarNeckComponent
 {
@@ -396,6 +414,7 @@ class MidiChordsEditor  : public AudioProcessorEditor,
                           public ChangeListener,
                           public TextEditorListener,
                           public FileDragAndDropTarget,
+                          public FileBrowserListener,
                           public ButtonListener,
                           public SliderListener,
                           public LabelListener
@@ -443,8 +462,14 @@ private:
 	void loadPreset(File file);
 	void chordFromString(String chordString);
 
+	void fileDoubleClicked (const File &file);
+	void selectionChanged(void) {}
+	void fileClicked(const juce::File &file,const juce::MouseEvent &);
+
     MidiChords* getFilter() const throw()       { return (MidiChords*) getAudioProcessor(); }
 	int mode;
+	ChordPresetFileFilter fileFilter;
+	FileBrowserComponent* browser;
     //[/UserVariables]
 
     //==============================================================================
@@ -492,6 +517,9 @@ private:
     ChordsGuitar* guitar;
     Label* versionLabel;
     ToggleButton* transposeInputButton;
+    ToggleButton* toAllChannelsButton;
+    TextButton* infoButton;
+    TextEditor* infoBox;
 
 
     //==============================================================================
@@ -501,4 +529,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_6F999589__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EE1EA6A9__

@@ -19,6 +19,7 @@ enum parameters {
 	kLearnChannel,
 	kVelocity,
 	kInputTranspose,
+	kToAllChannels,
 
     numParams,
 	kVariation,
@@ -277,6 +278,7 @@ private:
 	bool guess;
 	bool flats;
 	bool inputtranspose;
+	bool ccToAllChannels;
 
 	bool playingFromGUI, playFromGUI;
 	int playButtonTrigger;

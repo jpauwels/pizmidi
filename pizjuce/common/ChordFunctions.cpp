@@ -358,33 +358,53 @@ String getFirstRecognizedChord(Array<int> chord, bool flats)
 	return "("+listNoteNames(temp,flats)+")";// "Unknown chord";
 }
 
-String getIntervalStringFromNoteNames(int root, String noteString)
+String getIntervalStringFromNoteNames(int root, String noteString, int bottomOctave)
 {
-	root %= 12;
 	StringArray sa;
 	sa.addTokens(noteString," ,",String::empty);
-	int bass = getNoteValue(sa[0]);
+	bool absolute;
+	int bass = getNoteValue(sa[0],bottomOctave,absolute);
 	int last = 0;
 	String string;
 	if (bass!=NOT_A_NOTE)
 	{
-		if (bass>root)
-			bass-=12;
-		last = bass-root;
-		string += String(last);
-		for(int i=1;i<sa.size();i++)
-		{
-			const int note = getNoteValue(sa[i]);
-			if (note!=NOT_A_NOTE)
+		if (!absolute) {
+			root %= 12;
+			if (bass>root)
+				bass-=12;
+			last = bass-root;
+			string += String(last);
+			for(int i=1;i<sa.size();i++)
 			{
-				int step = note-root;
-				while (step-last<0)
-					step+=12;
-				string+=" "+String(step);
-				last = step;
+				const int note = getNoteValue(sa[i]);
+				if (note!=NOT_A_NOTE)
+				{
+					int step = note-root;
+					while (step-last<0)
+						step+=12;
+					string+=" "+String(step);
+					last = step;
+				}
+			}
+		}
+		else {
+			last = bass-root;
+			string += String(last);
+			for(int i=1;i<sa.size();i++)
+			{
+				const int note = getNoteValue(sa[i],bottomOctave,absolute);
+				if (note!=NOT_A_NOTE)
+				{
+					int step = note-root;
+					while (step-last<0)
+						step+=12;
+					string+=" "+String(step);
+					last = step;
+				}
 			}
 		}
 	} else {
+		root %= 12;
 		bass = getIntervalValue(sa[0]);
 		if (bass>root)
 			bass-=12;

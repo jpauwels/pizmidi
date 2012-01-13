@@ -1898,7 +1898,9 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 #ifdef PIZMIDI
 #define PIZ_FX_MAGIC 1
     String hostname = getHostVendor();
+	filter->hostInfo += "Host Vendor: " + hostname + "\n";
     String hostproduct = getHostName();
+	filter->hostInfo += "Host Product: " + hostproduct + "\n";
     if (!hostname.isEmpty()) {
         if (hostname.contains("Ableton")) {
             inst=true;
@@ -1931,11 +1933,17 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 			numInChans=2;
             numOutChans=2;
         }
+        else if (hostname.contains("Open Labs")) {
+            inst=false;
+			numInChans=2;
+            numOutChans=2;
+        }
 	}
     if (!inst && numOutChans) numInChans=numOutChans;
 
     hostname = getHostName();
     if (hostname.isEmpty()) hostname="unknown";
+
 
     //read "pizmidi.ini" in plugin's directory
 	String pizmidiIniPath = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getFullPathName() 
@@ -1949,6 +1957,7 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 		}
 	}
     if (File(pizmidiIniPath).exists()) {
+		filter->hostInfo += "pizmidi.ini: " + pizmidiIniPath + "\n";
         StringArray lines;
         lines.addLines(File(pizmidiIniPath).loadFileAsString());
         bool hostmatch=false;
@@ -1978,6 +1987,8 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
             }
         }
     }
+	else
+		filter->hostInfo += "pizmidi.ini: none\n";
 #else 
     String hostname = getHostName();
 #endif
@@ -2025,6 +2036,9 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
         VSTID = (int)(Piz_EffectID);
 	}
 #endif
+	filter->hostInfo += inst ? "Loaded as: Instrument\n" : "Loaded as: Effect\n";
+	filter->hostInfo += "Audio inputs: " + String(numInChans) + "\n";
+	filter->hostInfo += "Audio outputs: " + String(numOutChans) + "\n";
     setUniqueID (VSTID);
     cEffect.version = (long) (JucePlugin_VersionCode);
 

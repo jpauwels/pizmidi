@@ -33,6 +33,7 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("UsePC",false,0);
 		progv.setProperty("Velocity",100,0);
 		progv.setProperty("InputTranspose",false,0);
+		progv.setProperty("ToAllChannels",false,0);
 
 		progv.setProperty("Name","Program "+ String(p+1),0);
 		progv.setProperty("lastUIWidth",600,0);
@@ -77,6 +78,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 		guess = true;
 		flats = false;
 		inputtranspose = false;
+		ccToAllChannels = false;
 		previewVel = 100;
 		lastUIWidth = 600;
 		lastUIHeight = 400;
@@ -135,6 +137,7 @@ void MidiChords::setCurrentProgram (int index)
 	usepc = programs->get(index,"UsePC");
 	previewVel = programs->get(index,"Velocity");
 	inputtranspose = programs->get(index,"InputTranspose");
+	ccToAllChannels = programs->get(index,"ToAllChannels");
 
     lastUIWidth = programs->get(index,"lastUIWidth");
     lastUIHeight = programs->get(index,"lastUIHeight");
@@ -171,6 +174,7 @@ float MidiChords::getParameter (int index)
 	case kGuess: return guess ? 1.f : 0.f;
 	case kFlats: return flats ? 1.f : 0.f;
 	case kInputTranspose: return inputtranspose ? 1.f : 0.f;
+	case kToAllChannels: return ccToAllChannels ? 1.f : 0.f;
 	default: return 0.0f;
     }
 }
@@ -245,6 +249,11 @@ void MidiChords::setParameter (int index, float newValue)
         inputtranspose = newValue>0.f;
         sendChangeMessage();
     }
+    else if (index==kToAllChannels)
+    {
+        ccToAllChannels = newValue>0.f;
+        sendChangeMessage();
+    }
 }
 
 const String MidiChords::getParameterName (int index)
@@ -273,6 +282,8 @@ const String MidiChords::getParameterName (int index)
 		return "PreviewVelocity";
 	if (index == kInputTranspose)
 		return "TranspInput";
+	if (index == kToAllChannels)
+		return "ToAllChannels";
 	return String::empty;
 }
 
@@ -307,6 +318,8 @@ const String MidiChords::getParameterText (int index)
 		return String(previewVel);
     if (index == kInputTranspose)
         return inputtranspose ? "Yes" : "No";  
+    if (index == kToAllChannels)
+        return ccToAllChannels ? "Yes" : "No";  
 	return String::empty;
 }
 
@@ -483,6 +496,19 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 					notePlaying[ch][note]=false;
 					sendChangeMessage();
 				}
+			}
+			else if (m.getChannel()>0) {
+				if (ccToAllChannels)
+				{
+					for(int ch=1;ch<=16;ch++)
+					{
+						m.setChannel(ch);
+						output.addEvent(m,sample);
+						blockOriginalEvent = true;
+					}
+				}
+				else
+					blockOriginalEvent = false;
 			}
 			else
 				blockOriginalEvent = false;
@@ -752,6 +778,7 @@ void MidiChords::copySettingsToProgram(int index)
 	programs->set(index,"Flats",flats);
 	programs->set(index,"Velocity",previewVel);
 	programs->set(index,"InputTranspose",inputtranspose);
+	programs->set(index,"ToAllChannels",ccToAllChannels);
 
 	for (int i=0;i<128;i++) {
 		programs->clearNoteMatrix(index,i);
@@ -992,6 +1019,8 @@ bool MidiChords::readKeyFile(File file)
 	}
 	else {
 		file = File(getCurrentPath()+File::separatorString+"midiChords"+File::separatorString+"midiChordsKey.txt");
+		if (!file.exists())
+			file = File(getCurrentPath()+File::separatorString+"midiChordsKey.txt");
 	}
 
 	if (file.exists()) {
@@ -1075,6 +1104,7 @@ void MidiChords::readChorderPreset(File file)
 		else if (otherSettings[1]==2)
 			mode = Global;
 		programs->set(curProgram,"ChordMode",mode);
+		changeProgramName(curProgram,file.getFileNameWithoutExtension());
 
 		selectTrigger(curTrigger);
 	}

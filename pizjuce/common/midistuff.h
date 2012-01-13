@@ -58,6 +58,43 @@ inline int getNoteValue(String noteName)
 	return NOT_A_NOTE;
 }
 
+inline int getNoteValue(String noteName, int bottomOctave, bool &hasOctaveNumber)
+{
+	int octave = 0;
+	if (noteName.containsAnyOf("-0123456789")) {
+		octave = (noteName.getTrailingIntValue() - bottomOctave)*12;
+		hasOctaveNumber = true;
+		noteName = noteName.removeCharacters("-0123456789");
+	}
+	else
+		hasOctaveNumber = false;
+	if (noteName.equalsIgnoreCase("C") || noteName.equalsIgnoreCase("B#") || noteName.equalsIgnoreCase("Dbb"))
+		return nC + octave;
+	if (noteName.equalsIgnoreCase("C#") || noteName.equalsIgnoreCase("Db") || noteName.equalsIgnoreCase("Bx"))
+		return nDb + octave;
+	if (noteName.equalsIgnoreCase("D") || noteName.equalsIgnoreCase("Ebb") || noteName.equalsIgnoreCase("Cx"))
+		return nD + octave;
+	if (noteName.equalsIgnoreCase("Eb") || noteName.equalsIgnoreCase("D#") || noteName.equalsIgnoreCase("Fbb"))
+		return nEb + octave;
+	if (noteName.equalsIgnoreCase("E") || noteName.equalsIgnoreCase("Fb") || noteName.equalsIgnoreCase("Dx"))
+		return nE + octave;
+	if (noteName.equalsIgnoreCase("F") || noteName.equalsIgnoreCase("E#") || noteName.equalsIgnoreCase("Gbb"))
+		return nF + octave;
+	if (noteName.equalsIgnoreCase("Gb") || noteName.equalsIgnoreCase("F#") || noteName.equalsIgnoreCase("Ex"))
+		return nGb + octave;
+	if (noteName.equalsIgnoreCase("G") || noteName.equalsIgnoreCase("Fx") || noteName.equalsIgnoreCase("Abb"))
+		return nG + octave;
+	if (noteName.equalsIgnoreCase("Ab") || noteName.equalsIgnoreCase("G#"))
+		return nAb + octave;
+	if (noteName.equalsIgnoreCase("A") || noteName.equalsIgnoreCase("Gx") || noteName.equalsIgnoreCase("Bbb"))
+		return nA + octave;
+	if (noteName.equalsIgnoreCase("Bb") || noteName.equalsIgnoreCase("A#") || noteName.equalsIgnoreCase("Cbb"))
+		return nBb + octave;
+	if (noteName.equalsIgnoreCase("B") || noteName.equalsIgnoreCase("Cb") || noteName.equalsIgnoreCase("Ax"))
+		return nB + octave;
+	return NOT_A_NOTE;
+}
+
 inline int getIntervalValue(String intervalName)
 {
 	int result = NOT_A_NOTE;

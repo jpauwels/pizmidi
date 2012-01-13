@@ -77,6 +77,6 @@ void fillChordDatabase();
 
 String listNoteNames(Array<int> chord);
 String getFirstRecognizedChord(Array<int> chord, bool flats);
-String getIntervalStringFromNoteNames(int root, String noteString);
+String getIntervalStringFromNoteNames(int root, String noteString, int bottomOctave);
 
 #endif

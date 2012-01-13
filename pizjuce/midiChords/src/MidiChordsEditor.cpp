@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  11 Jan 2012 9:23:36pm
+  Creation date:  13 Jan 2012 1:25:17pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -74,7 +74,10 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       demoLabel (0),
       guitar (0),
       versionLabel (0),
-      transposeInputButton (0)
+      transposeInputButton (0),
+      toAllChannelsButton (0),
+      infoButton (0),
+      infoBox (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
     toggleButton->setButtonText (L"Guess chord name");
@@ -179,7 +182,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
     addAndMakeVisible (transposeSlider = new Slider (L"transpose"));
     transposeSlider->setTooltip (L"Transpose output by semitones");
-    transposeSlider->setRange (-48, 48, 1);
+    transposeSlider->setRange (-12, 12, 1);
     transposeSlider->setSliderStyle (Slider::LinearBar);
     transposeSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
     transposeSlider->setColour (Slider::backgroundColourId, Colours::white);
@@ -343,7 +346,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     guitar->setName (L"new component");
 
     addAndMakeVisible (versionLabel = new Label (L"new label",
-                                                 L"1.0.2"));
+                                                 L"99.99.99"));
     versionLabel->setFont (Font (12.0000f, Font::plain));
     versionLabel->setJustificationType (Justification::centredLeft);
     versionLabel->setEditable (false, false, false);
@@ -351,8 +354,29 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
     addAndMakeVisible (transposeInputButton = new ToggleButton (L"new toggle button"));
+    transposeInputButton->setTooltip (L"When checked, incoming trigger notes are transposed by the opposite of the \"Transpose\" slider.");
     transposeInputButton->setButtonText (L"Also Transpose Input");
     transposeInputButton->addListener (this);
+
+    addAndMakeVisible (toAllChannelsButton = new ToggleButton (L"new toggle button"));
+    toAllChannelsButton->setTooltip (L"When checked, CCs (and other control messages) are sent to all MIDI channels. Otherwise they are passed through on the original channel.");
+    toAllChannelsButton->setButtonText (L"Send CCs to All Channels");
+    toAllChannelsButton->addListener (this);
+
+    addAndMakeVisible (infoButton = new TextButton (L"new button"));
+    infoButton->setButtonText (L"?");
+    infoButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnTop);
+    infoButton->addListener (this);
+
+    addAndMakeVisible (infoBox = new TextEditor (L"new text editor"));
+    infoBox->setMultiLine (false);
+    infoBox->setReturnKeyStartsNewLine (false);
+    infoBox->setReadOnly (true);
+    infoBox->setScrollbarsShown (true);
+    infoBox->setCaretVisible (true);
+    infoBox->setPopupMenuEnabled (true);
+    infoBox->setColour (TextEditor::backgroundColourId, Colour (0xf2ffffff));
+    infoBox->setText (String::empty);
 
 
     //[UserPreSize]
@@ -402,6 +426,10 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
 
+	infoBox->setVisible(false);
+	infoBox->setText("Insert Piz Here-> midiChords v." + String(JucePlugin_VersionString) + "\n\n"
+		+ "== Host Info ==\n" + getFilter()->hostInfo + "\n\n",false);
+
 	const int middleC = getFilter()->getBottomOctave()+5;
 	chordKeyboard->setOctaveForMiddleC(middleC);
 	triggerKeyboard->setOctaveForMiddleC(middleC);
@@ -409,6 +437,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
 	static NonShinyLookAndFeel Look;
 	LookAndFeel::setDefaultLookAndFeel (&Look);
+
+	File chordPath(getFilter()->getCurrentPath()+File::separatorString
+		+"midiChords"+File::separatorString+"mappings");
+	browser = new FileBrowserComponent(FileBrowserComponent::openMode|FileBrowserComponent::useTreeView|FileBrowserComponent::canSelectFiles,
+			chordPath,&fileFilter,0);
+	browser->addListener(this);
 
 	mode = Normal;
     //[/UserPreSize]
@@ -429,6 +463,8 @@ MidiChordsEditor::~MidiChordsEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
 	getFilter()->removeChangeListener(this);
+
+	deleteAndZero (browser);
     //[/Destructor_pre]
 
     deleteAndZero (toggleButton);
@@ -475,6 +511,9 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (guitar);
     deleteAndZero (versionLabel);
     deleteAndZero (transposeInputButton);
+    deleteAndZero (toAllChannelsButton);
+    deleteAndZero (infoButton);
+    deleteAndZero (infoBox);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -572,13 +611,13 @@ void MidiChordsEditor::resized()
     resetChordButton->setBounds (331, 76, 40, 21);
     clearAllButton->setBounds (8, 368, 64, 24);
     resetAllButton->setBounds (72, 368, 64, 24);
-    transposeUpButton->setBounds (173, 368, 32, 24);
-    transposeDownButton->setBounds (144, 368, 29, 24);
+    transposeUpButton->setBounds (173, 404, 32, 24);
+    transposeDownButton->setBounds (144, 404, 29, 24);
     transposeChordUpButton->setBounds (239, 76, 23, 21);
     transposeChordDownButton->setBounds (216, 76, 23, 21);
     transposeSlider->setBounds (528, 376, 104, 16);
     velocitySlider->setBounds (376, 197, 22, 22);
-    variationSlider->setBounds (338, 351, 104, 16);
+    variationSlider->setBounds (334, 411, 104, 16);
     normalButton->setBounds (442, 318, 64, 24);
     octaveButton->setBounds (506, 318, 64, 24);
     globalButton->setBounds (570, 318, 64, 24);
@@ -593,7 +632,7 @@ void MidiChordsEditor::resized()
     pasteButton->setBounds (149, 73, 38, 21);
     previewButton->setBounds (230, 196, 143, 24);
     chordEditor->setBounds (78, 54, 144, 20);
-    pcButton->setBounds (320, 372, 98, 24);
+    pcButton->setBounds (342, 372, 98, 24);
     nextButton->setBounds (113, 204, 23, 21);
     prevButton->setBounds (90, 204, 23, 21);
     triggerNoteLabel->setBounds (558, 203, 73, 24);
@@ -601,7 +640,10 @@ void MidiChordsEditor::resized()
     demoLabel->setBounds (275, 50, 81, 24);
     guitar->setBounds (8, 99, getWidth() - 16, 89);
     versionLabel->setBounds (352, 28, 58, 24);
-    transposeInputButton->setBounds (524, 361, 107, 16);
+    transposeInputButton->setBounds (526, 360, 105, 16);
+    toAllChannelsButton->setBounds (148, 372, 188, 24);
+    infoButton->setBounds (-1, -1, 19, 18);
+    infoBox->setBounds (proportionOfWidth (0.5000f) - ((400) / 2), proportionOfHeight (0.5000f) - ((200) / 2), 400, 200);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -749,25 +791,27 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == presetMenuButton)
     {
         //[UserButtonCode_presetMenuButton] -- add your button handler code here..
-		//StringArray list;
-		Array<File> list;
-		listPresetFiles(list);
+		//Array<File> list;
+		//listPresetFiles(list);
+		browser->refresh();
+
 		PopupMenu menu;
 		menu.addItem(-1,"Save...");
 		menu.addSeparator();
-		for (int i=0;i<list.size();i++)
-		{
-			if (list[i].existsAsFile())
-			{
-				menu.addItem(i+1,list[i].getFileNameWithoutExtension());
-			}
-		}
+		menu.addCustomItem(0,browser,250,300,false);
+		//for (int i=0;i<list.size();i++)
+		//{
+		//	if (list[i].existsAsFile())
+		//	{
+		//		menu.addItem(i+1,list[i].getFileNameWithoutExtension());
+		//	}
+		//}
 		int result = menu.showAt(presetMenuButton);
 		if (result!=0)
 		{
-			if (result>0)
-				loadPreset(list[result-1]);
-			else if (result==-1)
+			//if (result>0)
+			//	loadPreset(list[result-1]);
+			if (result==-1)
 				getFilter()->savePreset(presetNameLabel->getText());
 		}
         //[/UserButtonCode_presetMenuButton]
@@ -817,6 +861,19 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_transposeInputButton] -- add your button handler code here..
 		getFilter()->setParameterNotifyingHost(kInputTranspose,transposeInputButton->getToggleState() ? 1.f : 0.f);
         //[/UserButtonCode_transposeInputButton]
+    }
+    else if (buttonThatWasClicked == toAllChannelsButton)
+    {
+        //[UserButtonCode_toAllChannelsButton] -- add your button handler code here..
+		getFilter()->setParameterNotifyingHost(kToAllChannels,toAllChannelsButton->getToggleState() ? 1.f : 0.f);
+        //[/UserButtonCode_toAllChannelsButton]
+    }
+    else if (buttonThatWasClicked == infoButton)
+    {
+        //[UserButtonCode_infoButton] -- add your button handler code here..
+		infoBox->setVisible(!infoBox->isVisible());
+		infoButton->setToggleState(infoBox->isVisible(),false);
+        //[/UserButtonCode_infoButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -934,7 +991,7 @@ void MidiChordsEditor::chordFromString(String chordString)
 	if(chordString.contains(":"))
 		chordString = chordString.fromLastOccurrenceOf(":",false,false);
 	if (chordString.containsAnyOf("abcdefgABCDEFGmMrRopP#+") || !chordString.contains("0"))
-		chordString = getIntervalStringFromNoteNames(t,chordString);
+		chordString = getIntervalStringFromNoteNames(t,chordString,getFilter()->bottomOctave);
 
 	sa.addTokens(chordString," ,",String::empty);
 	if (sa.size()>0)
@@ -974,16 +1031,19 @@ void MidiChordsEditor::updateParametersFromFilter()
 	const int newMode = roundToInt(filter->getParameter(kMode)*(numModes-1));
 	const int chordChan = roundToInt(filter->getParameter(kLearnChannel)*16.f);
 	const int previewVel = roundToInt(filter->getParameter(kVelocity)*126.f)+1;
+	const int transpose = roundToInt(filter->getParameter(kTranspose)*96.f)-48;
 
 	channelSlider->setValue(filter->getParameter(kChannel)*16.f,false);
 	learnChanSlider->setValue(chordChan,false);
 	velocitySlider->setValue(previewVel,false);
+	transposeSlider->setValue(transpose,false);
 	chordLearnButton->setToggleState(filter->getParameter(kLearnChord)>0,false);
 	triggerLearnButton->setToggleState(filter->getParameter(kFollowInput)>0,false);
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
 	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
 	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
 	transposeInputButton->setToggleState(filter->getParameter(kInputTranspose)>0,false);
+	toAllChannelsButton->setToggleState(filter->getParameter(kToAllChannels)>0,false);
 
 	if (chordChan==0) chordKeyboard->setMidiChannelsToDisplay(0xffff);
 	else chordKeyboard->setMidiChannelsToDisplay(1<<(chordChan-1));
@@ -1198,7 +1258,7 @@ void MidiChordsEditor::textEditorFocusLost(TextEditor &editor) {
 void MidiChordsEditor::filesDropped (const StringArray& filenames, int mouseX, int mouseY)
 {
 	File file = File(filenames[0]);
-	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb") 
+	if ( file.hasFileExtension("chords") || file.hasFileExtension("fxp") || file.hasFileExtension("fxb")
 		|| file.hasFileExtension("xml"))
 		loadPreset(file);
 	else if (file.getFileName() == "midiChordsKey.txt") {
@@ -1218,6 +1278,21 @@ bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
     return false;
 }
 
+void MidiChordsEditor::fileClicked(const juce::File &file,const juce::MouseEvent &)
+{
+	if (file.existsAsFile())
+		loadPreset(file);
+}
+
+void MidiChordsEditor::fileDoubleClicked (const File &file)
+{
+	if (file.existsAsFile())
+	{
+		//loadPreset(file);
+		PopupMenu::dismissAllActiveMenus();
+	}
+}
+
 //[/MiscUserCode]
 
 
@@ -1230,7 +1305,7 @@ bool MidiChordsEditor::isInterestedInFileDrag (const StringArray& files){
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MidiChordsEditor" componentName=""
-                 parentClasses="public AudioProcessorEditor, public ChangeListener, public TextEditorListener, public FileDragAndDropTarget"
+                 parentClasses="public AudioProcessorEditor, public ChangeListener, public TextEditorListener, public FileDragAndDropTarget, public FileBrowserListener"
                  constructorParams="MidiChords* const ownerFilter" variableInitialisers="AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="0" snapShown="1" overlayOpacity="0.330000013"
                  fixedSize="1" initialWidth="640" initialHeight="400">
@@ -1308,10 +1383,10 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="72 368 64 24" buttonText="Reset All"
               connectedEdges="1" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="f59df0e454cbaec8" memberName="transposeUpButton"
-              virtualName="" explicitFocusOrder="0" pos="173 368 32 24" buttonText="-&gt;"
+              virtualName="" explicitFocusOrder="0" pos="173 404 32 24" buttonText="-&gt;"
               connectedEdges="1" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="3fe107b4cf733d10" memberName="transposeDownButton"
-              virtualName="" explicitFocusOrder="0" pos="144 368 29 24" buttonText="&lt;-"
+              virtualName="" explicitFocusOrder="0" pos="144 404 29 24" buttonText="&lt;-"
               connectedEdges="2" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="transpose" id="b392a950edbb9665" memberName="transposeChordUpButton"
               virtualName="" explicitFocusOrder="0" pos="239 76 23 21" tooltip="Shift chord up one semitone"
@@ -1321,7 +1396,7 @@ BEGIN_JUCER_METADATA
               buttonText="&lt;" connectedEdges="11" needsCallback="1" radioGroupId="0"/>
   <SLIDER name="transpose" id="e04428ac0ed97dc9" memberName="transposeSlider"
           virtualName="" explicitFocusOrder="0" pos="528 376 104 16" tooltip="Transpose output by semitones"
-          bkgcol="ffffffff" min="-48" max="48" int="1" style="LinearBar"
+          bkgcol="ffffffff" min="-12" max="12" int="1" style="LinearBar"
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="velocity" id="d173a9d6025fabc0" memberName="velocitySlider"
@@ -1330,7 +1405,7 @@ BEGIN_JUCER_METADATA
           textBoxPos="NoTextBox" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="Variation" id="992cbb80661db8e9" memberName="variationSlider"
-          virtualName="" explicitFocusOrder="0" pos="338 351 104 16" min="0"
+          virtualName="" explicitFocusOrder="0" pos="334 411 104 16" min="0"
           max="100" int="0.1" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="new button" id="ea513687ce233abe" memberName="normalButton"
@@ -1384,7 +1459,7 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <TOGGLEBUTTON name="new toggle button" id="985f12fa947001cc" memberName="pcButton"
-                virtualName="" explicitFocusOrder="0" pos="320 372 98 24" buttonText="Use ProgCh"
+                virtualName="" explicitFocusOrder="0" pos="342 372 98 24" buttonText="Use ProgCh"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <TEXTBUTTON name="next" id="112bbd95115b0fee" memberName="nextButton" virtualName=""
               explicitFocusOrder="0" pos="113 204 23 21" tooltip="Select next higher trigger note"
@@ -1412,12 +1487,24 @@ BEGIN_JUCER_METADATA
                     params="ownerFilter-&gt;chordKbState, ownerFilter"/>
   <LABEL name="new label" id="9ec8a16d4577cd67" memberName="versionLabel"
          virtualName="" explicitFocusOrder="0" pos="352 28 58 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="1.0.2" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="99.99.99" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="12"
          bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="new toggle button" id="d3b81c8771f45be2" memberName="transposeInputButton"
-                virtualName="" explicitFocusOrder="0" pos="524 361 107 16" buttonText="Also Transpose Input"
-                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="526 360 105 16" tooltip="When checked, incoming trigger notes are transposed by the opposite of the &quot;Transpose&quot; slider."
+                buttonText="Also Transpose Input" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
+  <TOGGLEBUTTON name="new toggle button" id="b5393aba43fddbf9" memberName="toAllChannelsButton"
+                virtualName="" explicitFocusOrder="0" pos="148 372 188 24" tooltip="When checked, CCs (and other control messages) are sent to all MIDI channels. Otherwise they are passed through on the original channel."
+                buttonText="Send CCs to All Channels" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
+  <TEXTBUTTON name="new button" id="57021a22a2d1dc95" memberName="infoButton"
+              virtualName="" explicitFocusOrder="0" pos="-1 -1 19 18" buttonText="?"
+              connectedEdges="5" needsCallback="1" radioGroupId="0"/>
+  <TEXTEDITOR name="new text editor" id="2319ccc237bcf9fc" memberName="infoBox"
+              virtualName="" explicitFocusOrder="0" pos="50%c 50%c 400 200"
+              bkgcol="f2ffffff" initialText="" multiline="0" retKeyStartsLine="0"
+              readonly="1" scrollbars="1" caret="1" popupmenu="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

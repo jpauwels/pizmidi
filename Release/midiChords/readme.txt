@@ -14,10 +14,11 @@ you can copy from the GUI and paste into a text file and vice-versa.
 Ctrl-click on Paste uses the same pitches as the copied chord, otherwise
 it's relative to the new trigger note. 
 
-There is also a text box to type in chords directly. It can read three different formats:
-- note names, like "C E G Bb D" for a C9 chord
-- interval names, like "1 3 5 b7 9" or "Root Maj3 P5 Min7 Maj9" etc.
-- semitone offset from trigger note "0 4 7 10 14" (default, see below) 
+There is also a text box to type in chords directly. It can read four different formats:
+- Note names, like "C E G Bb D" for a C9 chord
+- Absolute note names, with octave number, i.e. "C3 E3 G3 Bb3 D4"
+- Interval names, like "1 3 5 b7 9" or "Root Maj3 P5 Min7 Maj9" etc.
+- Semitone offset from trigger note "0 4 7 10 14" (default, see below) 
 
 The "Paste" button can also use any of these formats directly, if you copied
 them from a website or other source (so you don't have to paste them into the

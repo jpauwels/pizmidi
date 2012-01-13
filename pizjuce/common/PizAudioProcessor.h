@@ -96,6 +96,7 @@ public:
 	double (*GetCursorPosition)();
 	void* (*get_config_var)(const char* name, int* szout);
 	bool reaper;
+	String hostInfo;
 
 private:
 	String currentPath;
