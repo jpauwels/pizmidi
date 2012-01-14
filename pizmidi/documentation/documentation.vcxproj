@@ -83,6 +83,7 @@
     <None Include="..\..\Release\doc\midiInvertNotes.txt" />
     <None Include="..\..\Release\doc\midiKeySplit.txt" />
     <None Include="..\..\Release\doc\midiKeySplit4.txt" />
+    <None Include="..\..\Release\doc\midiMultiProgramChange.txt" />
     <None Include="..\..\Release\doc\midiNotchFilter.txt" />
     <None Include="..\..\Release\doc\midiNoteGroups.txt" />
     <None Include="..\..\Release\doc\midiNotesToCC.txt" />

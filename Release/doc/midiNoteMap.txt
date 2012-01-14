@@ -1,0 +1,14 @@
+midiNoteMap
+
+Simple 1-to-1 keyboard mapper.
+
+
+Parameters:
+
+Channel - Channel to affect (1-16).
+
+Reset - Sets all output notes the same as input.
+
+Clear - Sets all notes to "Off."
+
+Notes 0-128 - Input notes. Set to "Off" or any other output note.

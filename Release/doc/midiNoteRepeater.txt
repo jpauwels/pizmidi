@@ -1,0 +1,28 @@
+midiNoteRepeater
+
+Repeats every Nth note a set number of times, or blocks it.
+
+
+Parameters:
+
+TempoSync - When On, RepeatTime will be measured in musical note values, following host tempo; when Off, RepeatTime will be absolute time in milliseconds.
+
+RepeatTime - Either tempo-synced values from 64th note to 3 bars (TempoSync On), or 0-2000ms (TempoSync Off).
+
+StartCount - Counter starts counting from this number (used to offset the count).
+
+Count - Number of notes to count before selecting a note to affect (1 to 100)
+
+Feedback - Velocity of repeated notes will decrease by this percentage with every repeat.
+
+Repeats - Number of times to repeat the selected note (0x - 100x). Set to 0x to block the selected note.
+
+Wet - Scales the velocity of selected/repeated notes.
+
+Dry - Scales the velocity of other notes. Set to 0% to block unselected notes.
+
+Note - Note(s) to count, either "All" or any single note.
+
+InChannel - Incoming channel to count notes on.
+
+WetChannel - Selected/repeated notes are sent on this channel.

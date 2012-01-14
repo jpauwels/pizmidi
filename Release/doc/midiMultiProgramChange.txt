@@ -1,0 +1,18 @@
+midiMultiProgramChange
+
+Uses input program change to trigger selected program changes on all channels.
+
+
+Internal Programs: 
+The plugin's internal VST programs can be used to store 128 Program combinations, which will be sent when switching to that internal program. All parameters other than Program, Bank MSB, and Bank LSB are shared between all internal programs.
+
+
+Parameters:
+
+InChannel - MIDI channel to use for incoming Program Change messages.
+
+Thru - Whether or not to send through other MIDI messages.
+
+Trigger - When parameter goes to maximum, send a Program Change message on all selected channels.
+
+Program [CH#] - Selects the program number to send on [CH#] with Program Change messages, or set to "Off" to disable sending PC. Changing this parameter will itself send the PC messages.

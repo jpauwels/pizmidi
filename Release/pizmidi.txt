@@ -5,6 +5,14 @@ Change log
 
 
 ----------------------------
+changes 20120114:
+
+* Added midiMultiProgramChange
+* Added midiNoteMap
+* Added midiNoteRepeater
+* Plugins should now appear as effects in Open Labs MOS
+
+----------------------------
 changes 20111213:
 
 * Fixed midiTriggerList

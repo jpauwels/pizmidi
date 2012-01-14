@@ -74,6 +74,10 @@ inline void getHostStuff(char* host, bool &inst, int &numoutputs) {
 		inst=true;
 		numoutputs=2;
 	}
+	else if (strncmp("Music OS",host,8)==0) {
+		inst=false;
+		numoutputs=2;
+	}
 }
 
 inline void readIniFile(char* host, bool &inst, int &numinputs, int &numoutputs, int &bottomOctave) {

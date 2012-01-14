@@ -1933,7 +1933,7 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 			numInChans=2;
             numOutChans=2;
         }
-        else if (hostname.contains("Open Labs")) {
+        else if (hostname.contains("Music OS")) {
             inst=false;
 			numInChans=2;
             numOutChans=2;
