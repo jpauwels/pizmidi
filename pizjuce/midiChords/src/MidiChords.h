@@ -233,6 +233,7 @@ public:
 	}
 	void clearAllChords();
 	void resetAllChords();
+	void copyChordToAllTriggers(bool absolute);
 	void clearChord(int trigger);
 	void resetChord(int trigger);
 	void transposeAll(bool up);
@@ -250,10 +251,10 @@ public:
 	bool isPreviewChordPlaying() {return playFromGUI;}
 	
 	void readChorderPreset(File file);
-
 	bool readKeyFile(File file=File::nonexistent);
 	bool demo;
 
+	String dataPath;
 	int lastUIWidth, lastUIHeight;
     //==============================================================================
     juce_UseDebuggingNewOperator

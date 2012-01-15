@@ -1,18 +1,13 @@
 Insert Piz Here-> midiChords
 (See http://thepiz.org/plugins for links to source code and other plugins)
 
-midiChords:
 Allows mapping of every input MIDI note to 0 or more output notes. 
 
-Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not 
-discussed here may or may not be documented in GUI tooltips.
+Welcome to the hastily-compiled documentation copied from KVR forum posts. Anything not discussed here may or may not be documented in GUI tooltips.
 
 To install: put "midiChords.dll" and the "midiChords" folder in your VST folder.
 
-The copy/paste buttons use the same format as the saved chords/mappings, so
-you can copy from the GUI and paste into a text file and vice-versa.
-Ctrl-click on Paste uses the same pitches as the copied chord, otherwise
-it's relative to the new trigger note. 
+The copy/paste buttons use the same format as the saved chords/mappings, so you can copy from the GUI and paste into a text file and vice-versa. Ctrl-click on Paste uses the same pitches as the copied chord, otherwise it's relative to the new trigger note. 
 
 There is also a text box to type in chords directly. It can read four different formats:
 - Note names, like "C E G Bb D" for a C9 chord
@@ -20,25 +15,17 @@ There is also a text box to type in chords directly. It can read four different 
 - Interval names, like "1 3 5 b7 9" or "Root Maj3 P5 Min7 Maj9" etc.
 - Semitone offset from trigger note "0 4 7 10 14" (default, see below) 
 
-The "Paste" button can also use any of these formats directly, if you copied
-them from a website or other source (so you don't have to paste them into the
-text box first).
+With any format, to assign channels to notes, use decimal points: "C.1 E.2 G.3 Bb.4 D.5"
 
-Each chord may contain notes for multiple channels. Right-clicking notes on the chord 
-keyboard allows you to choose which channels each note is sent on. The channel slider 
-above the Learn button lets you filter which input channel(s) are learned. This setting 
-is also used for setting chord notes with left-click.
+The "Paste" button can also use any of these formats directly, if you copied them from a website or other source (so you don't have to paste them into the text box first).
+
+Each chord may contain notes for multiple channels. Right-clicking notes on the chord keyboard allows you to choose which channels each note is sent on. The channel slider above the Learn button lets you filter which input channel(s) are learned. This setting is also used for setting chord notes with left-click.
 
 Presets menu:
-Presets are saved to and loaded from the "mappings" folder. Any files in .chords, .fxp, 
-or .xml (Steinerg Chorder presets) formats can be loaded. Presets can also be loaded by
-drag & drop.
+Presets are saved to and loaded from the "mappings" folder. Any files in .chords, .fxp, or .xml (Steinerg Chorder presets) formats can be loaded. Presets can also be loaded by drag & drop.
 
 Saved chord shape menu:
-The "Chords" menu is built from plain text files in the "chords" folder.
-Chord shapes are defined as the difference in semitones from the trigger note,
-in a space-separated list. Everything to the left of the colon is the chord
-name displayed in the menu.
+The "Chords" menu is built from plain text files in the "chords" folder. Chord shapes are defined as the difference in semitones from the trigger note, in a space-separated list. Everything to the left of the colon is the chord name displayed in the menu.
 
 Example:
 

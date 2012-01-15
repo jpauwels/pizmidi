@@ -151,7 +151,7 @@ void MidiProgramChange::getParameterName(VstInt32 index, char *label){
 		strcpy(label, "Thru");
 	}
 	else if (index >= kProgram && index < kProgram+16) { 
-        sprintf(label, "Program %d", index-kProgram+1);
+        sprintf(label, "Ch.%d Prog.", index-kProgram+1);
 	}
 	else if (index==kChannel) {
         strcpy(label, "InChannel");

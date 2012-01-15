@@ -360,65 +360,89 @@ String getFirstRecognizedChord(Array<int> chord, bool flats)
 
 String getIntervalStringFromNoteNames(int root, String noteString, int bottomOctave)
 {
+	bool multichannel = noteString.contains(".");
 	StringArray sa;
 	sa.addTokens(noteString," ,",String::empty);
 	bool absolute;
-	int bass = getNoteValue(sa[0],bottomOctave,absolute);
+	int bass = getNoteValue(sa[0].upToFirstOccurrenceOf(".",false,false),bottomOctave,absolute);
 	int last = 0;
 	String string;
 	if (bass!=NOT_A_NOTE)
 	{
+		int channel = multichannel ? sa[0].fromFirstOccurrenceOf(".",false,false).getIntValue() : 0;
+
 		if (!absolute) {
 			root %= 12;
 			if (bass>root)
 				bass-=12;
 			last = bass-root;
-			string += String(last);
+			if (channel>0)
+				string += String(last) + "." + String(channel);
+			else 
+				string += String(last);
 			for(int i=1;i<sa.size();i++)
 			{
-				const int note = getNoteValue(sa[i]);
+				const int note = getNoteValue(sa[i].upToFirstOccurrenceOf(".",false,false));
 				if (note!=NOT_A_NOTE)
 				{
 					int step = note-root;
 					while (step-last<0)
 						step+=12;
-					string+=" "+String(step);
+					channel = sa[i].fromFirstOccurrenceOf(".",false,false).getIntValue();
+					if (channel>0)
+						string += " " + String(step) + "." + String(channel);
+					else 
+						string += " "+String(step);
 					last = step;
 				}
 			}
 		}
 		else {
 			last = bass-root;
-			string += String(last);
+			if (channel>0)
+				string += String(last) + "." + String(channel);
+			else 
+				string += String(last);
 			for(int i=1;i<sa.size();i++)
 			{
-				const int note = getNoteValue(sa[i],bottomOctave,absolute);
+				const int note = getNoteValue(sa[i].upToFirstOccurrenceOf(".",false,false),bottomOctave,absolute);
 				if (note!=NOT_A_NOTE)
 				{
 					int step = note-root;
 					while (step-last<0)
 						step+=12;
-					string+=" "+String(step);
+					channel = sa[i].fromFirstOccurrenceOf(".",false,false).getIntValue();
+					if (channel>0)
+						string += " " + String(step) + "." + String(channel);
+					else 
+						string += " "+String(step);
 					last = step;
 				}
 			}
 		}
 	} else {
 		root %= 12;
-		bass = getIntervalValue(sa[0]);
+		bass = getIntervalValue(sa[0].upToFirstOccurrenceOf(".",false,false));
 		if (bass>root)
 			bass-=12;
 		last = bass-root;
-		string += String(last);
+		int channel = multichannel ? sa[0].fromFirstOccurrenceOf(".",false,false).getIntValue() : 0;
+		if (channel>0)
+			string += String(last) + "." + String(channel);
+		else 
+			string += String(last);
 		for(int i=1;i<sa.size();i++)
 		{
-			const int note = getIntervalValue(sa[i]);
+			const int note = getIntervalValue(sa[i].upToFirstOccurrenceOf(".",false,false));
 			if (note!=NOT_A_NOTE)
 			{
 				int step = note-root;
 				while (step-last<0)
 					step+=12;
-				string+=" "+String(step);
+				if (channel>0)
+					string += " " + String(step) + "." + String(channel);
+				else 
+					string += " "+String(step);
 				last = step;
 			}
 		}

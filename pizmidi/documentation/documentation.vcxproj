@@ -86,6 +86,8 @@
     <None Include="..\..\Release\doc\midiMultiProgramChange.txt" />
     <None Include="..\..\Release\doc\midiNotchFilter.txt" />
     <None Include="..\..\Release\doc\midiNoteGroups.txt" />
+    <None Include="..\..\Release\doc\midiNoteMap.txt" />
+    <None Include="..\..\Release\doc\midiNoteRepeater.txt" />
     <None Include="..\..\Release\doc\midiNotesToCC.txt" />
     <None Include="..\..\Release\doc\midiNoteToggle.txt" />
     <None Include="..\..\Release\doc\midiNRPNConverter.txt" />

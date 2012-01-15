@@ -62,6 +62,16 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 {
 	DBG("MidiChords()");
 
+	dataPath = getCurrentPath() + File::separatorString + "midiChords"; 
+	//if (File(path).exists())
+	//	dataPath = path;
+	//else {
+	//	path = File::getSpecialLocation(File::userApplicationDataDirectory).getFullPathName()
+	//		+ File::separatorString + "pizmidi" + File::separatorString + "midiChords";
+	//	if (!File(path).exists())
+	//		File 
+	//}
+
 	demo = !readKeyFile();
 	fillChordDatabase();
 	programs = new MidiChordsPrograms();
@@ -817,6 +827,38 @@ void MidiChords::resetAllChords()
 	sendChangeMessage();
 }
 
+void MidiChords::copyChordToAllTriggers(bool absolute)
+{
+	for (int i=0;i<128;i++)
+	{
+		if (i!=curTrigger)
+		{
+			progKbState[curProgram][i].reset();
+			programs->clearNoteMatrix(curProgram,i);
+			for (int ch=1;ch<=16;ch++)
+			{
+				for (int n=0;n<128;n++)
+				{
+					if (progKbState[curProgram][curTrigger].isNoteOn(ch,n))
+					{
+						if (absolute) {
+							progKbState[curProgram][i].noteOn(ch,n,1.f);
+							programs->setChordNote(curProgram,i,ch,n,true);
+						}
+						else {
+							int note = n-curTrigger+i;
+							if (note>=0 && note<128) {
+								progKbState[curProgram][i].noteOn(ch,note,1.f);
+								programs->setChordNote(curProgram,i,ch,note,true);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 void MidiChords::clearChord(int trigger)
 {
 	numChordNotes[curProgram][trigger]=0;
@@ -994,8 +1036,7 @@ void MidiChords::savePreset(String name)
 		if (usingTrigger)
 			contents += "\n";
 	}
-	File chordFile(getCurrentPath()+File::separatorString
-		+"midiChords"+File::separatorString+"mappings"+File::separatorString+name+".chords");
+	File chordFile(dataPath+File::separatorString+"mappings"+File::separatorString+name+".chords");
 
 	FileChooser myChooser ("Save preset...",chordFile,"*.chords");
 
@@ -1018,12 +1059,19 @@ bool MidiChords::readKeyFile(File file)
 		copy=true;
 	}
 	else {
-		file = File(getCurrentPath()+File::separatorString+"midiChords"+File::separatorString+"midiChordsKey.txt");
+		file = File(dataPath+File::separatorString+"midiChordsKey.txt");
 		if (!file.exists())
 			file = File(getCurrentPath()+File::separatorString+"midiChordsKey.txt");
+		//if (!file.exists())
+		//	file = File(folderPath+File::separatorString+"midiChordsKey.txt");
 	}
 
 	if (file.exists()) {
+		if (file.hasFileExtension("zip"))
+		{
+			if (ZipFile(file).uncompressTo(File(dataPath)))
+				file = File(dataPath+File::separatorString+"midiChordsKey.txt");
+		}
 		XmlElement* xmlKey = decodeEncryptedXml(file.loadFileAsString(),"3,5097efd7266b329e878e65129df0c8fe3ffc188abd24625e3709c65b304f5e2bdfa157e6c3cc6de5c29e36138c29f2516b56c55827aa238135bf1e23b6cab4f7");
 		if ( !xmlKey->getStringAttribute("product").compare("midiChords 1.x")
 			&& xmlKey->getStringAttribute("username").isNotEmpty()
@@ -1032,7 +1080,7 @@ bool MidiChords::readKeyFile(File file)
 			demo=false;
 			//infoString = "Registered to " + xmlKey->getStringAttribute("username");
 			if (copy) 
-				file.copyFileTo(File(getCurrentPath()+File::separatorString+"midiChords"+File::separatorString+"midiChordsKey.txt"));
+				file.copyFileTo(File(dataPath+File::separatorString+"midiChordsKey.txt"));
 			sendChangeMessage();
 		}
 		else

@@ -15,4 +15,4 @@ Thru - Whether or not to send through other MIDI messages.
 
 Trigger - When parameter goes to maximum, send a Program Change message on all selected channels.
 
-Program [CH#] - Selects the program number to send on [CH#] with Program Change messages, or set to "Off" to disable sending PC. Changing this parameter will itself send the PC messages.
+Ch# Program - Selects the program number to send on each channel, or set to "Off" to disable. Changing this parameter will itself send the PC messages.
