@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  15 Jan 2012 10:33:30am
+  Creation date:  19 Jan 2012 11:05:23pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DF51AB1D__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DF51AB1D__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -387,13 +387,20 @@ private:
     MidiKeyboardState* s;
 	MidiChords* owner;
 
-	bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e)
+	virtual bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e)
 	{
 		if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
 			owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
 		else
 			owner->selectTrigger(midiNoteNumber);
 		return false;
+	}
+	virtual void mouseDraggedToKey (int midiNoteNumber, const MouseEvent& e)
+	{
+		if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
+			owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
+		else
+			owner->selectTrigger(midiNoteNumber);
 	}
 };
 
@@ -519,8 +526,12 @@ private:
     ToggleButton* transposeInputButton;
     ToggleButton* toAllChannelsButton;
     TextButton* infoButton;
-    TextEditor* infoBox;
     TextButton* specialMenuButton;
+    ChannelSlider* outputChannelSlider;
+    TextButton* applyChannelButton;
+    Label* label;
+    Label* label2;
+    TextEditor* infoBox;
 
 
     //==============================================================================
@@ -530,4 +541,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_DF51AB1D__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__

@@ -24,6 +24,7 @@ MidiChordsPrograms::MidiChordsPrograms ()
 
 		progv.setProperty("Channel",0,0);
 		progv.setProperty("LearnChannel",0,0);
+		progv.setProperty("OutChannel",0,0);
 		progv.setProperty("FollowInput",true,0);
 		progv.setProperty("Transpose",0,0);
 		progv.setProperty("ChordMode",Normal,0);
@@ -80,6 +81,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 	{
 		channel = 0;
 		learnchan = 0;
+		outchan = 0;
 		follow = true;
 		usepc = false;
 		transpose = 0;
@@ -138,6 +140,7 @@ void MidiChords::setCurrentProgram (int index)
 	programs->setProperty("lastProgram",index,0);
 	channel = programs->get(index,"Channel");
 	learnchan = programs->get(index,"LearnChannel");
+	outchan = programs->get(index,"OutChannel");
 	follow = programs->get(index,"FollowInput");
 	transpose = programs->get(index,"Transpose");
 	mode = programs->get(index,"ChordMode");
@@ -174,6 +177,7 @@ float MidiChords::getParameter (int index)
     {
     case kChannel: return ((float)channel)/16.f;
     case kLearnChannel: return ((float)learnchan)/16.f;
+    case kOutChannel: return ((float)outchan)/16.f;
     case kVelocity: return ((float)(previewVel-1))/126.f;
 	case kUseProgCh: return usepc ? 1.f : 0.f;
 	case kLearnChord: return learn ? 1.f : 0.f; 
@@ -199,6 +203,11 @@ void MidiChords::setParameter (int index, float newValue)
     else if (index==kLearnChannel)
     {
         learnchan = roundToInt(newValue*16.f);
+        sendChangeMessage();
+    }
+    else if (index==kOutChannel)
+    {
+        outchan = roundToInt(newValue*16.f);
         sendChangeMessage();
     }
     else if (index==kVelocity)
@@ -272,6 +281,8 @@ const String MidiChords::getParameterName (int index)
         return "Channel";
     if (index == kLearnChannel)
         return "LearnChannel";
+    if (index == kOutChannel)
+        return "OutChannel";
 	if (index == kUseProgCh)
 		return "UseProgCh";
 	if (index == kLearnChord)
@@ -303,6 +314,8 @@ const String MidiChords::getParameterText (int index)
 		return channel==0 ? "Any" : String(channel);
     if (index == kLearnChannel)
 		return learnchan==0 ? "All" : String(learnchan);
+    if (index == kOutChannel)
+		return outchan==0 ? "Multi" : String(outchan);
     if (index == kUseProgCh)
         return usepc ? "Yes" : "No";    
 	if (index == kLearnChord)
@@ -376,17 +389,20 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			{
 				for (int n=0;n<128;n++)
 				{
-					if (progKbState[curProgram][curTrigger].isNoteOn(c,n)) {
+					bool usedNote = false;
+					if (progKbState[curProgram][curTrigger].isNoteOn(c,n) && !usedNote) {
+						usedNote = outchan>0;
+						int outputChannel = outchan==0 ? c : outchan;
 						int newNote = n+transpose;
-						if (chordNotePlaying[c][newNote]) {
-							ignoreNextNoteOff[c-1].add(newNote);
-							playingChord[curTrigger].add(ChordNote(c,newNote));
+						if (chordNotePlaying[outputChannel][newNote]) {
+							ignoreNextNoteOff[outputChannel-1].add(newNote);
+							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
 						}
 						else if (newNote < 128 && newNote >= 0) 
 						{
-							output.addEvent(MidiMessage::noteOn(c,newNote,(uint8)previewVel),0);
-							playingChord[curTrigger].add(ChordNote(c,newNote));
-							chordNotePlaying[c][newNote]=true;
+							output.addEvent(MidiMessage::noteOn(outputChannel,newNote,(uint8)previewVel),0);
+							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
+							chordNotePlaying[outputChannel][newNote]=true;
 						}
 					}
 				}
@@ -451,22 +467,25 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 					{
 						for (int n=0;n<128;n++)
 						{
-							if (progKbState[curProgram][trigger].isNoteOn(c,n)) {
+							bool usedNote = false;
+							if (progKbState[curProgram][trigger].isNoteOn(c,n) && !usedNote) {
+								usedNote = outchan>0;
+								int outputChannel = outchan==0 ? c : outchan;
 								triggered = true;
 								int newNote = n+transpose;
 								if (mode==Global)
 									newNote += tnote-root;
 								else if (mode==Octave)
 									newNote +=  12 * (tnote/12 - 60/12);
-								if (chordNotePlaying[ch][newNote]) {
-									ignoreNextNoteOff[c-1].add(newNote);
-									playingChord[tnote].add(ChordNote(c,newNote));
+								if (chordNotePlaying[outputChannel][newNote]) {
+									ignoreNextNoteOff[outputChannel-1].add(newNote);
+									playingChord[tnote].add(ChordNote(outputChannel,newNote));
 								}
 								else if (newNote < 128 && newNote >= 0) 
 								{
-									output.addEvent(MidiMessage::noteOn(c,newNote,v),sample);
-									playingChord[tnote].add(ChordNote(c,newNote));
-									chordNotePlaying[c][newNote]=true;
+									output.addEvent(MidiMessage::noteOn(outputChannel,newNote,v),sample);
+									playingChord[tnote].add(ChordNote(outputChannel,newNote));
+									chordNotePlaying[outputChannel][newNote]=true;
 								}
 							}
 						}
@@ -775,6 +794,7 @@ void MidiChords::copySettingsToProgram(int index)
 {
 	programs->set(index,"Channel",channel);
 	programs->set(index,"LearnChannel",learnchan);
+	programs->set(index,"OutChannel",outchan);
 	programs->set(index,"UsePC",usepc);
 	programs->set(index,"FollowInput",follow);
     programs->set(index,"Name",getProgramName(index));
@@ -909,14 +929,14 @@ void MidiChords::transposeAll(bool up)
 						progKbState[curProgram][i].noteOn(c+1,n+1,1.f);
 						programs->setChordNote(curProgram,i,c+1,n+1,true);
 						if (i==curTrigger) 
-							chordKbState.noteOn(c+1,n+1,128);
+							chordKbState.noteOn(c+1,n+1,1.f);
 
 					}
 					else {
 						progKbState[curProgram][i].noteOn(c+1,n-1,1.f);
 						programs->setChordNote(curProgram,i,c+1,n-1,true);
 						if (i==curTrigger) 
-							chordKbState.noteOn(c+1,n-1,128);
+							chordKbState.noteOn(c+1,n-1,1.f);
 					}
 				}
 				else {
@@ -950,13 +970,13 @@ void MidiChords::transposeChord(int trigger, bool up)
 					progKbState[curProgram][trigger].noteOn(c+1,n+1,1.f);
 					programs->setChordNote(curProgram,trigger,c+1,n+1,true);
 					if (trigger==curTrigger) 
-						chordKbState.noteOn(c+1,n+1,128);
+						chordKbState.noteOn(c+1,n+1,1.f);
 				}
 				else {
 					progKbState[curProgram][trigger].noteOn(c+1,n-1,1.f);
 					programs->setChordNote(curProgram,trigger,c+1,n-1,true);
 					if (trigger==curTrigger) 
-						chordKbState.noteOn(c+1,n-1,128);
+						chordKbState.noteOn(c+1,n-1,1.f);
 				}
 			}
 			else {
@@ -988,12 +1008,12 @@ void MidiChords::transposeCurrentChordByOctave(bool up)
 				{
 					progKbState[curProgram][curTrigger].noteOn(c+1,n+12,1.f);
 					programs->setChordNote(curProgram,curTrigger,c+1,n+12,true);
-					chordKbState.noteOn(c+1,n+12,128);
+					chordKbState.noteOn(c+1,n+12,1.f);
 				}
 				else {
 					progKbState[curProgram][curTrigger].noteOn(c+1,n-12,1.f);
 					programs->setChordNote(curProgram,curTrigger,c+1,n-12,true);
-					chordKbState.noteOn(c+1,n-12,128);
+					chordKbState.noteOn(c+1,n-12,1.f);
 				}
 			}
 			else {
@@ -1007,6 +1027,29 @@ void MidiChords::transposeCurrentChordByOctave(bool up)
 	sendChangeMessage();
 }
 
+void MidiChords::applyChannelToChord()
+{
+	if (learnchan>=0) 
+	{
+		programs->clearNoteMatrix(curProgram,curTrigger);
+		chordKbState.reset();
+		for (int n=0;n<128;n++)
+		{
+			if (progKbState[curProgram][curTrigger].isNoteOnForChannels(0xffff,n))
+			{
+				for (int ch=1;ch<=16;ch++)
+				{
+					if (progKbState[curProgram][curTrigger].isNoteOn(ch,n))
+						progKbState[curProgram][curTrigger].noteOff(ch,n);
+				}
+				progKbState[curProgram][curTrigger].noteOn(learnchan,n,1.f);
+				programs->setChordNote(curProgram,curTrigger,learnchan,n,true);
+				chordKbState.noteOn(learnchan,n,1.f);
+			}
+		}
+		sendChangeMessage();
+	}
+}
 
 void MidiChords::savePreset(String name)
 {
@@ -1080,7 +1123,7 @@ bool MidiChords::readKeyFile(File file)
 			demo=false;
 			//infoString = "Registered to " + xmlKey->getStringAttribute("username");
 			if (copy) 
-				file.copyFileTo(File(dataPath+File::separatorString+"midiChordsKey.txt"));
+				file.copyFileTo(File(getCurrentPath()+File::separatorString+"midiChordsKey.txt"));
 			sendChangeMessage();
 		}
 		else

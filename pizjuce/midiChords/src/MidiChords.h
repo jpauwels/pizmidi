@@ -20,6 +20,7 @@ enum parameters {
 	kVelocity,
 	kInputTranspose,
 	kToAllChannels,
+	kOutChannel,
 
     numParams,
 	kVariation,
@@ -239,6 +240,7 @@ public:
 	void transposeAll(bool up);
 	void transposeChord(int trigger, bool up);
 	void transposeCurrentChordByOctave(bool up);
+	void applyChannelToChord();
 	String getCurrentChordName();
 	void savePreset(String name);
 	void playCurrentChord(bool on) 
@@ -269,6 +271,7 @@ private:
 
     int channel;
 	int learnchan;
+	int outchan;
 	bool learn;
 	bool follow;
 	bool usepc;
