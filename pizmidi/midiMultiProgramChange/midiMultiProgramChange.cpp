@@ -52,6 +52,7 @@ MidiProgramChange::MidiProgramChange(audioMasterCallback audioMaster)
 	}
 
 	trigger=false;
+	memset(trig,0,sizeof(trig));
 	senttrig=false;
     for (int i=0;i<kNumParams;i++) automated[i]=false;
     
@@ -77,7 +78,7 @@ void MidiProgramChange::setProgram (VstInt32 prog)
 	MidiProgramChangeProgram* ap = &programs[prog];
 	curProgram = prog;
 	for (int i=0;i<kNumParams;i++) {
-    	setParameter(i,ap->param[i]);
+    	setParameterAutomated(i,ap->param[i]);
     }
     trigger=true;
 }
@@ -129,13 +130,16 @@ void MidiProgramChange::setParameter(VstInt32 index, float value){
         param[index]=value;
 		if (value==1.f){// && !senttrig) {
 			trigger=true;
+			for (int ch=0;ch<16;ch++)
+				trig[ch]=true;
 			senttrig=true;
 		}
 		else if (value<1.f && senttrig) senttrig=false;
 	}
 	else if (index >= kProgram && index < kProgram+16) { 
         program[index-kProgram]=FLOAT_TO_MIDI2(value);
-		if (!automated[index]) trigger=true;
+		trigger=true;
+		trig[index-kProgram]=true;
         param[index] = ap->param[index] = value;
 	}
 }
@@ -211,8 +215,8 @@ void MidiProgramChange::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventV
 	if (trigger) {
 		trigger=false;
 		for (int ch = 0; ch<16;ch++) {
-			if(program[ch]!=0) {
-        		//create GUI triggered message
+			if (trig[ch] && program[ch]!=0)
+			{
         		VstMidiEvent progch;
         		progch.midiData[0] = MIDI_PROGRAMCHANGE | ch;
         		progch.midiData[1] = program[ch]-1;
@@ -221,6 +225,7 @@ void MidiProgramChange::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventV
         		outputs[0].push_back(progch);
 				setParameterAutomated(kTrigger,0.4f);
 			}
+			trig[ch]=false;
 		}
 	}
 }                                                                                                               

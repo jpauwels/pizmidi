@@ -65,6 +65,8 @@ JuceProgram::JuceProgram ()
 	param[kRecCC]	= (-1 + 2)/129.f;
 	param[kPlayCC]	= (-1 + 2)/129.f;
 
+	param[kMonitor] = 1.f;
+
     looplength=0;
     loopstart=0;
     measureFromHere=0;

@@ -462,12 +462,12 @@ private:
 			return memcmp(&rules,&oldrules,sizeof(Rules)) != 0;
 		}
 
-		int getTransposedNote(int note, int voice, bool &killNote, int channel)
+		int getTransposedNote(int note, int voice, bool &killNote, int channel, bool isInputNote=false)
 		{
 			if (channel==10 && !rules.transpose10)
 				return note;
 			int transposey=0;
-			int interval = rules.transposedTrigger ? (trignote[voice] - rules.root) : 0;
+			int interval = (!isInputNote && rules.transposedTrigger) ? (trignote[voice] - rules.root) : 0;
 			if (interval!=0 && rules.forceToScale)
 			{
 				//first force trigger note to scale

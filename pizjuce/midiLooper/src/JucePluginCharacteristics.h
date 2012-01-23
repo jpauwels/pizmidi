@@ -31,8 +31,8 @@
 #define JucePlugin_ProducesMidiOutput               1
 #define JucePlugin_SilenceInProducesSilenceOut      0
 #define JucePlugin_EditorRequiresKeyboardFocus      1
-#define JucePlugin_VersionCode              0x00010200
-#define JucePlugin_VersionString            "1.3"
+#define JucePlugin_VersionCode              0x00010400
+#define JucePlugin_VersionString            "1.4"
 
 //==============================================================================
 /*                                VST settings                                */

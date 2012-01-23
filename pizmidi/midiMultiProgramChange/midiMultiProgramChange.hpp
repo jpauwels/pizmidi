@@ -57,6 +57,7 @@ protected:
 	int program[16];
 	bool senttrig;
 	bool trigger;
+	bool trig[16];
 	bool thru;
 	bool automated[kNumParams];
 

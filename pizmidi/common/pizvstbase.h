@@ -78,6 +78,14 @@ inline void getHostStuff(char* host, bool &inst, int &numoutputs) {
 		inst=false;
 		numoutputs=2;
 	}
+	else if (strncmp("Ross Bencina",host,12)==0) {
+		inst=false;
+		numoutputs=0;
+	}
+	else if (strncmp("Plogue",host,6)==0) {
+		inst=false;
+		numoutputs=0;
+	}
 }
 
 inline void readIniFile(char* host, bool &inst, int &numinputs, int &numoutputs, int &bottomOctave) {

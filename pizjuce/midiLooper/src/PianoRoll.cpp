@@ -31,6 +31,7 @@ PianoRoll::PianoRoll(AudioProcessor* _plugin, AudioProcessorEditor* _owner, Time
 	playline->setInterceptsMouseClicks(false,false);
 	setSize(800,800);
 	lasso.setBounds(0,0,0,0);
+	wasResizing = false;
 }
 
 PianoRoll::~PianoRoll()
@@ -68,6 +69,7 @@ void PianoRoll::mouseDown (const MouseEvent& e)
 		draggingNoteLength = sequence->getTimeOfMatchingKeyUp(hoveringNoteIndex) - sequence->getEventTime(hoveringNoteIndex);
 		draggingNoteStartTime = sequence->getEventTime(hoveringNoteIndex);
 		draggingNoteChannel = hoveringNote->message.getChannel()-1;
+		draggingNoteEndOffset = (draggingNoteStartTime + draggingNoteLength) - accurateTime;
 		lastDragTime = snap ? t : accurateTime;
 		if (!selectedNotes.contains(hoveringNote)) {
 			clearSelection();
@@ -79,6 +81,7 @@ void PianoRoll::mouseDown (const MouseEvent& e)
 	}
 	else if (e.mods.isAltDown()){
 		//make a new note
+		wasResizing=true;
 		clearSelection();
 		hoveringNoteIndex = New_Note;
 		draggingNoteNumber = n;
@@ -139,7 +142,8 @@ void PianoRoll::mouseDrag (const MouseEvent& e)
 		}
 		else
 		{
-			length = x - startTime;
+			wasResizing=true;
+			length = x - startTime + draggingNoteEndOffset;
 			double lengthDelta = snap ? snapPpqToGrid(length-draggingNoteLength,true) : length-draggingNoteLength;
 			int velocityDelta = jlimit(1,127,originalNoteVelocity + (getHeight()-e.y) - draggingNoteNumber*getHeight()/128) - draggingNoteVelocity;
 			for (int i=0;i<selectedNotes.size();i++)
@@ -147,7 +151,7 @@ void PianoRoll::mouseDrag (const MouseEvent& e)
 				if (selectedNotes.getUnchecked(i)->noteOffObject) {
 					//set length and velocity when Alt is down
 					double minWidth = snap ? stepLengthInPpq : 1.0;
-					if (lengthDelta!=0) 
+					//if (lengthDelta!=0) 
 						selectedNotes.getUnchecked(i)->noteOffObject->message.setTimeStamp(jmax(selectedNotes.getUnchecked(i)->message.getTimeStamp()+minWidth,selectedNotes.getUnchecked(i)->message.getTimeStamp()+selectedNoteLengths.getUnchecked(i).length+lengthDelta));
 					selectedNotes.getUnchecked(i)->message.setVelocity((jlimit(1,127,selectedNotes.getUnchecked(i)->message.getVelocity()+velocityDelta))*midiScaler);
 				}
@@ -209,9 +213,10 @@ void PianoRoll::mouseUp (const MouseEvent& e)
 			clearSelection();
 		}
 		else {
-			if (e.mods.isAltDown())
+			if (wasResizing || e.mods.isAltDown())
 			{
 				//resize notes
+				wasResizing=false;
 				for (int i=selectedNoteLengths.size();--i>=0;)
 				{
 					if (selectedNotes.getUnchecked(i)!=0 && selectedNotes.getUnchecked(i)->noteOffObject!=0) {

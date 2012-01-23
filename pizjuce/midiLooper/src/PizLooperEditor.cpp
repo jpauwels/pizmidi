@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  1 Dec 2011 11:06:41am
+  Creation date:  22 Jan 2012 7:48:02pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -1747,7 +1747,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     label24->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
     addAndMakeVisible (b_Monitor = new TextButton (L"MIDI_Monitor"));
-    b_Monitor->setTooltip (L"Monitor input MIDI through active slot\'s channel");
+    b_Monitor->setTooltip (L"Monitor input MIDI through active slot\'s settings (Transpose, Scale, I/O Channel)");
     b_Monitor->setButtonText (L"Monitor");
     b_Monitor->addListener (this);
     b_Monitor->setColour (TextButton::buttonColourId, Colour (0xff999999));
@@ -1756,6 +1756,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
 
     //[UserPreSize]
 	DBG("PizLooperEditor()");
+    aboutButton->setTooltip (L"Insert Piz Here-> midiLooper v" +String(JucePlugin_VersionString)+" http://thepiz.org/plugins/?p=midiLooper");
 	viewport->setTimeline(timeline);
 	viewport->setKeyboard(kbport);
     this->setMouseClickGrabsKeyboardFocus(false);
@@ -1832,7 +1833,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     s_PlayCC->setMouseClickGrabsKeyboardFocus(false);
     s_VelocitySens->setMouseClickGrabsKeyboardFocus(false);
     b_Monitor->setMouseClickGrabsKeyboardFocus(false);
-	b_Monitor->setVisible(false);
+	//b_Monitor->setVisible(false);
 
 	s_Stretch->setOwner(getAudioProcessor(),kStretch);
     s_High->setOwner(getAudioProcessor(),kNHigh);
@@ -3669,6 +3670,7 @@ void PizLooperEditor::updateControls(int param, float value, bool forCurProgram)
 	{
 	case kThru:
 		b_Thru->setToggleState(value>=0.5f,false);
+		b_Monitor->setEnabled(b_Thru->getToggleState());
 		break;
 	case kMonitor:
 		b_Monitor->setToggleState(value>=0.5f,false);
@@ -5123,7 +5125,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="12" bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="MIDI_Monitor" id="9b82f84d650b5d48" memberName="b_Monitor"
-              virtualName="" explicitFocusOrder="0" pos="678 33 55 20" tooltip="Monitor input MIDI through active slot's channel"
+              virtualName="" explicitFocusOrder="0" pos="678 33 55 20" tooltip="Monitor input MIDI through active slot's settings (Transpose, Scale, I/O Channel)"
               bgColOff="ff999999" buttonText="Monitor" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
 </JUCER_COMPONENT>

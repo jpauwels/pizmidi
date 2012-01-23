@@ -288,7 +288,7 @@ bool midiStrum::init(void){
         arp[n]=-1;
     }
     heldnotes=0;
-    expectingDelayedEvents=0;
+    expectingDelayedNotes=false;
 
     wasplaying=false;
     isplaying=false;
@@ -306,6 +306,7 @@ bool midiStrum::init(void){
 
 void midiStrum::cleanMidiDelayBuffer() {
     midiDelayBuffer.clear();
+	expectingDelayedNotes = false;
 }
 
 void midiStrum::preProcess() {
@@ -359,6 +360,8 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
     //process delay buffer----------------------------------------------------------
     VstMidiEventVec newBuffer;
     newBuffer.clear();
+	if (midiDelayBuffer.size()==0)
+		expectingDelayedNotes=false;
     for (unsigned int i=0;i<midiDelayBuffer.size();i++) {
         VstMidiEvent event = midiDelayBuffer[i];
         int status     = event.midiData[0] & 0xf0;   // scraping  channel
@@ -491,6 +494,7 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                                         delayed.midiData[2] = 0;
                                         delayed.deltaFrames += delay-samples;
                                         midiDelayBuffer.push_back(delayed);
+										expectingDelayedNotes = true;
                                         discard=true;
                                     }
                                 }
@@ -523,19 +527,25 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                     if (held[data1]>0) held[data1]=1;
                 }
                 if ( strumchannel==listenchannel
-                    && (data1>=downstroke && data1<downstroke+12) ) {
+                    && (data1>=downstroke && data1<downstroke+12) && mode!=simple) {
                         //ignore
                 }
                 else if (!sustain) {
-                    if (held[data1]) heldnotes--;
-                    if (heldnotes<0) heldnotes=0;
+					
+                    if (held[data1]) 
+						heldnotes--;
+                    if (heldnotes<0) 
+						heldnotes=0;
                     held[data1]=0;
                     tomod.midiData[0] = MIDI_NOTEOFF | outchannel;
                     //we assume every noteoff had a matching noteon as the previous event
                     //for each channel/note.
                     //therefore this noteoff belongs to the same voice as the last noteon.
 
-                    VstInt32 delay = roundToInt((0.1f+param[kRandom])*(float(rand()%1000)*0.001f-0.5f)*(sampleRate*0.1f));
+					VstInt32 delay = noteDelay[data1];
+					if (!expectingDelayedNotes)
+						delay = (VstInt32)(totalSamples - noteOrigPos[data1])+tomod.deltaFrames +(VstInt32)(sampleRate/1000.f);
+						//delay = roundToInt((0.1f+param[kRandom])*(float(rand()%1000)*0.001f-0.5f)*(sampleRate*0.1f));
                     if ((noteDelay[data1]+noteOrigPos[data1])
                         >= (totalSamples+tomod.deltaFrames+delay - (VstInt32)(sampleRate/100.f))) {
                             delay=noteDelay[data1]+(VstInt32)(sampleRate/1000.f);
@@ -555,12 +565,13 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                             tomod.deltaFrames += (delay - samples);
                             tomod.midiData[0] = MIDI_NOTEOFF | outchannel;
                             midiDelayBuffer.push_back(tomod);
+							expectingDelayedNotes = true;
                             discard=true;
                         }
                     }
                 }
             }
-            if (channel == strumchannel) {
+            if (channel == strumchannel && mode!=simple) {
                 if (data1>=downstroke && data1<downstroke+12) {
                     discard=true;
                     if (!strumming) {}
@@ -582,10 +593,13 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                             strumming=false;
                             strumnote=-1;
                             for (int n=0; n<128; n++) {
-                                if (notePlaying[n]) {
-                                    VstInt32 delay = roundToInt((0.1f+param[kRandom])*(float(rand()%1000)*0.001f-0.5f)*(sampleRate*0.1f));
-                                    if ((noteDelay[n]+noteOrigPos[n]) >= (totalSamples+tomod.deltaFrames+delay)) {
-                                        delay=noteDelay[n];                                    }
+                                if (notePlaying[n] || noteDelay[n]>0) {
+									VstInt32 delay = noteDelay[n];
+									if (!expectingDelayedNotes)
+										delay = (VstInt32)(totalSamples - noteOrigPos[n])+tomod.deltaFrames +(VstInt32)(sampleRate/1000.f);
+                                    //VstInt32 delay = roundToInt((0.1f+param[kRandom])*(float(rand()%1000)*0.001f-0.5f)*(sampleRate*0.1f));
+                                    //if ((noteDelay[n]+noteOrigPos[n]) >= (totalSamples+tomod.deltaFrames+delay)) {
+                                    //    delay=noteDelay[n];                                    }
                                     if (delay>0) {
                                         if (samples - tomod.deltaFrames - delay > 0) {
                                             // delayed event is within the current block
@@ -607,6 +621,7 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                                             delayed.midiData[2] = 0;
                                             delayed.deltaFrames += delay - samples;
                                             midiDelayBuffer.push_back(delayed);
+											expectingDelayedNotes = true;
                                             discard=true;
                                         }
                                     }
@@ -809,6 +824,7 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                                             delayed.midiData[2] = velocity;
                                             delayed.deltaFrames = tomod.deltaFrames+delay - samples;
                                             midiDelayBuffer.push_back(delayed);
+											expectingDelayedNotes = true;
                                         }
                                         noteDelay[n] = delay;
                                     }//(delay>0)
@@ -941,6 +957,7 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                             delayed.midiData[2] = velocity;
                             delayed.deltaFrames = strumdelta+delay - samples;
                             midiDelayBuffer.push_back(delayed);
+							expectingDelayedNotes = true;
                         }
                         noteDelay[n] = delay;
                     }//(delay>0)
@@ -1043,6 +1060,7 @@ void midiStrum::processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outp
                         delayed.midiData[2] = velocity;
                         delayed.deltaFrames = strumdelta+delay;
                         midiDelayBuffer.push_back(delayed);
+						expectingDelayedNotes = true;
                     }
                     noteDelay[n] = delay;
                     noteOrigPos[n] = totalSamples+strumdelta;

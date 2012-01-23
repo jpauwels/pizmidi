@@ -340,6 +340,8 @@ private:
 	int originalNoteVelocity;
 	double draggingNoteLength;
 	double draggingNoteStartTime;
+	double draggingNoteEndOffset;
+	bool wasResizing;
 	bool snapToGrid;
 	float noteLength;
 	double playTime;

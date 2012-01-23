@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  19 Jan 2012 11:05:23pm
+  Creation date:  20 Jan 2012 1:40:49pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -82,6 +82,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       applyChannelButton (0),
       label (0),
       label2 (0),
+      viewButton (0),
       infoBox (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
@@ -333,7 +334,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     triggerNoteLabel->addListener (this);
 
     addAndMakeVisible (learnChanSlider = new ChannelSlider (L"channel"));
-    learnChanSlider->setTooltip (L"Chord Input Channel");
+    learnChanSlider->setTooltip (L"Chord Input Channel, used for Learn and left-click entering notes");
     learnChanSlider->setRange (0, 16, 1);
     learnChanSlider->setSliderStyle (Slider::LinearBar);
     learnChanSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
@@ -379,7 +380,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     specialMenuButton->addListener (this);
 
     addAndMakeVisible (outputChannelSlider = new ChannelSlider (L"channel"));
-    outputChannelSlider->setTooltip (L"Output channel (overrides chord\'s saved channel)");
+    outputChannelSlider->setTooltip (L"Output channel (\"Multi\" is as saved, otherwise overrides chord\'s saved channel)");
     outputChannelSlider->setRange (0, 16, 1);
     outputChannelSlider->setSliderStyle (Slider::LinearBar);
     outputChannelSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
@@ -408,6 +409,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     label2->setColour (TextEditor::textColourId, Colours::black);
     label2->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
+    addAndMakeVisible (viewButton = new TextButton (L"view"));
+    viewButton->setTooltip (L"Switch between keyboard & guitar views");
+    viewButton->setButtonText (L"View");
+    viewButton->setConnectedEdges (Button::ConnectedOnTop);
+    viewButton->addListener (this);
+
     addAndMakeVisible (infoBox = new TextEditor (L"new text editor"));
     infoBox->setMultiLine (true);
     infoBox->setReturnKeyStartsNewLine (false);
@@ -422,7 +429,6 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
 
     //[UserPreSize]
-	guitar->setVisible(false);
 	this->setMouseClickGrabsKeyboardFocus(false);
 	chordKeyboard->setMouseClickGrabsKeyboardFocus(false);
 	triggerKeyboard->setMouseClickGrabsKeyboardFocus(false);
@@ -459,6 +465,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	outputChannelSlider->setMouseClickGrabsKeyboardFocus(false);
 	label->setMouseClickGrabsKeyboardFocus(false);
 	label2->setMouseClickGrabsKeyboardFocus(false);
+	viewButton->setVisible(false);
 
 	//channelSlider->setAllText("Any");
 	learnChanSlider->setAllText("All");
@@ -474,6 +481,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	variationSlider->setVisible(false);
 	transposeDownButton->setVisible(false);
 	transposeUpButton->setVisible(false);
+	guitar->setVisible(false);
 
 	File chordPath(getFilter()->getCurrentPath()+File::separatorString
 		+"midiChords"+File::separatorString+"mappings");
@@ -577,6 +585,7 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (applyChannelButton);
     deleteAndZero (label);
     deleteAndZero (label2);
+    deleteAndZero (viewButton);
     deleteAndZero (infoBox);
 
 
@@ -712,6 +721,7 @@ void MidiChordsEditor::resized()
     applyChannelButton->setBounds (44, 56, 32, 16);
     label->setBounds (335, 359, 91, 13);
     label2->setBounds (432, 359, 91, 13);
+    viewButton->setBounds (151, 190, 52, 21);
     infoBox->setBounds (proportionOfWidth (0.5000f) - ((500) / 2), proportionOfHeight (0.5100f) - ((300) / 2), 500, 300);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
@@ -941,12 +951,12 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_infoButton] -- add your button handler code here..
 		infoBox->moveCaretToTop(false);
-		infoBox->setVisible(!infoBox->isVisible());
-		infoButton->setToggleState(infoBox->isVisible(),false);
-		//if (infoBox->isVisible())
-		//	infoBox->addToDesktop(0);
-		//else
-		//	infoBox->removeFromDesktop();
+		if (infoButton->getToggleState())
+			Desktop::getInstance().getAnimator().fadeOut(infoBox,150);
+		else
+			Desktop::getInstance().getAnimator().fadeIn(infoBox,100);
+		//infoBox->setVisible(!infoBox->isVisible());
+		infoButton->setToggleState(!infoButton->getToggleState(),false);
         //[/UserButtonCode_infoButton]
     }
     else if (buttonThatWasClicked == specialMenuButton)
@@ -982,6 +992,12 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_applyChannelButton] -- add your button handler code here..
 		getFilter()->applyChannelToChord();
         //[/UserButtonCode_applyChannelButton]
+    }
+    else if (buttonThatWasClicked == viewButton)
+    {
+        //[UserButtonCode_viewButton] -- add your button handler code here..
+		guitar->setVisible(!guitar->isVisible());
+        //[/UserButtonCode_viewButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -1106,7 +1122,7 @@ void MidiChordsEditor::chordFromString(String chordString)
 	StringArray sa;
 	if(chordString.contains(":"))
 		chordString = chordString.fromLastOccurrenceOf(":",false,false);
-	if (chordString.containsAnyOf("abcdefgABCDEFGmMrRopP#+") || !chordString.contains("0"))
+	if (chordString.containsAnyOf("abcdefgABCDEFGmMrRopP#+")/* || !chordString.contains("0")*/)
 		chordString = getIntervalStringFromNoteNames(t,chordString,getFilter()->bottomOctave);
 
 	sa.addTokens(chordString," ,",String::empty);
@@ -1281,10 +1297,13 @@ void MidiChordsEditor::loadChord(String chorddef)
 	sa.addTokens(chorddef.fromLastOccurrenceOf(":",false,true)," ",String::empty);
 	for(int i=0;i<sa.size();i++)
 	{
-		if(sa[i].contains("."))
-			getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
-		else
-			getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+		if (sa[i].trim().isNotEmpty())
+		{
+			if(sa[i].contains("."))
+				getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+			else
+				getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+		}
 	}
 }
 
@@ -1326,10 +1345,13 @@ void MidiChordsEditor::loadPreset(File file)
 					sa.addTokens(lines[ln].fromLastOccurrenceOf(":",false,true)," ",String::empty);
 					for(int i=0;i<sa.size();i++)
 					{
-						if(sa[i].contains("."))
-							getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
-						else
-							getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+						if(sa[i].trim().isNotEmpty())
+						{
+							if(sa[i].contains("."))
+								getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
+							else
+								getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+						}
 					}
 				}
 			}
@@ -1347,8 +1369,8 @@ void MidiChordsEditor::saveChord(String name)
 	for (int c=1;c<=16;c++) {
 		for (int n=0;n<128;n++)
 		{
-			if (getFilter()->chordKbState.isNoteOn(1,n))
-				chordString += " " + String(t-n) + "." + String(c);
+			if (getFilter()->chordKbState.isNoteOn(c,n))
+				chordString += " " + String(n-t) + "." + String(c);
 		}
 	}
 	File chordFile(getFilter()->getCurrentPath()+File::separatorString
@@ -1596,9 +1618,10 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="15" bold="1" italic="0" justification="33"/>
   <SLIDER name="channel" id="51b00c0c435d1b05" memberName="learnChanSlider"
           virtualName="ChannelSlider" explicitFocusOrder="0" pos="6 56 38 16"
-          tooltip="Chord Input Channel" bkgcol="ffffffff" min="0" max="16"
-          int="1" style="LinearBar" textBoxPos="TextBoxLeft" textBoxEditable="1"
-          textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+          tooltip="Chord Input Channel, used for Learn and left-click entering notes"
+          bkgcol="ffffffff" min="0" max="16" int="1" style="LinearBar"
+          textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="b13bd78310d4145" memberName="demoLabel"
          virtualName="" explicitFocusOrder="0" pos="334 5 81 24" edTextCol="ff000000"
          edBkgCol="0" labelText="UNREGISTERED&#10;DEMO VERSION" editableSingleClick="0"
@@ -1628,9 +1651,10 @@ BEGIN_JUCER_METADATA
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <SLIDER name="channel" id="4905788d8bca0925" memberName="outputChannelSlider"
           virtualName="ChannelSlider" explicitFocusOrder="0" pos="348 374 66 16"
-          tooltip="Output channel (overrides chord's saved channel)" bkgcol="ffffffff"
-          min="0" max="16" int="1" style="LinearBar" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+          tooltip="Output channel (&quot;Multi&quot; is as saved, otherwise overrides chord's saved channel)"
+          bkgcol="ffffffff" min="0" max="16" int="1" style="LinearBar"
+          textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="new button" id="8efd6a9fa5389ff6" memberName="applyChannelButton"
               virtualName="" explicitFocusOrder="0" pos="44 56 32 16" tooltip="Applies input channel to selected chord"
               buttonText="Apply" connectedEdges="1" needsCallback="1" radioGroupId="0"/>
@@ -1644,6 +1668,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="Transpose" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
+  <TEXTBUTTON name="view" id="d372ec945cfb2f67" memberName="viewButton" virtualName=""
+              explicitFocusOrder="0" pos="151 190 52 21" tooltip="Switch between keyboard &amp; guitar views"
+              buttonText="View" connectedEdges="4" needsCallback="1" radioGroupId="0"/>
   <TEXTEDITOR name="new text editor" id="2319ccc237bcf9fc" memberName="infoBox"
               virtualName="" explicitFocusOrder="0" pos="50%c 51%c 500 300"
               bkgcol="f2ffffff" outlinecol="ff000000" shadowcol="38000000"

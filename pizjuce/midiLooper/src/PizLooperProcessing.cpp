@@ -524,12 +524,13 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 					played[message_number]=true;
 				}
 			}
-			//transpose using current slot settings
+			//transpose using current slot settings if "Monitor" is on
 			if (midi_message.isNoteOn() && param[kThru]>=0.5f) {
 				if (discard)
 					inputNoteTransposition[eventchan][notenum] = -1;
 				else {
-					midi_message.setNoteNumber(tRules[curProgram]->getTransposedNote(notenum,0,discard,midi_message.getChannel()));
+					if (param[kMonitor]>=0.5f)
+						midi_message.setNoteNumber(tRules[curProgram]->getTransposedNote(notenum,0,discard,midi_message.getChannel(),true));
 					inputNoteTransposition[eventchan][notenum] = midi_message.getNoteNumber();
 				}
 			}
@@ -657,21 +658,22 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 				&& (isSlotPlaying(slot) || barStopSample[slot][0]>=ppq*ppqPerSample) 
 				&& loop->getNumEvents()>0) 
 			{
+				//DBG("playing slot "+String(slot));
 				const double stretch = getStretchMultiplier(slot);
 				const double newend = (double)(roundToInt(getParameterForSlot(kLoopEnd,slot)*16.0f)-8);
 				const double newstart = (double)(roundToInt(getParameterForSlot(kLoopStart,slot)*16.0f)-8);
 				const double beatshift = (double)(roundToInt(getParameterForSlot(kShift,slot)*16.0f)-8);
 				const int targetNumLoops = roundToInt(getParameterForSlot(kNumLoops,slot)*64.f);
 				const int nextSlot = roundToInt(getParameterForSlot(kNextSlot,slot)*(float)numSlots)-1;
-				//to be safe, end any playing notes when doing a time-based operation
-				//todo: check if this is still needed with the noteoffbuffer
 				if (beatshift!=lastshift[slot] 
 					|| lastend[slot]!=newend 
 					|| laststart[slot]!=newstart 
 					|| lastchannel[slot]!=channel 
 					|| laststretch[slot]!=stretch) 
 				{
-					endHangingNotesInLoop(midiout, 0, slot);
+					//to be safe, end any playing notes when doing a time-based operation
+					//todo: check if this is still needed with the noteoffbuffer
+					//endHangingNotesInLoop(midiout, 0, slot);
 					for (int instance=0;instance<polyphony;instance++)
 						lastPlayedIndex[slot][instance]=-1;
 					lastshift[slot]=beatshift;
@@ -683,6 +685,7 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 				const double newlength = getLoopLength(slot)+lastend[slot]-laststart[slot];
 				for (int instance=0;instance<polyphony;instance++) {
 					if (polytrigger[slot][instance]>=0) {
+						//DBG("instance "+String(instance));
 						//play the event that goes here, if any
 						const float tr = getParameterForSlot(kTrigger,slot);
 						const bool unsyncloop = tr>=0.2f && tr<0.4f;
@@ -691,6 +694,7 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 						bool stopPlaying = false;
 						double lastLoopTime = -1;
 						int s = (int)(samplesPerPpq*ppq);
+						int banana = 0;
 						for (int i=0; i < buffer.getNumSamples(); i++) 
 						{
 							s++;
@@ -803,37 +807,59 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 									break;
 								if (looptime<lastLoopTime) {
 									lastPlayedIndex[slot][instance]=-1;
+									banana=0;
+								}
+								else if (lastPlayedIndex[slot][instance]+1 >= loop->getNumEvents()) {
+									lastPlayedIndex[slot][instance]=-1;
+									banana++;
+								}
+								else if (lastPlayedIndex[slot][instance]+1 >= loop->getNextIndexAtTime((int)(getLoopEnd(slot)*960.0))
+									&& banana<3) {
+									lastPlayedIndex[slot][instance]=-1;
+									banana++;
 								}
 								lastLoopTime = looptime;
+								//DBG("looptime="+String(looptime));
 								//==================================================================================
-								if (loop->getNumEvents()>0)
+								if (loop->getNumEvents()>0/* && banana<3*/)
 								{
 									bool stop = false;
 									int index;
 									if (lastPlayedIndex[slot][instance] == -1) {
 										index = loop->getNextIndexAtTime((int)(looptime*960.0));
-										lastPlayedIndex[slot][instance] = index-1;
+										if (loop->getEventTime(index)<=(int)(looptime*960.0)) {
+											lastPlayedIndex[slot][instance] = index-1;
+											banana++;
+										}
 									}
 									else if (loop->getEventTime(lastPlayedIndex[slot][instance]+1)<=(int)(looptime*960.0))
 										index = lastPlayedIndex[slot][instance]+1;
 									else 
 										index = lastPlayedIndex[slot][instance];
-									if (loop->getEventTime(index)>(int)(looptime*960.0)
-										|| lastPlayedIndex[slot][instance]>=index) 
+									if (loop->getEventTime(index)>(int)(looptime*960.0)) {
+										//DBG("  "+String(loop->getEventTime(index))+ " "+String((int)(looptime*960.0)));
 										stop=true;
+									}
+									if (lastPlayedIndex[slot][instance]>=index) {
+										//DBG("  "+String(lastPlayedIndex[slot][instance])+" "+String(index));
+										stop=true;
+									}
 									while (index<(loop->getNumEvents()) && !stop) 
 									{
 										if (loop->getEventTime(index)<=(int)(looptime*960.0))
 										{
 											if(lastPlayedIndex[slot][instance]<index)
 											{
+												DBG("playing loop event "+String(index)+ " at time "+String(loop->getEventTime(index)));
 												playLoopEvent(slot,instance,index,channel,stretch,i,samplesPerPpq,midiout);
 												lastPlayedIndex[slot][instance]=index;
 											}
 											index++;
 										}
-										else 
+										else {
+											DBG("stopping loop ln842");
 											stop=true;
+										}
 									} //events
 								}
 							}
@@ -894,7 +920,7 @@ void PizLooper::processNoteOffBuffer(int slot, MidiBuffer &midiout, int numSampl
 
 bool PizLooper::isNoteTriggeringAnySlot(MidiMessage const &message)
 {
-	if (message.isNoteOnOrOff()) 
+	if (message.isNoteOnOrOff() ) 
 	{
 		const int notenum = message.getNoteNumber();
 		if (param[kSingleLoop]>=0.5f)
@@ -903,6 +929,7 @@ bool PizLooper::isNoteTriggeringAnySlot(MidiMessage const &message)
 			if (getParameterForSlot(kNoteTrig,curProgram) > 0.f
 				&& notenum >= floatToMidi(getParameterForSlot(kNLow,curProgram)) 
 				&& notenum <= floatToMidi(getParameterForSlot(kNHigh,curProgram))
+				&& message.isForChannel(message.isForChannel(roundToInt(getParameterForSlot(kTrigChan,curProgram)*15.0f)+1))
 			)
 				return true;
 			return false;
@@ -912,6 +939,7 @@ bool PizLooper::isNoteTriggeringAnySlot(MidiMessage const &message)
 			if (getParameterForSlot(kNoteTrig,slot) > 0.f 
 				&& notenum >= floatToMidi(getParameterForSlot(kNLow,slot)) 
 				&& notenum <= floatToMidi(getParameterForSlot(kNHigh,slot))
+				&& message.isForChannel(message.isForChannel(roundToInt(getParameterForSlot(kTrigChan,slot)*15.0f)+1))
 			)
 				return true;
 		}

@@ -5,6 +5,11 @@ Change log
 
 
 ----------------------------
+changes 20120121:
+
+* Improved noteoff behavior in midiStrum
+
+----------------------------
 changes 20120114:
 
 * Added midiMultiProgramChange

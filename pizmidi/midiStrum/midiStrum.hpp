@@ -99,7 +99,7 @@ protected:
 
     bool wasplaying;
     bool isplaying;
-    unsigned char expectingDelayedEvents;
+    bool expectingDelayedNotes;
 
     inline void resetNote(char n, char v, bool off=false);
 

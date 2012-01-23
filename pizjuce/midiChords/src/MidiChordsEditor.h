@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  19 Jan 2012 11:05:23pm
+  Creation date:  20 Jan 2012 1:40:49pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -531,6 +531,7 @@ private:
     TextButton* applyChannelButton;
     Label* label;
     Label* label2;
+    TextButton* viewButton;
     TextEditor* infoBox;
 
 
@@ -541,4 +542,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EBE40F8C__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__

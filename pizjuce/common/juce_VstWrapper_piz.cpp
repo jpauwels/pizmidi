@@ -1938,6 +1938,16 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 			numInChans=2;
             numOutChans=2;
         }
+        else if (hostname.contains("Ross Bencina")) {
+            inst=false;
+			numInChans=0;
+            numOutChans=0;
+        }	
+        else if (hostname.contains("Plogue")) {
+            inst=false;
+			numInChans=0;
+            numOutChans=0;
+        }
 	}
     if (!inst && numOutChans) numInChans=numOutChans;
 
