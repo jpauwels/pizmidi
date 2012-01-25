@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MIDI.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="XT2Transport.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -40,6 +37,7 @@
     <ClInclude Include="..\common\pizvstbase.h">
       <Filter>Source Files\PizMidi</Filter>
     </ClInclude>
+    <ClInclude Include="PizPluginInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XT2Transport.cpp">

@@ -232,7 +232,7 @@
     <ClInclude Include="..\common\MIDI.h" />
     <ClInclude Include="..\common\PizMidi.h" />
     <ClInclude Include="..\common\pizvstbase.h" />
-    <ClInclude Include="MIDI.h" />
+    <ClInclude Include="PizPluginInfo.h" />
     <ClInclude Include="XT2Transport.hpp" />
     <ClInclude Include="..\..\..\..\pluginterfaces\vst2.x\aeffect.h" />
     <ClInclude Include="..\..\..\..\pluginterfaces\vst2.x\aeffectx.h" />

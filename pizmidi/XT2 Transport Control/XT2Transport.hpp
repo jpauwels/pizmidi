@@ -9,7 +9,7 @@ by Reuben Vinal
 #include "../common/PizMidi.h"
 
 #define XT_WINDOW_TITLE "energyXT"
-#define XT_EXE_NAME		"energyXT.exe"
+#define XT_EXE_NAME             "energyXT.exe"
 
 enum
 {
@@ -27,7 +27,7 @@ enum
 };
 
 class XT2TransportControlProgram {
-friend class XT2TransportControl;
+	friend class XT2TransportControl;
 public:
 	XT2TransportControlProgram ();
 	~XT2TransportControlProgram () {}
@@ -59,7 +59,7 @@ public:
 	virtual float  getParameter(VstInt32 index);
 	virtual void   getParameterDisplay(VstInt32 index, char *text);
 	virtual void   getParameterName(VstInt32 index, char *text);
-		
+
 protected:
 	float fPauseNote;
 	float fPauseMsg;
@@ -75,7 +75,7 @@ protected:
 
 	virtual void processMidiEvents(VstMidiEventVec *inputs, VstMidiEventVec *outputs, VstInt32 sampleFrames);
 
-   	XT2TransportControlProgram *programs;
+	XT2TransportControlProgram *programs;
 };
 
 #endif
