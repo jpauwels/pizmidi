@@ -16,12 +16,13 @@ PizMidi::PizMidi(audioMasterCallback audioMaster, VstInt32 numPrograms, VstInt32
     char* host;
     host = new char[kVstMaxVendorStrLen+1];
     bool inst = false;
+	bool ignoreDefault;
     if (getHostVendorString(host)) {
-        getHostStuff(host,inst,numoutputs);
+        getHostStuff(host,inst,numoutputs,ignoreDefault);
     }
     if (!inst && numoutputs) numinputs = numoutputs;
     if (!getHostProductString(host)) strcpy(host,"unknown");
-    readIniFile(host,inst,numinputs,numoutputs,bottomOctave);
+    readIniFile(host,inst,numinputs,numoutputs,bottomOctave,ignoreDefault);
     delete [] host;
 
 #if !PLUG_FORCE_EFFECT

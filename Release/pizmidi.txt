@@ -5,6 +5,13 @@ Change log
 
 
 ----------------------------
+changes 20120123:
+
+* Changed default loading configuration in some hosts
+* Fixed midiMultiProgramChange to work correctly in AudioMulch
+* PC Channel in midi16CCRouter now applies to all programs
+
+----------------------------
 changes 20120121:
 
 * Improved noteoff behavior in midiStrum

@@ -305,6 +305,10 @@ public:
 	double getLoopEnd(int slot) {
 		return programs[slot].loopstart + programs[slot].looplength;
 	}
+	bool isLoopEmpty(int slot)
+	{
+		return programs[slot].loop.getNumEvents()==0;
+	}
 	MidiKeyboardState keySelectorState;
 
 	int getNumerator(int slot) {return programs[slot].numerator;}
@@ -632,7 +636,7 @@ private:
 		int slot;
 	};
 	TransposeRules* tRules[numSlots];
-	void transposePlayingNotes(MidiBuffer& buffer, int samplePos, int slot, int voice=-1);
+	void transposePlayingNotes(MidiBuffer& buffer, int samplePos, int slot, int voice, int numSamples);
 
 
 	void processGroups(int slot)

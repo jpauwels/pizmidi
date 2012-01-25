@@ -100,6 +100,11 @@ bool Midi16CCRouter::getProgramNameIndexed (VstInt32 category, VstInt32 index, c
 void Midi16CCRouter::setParameter (VstInt32 index, float value) {
    Midi16CCRouterProgram* ap = &programs[curProgram];
    param[index] = ap->param[index] = value;
+   if (index==kPC) {
+	   for (int i=0;i<kNumPrograms;i++)
+		   programs[i].param[kPC] = value;
+   }
+
 }
 
 //-----------------------------------------------------------------------------------------

@@ -39,6 +39,7 @@ MidiProgramChange::MidiProgramChange(audioMasterCallback audioMaster)
 						programs[i].param[p] = defaultBank->GetProgParm(i,p);
 					}
 					strcpy(programs[i].name,defaultBank->GetProgramName(i));
+					programs[i].param[kCurrentProgram] = (float)i/127.f;
 				}
 			}
 		}
@@ -77,10 +78,12 @@ void MidiProgramChange::setProgram (VstInt32 prog)
 {
 	MidiProgramChangeProgram* ap = &programs[prog];
 	curProgram = prog;
+	settingProgram = true;
 	for (int i=0;i<kNumParams;i++) {
     	setParameterAutomated(i,ap->param[i]);
     }
     trigger=true;
+	settingProgram = false;
 }
 
 //------------------------------------------------------------------------
@@ -115,6 +118,10 @@ void  MidiProgramChange:: setSampleRate(float sampleRateIn){
 //-----------------------------------------------------------------------------------------
 void MidiProgramChange::setParameter(VstInt32 index, float value){
      MidiProgramChangeProgram* ap = &programs[curProgram];
+	 if (index==kCurrentProgram && !settingProgram)
+	 {
+		 setProgram(roundToInt(value*(kNumPrograms-1)));
+	 }
 	if (index==kThru) {
 		thru = value>=0.5f;
  		param[index] = value;
@@ -163,6 +170,10 @@ void MidiProgramChange::getParameterName(VstInt32 index, char *label){
 	else if (index==kTrigger) {
         strcpy(label, "Trigger");
 	}
+	else if (index==kCurrentProgram)
+	{
+		strcpy(label, "CurrentProgram");
+	}
 }
 
 //-----------------------------------------------------------------------------------------
@@ -181,6 +192,10 @@ void MidiProgramChange::getParameterDisplay(VstInt32 index, char *text){
 	else if (index==kTrigger) {
 		if (param[index]==1.f) strcpy(text, "Triggered!");
 		else strcpy(text, "Trigger-->");
+	}
+	else if (index==kCurrentProgram)
+	{
+		sprintf(text,"%d: %s",curProgram+1,programs[curProgram].name);
 	}
 }
 

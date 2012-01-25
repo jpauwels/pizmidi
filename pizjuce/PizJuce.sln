@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiPCGUI", "midiPCGUI\Buil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiChords", "midiChords\build\VST_Win32\midiChords.vcxproj", "{721D3837-E183-46C3-9F8D-C75AE67E0C7B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "midiDisplay", "midiDisplay\Builds\VisualStudio2010\midiDisplay.vcxproj", "{C4A46464-5585-A0F7-6BCF-FE520893144A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -261,6 +263,17 @@ Global
 		{721D3837-E183-46C3-9F8D-C75AE67E0C7B}.Standalone|Win32.Build.0 = Standalone|Win32
 		{721D3837-E183-46C3-9F8D-C75AE67E0C7B}.Standalone|x64.ActiveCfg = Standalone|x64
 		{721D3837-E183-46C3-9F8D-C75AE67E0C7B}.Standalone|x64.Build.0 = Standalone|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Debug|Win32.Build.0 = Debug|Win32
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Debug|x64.ActiveCfg = Debug|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Debug|x64.Build.0 = Debug|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Release|Win32.ActiveCfg = Release|Win32
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Release|Win32.Build.0 = Release|Win32
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Release|x64.ActiveCfg = Release|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Release|x64.Build.0 = Release|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Standalone|Win32.ActiveCfg = Release|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Standalone|x64.ActiveCfg = Release|x64
+		{C4A46464-5585-A0F7-6BCF-FE520893144A}.Standalone|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

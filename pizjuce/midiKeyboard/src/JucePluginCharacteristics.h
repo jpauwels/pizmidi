@@ -31,8 +31,8 @@
 #define JucePlugin_TailLengthSeconds				0
 #define JucePlugin_SilenceInProducesSilenceOut      0
 #define JucePlugin_EditorRequiresKeyboardFocus      0
-#define JucePlugin_VersionCode              0x00010400
-#define JucePlugin_VersionString            "1.4"
+#define JucePlugin_VersionCode              0x00010401
+#define JucePlugin_VersionString            "1.4.1"
 
 //==============================================================================
 /*                                MFX settings                                */

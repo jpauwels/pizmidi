@@ -1762,6 +1762,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     this->setMouseClickGrabsKeyboardFocus(false);
 	for (int slot=0;slot<numSlots;slot++) {
 		getButtonForSlot(slot)->addListener(this);
+		getButtonForSlot(slot)->addMouseListener(this,false);
 		getButtonForSlot(slot)->setMouseClickGrabsKeyboardFocus(false);
 	}
 	s_PlayCC->setVisible(false);
@@ -3481,15 +3482,15 @@ void PizLooperEditor::labelTextChanged (Label* labelThatHasChanged)
 //==============================================================================
 void PizLooperEditor::buttonStateChanged(juce::Button *button)
 {
-	int index=getButtonIndex(button);
-	if (ModifierKeys::getCurrentModifiers().isPopupMenu() && index!=-1) {
-		for (int i=0;i<numSlots;i++)
-			getFilter()->notifyHost(kPlay,i,index==i?1.f:0.f);
-		((Button*)button)->setToggleState(true,true);
-	}
 }
 void PizLooperEditor::mouseDown (const MouseEvent& e)
 {
+	int index=getButtonIndex(e.eventComponent);
+	if (e.mods.isPopupMenu() && index!=-1) {
+		for (int i=0;i<numSlots;i++)
+			getFilter()->notifyHost(kPlay,i,index==i?1.f:0.f);
+		((Button*)e.eventComponent)->setToggleState(true,false);
+	}
 }
 
 void PizLooperEditor::mouseDrag (const MouseEvent& e)
@@ -3610,14 +3611,18 @@ void PizLooperEditor::timerCallback() {
 
 void PizLooperEditor::handleNoteOn(MidiKeyboardState *source, int midiChannel, int midiNoteNumber, float velocity)
 {
-	if (source==&(getFilter()->keySelectorState))
+	if (source==&(getFilter()->keySelectorState)) {
 		getFilter()->notifyHostForActiveSlot(kNote0+midiNoteNumber,1.f);
+		keySelector->repaint();
+	}
 }
 
 void PizLooperEditor::handleNoteOff(MidiKeyboardState *source, int midiChannel, int midiNoteNumber)
 {
-	if (source==&(getFilter()->keySelectorState))
+	if (source==&(getFilter()->keySelectorState)) {
 		getFilter()->notifyHostForActiveSlot(kNote0+midiNoteNumber,0.f);
+		keySelector->repaint();
+	}
 }
 
 //==============================================================================
@@ -3641,13 +3646,19 @@ void PizLooperEditor::changeListenerCallback (ChangeBroadcaster* source)
 		getFilter()->setLoopLength(lastActiveLoop, timeline->getLength());
 		getFilter()->setLoopStart(lastActiveLoop, timeline->getStart());
 		getFilter()->updateLoopInfo();
-		if (getFilter()->currentNumEvents==0) loopinfoLabel->setText("No Loop",false);
+		if (getFilter()->currentNumEvents==0) {
+			loopinfoLabel->setText("No Loop",false);
+			getButtonForSlot(lastActiveLoop)->setColour(TextButton::textColourOffId,Colour(0xff979797));
+			getButtonForSlot(lastActiveLoop)->setColour(TextButton::textColourOnId,Colour(0xff555555));
+		}
 		else {
 			String loopinfo = "Loop length: ";
 			if (getFilter()->currentLength==1.0) loopinfo << "1 Beat (";
 			else loopinfo << getFilter()->currentLength << " Beats (";
 			loopinfo << getFilter()->currentNumEvents << " Events)";
 			loopinfoLabel->setText(loopinfo,false);
+			getButtonForSlot(lastActiveLoop)->setColour(TextButton::textColourOffId,Colours::black);
+			getButtonForSlot(lastActiveLoop)->setColour(TextButton::textColourOnId,Colours::black);
 		}
 	}
 	else if (source==viewport)
@@ -3837,15 +3848,24 @@ void PizLooperEditor::updateControls(int param, float value, bool forCurProgram)
 
 void PizLooperEditor::updateSlotButtons()
 {
+    PizLooper* const filter = getFilter();
 	for (int i=0;i<numSlots;i++) {
 		TextButton* b = getButtonForSlot(i);
-		if (getFilter()->isSlotPlaying(i)) {
+		if (filter->isSlotPlaying(i)) {
 			b->setColour(TextButton::buttonColourId,Colour(0xff17e617));
 			b->setColour(TextButton::buttonOnColourId,Colour(0xff17e617));
 		}
 		else {
 			b->setColour(TextButton::buttonColourId,Colour(0xffd3d3d3));
 			b->setColour(TextButton::buttonOnColourId,Colour(0xff979797));
+		}
+		if (filter->isLoopEmpty(i)) {
+			b->setColour(TextButton::textColourOffId,Colour(0xff979797));
+			b->setColour(TextButton::textColourOnId,Colour(0xff555555));
+		}
+		else {
+			b->setColour(TextButton::textColourOffId,Colours::black);
+			b->setColour(TextButton::textColourOnId,Colours::black);
 		}
 		b->setButtonText(String(i+1));
 	}
@@ -3923,6 +3943,14 @@ void PizLooperEditor::updateParametersFromFilter()
 		else {
 			b->setColour(TextButton::buttonColourId,Colour(0xffd3d3d3));
 			b->setColour(TextButton::buttonOnColourId,Colour(0xff979797));
+		}
+		if (filter->isLoopEmpty(i)) {
+			b->setColour(TextButton::textColourOffId,Colour(0xff979797));
+			b->setColour(TextButton::textColourOnId,Colour(0xff555555));
+		}
+		else {
+			b->setColour(TextButton::textColourOffId,Colours::black);
+			b->setColour(TextButton::textColourOnId,Colours::black);
 		}
 		b->setButtonText(String(i+1));
 	}

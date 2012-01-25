@@ -264,7 +264,7 @@ void PizKeyboard::processBlock (AudioSampleBuffer& buffer,
 	MidiBuffer output;
 	if (lastProgram!=curProgram)
 	{
-		for (int ch=0;ch<16;ch++) 
+		for (int ch=1;ch<=16;ch++) 
 		{
 			for (int n=0;n<128;n++)
 			{
@@ -273,7 +273,7 @@ void PizKeyboard::processBlock (AudioSampleBuffer& buffer,
 				}
 			}
 		}
-		for (int ch=0;ch<16;ch++) 
+		for (int ch=1;ch<=16;ch++) 
 		{
 			for (int n=0;n<128;n++)
 			{
@@ -288,7 +288,7 @@ void PizKeyboard::processBlock (AudioSampleBuffer& buffer,
 	if (clearHeldNotes)
 	{
 		clearHeldNotes=false;
-		for (int ch=0;ch<16;ch++) 
+		for (int ch=1;ch<=16;ch++) 
 		{
 			for (int n=0;n<128;n++)
 			{
@@ -300,18 +300,7 @@ void PizKeyboard::processBlock (AudioSampleBuffer& buffer,
 		editorKbState.reset();
 		sendChangeMessage();
 	}
-	if (sendHeldNotes)
-	{
-		sendHeldNotes=false;
-		for (int ch=0;ch<16;ch++) 
-		{
-			for (int n=0;n<128;n++)
-			{
-				if (progKbState[curProgram].isNoteOn(ch,n))
-					output.addEvent(MidiMessage::noteOn(ch,n,velocity),0);
-			}
-		}
-	}
+
 
 	if (qwerty && (!capslock || isCapsLockOn()))
 	{
@@ -352,54 +341,73 @@ void PizKeyboard::processBlock (AudioSampleBuffer& buffer,
 		}
 	}
 
-	if (toggle)
-	{
-		MidiBuffer::Iterator mid_buffer_iter(midiMessages);
-		MidiMessage m(0xf0);
-		int sample;
-		while(mid_buffer_iter.getNextEvent(m,sample)) {
-			if (m.isForChannel(channel+1))
+	bool skip = false;
+	MidiBuffer::Iterator mid_buffer_iter(midiMessages);
+	MidiMessage m(0xf0);
+	int sample;
+	while(mid_buffer_iter.getNextEvent(m,sample)) {
+		if (m.isForChannel(channel+1))
+		{
+			if (toggle)
 			{
 				if (m.isNoteOn()) {
+					skip = true;
 					if (progKbState[curProgram].isNoteOn(m.getChannel(),m.getNoteNumber()))
 						output.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),sample);
 					else 
 						output.addEvent(m,sample);
 				}
-				else if (!m.isNoteOff())
-					output.addEvent(m,sample);
-				else if (m.isProgramChange() && usepc)
+				else if (m.isNoteOff()) {
+					skip = true;
+				}
+			}
+			if (m.isProgramChange() && usepc)
+			{
+				setCurrentProgram(m.getProgramChangeNumber());
+				if (lastProgram!=curProgram)
 				{
-					setCurrentProgram(m.getProgramChangeNumber());
-					if (lastProgram!=curProgram)
+					for (int ch=1;ch<=16;ch++) 
 					{
-						for (int ch=0;ch<16;ch++) 
+						for (int n=0;n<128;n++)
 						{
-							for (int n=0;n<128;n++)
-							{
-								if (progKbState[lastProgram].isNoteOn(ch,n)) 
-									output.addEvent(MidiMessage::noteOff(ch,n),sample);
-							}
+							if (progKbState[lastProgram].isNoteOn(ch,n)) 
+								output.addEvent(MidiMessage::noteOff(ch,n),sample);
 						}
-						editorKbState.reset();
-						for (int ch=0;ch<16;ch++) 
-						{
-							for (int n=0;n<128;n++)
-							{
-								if (progKbState[curProgram].isNoteOn(ch,n)) {
-									editorKbState.noteOn(ch,n,velocity);
-									output.addEvent(MidiMessage::noteOn(ch,n,velocity),sample);
-								}
-							}
-						}
-						lastProgram = curProgram;
-						sendChangeMessage();
 					}
+					editorKbState.reset();
+					for (int ch=1;ch<=16;ch++) 
+					{
+						for (int n=0;n<128;n++)
+						{
+							if (progKbState[curProgram].isNoteOn(ch,n)) {
+								editorKbState.noteOn(ch,n,velocity);
+								output.addEvent(MidiMessage::noteOn(ch,n,velocity),sample);
+							}
+						}
+					}
+					lastProgram = curProgram;
+					sendChangeMessage();
 				}
 			}
 		}
+		if (!skip) 
+			output.addEvent(m,sample);
 	}
-	else output = midiMessages;
+	//if (!toggle) 
+	//	output = midiMessages;
+
+	if (sendHeldNotes)
+	{
+		sendHeldNotes=false;
+		for (int ch=1;ch<=16;ch++) 
+		{
+			for (int n=0;n<128;n++)
+			{
+				if (progKbState[curProgram].isNoteOn(ch,n))
+					output.addEvent(MidiMessage::noteOn(ch,n,velocity),0);
+			}
+		}
+	}
 
 	editorKbState.processNextMidiBuffer(output,0,buffer.getNumSamples(),true);
 	progKbState[curProgram].processNextMidiBuffer (output,0, buffer.getNumSamples(),false);

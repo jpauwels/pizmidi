@@ -44,51 +44,49 @@ inline void removeExtension(char* filename) {
         *lastdot = '\0';
 }
 
-inline void getHostStuff(char* host, bool &inst, int &numoutputs) {
+inline void getHostStuff(char* host, bool &inst, int &numoutputs, bool &ignoreDefault) {
+	ignoreDefault=false;
 	dbg("host vendor: " << host);
-	if (strncmp("Ableton",host,7)==0) {
+	if (strncmp("Ableton",host,7)==0
+		|| strncmp("Steinberg",host,9)==0
+		|| strncmp("Twelve Tone",host,11)==0
+		|| strncmp("Image-Line",host,10)==0
+		|| strncmp("brainspawn",host,10)==0
+		) {
 		inst=true;
 		numoutputs=2;
-	}
-	else if (strncmp("Steinberg",host,9)==0) {
-		inst=true;
-		numoutputs=2;
-	}
-	else if (strncmp("Twelve Tone",host,11)==0) {
-		inst=true;
-		numoutputs=2;
+		ignoreDefault=true;
 	}
 	else if (strncmp("Polac",host,5)==0) {
 		inst=true;
 		numoutputs=0;
+		ignoreDefault=true;
 	}
-	else if (strncmp("Native Instruments",host,18)==0) {
+	else if (strncmp("Native Instruments",host,18)==0
+		|| strncmp("Music OS",host,8)==0) {
 		inst=false;
 		numoutputs=2;
+		ignoreDefault=true;
 	}
-	else if (strncmp("Image-Line",host,10)==0) {
+	else if (strncmp("PreSonus",host,8)==0) {
 		inst=true;
 		numoutputs=2;
+		ignoreDefault=true;
 	}
-	else if (strncmp("brainspawn",host,10)==0) {
-		inst=true;
-		numoutputs=2;
-	}
-	else if (strncmp("Music OS",host,8)==0) {
-		inst=false;
-		numoutputs=2;
-	}
-	else if (strncmp("Ross Bencina",host,12)==0) {
-		inst=false;
-		numoutputs=0;
-	}
-	else if (strncmp("Plogue",host,6)==0) {
+	else if (strncmp("Pedalboard 2",host,12)==0
+		||   strncmp("Juce VST Host",host,13)==0
+		||   strncmp("Plogue",host,6)==0
+		||   strncmp("Ross Bencina",host,12)==0
+		||   strncmp("MuTools.com",host,11)==0 
+		||   strncmp("XT Software",host,11)==0 ) 
+	{
 		inst=false;
 		numoutputs=0;
+		ignoreDefault=true;
 	}
 }
 
-inline void readIniFile(char* host, bool &inst, int &numinputs, int &numoutputs, int &bottomOctave) {
+inline void readIniFile(char* host, bool &inst, int &numinputs, int &numoutputs, int &bottomOctave, bool ignoreDefault) {
 	dbg ("host product: " << host);
 	char* path;
 	char* name;
@@ -116,7 +114,7 @@ inline void readIniFile(char* host, bool &inst, int &numinputs, int &numoutputs,
 		{
 			dbg2(line);
 			if (line[0]!=';') {
-				if (!strncmp("default",line,7)) {
+				if (!strncmp("default",line,7) && !ignoreDefault) {
 					hostmatch=true;
 				}
 				else if (!strcmp(hostname,line)) {

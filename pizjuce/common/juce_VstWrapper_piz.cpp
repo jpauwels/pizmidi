@@ -1901,52 +1901,49 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 	filter->hostInfo += "Host Vendor: " + hostname + "\n";
     String hostproduct = getHostName();
 	filter->hostInfo += "Host Product: " + hostproduct + "\n";
+	bool ignoreDefault = false;
     if (!hostname.isEmpty()) {
-        if (hostname.contains("Ableton")) {
+        if (hostname.contains("Ableton")
+			|| hostname.contains("Steinberg") 
+			|| hostname.contains("Twelve Tone")) {
             inst=true;
             numOutChans=2;
+			ignoreDefault=true;
         }
-        else if (hostname.contains("Steinberg")) {
+        else if (hostname.contains("Image-Line")
+			|| hostname.contains("PreSonus")
+			|| hostname.contains("brainspawn")) {
             inst=true;
+			numInChans=2;
             numOutChans=2;
+			ignoreDefault=true;
         }
-        else if (hostname.contains("Twelve Tone")) {
-            inst=true;
+        else if (hostname.contains("Native Instruments") 
+			|| hostname.contains("Music OS")) 
+		{
+            inst=false;
+			numInChans=2;
             numOutChans=2;
-        }
-        else if (hostname.contains("Image-Line")) {
-            inst=true;
-            numInChans=2;
-            numOutChans=2;
+			ignoreDefault=true;
         }
         else if (hostname.contains("Polac")) {
             inst=true;
             numOutChans=0;
+			ignoreDefault=true;
         }
-        else if (hostname.contains("Native Instruments")) {
-            inst=false;
-			numInChans=2;
-            numOutChans=2;
-        }
-        else if (hostname.contains("brainspawn")) {
-            inst=true;
-			numInChans=2;
-            numOutChans=2;
-        }
-        else if (hostname.contains("Music OS")) {
-            inst=false;
-			numInChans=2;
-            numOutChans=2;
-        }
-        else if (hostname.contains("Ross Bencina")) {
+        else if (hostname.contains("Pedalboard 2")
+			|| hostname.contains("Juce VST Host")
+			|| hostname.contains("MuTools.com")
+			|| hostname.contains("Plogue")
+			|| hostname.contains("Ross Bencina")
+			|| hostname.contains("XT Software") 
+			|| hostname.contains("Cockos")
+			) 
+		{
             inst=false;
 			numInChans=0;
             numOutChans=0;
-        }	
-        else if (hostname.contains("Plogue")) {
-            inst=false;
-			numInChans=0;
-            numOutChans=0;
+			ignoreDefault=true;
         }
 	}
     if (!inst && numOutChans) numInChans=numOutChans;
@@ -1974,7 +1971,7 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
         for (int i=0;i<lines.size();i++) {
 			DBG(lines[i]);
             if (!lines[i].startsWithChar(';')) {
-				if (lines[i].startsWith("default")) {
+				if (lines[i].startsWith("default") && !ignoreDefault) {
                     hostmatch=true;
                 }
                 else if (lines[i].contains("host=" + hostname)) {

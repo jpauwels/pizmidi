@@ -10,6 +10,7 @@ by Reuben Vinal
 
 enum parameters
 {
+	kCurrentProgram,
 	kChannel,
 	kThru,
 	kTrigger,
@@ -60,6 +61,7 @@ protected:
 	bool trig[16];
 	bool thru;
 	bool automated[kNumParams];
+	bool settingProgram;
 
 	bool wait;
 	VstInt32 delaytime;
