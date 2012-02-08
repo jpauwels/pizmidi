@@ -93,13 +93,14 @@ PizLooper::PizLooper() : programs(0)
     currentLength=0.0;
     currentNumEvents=0;
 	keySelectorState.reset();
-	capturingScale=0;
-	lowestScaleInputNote=999;
 	memset(barTriggerSample,0,sizeof(barTriggerSample));
 	memset(barStopSample,-1,sizeof(barStopSample));
 	programs = new JuceProgram[numPrograms];
 	for (int i=0;i<numSlots;i++) {
 		programs[i].PRSettings.getChild(0).setProperty("slot",i,0);
+		capturingScale[i]=0;
+		capturingTranspose[i]=0;
+		lowestScaleInputNote[i]=999;
 	}
 	lastUIWidth = 800;
 	lastUIHeight = 487;
@@ -264,6 +265,7 @@ void PizLooper::setParameter (int index, float newValue) {
 						param[kFile]=0.5f;
 						this->getCallbackLock().exit();
 						newLoop=true;
+						updateLoopInfo();
 						sendChangeMessage();
 					}
 					else if (newValue==1.0f) {
@@ -479,6 +481,7 @@ const String PizLooper::getParameterName (int index) {
 		case kForceToKey: return String("ForceToScale")+String(i+1);
 		case kForceToScaleMode: return String("ForceMode")+String(i+1);
 		case kScaleChannel: return String("ScaleChannel")+String(i+1);
+		case kTransposeChannel: return String("TransposeChannel")+String(i+1);
 		case kUseScaleChannel: return String("UseScaleChan")+String(i+1);
 		case kUseTrChannel: return String("UseTransChan")+String(i+1);
 		case kNote0: return String("C")+String(i+1);
@@ -713,6 +716,9 @@ const String PizLooper::getParameterText (int index) {
 		case kScaleChannel:
 			//if (roundToInt(getParameter(index)*16.0f)==0) return String("Off");
 			return String(roundToInt(getParameter(index)*15.0f)+1);
+		case kTransposeChannel:
+			//if (roundToInt(getParameter(index)*16.0f)==0) return String("Off");
+			return String(roundToInt(getParameter(index)*15.0f)+1);
 		case kForceToScaleMode:
 			int mode;
 			mode = roundToInt(getParameter(index)*(float)(numForceToKeyModes-1));
@@ -817,26 +823,33 @@ void PizLooper::getStateInformation(MemoryBlock &destData) {
 	}
 
 	//save patterns
-	for (int i=0;i<numSlots;i++)
+	for (int i=0;i<numPrograms;i++)
 	{
-		MemoryBlock midiData(512,true);
-		MemoryOutputStream m(midiData,false);
+		if (programs[i].loop.getNumEvents()>0)
+		{
+			MemoryBlock midiData(512,true);
+			MemoryOutputStream m(midiData,false);
 
-		MidiFile midifile;
-		midifile.setTicksPerQuarterNote(960);
+			MidiFile midifile;
+			midifile.setTicksPerQuarterNote(960);
 
-		MidiMessageSequence midi(programs[i].loop.getAsJuceSequence());
-		midifile.addTrack(midi);
-		midifile.writeTo(m);
-		size_t dataSize = midiData.getSize();
-		destData.append(&dataSize,sizeof(int));
-		destData.append(midiData.getData(),dataSize);
+			MidiMessageSequence midi(programs[i].loop.getAsJuceSequence());
+			midifile.addTrack(midi);
+			midifile.writeTo(m);
+			int dataSize = (int)midiData.getSize();
+			destData.append(&dataSize,sizeof(int));
+			destData.append(midiData.getData(),dataSize);
+		}
+		else {
+			int dataSize = 0;
+			destData.append(&dataSize,sizeof(int));
+		}
 	}
 
 	MemoryBlock xmlData(512);
 
     XmlElement xmlState ("midiLooperSettings");
-    xmlState.setAttribute ("pluginVersion", 3);
+    xmlState.setAttribute ("pluginVersion", 4);
     xmlState.setAttribute ("program", getCurrentProgram());
 	for (int i=0;i<numGlobalParams;i++) {
 		xmlState.setAttribute (getParameterName(i), getParameter(i));
@@ -889,7 +902,7 @@ void PizLooper::setStateInformation (const void* data, int sizeInBytes) {
 		uint8* datab = (uint8*)data;
 		int totalMidiSize=0;
 		bool oldBank=false;
-		for (int i=0;i<numSlots;i++)
+		for (int i=0;i<numPrograms;i++)
 		{
 			programs[i].loop.clear();
 			if (i==16)
@@ -901,16 +914,24 @@ void PizLooper::setStateInformation (const void* data, int sizeInBytes) {
 			if (!oldBank)
 			{
 				int midiSize = *((int*)datab);
-				datab+=sizeof(int);
-				totalMidiSize+=sizeof(midiSize);
-				MemoryInputStream m(datab,midiSize,true);
-				MidiFile midifile;
-				if (midifile.readFrom(m)) {
-					programs[i].loop.addSequence(*midifile.getTrack(midifile.getNumTracks()-1),0,0,midifile.getLastTimestamp()+1);
-					programs[i].loop.updateMatchedPairs();
+				datab+=sizeof(midiSize);
+				if (midiSize>0)
+				{
+					totalMidiSize+=sizeof(midiSize);
+					MemoryInputStream m(datab,midiSize,true);
+					MidiFile midifile;
+					if (midifile.readFrom(m)) {
+						programs[i].loop.addSequence(*midifile.getTrack(midifile.getNumTracks()-1),0,0,midifile.getLastTimestamp()+1);
+						programs[i].loop.updateMatchedPairs();
+						uint8 bogus[3] = {0xff, 0x2f, 0x00};
+						int lastIndex = programs[i].loop.getNumEvents()-1;
+						uint8* lastmsg = programs[i].loop.getEventPointer(lastIndex)->message.getRawData();
+						if (memcmp(bogus,lastmsg,sizeof(bogus))==0)
+							programs[i].loop.deleteEvent(lastIndex,false);
+					}
+					datab+=midiSize;
+					totalMidiSize+=midiSize;
 				}
-				datab+=midiSize;
-				totalMidiSize+=midiSize;
 			}
 		}
 		if (xmlState==0) 
@@ -919,6 +940,7 @@ void PizLooper::setStateInformation (const void* data, int sizeInBytes) {
 
     if (xmlState != 0) {
 		if (xmlState->hasTagName ("midiLooperSettings")) {
+			const int versionNumber = xmlState->getIntAttribute("pluginVersion",0);
             for (int p=0;p<getNumPrograms();p++) {
 				for (int i=0;i<numGlobalParams;i++) {
 					param[i] = programs[p].param[i] = (float) xmlState->getDoubleAttribute (getParameterName(i), param[i]);
@@ -930,6 +952,8 @@ void PizLooper::setStateInformation (const void* data, int sizeInBytes) {
 				{
 					for (int i=numGlobalParams;i<numParamsPerSlot+numGlobalParams;i++) {
 						param[i+numParamsPerSlot*p] = programs[p].param[i] = (float) xmlProgram->getDoubleAttribute (getParameterName(i).removeCharacters("0123456789"), param[i+numParamsPerSlot*p]);
+						if (versionNumber<4 && kTransposeChannel==i) 
+							param[i+numParamsPerSlot*p] = programs[p].param[i] = programs[p].param[kScaleChannel];
 					}
 					param[kRecord+numParamsPerSlot*p]=programs[p].param[kRecord]=0.0f;
 					param[kFile]=programs[p].param[kFile]=0.5f;
@@ -1061,7 +1085,7 @@ bool PizLooper::readMidiFile(int index, String progname, File mid) {
 		programs[index].loopstart=0;
         MidiFile midifile;
         midifile.readFrom(FileInputStream(mid));
-		//look for time signature
+		//look for time signature & tempo
 		for (int i=0;i<midifile.getTrack(0)->getNumEvents();i++) {
 			const MidiMessage ID = midifile.getTrack(0)->getEventPointer(i)->message;
 			if (ID.isTimeSignatureMetaEvent())
@@ -1069,6 +1093,10 @@ bool PizLooper::readMidiFile(int index, String progname, File mid) {
 				ID.getTimeSignatureInfo(programs[index].numerator,programs[index].denominator);	
 				ppqPerBar = (double)getNumerator(index) * 4.0 / (double)getDenominator(index);
 				break;
+			}
+			else if (ID.isTempoMetaEvent())
+			{
+				double bpm = 60.0/ID.getTempoSecondsPerQuarterNote();
 			}
 		}
 		if(midifile.getNumTracks()==1) 
@@ -1129,7 +1157,7 @@ void PizLooper::updateLoopInfo()
 {
     currentNumEvents = programs[curProgram].loop.getNumEvents();
     currentLength = programs[curProgram].looplength;
-	killNotes(curProgram);
+	//killNotes(curProgram);
 }
 
 double PizLooper::getStretchMultiplier(int slot)

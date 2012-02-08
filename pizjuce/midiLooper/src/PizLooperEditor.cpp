@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  22 Jan 2012 7:48:02pm
+  Creation date:  4 Feb 2012 7:51:26pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -257,6 +257,8 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
       s_VelocitySens (0),
       label24 (0),
       b_Monitor (0),
+      s_TransposeChannel (0),
+      label28 (0),
       cachedImage_piznew40_png (0)
 {
     addAndMakeVisible (label = new Label (L"new label",
@@ -996,8 +998,8 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     s_ScaleChannel->setColour (Slider::textBoxTextColourId, Colours::white);
     s_ScaleChannel->addListener (this);
 
-    addAndMakeVisible (label25 = new Label (L"I/O Channel",
-                                            L"Scale/Transpose Channel"));
+    addAndMakeVisible (label25 = new Label (L"scale ch",
+                                            L"Scale Ch"));
     label25->setFont (Font (12.0000f, Font::plain));
     label25->setJustificationType (Justification::centred);
     label25->setEditable (false, false, false);
@@ -1048,8 +1050,8 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     label27->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
     addAndMakeVisible (b_UseTrChannel = new ToggleButton (L"new toggle button"));
-    b_UseTrChannel->setTooltip (L"When checked, notes on selected \"Scale Ch\" will apply to \"Semitones\" and \"Octave\" settings, relative to \"Root Note\"");
-    b_UseTrChannel->setButtonText (L"Use Scale Ch.");
+    b_UseTrChannel->setTooltip (L"When checked, notes on selected \"Transpose Ch\" will apply to \"Semitones\" and \"Octave\" settings, relative to \"Root Note\"");
+    b_UseTrChannel->setButtonText (L"Use Transp Ch");
     b_UseTrChannel->addListener (this);
     b_UseTrChannel->setColour (ToggleButton::textColourId, Colours::white);
 
@@ -1752,6 +1754,25 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     b_Monitor->addListener (this);
     b_Monitor->setColour (TextButton::buttonColourId, Colour (0xff999999));
 
+    addAndMakeVisible (s_TransposeChannel = new VSTSlider (L"TransposeChannel"));
+    s_TransposeChannel->setTooltip (L"Input notes on this channel will affect Semitones, Octave, and/or Force to Scale settings where \"Use Transp Ch\" is enabled");
+    s_TransposeChannel->setRange (1, 16, 1);
+    s_TransposeChannel->setSliderStyle (Slider::LinearBar);
+    s_TransposeChannel->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    s_TransposeChannel->setColour (Slider::backgroundColourId, Colour (0x1e000000));
+    s_TransposeChannel->setColour (Slider::thumbColourId, Colours::black);
+    s_TransposeChannel->setColour (Slider::textBoxTextColourId, Colours::white);
+    s_TransposeChannel->addListener (this);
+
+    addAndMakeVisible (label28 = new Label (L"tr ch",
+                                            L"Transpose Ch"));
+    label28->setFont (Font (12.0000f, Font::plain));
+    label28->setJustificationType (Justification::centred);
+    label28->setEditable (false, false, false);
+    label28->setColour (Label::textColourId, Colours::white);
+    label28->setColour (TextEditor::textColourId, Colours::black);
+    label28->setColour (TextEditor::backgroundColourId, Colour (0x0));
+
     cachedImage_piznew40_png = ImageCache::getFromMemory (piznew40_png, piznew40_pngSize);
 
     //[UserPreSize]
@@ -1854,6 +1875,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
     s_MasterVelocity->setOwner(getAudioProcessor(),kMasterVelocity);
     s_MasterTranspose->setOwner(getAudioProcessor(),kMasterTranspose);
     s_ScaleChannel->setOwner(getAudioProcessor(),kScaleChannel);
+    s_TransposeChannel->setOwner(getAudioProcessor(),kTransposeChannel);
     s_NumLoops->setOwner(getAudioProcessor(),kNumLoops);
     s_NextSlot->setOwner(getAudioProcessor(),kNextSlot);
     s_RecCC->setOwner(getAudioProcessor(),kRecCC);
@@ -1954,6 +1976,7 @@ PizLooperEditor::PizLooperEditor (PizLooper* const ownerFilter)
 	counter=0;
 	startTimer(75);
 
+	static NonShinyLookAndFeel Look;
 	LookAndFeel::setDefaultLookAndFeel (&Look);
 
 #if 0
@@ -2207,6 +2230,8 @@ PizLooperEditor::~PizLooperEditor()
     deleteAndZero (s_VelocitySens);
     deleteAndZero (label24);
     deleteAndZero (b_Monitor);
+    deleteAndZero (s_TransposeChannel);
+    deleteAndZero (label28);
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -2471,8 +2496,8 @@ void PizLooperEditor::resized()
     denominator->setBounds (584, 64, 29, 18);
     loopinfoLabel3->setBounds (5, 47, 141, 16);
     b_UseScaleChannel->setBounds (11, 329, 129, 17);
-    s_ScaleChannel->setBounds (43, 283, 72, 20);
-    label25->setBounds (7, 267, 140, 16);
+    s_ScaleChannel->setBounds (10, 283, 60, 20);
+    label25->setBounds (13, 267, 54, 16);
     s_MasterTranspose->setBounds (554, 36, 72, 16);
     label26->setBounds (452, 36, 102, 16);
     b_WaitForBar->setBounds (175, 123, 107, 16);
@@ -2607,15 +2632,16 @@ void PizLooperEditor::resized()
     s_VelocitySens->setBounds (234, 440, 64, 20);
     label24->setBounds (225, 424, 80, 16);
     b_Monitor->setBounds (678, 33, 55, 20);
+    s_TransposeChannel->setBounds (76, 283, 60, 20);
+    label28->setBounds (66, 267, 80, 16);
     //[UserResized] Add your own custom resize handling here..
     internalPath1.clear();
     internalPath1.startNewSubPath (141.0f, 294.0f);
-    internalPath1.lineTo (115.0f, 294.0f);
+    internalPath1.lineTo (136.0f, 294.0f);
 
     internalPath2.clear();
     internalPath2.startNewSubPath (29.0f, 310.0f);
-    internalPath2.lineTo (29.0f, 294.0f);
-    internalPath2.lineTo (43.0f, 294.0f);
+    internalPath2.lineTo (29.0f, 301.0f);
 
 	pianoRoll->setVisible(getWidth()>390);
 	getFilter()->setSize(getWidth(),getHeight());
@@ -3362,11 +3388,22 @@ void PizLooperEditor::sliderValueChanged (Slider* sliderThatWasMoved)
         //[UserSliderCode_s_ScaleChannel] -- add your slider handling code here..
         if (ModifierKeys::getCurrentModifiers().isCommandDown())
 		{
-			for (int i=0;i<numSlots;i++)
-				getFilter()->notifyHost(kScaleChannel,i,slider->mapToVSTRange());
+			if (ModifierKeys::getCurrentModifiers().isShiftDown()) {
+				for (int i=0;i<numSlots;i++) {
+					getFilter()->notifyHost(kScaleChannel,i,slider->mapToVSTRange());
+					getFilter()->notifyHost(kTransposeChannel,i,slider->mapToVSTRange());
+				}
+			}
+			else {
+				for (int i=0;i<numSlots;i++)
+					getFilter()->notifyHost(kScaleChannel,i,slider->mapToVSTRange());
+			}
 		}
-		else
+		else {
 			getFilter()->notifyHostForActiveSlot(kScaleChannel,slider->mapToVSTRange());
+			if (ModifierKeys::getCurrentModifiers().isShiftDown())
+				getFilter()->notifyHostForActiveSlot(kTransposeChannel,slider->mapToVSTRange());
+		}
         //[/UserSliderCode_s_ScaleChannel]
     }
     else if (sliderThatWasMoved == s_MasterTranspose)
@@ -3422,6 +3459,29 @@ void PizLooperEditor::sliderValueChanged (Slider* sliderThatWasMoved)
 		else
 			getFilter()->notifyHostForActiveSlot(kVeloSens,slider->mapToVSTRange());
         //[/UserSliderCode_s_VelocitySens]
+    }
+    else if (sliderThatWasMoved == s_TransposeChannel)
+    {
+        //[UserSliderCode_s_TransposeChannel] -- add your slider handling code here..
+        if (ModifierKeys::getCurrentModifiers().isCommandDown())
+		{
+			if (ModifierKeys::getCurrentModifiers().isShiftDown()) {
+				for (int i=0;i<numSlots;i++) {
+					getFilter()->notifyHost(kTransposeChannel,i,slider->mapToVSTRange());
+					getFilter()->notifyHost(kScaleChannel,i,slider->mapToVSTRange());
+				}
+			}
+			else {
+				for (int i=0;i<numSlots;i++)
+					getFilter()->notifyHost(kTransposeChannel,i,slider->mapToVSTRange());
+			}
+		}
+		else {
+			getFilter()->notifyHostForActiveSlot(kTransposeChannel,slider->mapToVSTRange());
+			if (ModifierKeys::getCurrentModifiers().isShiftDown())
+				getFilter()->notifyHostForActiveSlot(kScaleChannel,slider->mapToVSTRange());
+		}
+        //[/UserSliderCode_s_TransposeChannel]
     }
 
     //[UsersliderValueChanged_Post]
@@ -3827,6 +3887,10 @@ void PizLooperEditor::updateControls(int param, float value, bool forCurProgram)
 		s_ScaleChannel->setIndex(lastActiveLoop*numParamsPerSlot+kScaleChannel);
 		s_ScaleChannel->setVSTSlider(value);
 		break;
+	case kTransposeChannel:
+		s_TransposeChannel->setIndex(lastActiveLoop*numParamsPerSlot+kTransposeChannel);
+		s_TransposeChannel->setVSTSlider(value);
+		break;
 	case kUseScaleChannel:
 		b_UseScaleChannel->setToggleState(value>=0.5f,false);
 		break;
@@ -3958,11 +4022,15 @@ void PizLooperEditor::updateParametersFromFilter()
 
     nameLabel->setText(filter->getProgramName(lastActiveLoop),false);
 
-	String loopinfo = "Loop length: ";
-    if (filter->currentLength==1.0) loopinfo << "1 Beat (";
-    else loopinfo << filter->currentLength << " Beats (";
-    loopinfo << filter->currentNumEvents << " Events)";
-    loopinfoLabel->setText(loopinfo,false);
+	if (filter->currentNumEvents==0)
+		loopinfoLabel->setText("No Loop",false);
+	else {
+		String loopinfo = "Loop length: ";
+		if (filter->currentLength==1.0) loopinfo << "1 Beat (";
+		else loopinfo << filter->currentLength << " Beats (";
+		loopinfo << filter->currentNumEvents << " Events)";
+		loopinfoLabel->setText(loopinfo,false);
+	}
 	noSnap=true;
 	timeline->setLoop(filter->getLoopStart(lastActiveLoop),filter->getLoopLength(lastActiveLoop));
 	noSnap=false;
@@ -4302,12 +4370,12 @@ BEGIN_JUCER_METADATA
     <PATH pos="0 0 100 100" fill="solid: 822aa5" hasStroke="1" stroke="5, mitered, butt"
           strokeColour="solid: 5b5b5b" nonZeroWinding="1">s 139 294 l 139 310</PATH>
     <PATH pos="0 0 100 100" fill="solid: 822aa5" hasStroke="1" stroke="5, mitered, butt"
-          strokeColour="solid: 5b5b5b" nonZeroWinding="1">s 141 294 l 115 294</PATH>
+          strokeColour="solid: 5b5b5b" nonZeroWinding="1">s 141 294 l 136 294</PATH>
     <ROUNDRECT pos="141 254 161 72" cornerSize="10" fill="solid: 86404049" hasStroke="0"/>
     <ROUNDRECT pos="8 311 371 36" cornerSize="10" fill="linear: 256 265, 256 355, 0=ff000000, 1=ff434450"
                hasStroke="1" stroke="0.699999988, mitered, butt" strokeColour="solid: ff111111"/>
     <PATH pos="0 0 100 100" fill="solid: 822aa5" hasStroke="1" stroke="5, mitered, butt"
-          strokeColour="solid: 5b5b5b" nonZeroWinding="1">s 29 310 l 29 294 l 43 294</PATH>
+          strokeColour="solid: 5b5b5b" nonZeroWinding="1">s 29 310 l 29 301</PATH>
     <RECT pos="723 64 51 18" fill="solid: ffbababa" hasStroke="1" stroke="1, mitered, butt"
           strokeColour="solid: ff000000"/>
   </BACKGROUND>
@@ -4709,16 +4777,16 @@ BEGIN_JUCER_METADATA
                 txtcol="ffffffff" buttonText="Use Scale Channel" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <SLIDER name="ScaleChannel" id="ea379f0c4e3dd4ec" memberName="s_ScaleChannel"
-          virtualName="VSTSlider" explicitFocusOrder="0" pos="43 283 72 20"
+          virtualName="VSTSlider" explicitFocusOrder="0" pos="10 283 60 20"
           tooltip="Input notes on this channel will affect Semitones, Octave, and/or Force to Scale settings where &quot;Use Scale Ch&quot; is enabled"
           bkgcol="1e000000" thumbcol="ff000000" textboxtext="ffffffff"
           min="1" max="16" int="1" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <LABEL name="I/O Channel" id="93cfb6ed66e0a17c" memberName="label25"
-         virtualName="" explicitFocusOrder="0" pos="7 267 140 16" textCol="ffffffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="Scale/Transpose Channel"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="12" bold="0" italic="0" justification="36"/>
+  <LABEL name="scale ch" id="93cfb6ed66e0a17c" memberName="label25" virtualName=""
+         explicitFocusOrder="0" pos="13 267 54 16" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="Scale Ch" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="12" bold="0" italic="0" justification="36"/>
   <SLIDER name="MasterTranspose" id="d57f221f805d0cab" memberName="s_MasterTranspose"
           virtualName="VSTSlider" explicitFocusOrder="0" pos="554 36 72 16"
           tooltip="Global transposition applied to all played notes (after Force to Scale)"
@@ -4743,8 +4811,8 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="12" bold="0" italic="0" justification="36"/>
   <TOGGLEBUTTON name="new toggle button" id="4860c217b9607fce" memberName="b_UseTrChannel"
-                virtualName="" explicitFocusOrder="0" pos="148 252 130 17" tooltip="When checked, notes on selected &quot;Scale Ch&quot; will apply to &quot;Semitones&quot; and &quot;Octave&quot; settings, relative to &quot;Root Note&quot;"
-                txtcol="ffffffff" buttonText="Use Scale Ch." connectedEdges="0"
+                virtualName="" explicitFocusOrder="0" pos="148 252 130 17" tooltip="When checked, notes on selected &quot;Transpose Ch&quot; will apply to &quot;Semitones&quot; and &quot;Octave&quot; settings, relative to &quot;Root Note&quot;"
+                txtcol="ffffffff" buttonText="Use Transp Ch" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="new toggle button" id="85d95ffb3ae3028a" memberName="b_ImmediateTranspose"
                 virtualName="" explicitFocusOrder="0" pos="247 252 48 17" tooltip="When checked, playing notes will be split and transposed immediately on changes to Semitones / Octave / Force to Scale / Master Transpose settings"
@@ -5156,6 +5224,17 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="678 33 55 20" tooltip="Monitor input MIDI through active slot's settings (Transpose, Scale, I/O Channel)"
               bgColOff="ff999999" buttonText="Monitor" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
+  <SLIDER name="TransposeChannel" id="b0b2857ba8bcb082" memberName="s_TransposeChannel"
+          virtualName="VSTSlider" explicitFocusOrder="0" pos="76 283 60 20"
+          tooltip="Input notes on this channel will affect Semitones, Octave, and/or Force to Scale settings where &quot;Use Transp Ch&quot; is enabled"
+          bkgcol="1e000000" thumbcol="ff000000" textboxtext="ffffffff"
+          min="1" max="16" int="1" style="LinearBar" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <LABEL name="tr ch" id="63fe8f3eb653b053" memberName="label28" virtualName=""
+         explicitFocusOrder="0" pos="66 267 80 16" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="Transpose Ch" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="12" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

@@ -139,10 +139,11 @@ public:
                                 that will be inserted
         @see updateMatchedPairs
     */
-    void addEvent (const MidiMessage& newMessage,
-                   double timeAdjustment = 0);
+    void addEvent (const MidiMessage& newMessage, double timeAdjustment = 0);
+	void addNote (const MidiMessage& noteOn, const MidiMessage& noteOff, double timeAdjustment = 0);
 
     void moveEvent (int index, double timeAdjustment, bool moveMatchingNoteUp);
+	void transposeEvent (int index, int semitones);
 
     /** Deletes one of the events in the sequence.
 

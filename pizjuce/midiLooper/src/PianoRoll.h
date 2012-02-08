@@ -294,19 +294,40 @@ private:
 							//	|| abs(sequence->getEventTime(i)-sequence->getEventTime(sequence->indexOfLastNoteOn))<sequence->chordTolerance)
 							//	g.setColour(Colours::blue);
 							//else 
-							g.setColour(Colours::darkgoldenrod.withAlpha(roll->sequence->getEventPointer(i)->message.getFloatVelocity()));
-							g.fillRect( (float)getWidth()*(float)(roll->sequence->getEventTime(i)/roll->seqLengthInPpq),
-										(float)getHeight() - (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber())*roll->yinc-roll->yinc,
-										noteLength,
-										roll->yinc);
-							if (roll->selectedNotes.contains(roll->sequence->getEventPointer(i))) 
+							if (roll->selectedNotes.contains(roll->sequence->getEventPointer(i))) {
+								//outline of original note position
+								g.setColour(Colours::blue);
+								g.drawRect( (float)getWidth()*(float)(roll->sequence->getEventTime(i)/roll->seqLengthInPpq),
+									(float)getHeight() - (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber())*roll->yinc-roll->yinc,
+									noteLength,
+									roll->yinc);
+
+								//dragging note position
+								const double newTime = (float)((roll->sequence->getEventTime(i)+roll->draggingNoteTimeDelta));
+								const float newNote = (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber()+roll->draggingNoteTransposition);
+								g.setColour(Colours::darkgoldenrod.withAlpha(roll->sequence->getEventPointer(i)->message.getFloatVelocity()));
+								g.fillRect( (float)getWidth()*(float)(newTime/roll->seqLengthInPpq),
+											(float)getHeight() - newNote*roll->yinc-roll->yinc,
+											noteLength,
+											roll->yinc);
 								g.setColour(Colours::red);
-							else 
+								g.drawRect( (float)getWidth()*(float)(newTime/roll->seqLengthInPpq),
+									(float)getHeight() - newNote*roll->yinc - roll->yinc,
+									noteLength,
+									roll->yinc);
+							}
+							else {
+								g.setColour(Colours::darkgoldenrod.withAlpha(roll->sequence->getEventPointer(i)->message.getFloatVelocity()));
+								g.fillRect( (float)getWidth()*(float)(roll->sequence->getEventTime(i)/roll->seqLengthInPpq),
+											(float)getHeight() - (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber())*roll->yinc-roll->yinc,
+											noteLength,
+											roll->yinc);
 								g.setColour(Colours::black);
-							g.drawRect( (float)getWidth()*(float)(roll->sequence->getEventTime(i)/roll->seqLengthInPpq),
-										(float)getHeight() - (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber())*roll->yinc-roll->yinc,
-										noteLength,
-										roll->yinc);
+								g.drawRect( (float)getWidth()*(float)(roll->sequence->getEventTime(i)/roll->seqLengthInPpq),
+									(float)getHeight() - (float)(roll->sequence->getEventPointer(i)->message.getNoteNumber())*roll->yinc-roll->yinc,
+									noteLength,
+									roll->yinc);
+							}
 						}
 					}
 				}
@@ -341,6 +362,10 @@ private:
 	double draggingNoteLength;
 	double draggingNoteStartTime;
 	double draggingNoteEndOffset;
+
+	int draggingNoteTransposition;
+	double draggingNoteTimeDelta;
+
 	bool wasResizing;
 	bool snapToGrid;
 	float noteLength;

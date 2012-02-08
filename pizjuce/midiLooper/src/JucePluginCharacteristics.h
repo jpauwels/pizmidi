@@ -17,7 +17,7 @@
 /*                              Generic settings                              */
 #define JucePlugin_NoEditor                 0
 #define JucePlugin_Name                     "midiLooper"
-#define JucePlugin_Desc                     "midi looper/sampler"
+#define JucePlugin_Desc                     "MIDI looper/sampler"
 #define JucePlugin_Manufacturer             "Insert Piz Here"
 #define JucePlugin_ManufacturerCode         'IPHz'
 #define JucePlugin_PluginCode               'L0OP'
@@ -31,8 +31,8 @@
 #define JucePlugin_ProducesMidiOutput               1
 #define JucePlugin_SilenceInProducesSilenceOut      0
 #define JucePlugin_EditorRequiresKeyboardFocus      1
-#define JucePlugin_VersionCode              0x00010405
-#define JucePlugin_VersionString            "1.4.5"
+#define JucePlugin_VersionCode              0x00010407
+#define JucePlugin_VersionString            "1.4.7"
 
 //==============================================================================
 /*                                VST settings                                */

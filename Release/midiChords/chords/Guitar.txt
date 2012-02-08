@@ -1,8 +1,0 @@
---
-#Guitar chord shapes
-Guitar "E": -12 -5 0 4 7 12
-Guitar "G": -12 -8 -5 0 4 12
-Guitar "A": -12 -5 0 4 7
-Guitar "C": 0 4 7 12 16
-Guitar "D": 0 7 12 16
---

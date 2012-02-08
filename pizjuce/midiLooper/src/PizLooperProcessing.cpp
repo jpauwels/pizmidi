@@ -159,7 +159,12 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 
 	const int numevents = midiMessages.getNumEvents();
 	ScopedPointer<bool> played = new bool[numevents];
+	ScopedPointer<bool> usedForScale = new bool[numevents];
+	ScopedPointer<bool> usedForTranspose = new bool[numevents];
+
 	memset (played,0,sizeof(bool)*numevents);
+	memset (usedForScale,0,sizeof(bool)*numevents);
+	memset (usedForTranspose,0,sizeof(bool)*numevents);
 
 	MidiBuffer kbBuffer;
 	kbstate.processNextMidiBuffer(kbBuffer,0,buffer.getNumSamples(),true);
@@ -387,8 +392,10 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 		}
 
 		//midi input part
-		const int scalechan = (getParameterForSlot(kUseScaleChannel,slot)>=0.5f || getParameterForSlot(kUseTrChannel,slot)>=0.5f) 
+		const int scalechan = (getParameterForSlot(kUseScaleChannel,slot)>=0.5) 
 			? roundToInt(getParameterForSlot(kScaleChannel,slot)*15.0f)+1 : 0;
+		const int trchan = (getParameterForSlot(kUseTrChannel,slot)>=0.5f) 
+			? roundToInt(getParameterForSlot(kTransposeChannel,slot)*15.0f)+1 : 0;
 		const bool waitForBar = getParameterForSlot(kWaitForBar,slot)>=0.5;
 		MidiBuffer::Iterator midi_buffer_iter(midiMessages);
 		MidiMessage midi_message(0xfe);
@@ -401,6 +408,7 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 			const int notenum = midi_message.getNoteNumber();
 			const int eventchan = midi_message.getChannel()-1;
 			bool dontrecord = false;
+			bool usedForScaleTr = false; 
 			if (midi_message.isAllNotesOff())
 			{
 				if (isForChannel)
@@ -411,7 +419,8 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 							recNoteOn[slot][ch][n]=-1;
 						}
 					}
-					capturingScale=0;
+					capturingScale[slot]=0;
+					capturingTranspose[slot]=0;
 					dontrecord=true;
 				}
 			}
@@ -447,42 +456,65 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 				played[message_number]=true;
 				setActiveSlot(midi_message.getProgramChangeNumber());
 			}
-			if (scalechan>0 && midi_message.isForChannel(scalechan)) {
-				if (midi_message.isNoteOn() && !played[message_number])
+
+			if ((scalechan>0 && midi_message.isForChannel(scalechan))
+				|| (trchan>0 && midi_message.isForChannel(trchan)))
+			{
+				if (midi_message.isNoteOn() && (!usedForScale[message_number] || !usedForTranspose[message_number]))
 				{
-					if (getParameterForSlot(kUseScaleChannel,slot)>=0.5f
+					if (getParameterForSlot(kUseScaleChannel,slot>=0.5f)  
 						|| getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
 						played[message_number]=true;
 						dontrecord=true;
 						discard=true;
+						usedForScaleTr=true;
+						if (getParameterForSlot(kUseTrChannel,slot)>=0.5f)
+							usedForTranspose[message_number]=true;
+						if (getParameterForSlot(kUseScaleChannel,slot)>=0.5f)
+							usedForScale[message_number]=true;
 					}
-					if (capturingScale==0) {
-						lowestScaleInputNote=127;
+					if (capturingTranspose[slot]==0 && getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
+						lowestScaleInputNote[slot]=127;
+					}
+					if (getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
+						capturingTranspose[slot]++;
 						for (int s=0;s<numSlots;s++) {
-							if (getParameterForSlot(kUseScaleChannel,s)>=0.5f
-								&& scalechan == roundToInt(getParameterForSlot(kScaleChannel,s)*15.0f)+1)
-								for (int i=0;i<12;i++)
-									setParameterForSlot(kNote0+i,s,0.f);
+							if (getParameterForSlot(kUseTrChannel,s)>=0.5f
+								&& trchan == roundToInt(getParameterForSlot(kTransposeChannel,s)*15.0f)+1)
+							capturingTranspose[s]= capturingTranspose[slot];
 						}
 					}
-					capturingScale++;
+					if (getParameterForSlot(kUseScaleChannel,slot)>=0.5f)
+					{
+						if (capturingScale[slot]==0) {
+							for (int s=0;s<numSlots;s++) {
+								if (getParameterForSlot(kUseScaleChannel,s)>=0.5f
+									&& scalechan == roundToInt(getParameterForSlot(kScaleChannel,s)*15.0f)+1)
+									for (int i=0;i<12;i++)
+										setParameterForSlot(kNote0+i,s,0.f);
+							}
+						}
+						capturingScale[slot]++;
+					}
 					for (int s=0;s<numSlots;s++) {
 						if (getParameterForSlot(kUseScaleChannel,s)>=0.5f
 							&& scalechan == roundToInt(getParameterForSlot(kScaleChannel,s)*15.0f)+1) 
 						{
+							capturingScale[s]=capturingScale[slot];
 							setParameterForSlot(kNote0+notenum%12,s,1.f);
 						}
 						if (s==curProgram) 
 							sendChangeMessage();
 					}
-					if (notenum<lowestScaleInputNote) {
-						lowestScaleInputNote=notenum;
+					if (notenum<lowestScaleInputNote[slot] && getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
+						lowestScaleInputNote[slot]=notenum;
 						for (int s=0;s<numSlots;s++) {
 							if (getParameterForSlot(kUseTrChannel,s)>=0.5f
-								&& scalechan == roundToInt(getParameterForSlot(kScaleChannel,s)*15.0f)+1) {
+								&& trchan == roundToInt(getParameterForSlot(kTransposeChannel,s)*15.0f)+1) {
+									lowestScaleInputNote[s]=notenum;
 									const int r = floatToMidi(getParameterForSlot(kRoot,s));
-									setParameterForSlot(kOctave,s,(float)(lowestScaleInputNote/12 - r/12 + 4)*0.125f);
-									setParameterForSlot(kTranspose,s,(float)(lowestScaleInputNote%12 - r%12 + 12)/24.f);
+									setParameterForSlot(kOctave,s,(float)(lowestScaleInputNote[slot]/12 - r/12 + 4)*0.125f);
+									setParameterForSlot(kTranspose,s,(float)(lowestScaleInputNote[slot]%12 - r%12 + 12)/24.f);
 							}
 						}
 					}
@@ -494,17 +526,34 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 						tRules[slot]->update(); 
 					}
 				}
-				else if (midi_message.isNoteOff() && !played[message_number])
+				else if (midi_message.isNoteOff() && (!usedForScale[message_number] || !usedForTranspose[message_number]))
 				{
 					if (getParameterForSlot(kUseScaleChannel,slot)>=0.5f
 						|| getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
 						played[message_number]=true;
 						dontrecord=true;
 						discard=true;
+						usedForScaleTr=true;
 					}
-					capturingScale--;
-					if (capturingScale<1) {
-						capturingScale=0;
+					if (getParameterForSlot(kUseScaleChannel,slot)>=0.5f) {
+						usedForScale[message_number]=true;
+						capturingScale[slot]--;
+						if (capturingScale[slot]<1)
+							capturingScale[slot]=0;
+						for (int s=0;s<numSlots;s++)
+							if (getParameterForSlot(kUseScaleChannel,s)>=0.5f
+								&& scalechan == roundToInt(getParameterForSlot(kScaleChannel,s)*15.0f)+1)
+									capturingScale[s]= capturingScale[slot];
+					}
+					if (getParameterForSlot(kUseTrChannel,slot)>=0.5f) {
+						usedForTranspose[message_number]=true;
+						capturingTranspose[slot]--;
+						if (capturingTranspose[slot]<1)
+							capturingTranspose[slot]=0;
+						for (int s=0;s<numSlots;s++)
+							if (getParameterForSlot(kUseTrChannel,s)>=0.5f
+								&& trchan == roundToInt(getParameterForSlot(kTransposeChannel,s)*15.0f)+1)
+								capturingTranspose[s]= capturingTranspose[slot];
 					}
 				}
 			}
@@ -519,8 +568,13 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 			{
 				discard = true;
 			}
-			if (isForChannel && !dontrecord) {
-				recordMessage(midi_message,slot,playing,ppq,eventoffset,ppqPerSample,sample_number);
+			if ((isForChannel ||(slot==curProgram && param[kMonitor]>=0.5f)) && !dontrecord) {
+				//message is recorded here!
+				MidiMessage m(midi_message);
+				if (param[kMonitor]>=0.5f && param[kThru]>=0.5f && channel>0 && slot==curProgram) {
+					m.setChannel(channel+1);
+				}
+				recordMessage(m,slot,playing,ppq,eventoffset,ppqPerSample,sample_number);
 				if (overdub && isSlotPlaying(slot)) {
 					played[message_number]=true;
 				}
@@ -696,7 +750,215 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 						bool stopPlaying = false;
 						double lastLoopTime = -1;
 						int s = (int)(samplesPerPpq*ppq);
+						int64 startSample = s;
+						int64 endSample = startSample + buffer.getNumSamples()-1;
+						int stopAtSample = 999999;
 						int banana = 0;
+#if 0
+						if (barTriggerSample[slot][instance]>endSample) {
+							//waiting for next bar, don't start yet
+							stopPlaying=true;
+						}
+						else if (barTriggerSample[slot][instance]>=startSample) {
+							startSample = barTriggerSample[slot][instance];
+						}
+						if (barStopSample[slot][instance]>=startSample && barStopSample[slot][instance]<=endSample) {
+							stopAtSample = (int)(barStopSample[slot][instance] - startSample);
+						}
+						if(!stopPlaying)
+						{
+							int i = (int)(startSample - (int)(samplesPerPpq*ppq));
+							//==================================================================================
+							//time calculation
+							double looptime = fmod((ppq+(double)i*ppqPerSample-measurePlayFromHere[slot][instance])*laststretch[slot]-lastshift[slot], newlength) 
+								+ laststart[slot];
+							double endlooptime = fmod((ppq+(double)buffer.getNumSamples()*ppqPerSample-measurePlayFromHere[slot][instance])*laststretch[slot]-lastshift[slot], newlength) + laststart[slot];
+							while (looptime<(getLoopStart(slot)+laststart[slot])) {
+								looptime+=newlength;
+								endlooptime+=newlength;
+							}
+							double totallooptime = (ppq+(double)i*ppqPerSample-lastshift[slot]-measurePlayFromHere[slot][instance])*laststretch[slot] + laststart[slot];
+							double totallooptimeatend = (ppq+(double)buffer.getNumSamples()*ppqPerSample-lastshift[slot]-measurePlayFromHere[slot][instance])*laststretch[slot] + laststart[slot];
+							if (unsyncloop) 
+							{
+								looptime=fmod((ppq+(double)i*ppqPerSample-measurePlayFromHere[slot][instance])*stretch-beatshift,newlength)+getLoopStart(slot)+newstart;
+								totallooptime=(ppq+(double)i*ppqPerSample-beatshift-measurePlayFromHere[slot][instance])*stretch+getLoopStart(slot)+newstart;
+								endlooptime=fmod((ppq+(double)buffer.getNumSamples()*ppqPerSample-measurePlayFromHere[slot][instance])*stretch-beatshift,newlength)+getLoopStart(slot)+newstart;
+								totallooptimeatend=(ppq+(double)buffer.getNumSamples()*ppqPerSample-beatshift-measurePlayFromHere[slot][instance])*stretch+getLoopStart(slot)+newstart;
+							}
+							double totalloopcount = totallooptime / newlength;
+							int loopcount = jmax(0,(int)totalloopcount - startLoopCount[slot][instance]);
+							if (oneshot) 
+							{
+								looptime=(ppq+(double)i*ppqPerSample-beatshift-measurePlayFromHere[slot][instance])*stretch+getLoopStart(slot)+newstart;
+								endlooptime=(ppq+(double)buffer.getNumSamples()*ppqPerSample-beatshift-measurePlayFromHere[slot][instance])*stretch+getLoopStart(slot)+newstart;
+								if ((ppq+(double)buffer.getNumSamples()*ppqPerSample-measurePlayFromHere[slot][instance])*stretch >= newlength) 
+								{
+									stopAtSample = roundToInt(0.00104166666666666666666666666667*newlength*samplesPerPpq/stretch);
+								}
+								//handle beatshift>0:
+								else if (looptime>getLoopEnd(slot)) {
+									looptime-=newlength;
+									endlooptime-=newlength;
+								}
+								//handle beatshift<0:
+								else if (looptime<newstart) {
+									looptime+=newlength;
+									endlooptime+=newlength;
+								}
+							}
+							else 
+							{
+								if (lastLoopCount[slot][instance]==-1)
+								{
+									//starting first loop
+									startLoopCount[slot][instance] = (int)ceil(totalloopcount);
+									lastLoopCount[slot][instance] = 0;
+								}
+								else if (lastLoopCount[slot][instance]!=loopcount)
+								{
+									if (targetNumLoops>0 && loopcount==targetNumLoops) {
+										lastLoopCount[slot][instance]=-1;
+										stopPlaying=true;
+										if (polytrigger[slot][instance]!=-1)
+										{
+											currentPoly[slot]--;
+											polytrigger[slot][instance]=-1;
+											jassert(currentPoly[slot]>=0);
+											if (currentPoly[slot]==0) {
+												setParameterForSlot(kPlay,slot,0.0);
+												processGroups(slot);
+											}
+											lastPlayedIndex[slot][instance]=-1;
+										}
+										if (nextSlot>-1 && !isSlotPlaying(nextSlot))
+										{
+											setParameterForSlot(kPlay,nextSlot,1.0);
+											processGroups(nextSlot);
+											if (nextSlot<slot) {
+												polytrigger[nextSlot][0] = floatToMidi(getParameterForSlot(kRoot,nextSlot));
+												slot = nextSlot;
+												loop = &(programs[slot].loop);
+												channel = roundToInt(getParameterForSlot(kChannel,slot)*16.0f)-1;
+												lastPlayedIndex[slot][0]=-1;
+												not_done = true;
+											}
+										}
+									}
+									else 
+										lastLoopCount[slot][instance] = loopcount;
+								}
+							}
+							if (instance==0) 
+								loopPpq[slot]=looptime;
+							if (stopPlaying) 
+								break;
+							if (looptime<lastLoopTime) {
+								lastPlayedIndex[slot][instance]=-1;
+								banana=0;
+							}
+							else if (lastPlayedIndex[slot][instance]+1 >= loop->getNumEvents()) {
+								lastPlayedIndex[slot][instance]=-1;
+								banana++;
+							}
+							else if (lastPlayedIndex[slot][instance]+1 >= loop->getNextIndexAtTime((int)(getLoopEnd(slot)*960.0))
+								&& banana<3) {
+								lastPlayedIndex[slot][instance]=-1;
+								banana++;
+							}
+							lastLoopTime = looptime;
+							//DBG("looptime="+String(looptime));
+							//==================================================================================
+							if (loop->getNumEvents()>0 && banana<9)
+							{
+								bool stop = false;
+								int index;
+								if (lastPlayedIndex[slot][instance] == -1) {
+									index = loop->getNextIndexAtTime((int)(looptime*960.0));
+									if (index==loop->getNumEvents()) {
+										if (looptime>endlooptime)
+											index = loop->getNextIndexAtTime((int)(newstart*960.0));
+										if (index==loop->getNumEvents())
+											stop=true;
+									}
+									else if (loop->getEventTime(index)<=(int)(endlooptime*960.0)) {
+										lastPlayedIndex[slot][instance] = index-1;
+										banana++;
+									}
+								}
+								else if (loop->getEventTime(lastPlayedIndex[slot][instance]+1)<=(int)(endlooptime*960.0))
+									index = lastPlayedIndex[slot][instance]+1;
+								else 
+									index = lastPlayedIndex[slot][instance];
+								if (loop->getEventTime(index)>(int)(endlooptime*960.0)) {
+									DBG("  "+String(loop->getEventTime(index))+ " "+String((int)(looptime*960.0)));
+									stop=true;
+								}
+								if (lastPlayedIndex[slot][instance]>=index) {
+									//DBG("  "+String(lastPlayedIndex[slot][instance])+" "+String(index));
+									stop=true;
+								}
+								while (index<(loop->getNumEvents()) && !stop) 
+								{
+									if (loop->getEventTime(index)<=(int)(endlooptime*960.0))
+									{
+										if(lastPlayedIndex[slot][instance]<index)
+										{
+											if (i<stopAtSample)
+											{
+												DBG("playing loop event "+String(index)+ " at time "+String(loop->getEventTime(index)));
+												i = roundToInt((loop->getEventTime(index)*0.00104166666666666666666666666667 - looptime)*samplesPerPpq);
+												if (i<0)
+													i+=roundToInt(samplesPerPpq*newlength/stretch);
+												//i = roundToInt(((0.00104166666666666666666666666667*loop->getEventTime(index)-laststart[slot])/laststretch[slot]+ measurePlayFromHere[slot][instance]+lastshift[slot])*samplesPerPpq);
+												playLoopEvent(slot,instance,index,channel,stretch,i,samplesPerPpq,midiout);
+												lastPlayedIndex[slot][instance]=index;
+											}
+											else 
+												stop = true;
+										}
+										index++;
+										if (looptime>endlooptime && loop->getEventTime(index)>(int)(getLoopEnd(slot)*960.0))
+											index = loop->getNextIndexAtTime((int)(newstart*960.0));
+
+									}
+									else {
+										stop=true;
+									}
+								} //events
+							}
+							else
+								i = buffer.getNumSamples();
+						}
+						if (stopAtSample < buffer.getNumSamples())
+						{
+							if (oneshot) {
+								if (polytrigger[slot][instance]!=-1)
+								{
+									currentPoly[slot]--;
+									polytrigger[slot][instance]=-1;
+									if (currentPoly[slot]==0) {
+										setParameterForSlot(kPlay,slot,0.0);
+										processGroups(slot);
+									}
+									lastPlayedIndex[slot][instance]=-1;
+									lastLoopCount[slot][instance]=-1;
+									endHangingNotesInLoop(midiout,stopAtSample,slot,instance);
+								}
+							}
+							else {
+								if (noteTrig==0.0f) {
+									currentPoly[slot]--;
+									polytrigger[slot][0]=-1;
+								}
+								lastPlayedIndex[slot][instance]=-1;
+								lastLoopCount[slot][instance]=-1;
+								endHangingNotesInLoop(midiout,stopAtSample,slot,instance);
+								if (overdub) setParameterForSlot(kRecord,slot,0.f);
+							}
+						}
+#else
+						
 						for (int i=0; i < buffer.getNumSamples(); i++) 
 						{
 							s++;
@@ -859,13 +1121,13 @@ void PizLooper::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessage
 											index++;
 										}
 										else {
-											DBG("stopping loop ln842");
 											stop=true;
 										}
 									} //events
 								}
 							}
 						} //samples
+#endif
 					}
 				} //instances
 
@@ -909,7 +1171,7 @@ void PizLooper::processNoteOffBuffer(int slot, MidiBuffer &midiout, int numSampl
 			}
 			else {
 				e->subtractFromTime(numSamples);
-				jassert(e.noteOffSample>=0);
+				jassert(e->noteOffSample>=0);
 			}
 		}
 		else {

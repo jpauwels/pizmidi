@@ -467,12 +467,16 @@
     <ClInclude Include="..\..\..\common\GuitarNeckComponent.h" />
     <ClInclude Include="..\..\..\common\LookAndFeel.h" />
     <ClInclude Include="..\..\..\common\midistuff.h" />
+    <ClInclude Include="..\..\..\common\NoteSlider.h" />
     <ClInclude Include="..\..\..\common\PizButton.h" />
     <ClInclude Include="..\..\src\MidiChordsEditor.h" />
     <ClInclude Include="..\..\src\MidiChords.h" />
     <ClInclude Include="..\..\src\AppConfig.h" />
     <ClInclude Include="..\..\src\JuceHeader.h" />
     <ClInclude Include="..\..\src\JucePluginCharacteristics.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Release\midiChords\readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

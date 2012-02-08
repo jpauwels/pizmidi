@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  20 Jan 2012 1:40:49pm
+  Creation date:  31 Jan 2012 8:42:55am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,14 +19,42 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
 #include "../../common/ChannelSlider.h"
+#include "../../common/NoteSlider.h"
 #include "../../common/GuitarNeckComponent.h"
 #include "../../common/LookAndFeel.h"
+
+
+class FretsSlider : public Slider
+{
+public:
+	FretsSlider(String name) : Slider(name)	{};
+	~FretsSlider() {};
+
+	const String getTextFromValue(double value)
+	{
+		const int n = roundToInt(value);
+		return "Frets: "+String(n);
+	}
+};
+
+class StringsSlider : public Slider
+{
+public:
+	StringsSlider(String name) : Slider(name)	{};
+	~StringsSlider() {};
+
+	const String getTextFromValue(double value)
+	{
+		const int n = roundToInt(value);
+		return "Strings: "+String(n);
+	}
+};
 
 class ChordPresetFileFilter : public FileFilter
 {
@@ -51,7 +79,8 @@ class ChordsGuitar : public GuitarNeckComponent
 public:
 	ChordsGuitar(MidiKeyboardState &state, MidiChords* ownerFilter)
 		: GuitarNeckComponent(state),
-		owner(0)
+		owner(0),
+		erasing(false)
 	{
 		owner = ownerFilter;
 		s = &state;
@@ -59,63 +88,44 @@ public:
 private:
 	MidiChords* owner;
     MidiKeyboardState* s;
+	FrettedNote lastDraggedNote;
+	bool erasing;
 
 	void mouseDraggedToKey(int fret, int string, const MouseEvent& e)
 	{
+		FrettedNote n(fret,string);
+		if (n!=lastDraggedNote)
+		{
+			int midiNoteNumber = getNote(n);
+			int oldNoteOnString = getNote(FrettedNote(getStringFret(string),string));
+			if (s->isNoteOn(string+1,midiNoteNumber)) {
+				/*if (!erasing)*/
+					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,string+1);
+			}
+			else/* if (!erasing)*/ {
+				owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,string+1);
+				if (oldNoteOnString>=0)
+					owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,string+1);
+			}
+		}
+		lastDraggedNote = n;
 	}
 
 	bool mouseDownOnKey(int fret, int string, const MouseEvent &e) {
 		FrettedNote n(fret,string);
 		int midiNoteNumber = getNote(n);
 		int oldNoteOnString = getNote(FrettedNote(getStringFret(string),string));
-		if (e.mods.isPopupMenu())
-		{
-			PopupMenu m;
-			m.addSectionHeader(getNoteName(midiNoteNumber,owner->bottomOctave)+ " (" + String(midiNoteNumber)+")");
-			for (int i=1;i<=16;i++)
-			{
-				m.addItem(i,"Ch "+String(i),true,s->isNoteOn(i,midiNoteNumber));
-			}
-			int result = m.show();
-			if (result!=0)
-			{
-				if (s->isNoteOn(result,midiNoteNumber)) {
-					s->noteOff(result,midiNoteNumber);
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,result);
-				}
-				else {
-					s->noteOn(result,midiNoteNumber,127);
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,result);
-				}
-			}
+		if (s->isNoteOn(string+1,midiNoteNumber)) {
+			owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,string+1);
+			erasing = true;
 		}
-		else
-		{
-			const int chordChan = 0;//roundToInt(owner->getParameter(kLearnChannel)*16.f);
-			if (chordChan==0)
-			{
-				if (s->isNoteOn(string+1,midiNoteNumber)) {
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,string+1);
-				}
-				else {
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,string+1);
-					if (oldNoteOnString>=0)
-						owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,string+1);
-				}
-			}
-			else {
-				if (s->isNoteOn(chordChan,midiNoteNumber)) {
-					//s->noteOff(this->getMidiChannel(),midiNoteNumber);
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,chordChan);
-				}
-				else {
-					//s->noteOn(this->getMidiChannel(),midiNoteNumber,1.f);
-					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,chordChan);
-					if (oldNoteOnString>=0)
-						owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,chordChan);
-				}
-			}
+		else {
+			owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,string+1);
+			if (oldNoteOnString>=0)
+				owner->selectChordNote(owner->getCurrentTrigger(),oldNoteOnString,false,string+1);
+			erasing = false;
 		}
+		lastDraggedNote = n;
 		return true;
 	}
 };
@@ -236,6 +246,7 @@ private:
 					s->noteOn(result,midiNoteNumber,127);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,result);
 				}
+				repaint();
 			}
 		}
 		else
@@ -265,6 +276,7 @@ private:
 				}
 			}
 		}
+		owner->setSavedGuitarVoicing(false);
 		return false;
 	}
 };
@@ -285,12 +297,14 @@ public:
 		const int mode = roundToInt(owner->getParameter(kMode)*(numModes-1));
 		Colour c (textColour);
 
-		if (isDown) {
+		if (isDown)
 			c = c.overlaidWith (findColour (keyDownOverlayColourId));
-		}
 
 		if (isOver)
 			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+
+		if (owner->isNoteBypassed(midiNoteNumber))
+			c = c.overlaidWith (Colours::orange.withAlpha(0.6f));
 
 		if (mode==Octave) {
 			int n=midiNoteNumber%12;
@@ -337,6 +351,8 @@ public:
 			c = findColour (keyDownOverlayColourId);
 		if (isOver)
 			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
+		if (owner->isNoteBypassed(midiNoteNumber))
+			c = c.overlaidWith (Colours::orange.withAlpha(0.6f));
 		if (mode==Octave) {
 			int n=midiNoteNumber%12;
 			while (n<128) {
@@ -386,21 +402,37 @@ public:
 private:
     MidiKeyboardState* s;
 	MidiChords* owner;
+	bool bypassing;
 
 	virtual bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e)
 	{
-		if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
-			owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
-		else
-			owner->selectTrigger(midiNoteNumber);
+		if (e.mods.isShiftDown() || e.mods.isPopupMenu())
+		{
+			bypassing = !owner->isNoteBypassed(midiNoteNumber);
+			owner->setNoteBypassed(midiNoteNumber,bypassing);
+			repaint();
+		}
+		else {
+			if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
+				owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
+			else
+				owner->selectTrigger(midiNoteNumber);
+		}
 		return false;
 	}
 	virtual void mouseDraggedToKey (int midiNoteNumber, const MouseEvent& e)
 	{
-		if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
-			owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
-		else
-			owner->selectTrigger(midiNoteNumber);
+		if (e.mods.isShiftDown() || e.mods.isPopupMenu())
+		{
+			owner->setNoteBypassed(midiNoteNumber,bypassing);
+			repaint();
+		}
+		else {
+			if (roundToInt(owner->getParameter(kMode)*(numModes-1))==Global)
+				owner->setParameterNotifyingHost(kRoot,midiNoteNumber/127.f);
+			else
+				owner->selectTrigger(midiNoteNumber);
+		}
 	}
 };
 
@@ -443,7 +475,8 @@ public:
     bool isInterestedInFileDrag (const StringArray& files);
     void filesDropped (const StringArray& filenames, int mouseX, int mouseY);
     void mouseDown (const MouseEvent& e);
-    void mouseUp (const MouseEvent& e);
+    void mouseDoubleClick (const MouseEvent& e);
+	void mouseUp (const MouseEvent& e);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -473,10 +506,51 @@ private:
 	void selectionChanged(void) {}
 	void fileClicked(const juce::File &file,const juce::MouseEvent &);
 
+	bool isGuitarPreset(int index)
+	{
+		if (getFilter()->getNumStrings()!=getFilter()->guitarPresets[index].numStrings) 
+			return false;
+		for (int i=0;i<getFilter()->getNumStrings();i++)
+		{
+			if (getFilter()->getStringValue(i)!=getFilter()->guitarPresets[index].stringNotes[i])
+				return false;
+		}
+		return true;
+	}
+
+	void setUpGuitar(int index)
+	{
+		const int f = getFilter()->guitarPresets[index].numFrets;
+		const int s = getFilter()->guitarPresets[index].numStrings;
+		getFilter()->setNumFrets(f, false);
+		guitar->setNumFrets(f);
+		getFilter()->setNumStrings(s, false);
+		guitar->setNumStrings(s);
+		for (int i=0;i<maxStrings;i++)
+		{
+			if (i<s) {
+				getFilter()->setStringValue(i, getFilter()->guitarPresets[index].stringNotes[i], false);
+				guitar->setStringNote(i, getFilter()->guitarPresets[index].stringNotes[i]);
+			}
+			else {
+				getFilter()->setStringValue(i, -1, false);
+				guitar->setStringNote(i, -1);
+			}
+		}
+
+		getFilter()->translateToGuitarChord();
+		guitar->repaint();
+	}
+
     MidiChords* getFilter() const throw()       { return (MidiChords*) getAudioProcessor(); }
 	int mode;
 	ChordPresetFileFilter fileFilter;
 	FileBrowserComponent* browser;
+
+    FretsSlider* fretsSlider;
+    StringsSlider* stringsSlider;
+    NoteSlider* stringSlider[maxStrings];
+	int guitarPreset;
     //[/UserVariables]
 
     //==============================================================================
@@ -532,6 +606,7 @@ private:
     Label* label;
     Label* label2;
     TextButton* viewButton;
+    TextButton* setupButton;
     TextEditor* infoBox;
 
 
@@ -542,4 +617,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_ACD30766__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__

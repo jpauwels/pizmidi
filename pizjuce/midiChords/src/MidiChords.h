@@ -27,6 +27,8 @@ enum parameters {
 	numProgs = 128
 };
 
+
+
 enum ChordModes {Normal, Octave, Global, numModes};
 
 struct ChordNote
@@ -44,6 +46,33 @@ struct ChordNote
 
 	int c;
 	int n;
+};
+
+class GuitarDefinition {
+public:
+	GuitarDefinition()
+	{
+		guitarName = String::empty;
+		chordFile = "Chords.txt";
+		numFrets = 0;
+		numStrings = 0;
+	}
+
+	GuitarDefinition(String name, String file, int frets, Array<int> &notes)
+	{
+		guitarName = name;
+		chordFile = file;
+		numFrets = frets;
+		stringNotes.addArray(notes);
+		numStrings = notes.size();
+	}
+	~GuitarDefinition() {}
+
+	String guitarName;
+	int numStrings;
+	int numFrets;
+	Array<int> stringNotes;
+	String chordFile;
 };
 
 class MidiChordsPrograms : ValueTree {
@@ -232,6 +261,14 @@ public:
 			if (notePlaying[i][note]) return true;
 		return false;
 	}
+	void setNoteBypassed(int note, bool bypass)
+	{
+		programs->set(curProgram,"Bypassed"+String(note),bypass);
+	}
+	bool isNoteBypassed(int note) 
+	{
+		return programs->getChild(curProgram).getProperty("Bypassed"+String(note),false);
+	}
 	void clearAllChords();
 	void resetAllChords();
 	void copyChordToAllTriggers(bool absolute);
@@ -251,10 +288,65 @@ public:
 		}
 	}
 	bool isPreviewChordPlaying() {return playFromGUI;}
+	void translateToGuitarChord(bool force=false);
+	void setGuitarView(bool on)
+	{
+		if (getGuitarView())
+			savedGuitarVoicing[curTrigger] = true;
+		programs->set(curProgram,"GuitarView",on);
+		if (on/* && !savedGuitarVoicing[curTrigger]*/) {
+			translateToGuitarChord();
+		}
+	}
+	bool getGuitarView()
+	{
+		return programs->get(curProgram,"GuitarView");
+	}
+	void setSavedGuitarVoicing(bool isValid)
+	{
+		savedGuitarVoicing[curTrigger] = isValid;
+	}
+	void setStringValue(int string, int note, bool translate) {
+		programs->set(curProgram,"String"+String(string),note);
+		if (translate) translateToGuitarChord();
+	}
+	int getStringValue(int string) {
+		return programs->get(curProgram,"String"+String(string));
+	}
+	void setNumFrets(int frets, bool translate) {
+		programs->set(curProgram,"NumFrets",frets);
+		if (translate) translateToGuitarChord();
+	}
+	int getNumFrets() {
+		return programs->get(curProgram,"NumFrets");
+	}
+	void setNumStrings(int strings, bool translate) {
+		int n = getNumStrings();
+		if (n==strings)
+			return;
+		while (n<strings)
+		{
+			setStringValue(n,0,false);
+			++n;
+		}
+		while (n>strings)
+		{
+			--n;
+			setStringValue(n,-1,false);
+		}
+		programs->set(curProgram,"NumStrings",strings);
+		if (translate) translateToGuitarChord();
+	}
+	int getNumStrings() {
+		return programs->get(curProgram,"NumStrings");
+	}
 	
 	void readChorderPreset(File file);
 	bool readKeyFile(File file=File::nonexistent);
 	bool demo;
+
+	Array<GuitarDefinition> guitarPresets;
+	void fillGuitarPresetList ();
 
 	String dataPath;
 	int lastUIWidth, lastUIHeight;
@@ -284,6 +376,7 @@ private:
 	bool inputtranspose;
 	bool ccToAllChannels;
 
+	bool savedGuitarVoicing[128];
 	bool playingFromGUI, playFromGUI;
 	int playButtonTrigger;
 	int learning;

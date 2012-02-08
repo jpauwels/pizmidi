@@ -148,6 +148,28 @@ void PizMidiMessageSequence::addEvent (const MidiMessage& newMessage,
     list.insert (i + 1, newOne);
 }
 
+void PizMidiMessageSequence::addNote (const MidiMessage& noteOn, const MidiMessage& noteOff, double timeAdjustment)
+{
+    mehPtr const on = new MidiEventHolder (noteOn);
+    double t = timeAdjustment + noteOn.getTimeStamp();
+    on->message.setTimeStamp (t);
+    int i;
+    for (i = list.size(); --i >= 0;)
+        if (list.getUnchecked(i)->message.getTimeStamp() <= t)
+            break;
+    list.insert (i + 1, on);
+
+    mehPtr const off = new MidiEventHolder (noteOff);
+    t = timeAdjustment + noteOff.getTimeStamp();
+    off->message.setTimeStamp (t);
+    for (i = list.size(); --i >= 0;)
+        if (list.getUnchecked(i)->message.getTimeStamp() <= t)
+            break;
+    list.insert (i + 1, off);
+
+	on->noteOffObject = off;
+}
+
 //==============================================================================
 void PizMidiMessageSequence::moveEvent (int index, double timeAdjustment, const bool moveMatchingNoteUp)
 {
@@ -155,13 +177,31 @@ void PizMidiMessageSequence::moveEvent (int index, double timeAdjustment, const 
 	{
 		MidiMessage &message1 = list.getUnchecked(index)->message;
 		message1.addToTimeStamp (timeAdjustment);
-		if (moveMatchingNoteUp)
+		if (moveMatchingNoteUp && message1.isNoteOn())
 		{
 			MidiMessage &message2 = list.getUnchecked(index)->noteOffObject->message;
 			timeAdjustment += message2.getTimeStamp();
 			message2.addToTimeStamp (timeAdjustment);
 		}
 		sort();
+	}
+}
+
+void PizMidiMessageSequence::transposeEvent (int index, int semitones)
+{
+    if (((unsigned int) index) < (unsigned int) list.size())
+	{
+		MidiMessage &message1 = list.getUnchecked(index)->message;
+		if (message1.isNoteOn() || message1.isAftertouch())
+		{
+			const int newNote = message1.getNoteNumber()+semitones;
+			message1.setNoteNumber(newNote);
+			if (message1.isNoteOn())
+			{
+				MidiMessage &message2 = list.getUnchecked(index)->noteOffObject->message;
+				message2.setNoteNumber(newNote);
+			}
+		}
 	}
 }
 

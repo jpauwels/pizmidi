@@ -209,12 +209,14 @@ void fillChordDatabase()
 	ChordNames.add(ChordName("9"            , "c,e,g,bb,d"));            
 	ChordNames.add(ChordName("13"           , "c,e,g,bb,d,a"));          
 	ChordNames.add(ChordName("13"           , "c,e,g,bb,d,f,a"));          
+	ChordNames.add(ChordName("13"           , "c,e,bb,d,a"));          
 	ChordNames.add(ChordName("m6"           , "c,eb,g,a"));              
 	ChordNames.add(ChordName("m6add9"       , "c,eb,g,a,d"));            
 	ChordNames.add(ChordName("m6/9"			, "c,eb,a,d"));              
 	ChordNames.add(ChordName("m7add13"      , "c,eb,g,a,bb"));           
 	ChordNames.add(ChordName("m9"           , "c,eb,g,bb,d"));           
 	ChordNames.add(ChordName("m11"          , "c,eb,g,bb,d,f"));         
+	ChordNames.add(ChordName("m11"          , "c,eb,bb,d,f"));         
 	ChordNames.add(ChordName("m13"          , "c,eb,g,bb,d,f,a"));       
 	ChordNames.add(ChordName("m9/Maj7"      , "c,eb,g,b,d"));            
 	ChordNames.add(ChordName("m9(b5)"       , "c,eb,gb,bb,d"));          
@@ -342,8 +344,8 @@ String getFirstRecognizedChord(Array<int> chord, bool flats)
 		temp.addIfNotAlreadyThere(chord[i]%12);
 	}
 
-	if (temp.size()>9)
-		return "bllblblbllblb";
+	if (temp.size()>=9)
+		return getNoteNameWithoutOctave(chord[0],!flats)+" Note Soup";
 
 	Array<int> stackedChord = getAsStackedChord(temp,false);
 	if (stackedChord.size()==1)

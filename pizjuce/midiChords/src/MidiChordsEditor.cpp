@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  20 Jan 2012 1:40:49pm
+  Creation date:  31 Jan 2012 8:42:55am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -83,6 +83,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
       label (0),
       label2 (0),
       viewButton (0),
+      setupButton (0),
       infoBox (0)
 {
     addAndMakeVisible (toggleButton = new ToggleButton (L"new toggle button"));
@@ -415,6 +416,11 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
     viewButton->setConnectedEdges (Button::ConnectedOnTop);
     viewButton->addListener (this);
 
+    addAndMakeVisible (setupButton = new TextButton (L"new button"));
+    setupButton->setButtonText (L"Setup");
+    setupButton->setConnectedEdges (Button::ConnectedOnTop);
+    setupButton->addListener (this);
+
     addAndMakeVisible (infoBox = new TextEditor (L"new text editor"));
     infoBox->setMultiLine (true);
     infoBox->setReturnKeyStartsNewLine (false);
@@ -429,6 +435,31 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 
 
     //[UserPreSize]
+
+    fretsSlider = new FretsSlider (L"new slider");
+    fretsSlider->setRange (5, maxFrets, 1);
+    fretsSlider->setSliderStyle (Slider::LinearHorizontal);
+    fretsSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    fretsSlider->addListener (this);
+	fretsSlider->setMouseClickGrabsKeyboardFocus(false);
+
+    stringsSlider = new StringsSlider (L"new slider");
+    stringsSlider->setRange (1, maxStrings, 1);
+    stringsSlider->setSliderStyle (Slider::LinearHorizontal);
+    stringsSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    stringsSlider->addListener (this);
+	stringsSlider->setMouseClickGrabsKeyboardFocus(false);
+
+	for (int i=0;i<maxStrings;i++) {
+		stringSlider[i]= new NoteSlider (L"new slider");
+		stringSlider[i]->setRange (-1, 127, 1);
+		stringSlider[i]->setSliderStyle (Slider::LinearHorizontal);
+		stringSlider[i]->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+		stringSlider[i]->addListener (this);
+		stringSlider[i]->setBottomOctave(ownerFilter->bottomOctave);
+		stringSlider[i]->setMouseClickGrabsKeyboardFocus(false);
+	}
+
 	this->setMouseClickGrabsKeyboardFocus(false);
 	chordKeyboard->setMouseClickGrabsKeyboardFocus(false);
 	triggerKeyboard->setMouseClickGrabsKeyboardFocus(false);
@@ -465,7 +496,12 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	outputChannelSlider->setMouseClickGrabsKeyboardFocus(false);
 	label->setMouseClickGrabsKeyboardFocus(false);
 	label2->setMouseClickGrabsKeyboardFocus(false);
-	viewButton->setVisible(false);
+	guitar->setMouseClickGrabsKeyboardFocus(false);
+	setupButton->setMouseClickGrabsKeyboardFocus(false);
+
+	guitar->setMouseCursor(MouseCursor::PointingHandCursor);
+	chordKeyboard->setMouseCursor(MouseCursor::PointingHandCursor);
+	triggerKeyboard->setMouseCursor(MouseCursor::PointingHandCursor);
 
 	//channelSlider->setAllText("Any");
 	learnChanSlider->setAllText("All");
@@ -477,6 +513,7 @@ MidiChordsEditor::MidiChordsEditor (MidiChords* const ownerFilter)
 	previewButton->addMouseListener(this,false);
 	velocitySlider->setPopupDisplayEnabled(true,this);
 	velocitySlider->setDoubleClickReturnValue(true,100);
+	triggerKeyboard->addMouseListener(this,false);
 
 	variationSlider->setVisible(false);
 	transposeDownButton->setVisible(false);
@@ -586,10 +623,15 @@ MidiChordsEditor::~MidiChordsEditor()
     deleteAndZero (label);
     deleteAndZero (label2);
     deleteAndZero (viewButton);
+    deleteAndZero (setupButton);
     deleteAndZero (infoBox);
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    deleteAndZero (fretsSlider);
+    deleteAndZero (stringsSlider);
+	for (int i=0;i<maxStrings;i++)
+		deleteAndZero (stringSlider[i]);
     //[/Destructor]
 }
 
@@ -656,7 +698,7 @@ void MidiChordsEditor::paint (Graphics& g)
                                        Colour (0xffbfbfbf),
                                        248.0f, 215.0f,
                                        false));
-    g.fillRoundedRectangle (230.0f, 195.0f, 173.0f, 26.0f, 12.0000f);
+    g.fillRoundedRectangle (250.0f, 195.0f, 173.0f, 26.0f, 12.0000f);
 
     g.setColour (Colours::black);
     g.setFont (Font (10.7000f, Font::plain));
@@ -689,7 +731,7 @@ void MidiChordsEditor::resized()
     transposeChordUpButton->setBounds (159, 76, 23, 21);
     transposeChordDownButton->setBounds (136, 76, 23, 21);
     transposeSlider->setBounds (446, 374, 66, 16);
-    velocitySlider->setBounds (376, 197, 22, 22);
+    velocitySlider->setBounds (397, 197, 22, 22);
     variationSlider->setBounds (334, 411, 104, 16);
     normalButton->setBounds (442, 318, 64, 24);
     octaveButton->setBounds (506, 318, 64, 24);
@@ -703,7 +745,7 @@ void MidiChordsEditor::resized()
     textEditor->setBounds (82, -35, 150, 24);
     copyButton->setBounds (211, 73, 38, 21);
     pasteButton->setBounds (249, 73, 38, 21);
-    previewButton->setBounds (230, 196, 143, 24);
+    previewButton->setBounds (251, 196, 143, 24);
     chordEditor->setBounds (178, 54, 144, 20);
     pcButton->setBounds (167, 375, 160, 20);
     nextButton->setBounds (113, 204, 23, 21);
@@ -721,8 +763,9 @@ void MidiChordsEditor::resized()
     applyChannelButton->setBounds (44, 56, 32, 16);
     label->setBounds (335, 359, 91, 13);
     label2->setBounds (432, 359, 91, 13);
-    viewButton->setBounds (151, 190, 52, 21);
-    infoBox->setBounds (proportionOfWidth (0.5000f) - ((500) / 2), proportionOfHeight (0.5100f) - ((300) / 2), 500, 300);
+    viewButton->setBounds (151, 190, 41, 21);
+    setupButton->setBounds (195, 190, 45, 21);
+    infoBox->setBounds (proportionOfWidth (0.5000f) - ((500) / 2), proportionOfHeight (0.5000f) - ((300) / 2), 500, 300);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -862,8 +905,9 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		int result = menu.showAt(chordMenuButton);
 		if (result!=0)
 		{
-			if (result>0)
+			if (result>0) {
 				loadChord(list[result-1]);
+			}
 		}
         //[/UserButtonCode_chordMenuButton]
     }
@@ -996,8 +1040,30 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == viewButton)
     {
         //[UserButtonCode_viewButton] -- add your button handler code here..
+		setupButton->setEnabled(!guitar->isVisible());
 		guitar->setVisible(!guitar->isVisible());
+		getFilter()->setGuitarView(guitar->isVisible());
         //[/UserButtonCode_viewButton]
+    }
+    else if (buttonThatWasClicked == setupButton)
+    {
+        //[UserButtonCode_setupButton] -- add your button handler code here..
+		//getFilter()->fillGuitarPresetList();
+		PopupMenu m, custom;
+		for (int i=0;i<getFilter()->guitarPresets.size();i++)
+			m.addItem(i+1,getFilter()->guitarPresets[i].guitarName,true,isGuitarPreset(i));
+
+		m.addSeparator();
+		custom.addCustomItem(-1,fretsSlider,150,18,false);
+		custom.addCustomItem(-1,stringsSlider,150,18,false);
+		for (int i=0;i<maxStrings;i++)
+			custom.addCustomItem(-1,stringSlider[i],150,18,false);
+		m.addSubMenu("Customize",custom);
+
+		int result = m.showAt(setupButton);
+		if (result>0)
+			setUpGuitar(result-1);
+        //[/UserButtonCode_setupButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -1050,6 +1116,81 @@ void MidiChordsEditor::sliderValueChanged (Slider* sliderThatWasMoved)
     }
 
     //[UsersliderValueChanged_Post]
+    else if (sliderThatWasMoved == fretsSlider)
+    {
+		getFilter()->setNumFrets(roundToInt(fretsSlider->getValue()),true);
+		guitar->setNumFrets(roundToInt(fretsSlider->getValue()));
+    }
+    else if (sliderThatWasMoved == stringsSlider)
+    {
+		const int s = roundToInt(stringsSlider->getValue());
+		getFilter()->setNumStrings(s,true);
+		guitar->setNumStrings(s);
+		for (int i=0;i<maxStrings;i++)
+		{
+			stringSlider[i]->setEnabled(i<s);
+		}
+    }
+    else if (sliderThatWasMoved == stringSlider[0])
+    {
+		getFilter()->setStringValue(0,roundToInt(stringSlider[0]->getValue()),true);
+		guitar->setStringNote(0,roundToInt(stringSlider[0]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[1])
+    {
+		getFilter()->setStringValue(1,roundToInt(stringSlider[1]->getValue()),true);
+		guitar->setStringNote(1,roundToInt(stringSlider[1]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[2])
+    {
+		getFilter()->setStringValue(2,roundToInt(stringSlider[2]->getValue()),true);
+		guitar->setStringNote(2,roundToInt(stringSlider[2]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[3])
+    {
+		getFilter()->setStringValue(3,roundToInt(stringSlider[3]->getValue()),true);
+		guitar->setStringNote(3,roundToInt(stringSlider[3]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[4])
+    {
+		getFilter()->setStringValue(4,roundToInt(stringSlider[4]->getValue()),true);
+		guitar->setStringNote(4,roundToInt(stringSlider[4]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[5])
+    {
+		getFilter()->setStringValue(5,roundToInt(stringSlider[5]->getValue()),true);
+		guitar->setStringNote(5,roundToInt(stringSlider[5]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[6])
+    {
+		getFilter()->setStringValue(6,roundToInt(stringSlider[6]->getValue()),true);
+		guitar->setStringNote(6,roundToInt(stringSlider[6]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[7])
+    {
+		getFilter()->setStringValue(7,roundToInt(stringSlider[7]->getValue()),true);
+		guitar->setStringNote(7,roundToInt(stringSlider[7]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[8])
+    {
+		getFilter()->setStringValue(8,roundToInt(stringSlider[8]->getValue()),true);
+		guitar->setStringNote(8,roundToInt(stringSlider[8]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[9])
+    {
+		getFilter()->setStringValue(9,roundToInt(stringSlider[9]->getValue()),true);
+		guitar->setStringNote(9,roundToInt(stringSlider[9]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[10])
+    {
+		getFilter()->setStringValue(10,roundToInt(stringSlider[10]->getValue()),true);
+		guitar->setStringNote(10,roundToInt(stringSlider[10]->getValue()));
+    }
+    else if (sliderThatWasMoved == stringSlider[11])
+    {
+		getFilter()->setStringValue(11,roundToInt(stringSlider[11]->getValue()),true);
+		guitar->setStringNote(11,roundToInt(stringSlider[11]->getValue()));
+    }
     //[/UsersliderValueChanged_Post]
 }
 
@@ -1085,13 +1226,20 @@ void MidiChordsEditor::labelTextChanged (Label* labelThatHasChanged)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-
 void MidiChordsEditor::mouseDown(const MouseEvent& e)
 {
-	//if (infoBox->isVisible())
-	//	infoBox->toFront(false);
 	if (e.eventComponent==previewButton && !e.mods.isPopupMenu())
 		getFilter()->playCurrentChord(true);
+}
+
+void MidiChordsEditor::mouseDoubleClick (const MouseEvent& e)
+{
+	if (e.eventComponent==triggerKeyboard && (e.mods.isShiftDown() || e.mods.isPopupMenu()))
+	{
+		for (int i=0;i<128;i++)
+			getFilter()->setNoteBypassed(i,false);
+		triggerKeyboard->repaint();
+	}
 }
 
 void MidiChordsEditor::mouseUp (const MouseEvent& e)
@@ -1133,22 +1281,32 @@ void MidiChordsEditor::chordFromString(String chordString)
 		//absolute
 		for(int i=0;i<sa.size();i++)
 		{
-			if(sa[i].contains("."))
-				getFilter()->selectChordNote(t,root+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
-			else
-				getFilter()->selectChordNote(t,root+sa[i].getIntValue(),true);
+			String s = sa[i].trim();
+			if (s.isNotEmpty())
+			{
+				if(s.contains("."))
+					getFilter()->selectChordNote(t,root+s.upToFirstOccurrenceOf(".",false,true).getIntValue(),true,s.fromFirstOccurrenceOf(".",false,true).getIntValue());
+				else
+					getFilter()->selectChordNote(t,root+s.getIntValue(),true);
+			}
 		}
 	}
 	else {
+		//relative
 		for(int i=0;i<sa.size();i++)
 		{
-			//relative
-			if(sa[i].contains("."))
-				getFilter()->selectChordNote(t,t+sa[i].upToFirstOccurrenceOf(".",false,true).getIntValue(),true,sa[i].fromFirstOccurrenceOf(".",false,true).getIntValue());
-			else
-				getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
+			String s = sa[i].trim();
+			if (s.isNotEmpty())
+			{
+				if(s.contains("."))
+					getFilter()->selectChordNote(t,t+s.upToFirstOccurrenceOf(".",false,true).getIntValue(),true,s.fromFirstOccurrenceOf(".",false,true).getIntValue());
+				else
+					getFilter()->selectChordNote(t,t+s.getIntValue(),true);
+			}
 		}
 	}
+	if (guitar->isVisible())
+			getFilter()->translateToGuitarChord();
 }
 
 void MidiChordsEditor::changeListenerCallback (ChangeBroadcaster* source)
@@ -1165,6 +1323,32 @@ void MidiChordsEditor::updateParametersFromFilter()
 	const int outChan = roundToInt(filter->getParameter(kOutChannel)*16.f);
 	const int previewVel = roundToInt(filter->getParameter(kVelocity)*126.f)+1;
 	const int transpose = roundToInt(filter->getParameter(kTranspose)*96.f)-48;
+	const int s = filter->getNumStrings();
+	const bool flats = filter->getParameter(kFlats)>0;
+
+	guitar->setVisible(filter->getGuitarView());
+	setupButton->setEnabled(filter->getGuitarView());
+	fretsSlider->setValue(filter->getNumFrets(),false);
+	guitar->setNumFrets(filter->getNumFrets());
+
+	stringsSlider->setValue(s,false);
+	guitar->setNumStrings(s);
+
+	guitarPreset = -1;
+	for (int i=0;i<filter->guitarPresets.size();i++) {
+		if (isGuitarPreset(i))
+		{
+			guitarPreset = i;
+			break;
+		}
+	}
+
+	for (int i=0;i<maxStrings;i++)
+	{
+		stringSlider[i]->setEnabled(i<s);
+		stringSlider[i]->setValue(filter->getStringValue(i),false);
+		guitar->setStringNote(i,filter->getStringValue(i));
+	}
 
 	channelSlider->setValue(filter->getParameter(kChannel)*16.f,false);
 	learnChanSlider->setValue(chordChan,false);
@@ -1174,7 +1358,8 @@ void MidiChordsEditor::updateParametersFromFilter()
 	chordLearnButton->setToggleState(filter->getParameter(kLearnChord)>0,false);
 	triggerLearnButton->setToggleState(filter->getParameter(kFollowInput)>0,false);
 	toggleButton->setToggleState(filter->getParameter(kGuess)>0,false);
-	flatsButton->setToggleState(filter->getParameter(kFlats)>0,false);
+	flatsButton->setToggleState(flats,false);
+	guitar->setFlats(flats);
 	pcButton->setToggleState(filter->getParameter(kUseProgCh)>0,false);
 	transposeInputButton->setToggleState(filter->getParameter(kInputTranspose)>0,false);
 	toAllChannelsButton->setToggleState(filter->getParameter(kToAllChannels)>0,false);
@@ -1215,7 +1400,7 @@ void MidiChordsEditor::updateParametersFromFilter()
 			triggerLabel->setText("Trigger Note:",false);
 			triggerKeyboard->setAvailableRange(60,71);
 			triggerKeyboard->setKeyWidth((float)triggerKeyboard->getWidth()/7.f);
-			triggerNoteLabel->setText(getNoteNameWithoutOctave(t),false);
+			triggerNoteLabel->setText(getNoteNameWithoutOctave(t,!flats),false);
 		}
 		else {
 			triggerLabel->setText("Trigger Note:",false);
@@ -1236,7 +1421,8 @@ void MidiChordsEditor::updateParametersFromFilter()
 	if (presetNameLabel->getText() != getFilter()->getProgramName(getFilter()->getCurrentProgram()))
 		presetNameLabel->setText(getFilter()->getProgramName(getFilter()->getCurrentProgram()),false);
 
-	repaint();
+	triggerKeyboard->repaint();
+	//repaint();
 }
 
 String const MidiChordsEditor::getCurrentChordName()
@@ -1258,21 +1444,35 @@ String const MidiChordsEditor::getCurrentChordName()
 
 void MidiChordsEditor::listChordFiles(StringArray &list)
 {
-	File chordPath(getFilter()->getCurrentPath()+File::separatorString
-		+"midiChords"+File::separatorString+"chords");
-	Array<File> files;
-	chordPath.findChildFiles(files,File::findFiles,true);
-	for (int i=0;i<files.size();i++)
+	String chordPath = getFilter()->getCurrentPath() + File::separatorString
+		+ "midiChords" + File::separatorString + "chords";
+
+	if (guitarPreset>=0 && guitar->isVisible())
+		chordPath += File::separatorString + getFilter()->guitarPresets[guitarPreset].chordFile;
+	else 
+		chordPath += File::separatorString + "Chords.txt";
+
+	File chordFile = File(chordPath);
+	if (!chordFile.exists())
+		chordFile = getFilter()->getCurrentPath() + File::separatorString
+			+ "midiChords" + File::separatorString + "chords" + File::separatorString + "Chords.txt";
+
+	StringArray s;
+	s.addLines(chordFile.loadFileAsString());
+	for (int line=0;line<s.size();line++)
 	{
-		StringArray s;
-		s.addLines(files[i].loadFileAsString());
-		for (int line=0;line<s.size();line++)
-		{
-			if (!s[line].startsWithChar(';'))
-			{
-				list.add(s[line]);
-			}
-		}
+		if (!s[line].startsWithChar(';'))
+			list.add(s[line]);
+	}
+
+	chordFile = getFilter()->getCurrentPath() + File::separatorString
+		+ "midiChords" + File::separatorString + "chords" + File::separatorString + "User.txt";
+	s.clear();
+	s.addLines(chordFile.loadFileAsString());
+	for (int line=0;line<s.size();line++)
+	{
+		if (!s[line].startsWithChar(';'))
+			list.add(s[line]);
 	}
 }
 
@@ -1305,6 +1505,8 @@ void MidiChordsEditor::loadChord(String chorddef)
 				getFilter()->selectChordNote(t,t+sa[i].getIntValue(),true);
 		}
 	}
+	if (guitar->isVisible())
+		getFilter()->translateToGuitarChord();
 }
 
 void MidiChordsEditor::loadPreset(File file)
@@ -1364,18 +1566,20 @@ void MidiChordsEditor::loadPreset(File file)
 
 void MidiChordsEditor::saveChord(String name)
 {
+	const int curProgram = getFilter()->getCurrentProgram();
 	const int t = getFilter()->getCurrentTrigger();
 	String chordString = name + ":";
 	for (int c=1;c<=16;c++) {
 		for (int n=0;n<128;n++)
 		{
-			if (getFilter()->chordKbState.isNoteOn(c,n))
+			if (getFilter()->progKbState[curProgram][t].isNoteOn(c,n))
 				chordString += " " + String(n-t) + "." + String(c);
 		}
 	}
 	File chordFile(getFilter()->getCurrentPath()+File::separatorString
 		+"midiChords"+File::separatorString+"chords"+File::separatorString+"User.txt");
-	chordFile.appendText(chordString+"\n");
+	if (chordFile.create())
+		chordFile.appendText(chordString+"\n");
 }
 
 void MidiChordsEditor::textEditorTextChanged(TextEditor &editor) {
@@ -1469,7 +1673,7 @@ BEGIN_JUCER_METADATA
     <RECT pos="6 225 12M 93" fill="solid: ff000000" hasStroke="0"/>
     <RECT pos="6 97 12M 93" fill="solid: ff000000" hasStroke="0"/>
     <ROUNDRECT pos="462 202 172 36" cornerSize="10" fill="solid: ff000000" hasStroke="0"/>
-    <ROUNDRECT pos="230 195 173 26" cornerSize="12" fill="linear: 248 183, 248 215, 0=ff666666, 1=ffbfbfbf"
+    <ROUNDRECT pos="250 195 173 26" cornerSize="12" fill="linear: 248 183, 248 215, 0=ff666666, 1=ffbfbfbf"
                hasStroke="0"/>
     <TEXT pos="6 46 71 8" fill="solid: ff000000" hasStroke="0" text="Input Channel"
           fontname="Default font" fontsize="10.7" bold="0" italic="0" justification="36"/>
@@ -1543,7 +1747,7 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="velocity" id="d173a9d6025fabc0" memberName="velocitySlider"
-          virtualName="" explicitFocusOrder="0" pos="376 197 22 22" tooltip="Velocity for &quot;Play Chord&quot; button"
+          virtualName="" explicitFocusOrder="0" pos="397 197 22 22" tooltip="Velocity for &quot;Play Chord&quot; button"
           rotarysliderfill="7f000000" min="1" max="127" int="1" style="RotaryVerticalDrag"
           textBoxPos="NoTextBox" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
@@ -1592,7 +1796,7 @@ BEGIN_JUCER_METADATA
               explicitFocusOrder="0" pos="249 73 38 21" buttonText="Paste"
               connectedEdges="5" needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="play" id="92127eade5a319e5" memberName="previewButton"
-              virtualName="" explicitFocusOrder="0" pos="230 196 143 24" tooltip="Plays currently displayed chord"
+              virtualName="" explicitFocusOrder="0" pos="251 196 143 24" tooltip="Plays currently displayed chord"
               bgColOff="ff7ca17c" buttonText="Play Chord" connectedEdges="0"
               needsCallback="0" radioGroupId="0"/>
   <LABEL name="new label" id="5bdae6a44eaf90fa" memberName="chordEditor"
@@ -1669,10 +1873,13 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="view" id="d372ec945cfb2f67" memberName="viewButton" virtualName=""
-              explicitFocusOrder="0" pos="151 190 52 21" tooltip="Switch between keyboard &amp; guitar views"
+              explicitFocusOrder="0" pos="151 190 41 21" tooltip="Switch between keyboard &amp; guitar views"
               buttonText="View" connectedEdges="4" needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="new button" id="1079b29645f4ab3e" memberName="setupButton"
+              virtualName="" explicitFocusOrder="0" pos="195 190 45 21" buttonText="Setup"
+              connectedEdges="4" needsCallback="1" radioGroupId="0"/>
   <TEXTEDITOR name="new text editor" id="2319ccc237bcf9fc" memberName="infoBox"
-              virtualName="" explicitFocusOrder="0" pos="50%c 51%c 500 300"
+              virtualName="" explicitFocusOrder="0" pos="50%c 50%c 500 300"
               bkgcol="f2ffffff" outlinecol="ff000000" shadowcol="38000000"
               initialText="" multiline="1" retKeyStartsLine="0" readonly="1"
               scrollbars="1" caret="0" popupmenu="1"/>

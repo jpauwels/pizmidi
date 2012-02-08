@@ -41,8 +41,25 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("lastUIHeight",400,0);
 		progv.setProperty("lastTrigger",60,0);
 
+		progv.setProperty("GuitarView",false,0);
+		progv.setProperty("NumStrings",6,0);
+		progv.setProperty("NumFrets",24,0);
+		progv.setProperty("String0",64,0);
+		progv.setProperty("String1",59,0);
+		progv.setProperty("String2",55,0);
+		progv.setProperty("String3",50,0);
+		progv.setProperty("String4",45,0);
+		progv.setProperty("String5",40,0);
+		progv.setProperty("String6",-1,0);
+		progv.setProperty("String7",-1,0);
+		progv.setProperty("String8",-1,0);
+		progv.setProperty("String9",-1,0);
+		progv.setProperty("String10",-1,0);
+		progv.setProperty("String11",-1,0);
+
 		for (int t=0;t<128;t++)
 		{
+			progv.setProperty("Bypassed"+String(t),false,0);
 			ValueTree noteMatrix("NoteMatrix_T"+String(t));
 			//for (int c=0;c<16;c++) {
 			//	noteMatrix.setProperty("Ch"+String(c)+"_0-31", 0, 0);
@@ -100,6 +117,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 	}
 	memset(notePlaying,0,sizeof(notePlaying));
 	memset(chordNotePlaying,0,sizeof(chordNotePlaying));
+	memset(savedGuitarVoicing,0,sizeof(savedGuitarVoicing));
 	for (int c=0;c<16;c++)
 		for (int i=0;i<128;i++)
 			outputNote[c][i]=-1;
@@ -108,6 +126,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 	playFromGUI = playingFromGUI = false;
 	playButtonTrigger = curTrigger;
 	init = true;
+	fillGuitarPresetList();
 	setCurrentProgram(0);
 }
 
@@ -168,7 +187,10 @@ void MidiChords::setCurrentProgram (int index)
 		}
 	}
 	selectTrigger(programs->get(index,"lastTrigger"));
-    sendChangeMessage();  
+	//if (getGuitarView())
+	//	translateToGuitarChord();
+	//else 
+	//	sendChangeMessage();
 }
 
 float MidiChords::getParameter (int index)
@@ -233,11 +255,16 @@ void MidiChords::setParameter (int index, float newValue)
     }
     else if (index==kTranspose)
     {
-        transpose = roundToInt(newValue*96.f)-48;
-        sendChangeMessage();
+		int newTranspose = roundToInt(newValue*96.f)-48;
+		if (transpose!=newTranspose) {
+			transpose = newTranspose;
+			sendChangeMessage();
+		}
     }
 	else if (index==kMode)
 	{
+		if (getGuitarView())
+			setSavedGuitarVoicing(true);
 		mode = roundToInt(newValue*(numModes-1));
 		if (mode==Global)
 			selectTrigger(root);
@@ -451,49 +478,59 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 		if (channel==0 || m.isForChannel(channel))
 		{
 			if (m.isNoteOn()) {
-				blockOriginalEvent = true;
-				const int ch = m.getChannel();
-				const int tnote = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
-				const uint8 v = m.getVelocity();
-				if (!learn)
+				if (isNoteBypassed(m.getNoteNumber()))
 				{
-					bool triggered = false;
-					int trigger = tnote;
-					if (mode==Octave)
-						trigger =  60 + tnote%12;
-					else if (mode==Global)
-						trigger = root;
-					for (int c=1;c<=16;c++)
+					blockOriginalEvent = true;
+					output.addEvent(m,sample);
+					playingChord[m.getNoteNumber()].add(ChordNote(m.getChannel(),m.getNoteNumber()));
+					chordNotePlaying[m.getChannel()][m.getNoteNumber()]=true;
+				}
+				else 
+				{
+					blockOriginalEvent = true;
+					const int ch = m.getChannel();
+					const int tnote = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
+					const uint8 v = m.getVelocity();
+					if (!learn)
 					{
-						for (int n=0;n<128;n++)
+						bool triggered = false;
+						int trigger = tnote;
+						if (mode==Octave)
+							trigger =  60 + tnote%12;
+						else if (mode==Global)
+							trigger = root;
+						for (int c=1;c<=16;c++)
 						{
-							bool usedNote = false;
-							if (progKbState[curProgram][trigger].isNoteOn(c,n) && !usedNote) {
-								usedNote = outchan>0;
-								int outputChannel = outchan==0 ? c : outchan;
-								triggered = true;
-								int newNote = n+transpose;
-								if (mode==Global)
-									newNote += tnote-root;
-								else if (mode==Octave)
-									newNote +=  12 * (tnote/12 - 60/12);
-								if (chordNotePlaying[outputChannel][newNote]) {
-									ignoreNextNoteOff[outputChannel-1].add(newNote);
-									playingChord[tnote].add(ChordNote(outputChannel,newNote));
-								}
-								else if (newNote < 128 && newNote >= 0) 
-								{
-									output.addEvent(MidiMessage::noteOn(outputChannel,newNote,v),sample);
-									playingChord[tnote].add(ChordNote(outputChannel,newNote));
-									chordNotePlaying[outputChannel][newNote]=true;
+							for (int n=0;n<128;n++)
+							{
+								bool usedNote = false;
+								if (progKbState[curProgram][trigger].isNoteOn(c,n) && !usedNote) {
+									usedNote = outchan>0;
+									int outputChannel = outchan==0 ? c : outchan;
+									triggered = true;
+									int newNote = n+transpose;
+									if (mode==Global)
+										newNote += tnote-root;
+									else if (mode==Octave)
+										newNote +=  12 * (tnote/12 - 60/12);
+									if (chordNotePlaying[outputChannel][newNote]) {
+										ignoreNextNoteOff[outputChannel-1].add(newNote);
+										playingChord[tnote].add(ChordNote(outputChannel,newNote));
+									}
+									else if (newNote < 128 && newNote >= 0) 
+									{
+										output.addEvent(MidiMessage::noteOn(outputChannel,newNote,v),sample);
+										playingChord[tnote].add(ChordNote(outputChannel,newNote));
+										chordNotePlaying[outputChannel][newNote]=true;
+									}
 								}
 							}
 						}
+						if (triggered) sendChangeMessage();
+						notePlaying[ch][tnote]=true;
+						if (follow && mode!=Global)
+							selectTrigger(trigger);
 					}
-					if (triggered) sendChangeMessage();
-					notePlaying[ch][tnote]=true;
-					if (follow && mode!=Global)
-						selectTrigger(trigger);
 				}
 			}
 			else if (m.isNoteOff()) {
@@ -752,6 +789,9 @@ void MidiChords::setCurrentProgramStateInformation (const void* data, int sizeIn
 
 void MidiChords::selectTrigger(int index)
 {
+	if (getGuitarView())
+		savedGuitarVoicing[curTrigger]=true;
+
 	if (index>=0 && index<128)
 	{
 		if (mode==Octave)
@@ -766,7 +806,10 @@ void MidiChords::selectTrigger(int index)
 		}
 		curTrigger = index;
 		programs->set(curProgram,"lastTrigger",index);
-		sendChangeMessage();
+		if (getGuitarView())
+			translateToGuitarChord();
+		else 
+			sendChangeMessage();
 	}
 }
 
@@ -844,7 +887,10 @@ void MidiChords::resetAllChords()
 	}
 	chordKbState.reset();
 	chordKbState.noteOn(ch,curTrigger,1.f);
-	sendChangeMessage();
+	if (getGuitarView())
+		translateToGuitarChord();
+	else 
+		sendChangeMessage();
 }
 
 void MidiChords::copyChordToAllTriggers(bool absolute)
@@ -904,7 +950,10 @@ void MidiChords::resetChord(int trigger)
 	{
 		chordKbState.reset();
 		chordKbState.noteOn(ch,curTrigger,1.f);
-		sendChangeMessage();
+		if (getGuitarView())
+			translateToGuitarChord();
+		else 
+			sendChangeMessage();
 	}
 }
 
@@ -948,7 +997,10 @@ void MidiChords::transposeAll(bool up)
 			}
 		}
 	}
-	sendChangeMessage();
+	if (getGuitarView())
+		translateToGuitarChord();
+	else
+		sendChangeMessage();
 }
 
 void MidiChords::transposeChord(int trigger, bool up)
@@ -965,18 +1017,21 @@ void MidiChords::transposeChord(int trigger, bool up)
 		for (int n=0;n<128;n++)
 		{
 			if (oldState[c][n]) {
+				int newNote = n;
 				if (up) 
 				{
-					progKbState[curProgram][trigger].noteOn(c+1,n+1,1.f);
-					programs->setChordNote(curProgram,trigger,c+1,n+1,true);
+					newNote+=1;
+					progKbState[curProgram][trigger].noteOn(c+1,newNote,1.f);
+					programs->setChordNote(curProgram,trigger,c+1,newNote,true);
 					if (trigger==curTrigger) 
-						chordKbState.noteOn(c+1,n+1,1.f);
+						chordKbState.noteOn(c+1,newNote,1.f);
 				}
 				else {
-					progKbState[curProgram][trigger].noteOn(c+1,n-1,1.f);
-					programs->setChordNote(curProgram,trigger,c+1,n-1,true);
+					newNote-=1;
+					progKbState[curProgram][trigger].noteOn(c+1,newNote,1.f);
+					programs->setChordNote(curProgram,trigger,c+1,newNote,true);
 					if (trigger==curTrigger) 
-						chordKbState.noteOn(c+1,n-1,1.f);
+						chordKbState.noteOn(c+1,newNote,1.f);
 				}
 			}
 			else {
@@ -987,8 +1042,13 @@ void MidiChords::transposeChord(int trigger, bool up)
 			}
 		}
 	}
-	if (trigger==curTrigger) 
-	sendChangeMessage();
+
+	if (trigger==curTrigger) {
+		if (getGuitarView())
+			translateToGuitarChord();
+		else
+			sendChangeMessage();
+	}
 }
 
 void MidiChords::transposeCurrentChordByOctave(bool up)
@@ -1024,12 +1084,14 @@ void MidiChords::transposeCurrentChordByOctave(bool up)
 			}
 		}
 	}
+	if (getGuitarView())
+		translateToGuitarChord();
 	sendChangeMessage();
 }
 
 void MidiChords::applyChannelToChord()
 {
-	if (learnchan>=0) 
+	if (learnchan>0 && !getGuitarView()) 
 	{
 		programs->clearNoteMatrix(curProgram,curTrigger);
 		chordKbState.reset();
@@ -1070,6 +1132,8 @@ void MidiChords::savePreset(String name)
 				if (progKbState[curProgram][t].isNoteOn(c,n)) {
 					if (!usingTrigger) {
 						contents += String(t) + ":";
+						if (getGuitarView())
+							contents += " guitar";
 						usingTrigger = true;
 					}
 					contents += String(" ") + String(n-t)+"."+String(c);
@@ -1198,5 +1262,142 @@ void MidiChords::readChorderPreset(File file)
 		changeProgramName(curProgram,file.getFileNameWithoutExtension());
 
 		selectTrigger(curTrigger);
+	}
+}
+
+void MidiChords::translateToGuitarChord(bool force)
+{
+	bool doIt = force;
+	if (!force)
+	{
+		int guitarChord[maxStrings];
+		for (int s=0;s<maxStrings;s++)
+			guitarChord[s] = -1;
+		bool oldState[16][128];
+		for (int c=0;c<16;c++) {
+			for (int n=0;n<128;n++) {
+				oldState[c][n] = progKbState[curProgram][curTrigger].isNoteOn(c+1,n);
+				if (oldState[c][n] && getGuitarView() && c<12) {
+					if (guitarChord[c]>=0) {
+						doIt = true;
+						break;
+					}
+					guitarChord[c] = n;
+				}
+			}
+		}
+		for (int s=0;s<maxStrings;s++)
+		{
+			if (guitarChord[s]>=0)
+			{
+				if (guitarChord[s] > getStringValue(s) + getNumFrets()
+					|| guitarChord[s] < getStringValue(s)
+					|| s>=getNumStrings())
+				{
+					doIt = true;
+					break;
+				}
+			}
+		}
+	}
+	if (!doIt) {
+		sendChangeMessage();
+		return;
+	}
+
+	bool tempState[16][128];
+	memset (tempState,0,sizeof(tempState));
+	const int numFrets = (int)programs->get(curProgram,"NumFrets");
+	const int numStrings = (int)programs->get(curProgram,"NumStrings");
+	Array<int> unusedNotes;
+	Array<int> unusedStrings;
+	for (int s=0;s<numStrings;s++)
+		unusedStrings.add(s);
+
+	for (int n=127;n>=0;n--)
+	{
+		if (progKbState[curProgram][curTrigger].isNoteOnForChannels(0xffff,n))
+		{
+			int zeroFretNote;
+			bool foundString=false;
+			int s=0;
+			while (s<numStrings && !foundString)
+			{
+				zeroFretNote = (int)programs->get(curProgram,"String"+String(s));
+				if (n >= zeroFretNote && n <= zeroFretNote+numFrets && unusedStrings.contains(s)) {
+					tempState[s][n]=true;
+					foundString=true;
+					unusedStrings.removeValue(s);
+				}
+				s++;
+			}
+			if (!foundString) {
+				unusedNotes.addIfNotAlreadyThere(n);
+			}
+		}
+	}
+
+	if (unusedStrings.size()>0)
+	{
+		for (int n=0;n<unusedNotes.size();n++)
+		{
+			for (int i=0;i<unusedStrings.size();i++)
+			{
+				int zeroFretNote = (int)programs->get(curProgram,"String"+String(unusedStrings[i]));
+				if (n >= zeroFretNote && n <= zeroFretNote+numFrets && unusedStrings.contains(0)) {
+					tempState[unusedStrings[i]][n]=true;
+					unusedStrings.removeValue(0);
+				}
+			}
+		}
+	}
+
+	//todo: redistribute notes if more strings available and stretching over too many frets
+
+	progKbState[curProgram][curTrigger].reset();
+	chordKbState.reset();
+	programs->clearNoteMatrix(curProgram,curTrigger);
+	for (int c=0;c<16;c++) {
+		for (int n=0;n<128;n++)
+		{
+			if (tempState[c][n]) {
+				progKbState[curProgram][curTrigger].noteOn(c+1,n,1.f);
+				programs->setChordNote(curProgram,curTrigger,c+1,n,true);
+				chordKbState.noteOn(c+1,n,1.f);
+			}
+		}
+	}
+	sendChangeMessage();
+
+}
+
+void MidiChords::fillGuitarPresetList ()
+{
+	guitarPresets.clearQuick();
+	File chordPath(getCurrentPath()+File::separatorString
+		+"midiChords"+File::separatorString+"guitars");
+	Array<File> files;
+	chordPath.findChildFiles(files,File::findFiles,true);
+	for (int i=0;i<files.size();i++)
+	{
+		StringArray lines;
+		lines.addLines(files[i].loadFileAsString());
+		lines.sort(true);
+		for (int line=0;line<lines.size();line++)
+		{
+			if (lines[line].trim().isNotEmpty())
+			{
+				if (!lines[line].startsWithChar(';'))
+				{
+					StringArray s;
+					s.addTokens(lines[line],",","\"");
+					Array<int> notes;
+					for (int n = 3; n<s.size();n++)
+						notes.add(s[n].trim().getIntValue());
+					guitarPresets.add(GuitarDefinition(s[0].trim().removeCharacters("\""),s[1].trim(),
+						s[2].trim().upToFirstOccurrenceOf(" frets",false,true).getIntValue(),notes));
+				}
+			}
+		}
 	}
 }

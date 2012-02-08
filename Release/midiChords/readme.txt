@@ -7,6 +7,8 @@ Welcome to the hastily-compiled documentation copied from KVR forum posts. Anyth
 
 To install: put "midiChords.dll" and the "midiChords" folder in your VST folder.
 
+Input/trigger notes are on the bottom; output notes/chords on top. Shift-drag or right-click-drag the trigger keyboard to set bypassed keys (orange). These notes are passed through without being affected by Transpose/Out Channel settings.
+
 The copy/paste buttons use the same format as the saved chords/mappings, so you can copy from the GUI and paste into a text file and vice-versa. Ctrl-click on Paste uses the same pitches as the copied chord, otherwise it's relative to the new trigger note. 
 
 There is also a text box to type in chords directly. It can read four different formats:
@@ -19,13 +21,19 @@ With any format, to assign channels to notes, use decimal points: "C.1 E.2 G.3 B
 
 The "Paste" button can also use any of these formats directly, if you copied them from a website or other source (so you don't have to paste them into the text box first).
 
-Each chord may contain notes for multiple channels. Right-clicking notes on the chord keyboard allows you to choose which channels each note is sent on. The channel slider above the Learn button lets you filter which input channel(s) are learned. This setting is also used for setting chord notes with left-click.
+Keyboard View:
+Each chord may contain notes for multiple channels. Right-clicking notes on the chord keyboard allows you to choose which channels each note is sent on. The channel slider above the Learn button lets you filter which input channel(s) are learned. This setting is also used for setting chord notes with left-click. 
+
+Guitar View:
+Also known as "Generic Fretted Stringed Instrument View." Some presets are provided, or custom setups can be defined, with up to 16 strings in any tuning. Each string is sent on its own MIDI channel, so you may want to use the main Out Channel setting to send them all in one channel. When switching from keyboard to guitar (or when changing tuning or number of strings), midiChords attempts to form a guitar chord using the same pitches. Any notes outside the guitar's range will be deleted.
+
+Guitar definitions are filled in from text files in the "guitars" folder.
 
 Presets menu:
 Presets are saved to and loaded from the "mappings" folder. Any files in .chords, .fxp, or .xml (Steinerg Chorder presets) formats can be loaded. Presets can also be loaded by drag & drop.
 
 Saved chord shape menu:
-The "Chords" menu is built from plain text files in the "chords" folder. Chord shapes are defined as the difference in semitones from the trigger note, in a space-separated list. Everything to the left of the colon is the chord name displayed in the menu.
+The "Chords" menu is built from plain text files in the "chords" folder. "Chords.txt" shows for the Keyboard View; for "guitar" view the chords file that is used is defined in the guitar preset (for example "Guitar Chords.txt" only shows for the Guitar View). "User.txt" is appended at the end for all views. Chord shapes are defined as the difference in semitones from the trigger note, in a space-separated list. Everything to the left of the colon is the chord name displayed in the menu.
 
 Example:
 

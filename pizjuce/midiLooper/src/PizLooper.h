@@ -54,6 +54,7 @@ enum parameters {
 	kMuteGroup,
 	kForceToKey, //on/off
 	kScaleChannel, //midi channel for force to scale
+	kTransposeChannel, //midi channel for transpose
 	kUseScaleChannel, //toggle using midi channel for force to scale
 	kUseTrChannel, //toggle using midi channel for transposing
 	kNote0,kNote1,kNote2,kNote3,kNote4,kNote5,kNote6,kNote7,kNote8,kNote9,kNote10,kNote11,
@@ -662,10 +663,11 @@ private:
 
     bool init;
     bool kill_all_notes[numSlots];
-	int capturingScale;
-	int lowestScaleInputNote;
+	int capturingScale[numSlots];
+	int capturingTranspose[numSlots];
+	int lowestScaleInputNote[numSlots];
 	int playingNote[16][128]; //keep track of the actual notes that are output
-	uint64 barTriggerSample[numSlots][polyphony];
+	int64 barTriggerSample[numSlots][polyphony];
 	int64 barStopSample[numSlots][polyphony];
 	int lastPlayedIndex[numSlots][polyphony];
 	int lastLoopCount[numSlots][polyphony];

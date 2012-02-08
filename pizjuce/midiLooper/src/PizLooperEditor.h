@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  22 Jan 2012 7:48:02pm
+  Creation date:  4 Feb 2012 7:51:26pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_61D4828D__
-#define __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_61D4828D__
+#ifndef __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_D53500E8__
+#define __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_D53500E8__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "PizLooper.h"
@@ -118,7 +118,6 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-	NonShinyLookAndFeel Look;
     TooltipWindow tooltipWindow;
     void updateParametersFromFilter();
 	void updateControls(int param, float value, bool forCurProgram);
@@ -369,6 +368,8 @@ private:
     VSTSlider* s_VelocitySens;
     Label* label24;
     TextButton* b_Monitor;
+    VSTSlider* s_TransposeChannel;
+    Label* label28;
     Image cachedImage_piznew40_png;
 
 
@@ -379,4 +380,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_61D4828D__
+#endif   // __JUCER_HEADER_PIZLOOPEREDITOR_PIZLOOPEREDITOR_D53500E8__

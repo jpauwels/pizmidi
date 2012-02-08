@@ -67,5 +67,11 @@
     <ClInclude Include="..\..\..\common\GuitarNeckComponent.h">
       <Filter>Source Files\filter</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\common\NoteSlider.h">
+      <Filter>Source Files\filter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Release\midiChords\readme.txt" />
   </ItemGroup>
 </Project>

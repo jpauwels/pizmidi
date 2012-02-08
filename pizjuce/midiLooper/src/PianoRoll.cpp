@@ -14,7 +14,10 @@ PianoRoll::PianoRoll(AudioProcessor* _plugin, AudioProcessorEditor* _owner, Time
 	beatSize(0),
 	barSize(0),
 	gridSize(0),
-	timeline(0)
+	timeline(0),
+	draggingNoteTransposition(0),
+	draggingNoteTimeDelta(0)
+
 {
 	plugin = _plugin;
 	owner = _owner;
@@ -64,6 +67,8 @@ void PianoRoll::mouseDown (const MouseEvent& e)
 	if (hoveringNoteIndex != No_Note) {
 		hoveringNote = sequence->getEventPointer(hoveringNoteIndex);
 		//existing note
+		draggingNoteTimeDelta = 0.0;
+		draggingNoteTransposition = 0;
 		draggingNoteNumber = n;
 		draggingNoteVelocity = originalNoteVelocity = hoveringNote->message.getVelocity();
 		draggingNoteLength = sequence->getTimeOfMatchingKeyUp(hoveringNoteIndex) - sequence->getEventTime(hoveringNoteIndex);
@@ -89,12 +94,14 @@ void PianoRoll::mouseDown (const MouseEvent& e)
 		draggingNoteLength = stepLengthInPpq-1;
 		draggingNoteStartTime = snap ? t : accurateTime;
 		draggingNoteChannel = defaultChannel;
+		draggingNoteTimeDelta = 0.0;
+		draggingNoteTransposition = 0;
 		lastDragTime = snap ? t : accurateTime;
 		if (sequence->getNumEvents()==0 && timeline->getLength()==0)
 			timeline->setLoop(0,quarterNotesPerBar*ceil((lastDragTime+1)/(timebase*quarterNotesPerBar)));
 		plugin->getCallbackLock().enter();
-		sequence->addEvent(MidiMessage(MIDI_NOTEON | draggingNoteChannel, draggingNoteNumber, draggingNoteVelocity, draggingNoteStartTime));
-		sequence->addEvent(MidiMessage(MIDI_NOTEOFF | draggingNoteChannel, draggingNoteNumber, 0, draggingNoteStartTime+draggingNoteLength));
+		sequence->addNote(MidiMessage(MIDI_NOTEON | draggingNoteChannel, draggingNoteNumber, draggingNoteVelocity, draggingNoteStartTime),
+						  MidiMessage(MIDI_NOTEOFF | draggingNoteChannel, draggingNoteNumber, 0, draggingNoteStartTime+draggingNoteLength));
 		plugin->getCallbackLock().exit();
 		sequence->updateMatchedPairs();
 		hoveringNote = sequence->getEventPointer(sequence->getIndexOfNote(draggingNoteNumber,draggingNoteStartTime,true));
@@ -124,21 +131,10 @@ void PianoRoll::mouseDrag (const MouseEvent& e)
 		{
 			int noteDelta = n-draggingNoteNumber;
 			double timeDelta = jmax(0.0,snap ? snapPpqToGrid(x-offset) : x-offset) - draggingNoteStartTime;
-			for (int i=0;i<selectedNotes.size();i++)
-			{
-				jassert(selectedNotes.getUnchecked(i)->noteOffObject!=0);
-				//move note if Alt is not down
-				const int newNote = selectedNotes.getUnchecked(i)->message.getNoteNumber()+noteDelta;
-				selectedNotes.getUnchecked(i)->message.setNoteNumber(newNote);
-				selectedNotes.getUnchecked(i)->noteOffObject->message.setNoteNumber(newNote);
-				//sequence->moveEvent(sequence->getIndexOf(selectedNotes.getUnchecked(i)),timeDelta,true);
-				selectedNotes.getUnchecked(i)->message.addToTimeStamp(timeDelta);
-				selectedNotes.getUnchecked(i)->noteOffObject->message.addToTimeStamp(timeDelta);
-				//DBG("dragging on"+String(selectedNotes.getUnchecked(i)->message.getNoteNumber())+" off"+String(selectedNotes.getUnchecked(i)->noteOffObject->message.getNoteNumber()));
-			}
-			//sequence->updateMatchedPairs();
 			draggingNoteNumber += noteDelta;
 			draggingNoteStartTime += timeDelta;
+			draggingNoteTransposition = n-hoveringNote->message.getNoteNumber();
+			draggingNoteTimeDelta = jmax(0.0,snap ? snapPpqToGrid(x-offset) : x-offset) - hoveringNote->message.getTimeStamp();
 		}
 		else
 		{
@@ -156,8 +152,6 @@ void PianoRoll::mouseDrag (const MouseEvent& e)
 					selectedNotes.getUnchecked(i)->message.setVelocity((jlimit(1,127,selectedNotes.getUnchecked(i)->message.getVelocity()+velocityDelta))*midiScaler);
 				}
 			}
-			sequence->updateMatchedPairs();
-			//draggingNoteLength += lengthDelta;
 			draggingNoteVelocity += velocityDelta;
 		}
 		lastDragTime=x;
@@ -208,12 +202,31 @@ void PianoRoll::mouseUp (const MouseEvent& e)
 			plugin->getCallbackLock().enter();
 			for (int i=selectedNotes.size();--i>=0;)
 				sequence->deleteEvent(sequence->getIndexOf(selectedNotes.getUnchecked(i)),true);			
-			plugin->getCallbackLock().exit();
 			sequence->updateMatchedPairs();
+			plugin->getCallbackLock().exit();
 			clearSelection();
 		}
 		else {
-			if (wasResizing || e.mods.isAltDown())
+			if (draggingNoteTimeDelta!=0 || draggingNoteTransposition!=0)
+			{
+				plugin->getCallbackLock().enter();
+				if (draggingNoteTimeDelta!=0.0) {
+					for (int i=0;i<selectedNotes.size();i++) {
+						selectedNotes.getUnchecked(i)->message.addToTimeStamp(draggingNoteTimeDelta);
+						selectedNotes.getUnchecked(i)->noteOffObject->message.addToTimeStamp(draggingNoteTimeDelta);
+						//sequence->moveEvent(sequence->getIndexOf(selectedNotes.getUnchecked(i)),draggingNoteTimeDelta,true);
+					}
+					draggingNoteTimeDelta=0.0;
+				}
+				if (draggingNoteTransposition!=0) {
+					for (int i=0;i<selectedNotes.size();i++)
+						sequence->transposeEvent(sequence->getIndexOf(selectedNotes.getUnchecked(i)),draggingNoteTransposition);
+					draggingNoteTransposition=0;
+				}
+				sequence->updateMatchedPairs(true);
+				plugin->getCallbackLock().exit();
+			}
+			else if (wasResizing || e.mods.isAltDown())
 			{
 				//resize notes
 				wasResizing=false;
@@ -227,10 +240,10 @@ void PianoRoll::mouseUp (const MouseEvent& e)
 						selectedNoteLengths.remove(i);
 					}
 				}
+				plugin->getCallbackLock().enter();
+				sequence->updateMatchedPairs(true);
+				plugin->getCallbackLock().exit();
 			}
-			plugin->getCallbackLock().enter();
-			sequence->updateMatchedPairs(true);
-			plugin->getCallbackLock().exit();
 		}
 		hoveringNoteIndex = No_Note;
 		hoveringNote=0;
@@ -253,6 +266,8 @@ void PianoRoll::mouseDoubleClick (const MouseEvent& e)
 		double t = pixelsToPpq((float)e.x,true);
 		double accurateTime = pixelsToPpq((float)e.x,false);
 		hoveringNoteIndex = sequence->getIndexOfNote(n,accurateTime);
+		draggingNoteTimeDelta = 0.0;
+		draggingNoteTransposition = 0;
 		draggingNoteNumber = n;
 		draggingNoteVelocity = originalNoteVelocity = 127;
 		draggingNoteLength = stepLengthInPpq-1;
@@ -262,9 +277,9 @@ void PianoRoll::mouseDoubleClick (const MouseEvent& e)
 		if (hoveringNoteIndex == No_Note) {
 			if (sequence->getNumEvents()==0 && timeline->getLength()==0)
 				timeline->setLoop(0,quarterNotesPerBar*ceil((lastDragTime+1)/(timebase*quarterNotesPerBar)));
-			sequence->addEvent(MidiMessage(MIDI_NOTEON | draggingNoteChannel, draggingNoteNumber, draggingNoteVelocity, draggingNoteStartTime));
-			sequence->addEvent(MidiMessage(MIDI_NOTEOFF | draggingNoteChannel, draggingNoteNumber, 0, draggingNoteStartTime+draggingNoteLength));
-			sequence->updateMatchedPairs();
+			sequence->addNote(MidiMessage(MIDI_NOTEON | draggingNoteChannel, draggingNoteNumber, draggingNoteVelocity, draggingNoteStartTime),
+							  MidiMessage(MIDI_NOTEOFF | draggingNoteChannel, draggingNoteNumber, 0, draggingNoteStartTime+draggingNoteLength));
+			//sequence->updateMatchedPairs();
 			addToSelection(sequence->getEventPointer(sequence->getIndexOfNote(n,draggingNoteStartTime,true)));
 			sendChangeMessage();
 			noteLayer->repaint();
