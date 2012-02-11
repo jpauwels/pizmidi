@@ -2008,6 +2008,9 @@ JuceVSTWrapper::JuceVSTWrapper (audioMasterCallback audioMaster,
 		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition",0.0))
 			*(VstIntPtr *)&(filter->GetPlayPosition) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition",0.0);
 		else filter->reaper = false;
+		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition2",0.0))
+			*(VstIntPtr *)&(filter->GetPlayPosition2) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetPlayPosition2",0.0);
+		else filter->reaper = false;
 		if (audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetCursorPosition",0.0))
 			*(VstIntPtr *)&(filter->GetCursorPosition) = (VstIntPtr)audioMaster(NULL,0xdeadbeef,0xdeadf00d,0,"GetCursorPosition",0.0);
 		else filter->reaper = false;

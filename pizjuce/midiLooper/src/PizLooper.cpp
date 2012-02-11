@@ -83,7 +83,7 @@ JuceProgram::~JuceProgram()
 }
 
 //==============================================================================
-PizLooper::PizLooper() : programs(0)
+PizLooper::PizLooper() : programs(0), slotLimit(numSlots)
 {
 	DBG("PizLooper()");
 	demo = !readKeyFile();
@@ -925,9 +925,16 @@ void PizLooper::setStateInformation (const void* data, int sizeInBytes) {
 						programs[i].loop.updateMatchedPairs();
 						uint8 bogus[3] = {0xff, 0x2f, 0x00};
 						int lastIndex = programs[i].loop.getNumEvents()-1;
-						uint8* lastmsg = programs[i].loop.getEventPointer(lastIndex)->message.getRawData();
-						if (memcmp(bogus,lastmsg,sizeof(bogus))==0)
-							programs[i].loop.deleteEvent(lastIndex,false);
+						uint8* lastmsg;/* = programs[i].loop.getEventPointer(lastIndex)->message.getRawData();*/
+						bool done = false;
+						while (lastIndex>=0 && !done) {
+							lastmsg = programs[i].loop.getEventPointer(lastIndex)->message.getRawData();
+							if (memcmp(bogus,lastmsg,sizeof(bogus))==0)
+								programs[i].loop.deleteEvent(lastIndex,false);
+							else 
+								done = true;
+							lastIndex--;
+						}
 					}
 					datab+=midiSize;
 					totalMidiSize+=midiSize;

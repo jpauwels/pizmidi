@@ -93,6 +93,7 @@ public:
 
 	double (*TimeMap2_timeToBeats)(ReaProject *proj, double tpos, int *measures, int *cml, double *fullbeats, int *cdenom);
 	double (*GetPlayPosition)();
+	double (*GetPlayPosition2)();
 	double (*GetCursorPosition)();
 	void* (*get_config_var)(const char* name, int* szout);
 	bool reaper;

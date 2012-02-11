@@ -50,7 +50,7 @@ imagePluginEditor::imagePluginEditor (imagePluginFilter* const ownerFilter)
     chanSlider->addListener (this);
 
 	container->addAndMakeVisible (label = new Label ("new label",
-                                          "Insert Piz Here->  image v1.5\n\n- Double-click to toggle full-screen\n- Drag & drop to load images (png/jpg/gif/svg)\n- Supports MIDI Program Change"));
+		"Insert Piz Here->  image v"+String(JucePlugin_VersionString)+"\n\n- Double-click to toggle full-screen\n- Drag & drop to load images (png/jpg/gif/svg)\n- Supports MIDI Program Change"));
     label->setFont (Font (15.0000f, Font::plain));
     label->setJustificationType (Justification::centredLeft);
     label->setEditable (false, false, false);
@@ -179,7 +179,8 @@ void imagePluginEditor::buttonStateChanged (Button* buttonThatWasClicked) {
 			m.addSectionHeader("Text:");
             m.addCustomItem (1234, textEditor, 200 , 72, false);
             m.addSeparator();
-
+			
+			m.addItem(99999,"Load Image...");
             m.addItem(66,"Clear Image");
             sub1.addCustomItem (1234, colourSelector, 300, 300, false);
             m.addSubMenu ("Background Color", sub1);
@@ -211,6 +212,22 @@ void imagePluginEditor::buttonStateChanged (Button* buttonThatWasClicked) {
 					imagepad->setIconPath("");
 					imagepad->repaint();
                 }
+				else if (result==99999)
+				{
+					FileChooser myChooser ("Load image...",
+						File(getFilter()->iconPath),"*.png;*.gif;*.svg;*.jpg");
+
+					if (myChooser.browseForFileToOpen())
+					{
+						File file (myChooser.getResult());
+						if (imagepad->setImageFromFile(file))
+						{
+							//save the relative path
+							imagepad->setIconPath(file.getRelativePathFrom(File(getFilter()->iconPath)));
+							getFilter()->icon = imagepad->getIconPath();
+						}
+					}
+				}
 				else if (result==76) {
 					getFilter()->setBankColours(colourSelector->getCurrentColour(),textColourSelector->getCurrentColour());
 				}

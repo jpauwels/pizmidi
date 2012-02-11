@@ -142,19 +142,19 @@ public:
     const String getName() const;
 
     int getNumParameters() { return numParams; }
-	float getParameterForSlot(int parameter, int slot) 
+	inline float getParameterForSlot(int parameter, int slot) 
 	{
 		if (parameter<numGlobalParams)
 			return getParameter(parameter);
 		return getParameter(parameter + slot*numParamsPerSlot);
 	}
-	float getParamForActiveSlot(int parameter) 
+	inline float getParamForActiveSlot(int parameter) 
 	{
 		if (parameter<numGlobalParams)
 			return getParameter(parameter);
 		return getParameter(parameter + curProgram*numParamsPerSlot);
 	}
-	bool isSlotPlaying(int slot) {return getParameterForSlot(kPlay,slot)>=0.5f && programs[slot].looplength>0;}
+	inline bool isSlotPlaying(int slot) {return getParameterForSlot(kPlay,slot)>=0.5f && programs[slot].looplength>0;}
 	void playSlot(int slot)
 	{
 		notifyHost(kPlay,slot,1.f);
@@ -707,6 +707,8 @@ private:
 	double getPpqOfLastLoopStart(double ppq, int slot);
 	void recordMessage(const MidiMessage &midi_message, int slot,
 		bool playing, double ppq, double eventoffset, double ppqPerSample, int sample_number);
+
+	int slotLimit;
 };
 
 
