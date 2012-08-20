@@ -7,6 +7,7 @@ class ClickableLabel;
 class ClickableLabelListener
 {
 public:
+	virtual ~ClickableLabelListener(){};
 	virtual void clickableLabelMouseDown(ClickableLabel *label, const MouseEvent &e)=0;
 	virtual void clickableLabelMouseDoubleClick(ClickableLabel *label, const MouseEvent &e)=0;
 };

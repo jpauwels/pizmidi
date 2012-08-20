@@ -8,10 +8,13 @@ class VSTSlider : public Slider
 public:
     VSTSlider(String name);
     ~VSTSlider();
-    const String getTextFromValue (double value);
+    String getTextFromValue (double value);
     void setOwner(AudioProcessor*, int);
     float mapToVSTRange();
     void setVSTSlider(float x);
+
+    void setVSTSlider();
+	void setVSTParam();
 private:
     AudioProcessor* ownerPlugin;
     int vstIndex;

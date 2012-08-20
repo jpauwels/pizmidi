@@ -58,6 +58,8 @@ ChordName::ChordName(String chordName, String noteString)
 
 String ChordName::getName(int rootNote, int bassNote, bool flats)
 {
+	if (name=="dim7" || name=="+")
+		rootNote = bassNote;
 	String chordName = getNoteNameWithoutOctave(rootNote,!flats) + name;
 	if (bassNote%12 != rootNote%12)
 		chordName += "/" + getNoteNameWithoutOctave(bassNote,!flats);
@@ -335,7 +337,7 @@ String listNoteNames(Array<int> chord, bool flats)
 String getFirstRecognizedChord(Array<int> chord, bool flats)
 {
 	if (chord.size()==0)
-		return "--";
+		return " ";
 	if (chord.size()==2)
 		return getIntervalName(chord[1]-chord[0]) + " ("+listNoteNames(chord,flats)+")";
 	
@@ -354,8 +356,9 @@ String getFirstRecognizedChord(Array<int> chord, bool flats)
 	String s = ChordName::getIntervalString(stackedChord);
 	for (int i=0;i<ChordNames.size();i++)
 	{
-		if (ChordNames.getReference(i).equals2(s))
+		if (ChordNames.getReference(i).equals2(s)) {
 			return ChordNames.getReference(i).getName(stackedChord[ChordNames.getReference(i).getRootIndex()],chord[0],flats);
+		}
 	}
 	return "("+listNoteNames(temp,flats)+")";// "Unknown chord";
 }

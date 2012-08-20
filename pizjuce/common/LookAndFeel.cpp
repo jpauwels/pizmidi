@@ -1,5 +1,90 @@
   #include "LookAndFeel.h"
 
+namespace LookAndFeelHelpers
+{
+    static void createRoundedPath (Path& p,
+                                   const float x, const float y,
+                                   const float w, const float h,
+                                   const float cs,
+                                   const bool curveTopLeft, const bool curveTopRight,
+                                   const bool curveBottomLeft, const bool curveBottomRight) noexcept
+    {
+        const float cs2 = 2.0f * cs;
+
+        if (curveTopLeft)
+        {
+            p.startNewSubPath (x, y + cs);
+            p.addArc (x, y, cs2, cs2, float_Pi * 1.5f, float_Pi * 2.0f);
+        }
+        else
+        {
+            p.startNewSubPath (x, y);
+        }
+
+        if (curveTopRight)
+        {
+            p.lineTo (x + w - cs, y);
+            p.addArc (x + w - cs2, y, cs2, cs2, 0.0f, float_Pi * 0.5f);
+        }
+        else
+        {
+            p.lineTo (x + w, y);
+        }
+
+        if (curveBottomRight)
+        {
+            p.lineTo (x + w, y + h - cs);
+            p.addArc (x + w - cs2, y + h - cs2, cs2, cs2, float_Pi * 0.5f, float_Pi);
+        }
+        else
+        {
+            p.lineTo (x + w, y + h);
+        }
+
+        if (curveBottomLeft)
+        {
+            p.lineTo (x + cs, y + h);
+            p.addArc (x, y + h - cs2, cs2, cs2, float_Pi, float_Pi * 1.5f);
+        }
+        else
+        {
+            p.lineTo (x, y + h);
+        }
+
+        p.closeSubPath();
+    }
+
+    static Colour createBaseColour (const Colour& buttonColour,
+                                    const bool hasKeyboardFocus,
+                                    const bool isMouseOverButton,
+                                    const bool isButtonDown) noexcept
+    {
+        const float sat = hasKeyboardFocus ? 1.3f : 0.9f;
+        const Colour baseColour (buttonColour.withMultipliedSaturation (sat));
+
+        if (isButtonDown)
+            return baseColour.contrasting (0.2f);
+        else if (isMouseOverButton)
+            return baseColour.contrasting (0.1f);
+
+        return baseColour;
+    }
+
+    static TextLayout layoutTooltipText (const String& text, const Colour& colour) noexcept
+    {
+        const float tooltipFontSize = 13.0f;
+        const int maxToolTipWidth = 400;
+
+        AttributedString s;
+        s.setJustification (Justification::centred);
+        s.append (text, Font (tooltipFontSize, Font::bold), colour);
+
+        TextLayout tl;
+        tl.createLayoutWithBalancedLineLengths (s, (float) maxToolTipWidth);
+        return tl;
+    }
+}
+
 static const Colour createBaseColour (const Colour& buttonColour,
                                       const bool hasKeyboardFocus,
                                       const bool isMouseOverButton,
@@ -158,41 +243,25 @@ NonShinyLookAndFeel::~NonShinyLookAndFeel()
 {
 }
 
-static const TextLayout layoutTooltipText (const String& text) throw()
-{
-    const float tooltipFontSize = 12.0f;
-    const int maxToolTipWidth = 300;
-
-    const Font f (tooltipFontSize, Font::plain);
-    TextLayout tl (text, f);
-    tl.layout (maxToolTipWidth, Justification::left, true);
-
-    return tl;
-}
-
 void NonShinyLookAndFeel::getTooltipSize (const String& tipText, int& width, int& height)
 {
-    const TextLayout tl (layoutTooltipText (tipText));
+    const TextLayout tl (LookAndFeelHelpers::layoutTooltipText (tipText, Colours::black));
 
-    width = tl.getWidth() + 18;
-    height = tl.getHeight() + 10;
+    width = (int)tl.getWidth() + 18;
+    height = (int)tl.getHeight() + 10;
 }
 
 void NonShinyLookAndFeel::drawTooltip (Graphics& g, const String& text, int width, int height)
 {
     g.fillAll (findColour (TooltipWindow::backgroundColourId));
 
-    const Colour textCol (findColour (TooltipWindow::textColourId));
-
-#if ! JUCE_MAC // The mac windows already have a non-optional 1 pix outline, so don't double it here..
+   #if ! JUCE_MAC // The mac windows already have a non-optional 1 pix outline, so don't double it here..
     g.setColour (findColour (TooltipWindow::outlineColourId));
     g.drawRect (0, 0, width, height, 1);
-#endif
+   #endif
 
-    const TextLayout tl (layoutTooltipText (text));
-
-    g.setColour (findColour (TooltipWindow::textColourId));
-    tl.drawWithin (g, 0, 0, width, height, Justification::centred);
+    const TextLayout tl (LookAndFeelHelpers::layoutTooltipText (text, findColour (TooltipWindow::textColourId)));
+    tl.draw (g, Rectangle<float> ((float) width, (float) height));
 }
 
 
@@ -383,7 +452,7 @@ void NonShinyLookAndFeel::drawTextEditorOutline (Graphics& g, int width, int hei
 
             g.setOpacity (1.0f);
             const Colour shadowColour (textEditor.findColour (TextEditor::shadowColourId).withMultipliedAlpha (0.75f));
-            g.drawBevel (0, 0, width, height + 2, border + 2, shadowColour, shadowColour);
+            drawBevel (g, 0, 0, width, height + 2, border + 2, shadowColour, shadowColour);
         }
         else
         {
@@ -392,7 +461,7 @@ void NonShinyLookAndFeel::drawTextEditorOutline (Graphics& g, int width, int hei
 
             g.setOpacity (1.0f);
             const Colour shadowColour (textEditor.findColour (TextEditor::shadowColourId));
-            g.drawBevel (0, 0, width, height + 2, 3, shadowColour, shadowColour);
+            drawBevel (g, 0, 0, width, height + 2, 3, shadowColour, shadowColour);
         }
     }
 }
@@ -499,31 +568,12 @@ public:
 	SliderLabelComp() : Label (String::empty, String::empty) {}
 	~SliderLabelComp()	{}
 
-	void mouseWheelMove (const MouseEvent&, float, float) {}
+	virtual int mouseWheelMove (const MouseEvent&, float, float) { return 0; }
 };
 
 Label* NonShinyLookAndFeel::createSliderTextBox (Slider& slider)
 {
-	Label* const l = new SliderLabelComp();
-
-	l->setJustificationType (Justification::centred);
-
-	l->setColour (Label::textColourId, slider.findColour (Slider::textBoxTextColourId));
-
-	l->setColour (Label::backgroundColourId,
-				  (slider.getSliderStyle() == Slider::LinearBar) ? Colours::transparentBlack
-																 : slider.findColour (Slider::textBoxBackgroundColourId));
-	l->setColour (Label::outlineColourId, slider.findColour (Slider::textBoxOutlineColourId));
-
-	l->setColour (TextEditor::textColourId, slider.findColour (Slider::textBoxTextColourId).withAlpha(1.f));
-
-	l->setColour (TextEditor::backgroundColourId,
-				  slider.findColour (Slider::textBoxBackgroundColourId)
-						.withAlpha (slider.getSliderStyle() == Slider::LinearBar ? 0.7f : 1.0f));
-
-	l->setColour (TextEditor::outlineColourId, slider.findColour (Slider::textBoxOutlineColourId));
-
-	return l;
+	return LookAndFeel::createSliderTextBox(slider);
 }
 
 //==============================================================================

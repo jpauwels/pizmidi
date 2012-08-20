@@ -10,7 +10,7 @@ public:
 	};
 	~ChannelSlider() {};
 
-	const String getTextFromValue(double value)
+	String getTextFromValue(double value)
 	{
 		if (value<0.5) return allText;
 		return String((int)value);

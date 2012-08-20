@@ -1,4 +1,4 @@
-#include "juce_amalgamated.h"
+#include "JuceHeader.h"
 
 #ifndef MRALIASPRO
 static const String encryptXml (const XmlElement* xml,
