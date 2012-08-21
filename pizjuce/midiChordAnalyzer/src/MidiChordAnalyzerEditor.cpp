@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  18 Aug 2012 11:12:24am
+  Creation date:  20 Aug 2012 4:41:36pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -45,8 +45,6 @@ MidiChordAnalyzerEditor::MidiChordAnalyzerEditor (MidiChordAnalyzer* const owner
     chordNameLabel->setFont (Font (46.0000f, Font::bold));
     chordNameLabel->setJustificationType (Justification::centred);
     chordNameLabel->setEditable (false, false, false);
-    chordNameLabel->setColour (Label::backgroundColourId, Colour (0x279a3c3c));
-    chordNameLabel->setColour (Label::outlineColourId, Colour (0xb3000000));
     chordNameLabel->setColour (TextEditor::textColourId, Colours::black);
     chordNameLabel->setColour (TextEditor::backgroundColourId, Colour (0x0));
 
@@ -88,8 +86,10 @@ MidiChordAnalyzerEditor::MidiChordAnalyzerEditor (MidiChordAnalyzer* const owner
 	learnChanSlider->setMouseClickGrabsKeyboardFocus(false);
 	pizButton->setMouseClickGrabsKeyboardFocus(false);
 	chordNameLabel->setMouseClickGrabsKeyboardFocus(false);
+	chordNameLabel->setText(" ", false);
 	flatsButton->setMouseClickGrabsKeyboardFocus(false);
 	chordKeyboard->setMouseCursor(MouseCursor::PointingHandCursor);
+	numHeldNotes = 0;
 
 	learnChanSlider->setAllText("All");
 	pizButton->addListener(this);
@@ -142,7 +142,7 @@ void MidiChordAnalyzerEditor::paint (Graphics& g)
     g.fillAll (Colour (0xffd8d8d8));
 
     g.setGradientFill (ColourGradient (Colours::white,
-                                       61.0f, (float) (-31),
+                                       61.0f, (float) (-15),
                                        Colour (0xe7e7e7),
                                        61.0f, 23.0f,
                                        false));
@@ -164,6 +164,23 @@ void MidiChordAnalyzerEditor::paint (Graphics& g)
 
     g.setColour (Colours::black);
     g.fillPath (internalPath2);
+
+    g.setGradientFill (ColourGradient (Colours::black,
+                                       100.0f, 16.0f,
+                                       Colour (0x279a3c3c),
+                                       100.0f, 63.0f,
+                                       false));
+    g.fillRect (8, 57, 460, 59);
+
+    g.setColour (Colour (0xb3000000));
+    g.drawRect (8, 57, 460, 59, 1);
+
+    g.setGradientFill (ColourGradient (Colour (0x0),
+                                       69.0f, 168.0f,
+                                       Colours::black,
+                                       69.0f, 294.0f,
+                                       false));
+    g.fillRect (0, 149, proportionOfWidth (1.0000f), 33);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -638,7 +655,30 @@ void MidiChordAnalyzerEditor::updateParametersFromFilter()
 	if (chordChan==0) chordKeyboard->setMidiChannelsToDisplay(0xffff);
 	else chordKeyboard->setMidiChannelsToDisplay(1<<(chordChan-1));
 
-	chordNameLabel->setText(getCurrentChordName(chordChan),false);
+	if (numHeldNotes < chordKeyboard->getNumHeldNotes(chordChan)) {
+		chordNameLabel->setText(getCurrentChordName(chordChan), false);
+		Desktop::getInstance().getAnimator().animateComponent(chordNameLabel, chordNameLabel->getBounds(), 1.f, 0, false, 1.0, 1.0);
+	}
+	else if (getCurrentChordName(chordChan)==" ")
+	{
+		Desktop::getInstance().getAnimator().animateComponent(chordNameLabel, chordNameLabel->getBounds(), 0.f, 500, false, 2.0, 0.5);
+	}
+	else
+		startTimer(100);
+	numHeldNotes = chordKeyboard->getNumHeldNotes(chordChan);
+}
+
+void MidiChordAnalyzerEditor::timerCallback() {
+	const int chordChan = roundToInt(getFilter()->getParameter(kChannel)*16.f);
+	if (getCurrentChordName(chordChan)==" ")
+	{
+		Desktop::getInstance().getAnimator().animateComponent(chordNameLabel, chordNameLabel->getBounds(), 0.f, 500, false, 2.0, 0.5);
+	}
+	else {
+		chordNameLabel->setText(getCurrentChordName(chordChan), false);
+		Desktop::getInstance().getAnimator().animateComponent(chordNameLabel, chordNameLabel->getBounds(), 1.f, 0, false, 1.0, 1.0);
+	}
+	stopTimer();
 }
 
 String const MidiChordAnalyzerEditor::getCurrentChordName(int channel)
@@ -666,24 +706,28 @@ String const MidiChordAnalyzerEditor::getCurrentChordName(int channel)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MidiChordAnalyzerEditor"
-                 componentName="" parentClasses="public AudioProcessorEditor, public ChangeListener"
+                 componentName="" parentClasses="public AudioProcessorEditor, public ChangeListener, public Timer"
                  constructorParams="MidiChordAnalyzer* const ownerFilter" variableInitialisers="AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="0" snapShown="1" overlayOpacity="0.330000013"
                  fixedSize="1" initialWidth="600" initialHeight="180">
   <BACKGROUND backgroundColour="ffd8d8d8">
-    <RECT pos="0 0 100% 100" fill="linear: 61 -31, 61 23, 0=ffffffff, 1=e7e7e7"
+    <RECT pos="0 0 100% 100" fill="linear: 61 -15, 61 23, 0=ffffffff, 1=e7e7e7"
           hasStroke="0"/>
     <IMAGE pos="479 9 111 61" resource="snake_gif" opacity="1" mode="0"/>
     <TEXT pos="477 73 38 8" fill="solid: ff000000" hasStroke="0" text="Channel"
           fontname="Default font" fontsize="10.7" bold="0" italic="0" justification="36"/>
     <PATH pos="0 0 100 100" fill="solid: ff000000" hasStroke="0" nonZeroWinding="1">s 148.57 30.73 l 148.57 39.44 l 144.21 39.44 l 144.21 32.91 l 142.03 32.91 l 142.03 39.44 l 137.68 39.44 l 137.68 32.91 l 135.5 32.91 l 135.5 39.44 l 131.14 39.44 l 131.14 30.73 x s 150.74 39.44 l 150.74 32.91 l 155.1 32.91 l 155.1 39.44 x s 150.74 28.56 l 155.1 28.56 l 155.1 30.73 l 150.74 30.73 x s 157.28 39.44 l 157.28 30.73 l 163.81 30.73 l 163.81 28.56 l 168.17 28.56 l 168.17 39.44 x s 161.72 32.91 l 161.72 37.27 l 163.81 37.27 l 163.81 32.91 x s 170.34 39.44 l 170.34 32.91 l 174.7 32.91 l 174.7 39.44 x s 170.34 28.56 l 174.7 28.56 l 174.7 30.73 l 170.34 30.73 x s 187.77 37.27 l 187.77 39.44 l 176.88 39.44 l 176.88 28.56 l 187.77 28.56 l 187.77 30.73 l 181.23 30.73 l 181.23 37.27 x s 196.48 32.91 l 194.3 32.91 l 194.3 39.44 l 189.94 39.44 l 189.94 28.56 l 194.3 28.56 l 194.3 30.73 l 200.83 30.73 l 200.83 39.44 l 196.48 39.44 x s 213.9 39.44 l 203.01 39.44 l 203.01 30.73 l 213.9 30.73 x s 209.54 32.91 l 207.37 32.91 l 207.37 37.27 l 209.54 37.27 x s 224.79 30.73 l 224.79 32.91 l 220.43 32.91 l 220.43 39.44 l 216.08 39.44 l 216.08 30.73 x s 226.97 39.44 l 226.97 30.73 l 233.5 30.73 l 233.5 28.56 l 237.86 28.56 l 237.86 39.44 x s 231.41 32.91 l 231.41 37.27 l 233.5 37.27 l 233.5 32.91 x s 250.92 28.56 l 250.92 39.44 l 246.57 39.44 l 246.57 35.09 l 244.39 35.09 l 244.39 39.44 l 240.03 39.44 l 240.03 28.56 x s 246.57 30.73 l 244.39 30.73 l 244.39 32.91 l 246.57 32.91 x s 253.1 30.73 l 263.99 30.73 l 263.99 39.44 l 259.63 39.44 l 259.63 32.91 l 257.46 32.91 l 257.46 39.44 l 253.1 39.44 x s 266.17 32.91 l 268.34 32.91 l 268.34 30.73 l 277.06 30.73 l 277.06 39.44 l 266.17 39.44 x s 272.7 32.91 l 270.52 32.91 l 270.52 37.27 l 272.7 37.27 x s 279.23 28.56 l 283.59 28.56 l 283.59 39.44 l 279.23 39.44 x s 285.77 43.8 l 285.77 41.62 l 292.3 41.62 l 292.3 39.44 l 285.77 39.44 l 285.77 30.73 l 290.12 30.73 l 290.12 37.27 l 292.3 37.27 l 292.3 30.73 l 296.66 30.73 l 296.66 43.8 x s 303.19 35.09 l 303.19 32.91 l 298.83 32.91 l 298.83 30.73 l 309.72 30.73 l 309.72 32.91 l 307.54 32.91 l 307.54 35.09 l 305.37 35.09 l 305.37 37.27 l 309.72 37.27 l 309.72 39.44 l 298.83 39.44 l 298.83 37.27 l 301.01 37.27 l 301.01 35.09 x s 311.9 39.44 l 311.9 30.73 l 322.79 30.73 l 322.79 35.09 l 320.61 35.09 l 320.61 37.27 l 322.79 37.27 l 322.79 39.44 x s 316.26 35 l 318.43 35 l 318.43 33 l 316.26 33 x s 333.68 30.73 l 333.68 32.91 l 329.32 32.91 l 329.32 39.44 l 324.97 39.44 l 324.97 30.73 x</PATH>
     <PATH pos="0 0 100 100" fill="solid: ff000000" hasStroke="0" nonZeroWinding="1">s 161.67 16.83 l 165 16.83 l 165 25.17 l 161.67 25.17 x s 166.67 18.5 l 175 18.5 l 175 25.17 l 171.67 25.17 l 171.67 20.17 l 170 20.17 l 170 25.17 l 166.67 25.17 x s 185 20.17 l 181.67 20.17 l 181.67 21.83 l 185 21.83 l 185 23.5 l 183.33 23.5 l 183.33 25.17 l 176.67 25.17 l 176.67 23.5 l 180 23.5 l 180 21.83 l 176.67 21.83 l 176.67 20.17 l 178.33 20.17 l 178.33 18.5 l 185 18.5 x s 186.67 25.17 l 186.67 18.5 l 195 18.5 l 195 21.83 l 193.33 21.83 l 193.33 23.5 l 195 23.5 l 195 25.17 x s 190 21.77 l 191.67 21.77 l 191.67 20.23 l 190 20.23 x s 203.33 18.5 l 203.33 20.17 l 200 20.17 l 200 25.17 l 196.67 25.17 l 196.67 18.5 x s 211.67 18.5 l 211.67 20.17 l 210 20.17 l 210 25.17 l 206.67 25.17 l 206.67 20.17 l 205 20.17 l 205 18.5 l 206.67 18.5 l 206.67 16.83 l 210 16.83 l 210 18.5 x s 228.33 16.83 l 228.33 21.83 l 221.67 21.83 l 221.67 25.17 l 218.33 25.17 l 218.33 16.83 x s 221.67 20.17 l 225 20.17 l 225 18.5 l 221.67 18.5 x s 230 25.17 l 230 20.17 l 233.33 20.17 l 233.33 25.17 x s 230 16.83 l 233.33 16.83 l 233.33 18.5 l 230 18.5 x s 238.33 21.83 l 238.33 20.17 l 235 20.17 l 235 18.5 l 243.33 18.5 l 243.33 20.17 l 241.67 20.17 l 241.67 21.83 l 240 21.83 l 240 23.5 l 243.33 23.5 l 243.33 25.17 l 235 25.17 l 235 23.5 l 236.67 23.5 l 236.67 21.83 x s 256.67 16.83 l 260 16.83 l 260 25.17 l 256.67 25.17 l 256.67 21.83 l 253.33 21.83 l 253.33 25.17 l 250 25.17 l 250 16.83 l 253.33 16.83 l 253.33 20.17 l 256.67 20.17 x s 261.67 25.17 l 261.67 18.5 l 270 18.5 l 270 21.83 l 268.33 21.83 l 268.33 23.5 l 270 23.5 l 270 25.17 x s 265 21.77 l 266.67 21.77 l 266.67 20.23 l 265 20.23 x s 278.33 18.5 l 278.33 20.17 l 275 20.17 l 275 25.17 l 271.67 25.17 l 271.67 18.5 x s 280 25.17 l 280 18.5 l 288.33 18.5 l 288.33 21.83 l 286.67 21.83 l 286.67 23.5 l 288.33 23.5 l 288.33 25.17 x s 283.33 21.77 l 285 21.77 l 285 20.23 l 283.33 20.23 x s 290 21.83 l 290 20.17 l 298.33 20.17 l 298.33 21.83 x s 300 16.83 l 303.33 16.83 l 303.33 18.5 l 305 18.5 l 305 20.17 l 306.67 20.17 l 306.67 21.83 l 305 21.83 l 305 23.5 l 303.33 23.5 l 303.33 25.17 l 300 25.17 l 300 23.5 l 301.67 23.5 l 301.67 21.83 l 303.33 21.83 l 303.33 20.17 l 301.67 20.17 l 301.67 18.5 l 300 18.5 x</PATH>
+    <RECT pos="8 57 460 59" fill="linear: 100 16, 100 63, 0=ff000000, 1=279a3c3c"
+          hasStroke="1" stroke="1, mitered, butt" strokeColour="solid: b3000000"/>
+    <RECT pos="0 149 100% 33" fill="linear: 69 168, 69 294, 0=0, 1=ff000000"
+          hasStroke="0"/>
   </BACKGROUND>
   <LABEL name="new label" id="84701c0c650fe2e" memberName="chordNameLabel"
-         virtualName="" explicitFocusOrder="0" pos="8 57 460 59" bkgCol="279a3c3c"
-         outlineCol="b3000000" edTextCol="ff000000" edBkgCol="0" labelText="G#Maj13b5#9"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="46" bold="1" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="8 57 460 59" edTextCol="ff000000"
+         edBkgCol="0" labelText="G#Maj13b5#9" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="46" bold="1" italic="0" justification="36"/>
   <GENERICCOMPONENT name="" id="8e79ee27297830eb" memberName="chordKeyboard" virtualName=""
                     explicitFocusOrder="0" pos="8 124 16M 47" class="ChordAnalyzerKeyboardComponent"
                     params="ownerFilter-&gt;chordKbState, ownerFilter"/>

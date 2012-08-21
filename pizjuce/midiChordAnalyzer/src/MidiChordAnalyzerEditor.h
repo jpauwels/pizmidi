@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  18 Aug 2012 11:12:24am
+  Creation date:  20 Aug 2012 4:41:36pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_E48551AA__
-#define __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_E48551AA__
+#ifndef __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_8E29B7A9__
+#define __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_8E29B7A9__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChordAnalyzer.h"
@@ -42,6 +42,21 @@ public:
 		this->setLowestVisibleKey(36);
 	}
 	~ChordAnalyzerKeyboardComponent() {};
+	
+	int getNumHeldNotes(int channel)
+	{
+		int num=0;
+		for (int i=1;i<=16;i++) {
+			if (channel==0 || channel==i) {
+				for (int n=0;n<128;n++)
+				{
+					if (s->isNoteOn(i, n))
+						++num;
+				}
+			}
+		}
+		return num;
+	}
 
 private:
 	MidiChordAnalyzer* owner;
@@ -80,6 +95,7 @@ private:
 */
 class MidiChordAnalyzerEditor  : public AudioProcessorEditor,
                                  public ChangeListener,
+                                 public Timer,
                                  public ButtonListener,
                                  public SliderListener
 {
@@ -96,6 +112,7 @@ public:
     void mouseDoubleClick (const MouseEvent& e);
 	void mouseUp (const MouseEvent& e);
 	String const getCurrentChordName(int channel);
+	void timerCallback();
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -115,6 +132,7 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     TooltipWindow tooltipWindow;
     void updateParametersFromFilter();
+	int numHeldNotes;
 
     MidiChordAnalyzer* getFilter() const throw()       { return (MidiChordAnalyzer*) getAudioProcessor(); }
     //[/UserVariables]
@@ -139,4 +157,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_E48551AA__
+#endif   // __JUCER_HEADER_MIDICHORDANALYZEREDITOR_MIDICHORDANALYZEREDITOR_8E29B7A9__
