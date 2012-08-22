@@ -369,7 +369,7 @@ midi2qwerty::midi2qwerty(audioMasterCallback audioMaster)
     for (int i=0;i<kNumSlots;i++) keydown[i]=false;
 
     settingprog=false;
-	InitAscii2KeyCodeTable();
+	//InitAscii2KeyCodeTable();
 	init();
 }
 

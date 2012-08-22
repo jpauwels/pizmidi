@@ -368,7 +368,7 @@ void InitAscii2KeyCodeTable() {};
 /*
  * Define keycodes only found in OSX >= 10.5 for older versions
  */
-//#if MAC_OS_X_VERSION_MAX_ALLOWED <= 1040
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= 1040
 #define kVK_ANSI_Keypad0 0x52
 #define kVK_ANSI_Keypad1 0x53
 #define kVK_ANSI_Keypad2 0x54
@@ -416,7 +416,7 @@ void InitAscii2KeyCodeTable() {};
 #define kVK_UpArrow 0x7e
 #define kVK_Space 0x31
 #define kVK_Command 0x37
-//#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= 1040 */
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= 1040 */
 
 char *getKeyName(unsigned int keycode) {
 	char *text;
@@ -529,57 +529,6 @@ char *getModifierName(float i)
 	return Modifier;
 }
 
-enum {
-	kTableCountOffset = 256+2,
-	kFirstTableOffset = 256+4,
-	kTableSize = 128
-};
-
-struct KeyTable
-{
-	short transtable[256];
-	short kchrID;
-	Str255 KCHRname;
-} keytable;
-
-OSStatus InitAscii2KeyCodeTable()
-{
-    unsigned char *theCurrentKCHR, *ithKeyTable;
-    short count, i, j, resID;
-    Handle theKCHRRsrc;
-    ResType rType;
-        /* set up our table to all minus ones */
-    for (i=0;i<256; i++) keytable.transtable[i] = -1;
-        /* find the current kchr resource ID */
-    keytable.kchrID = (short) GetScriptVariable(smCurrentScript,smScriptKeys);
-        /* get the current KCHR resource */
-    theKCHRRsrc = GetResource('KCHR', keytable.kchrID);
-    if (theKCHRRsrc == NULL) return resNotFound;
-        GetResInfo(theKCHRRsrc,&resID,&rType,keytable.KCHRname);
-        /* dereference the resource */
-    theCurrentKCHR = (unsigned char *)  (*theKCHRRsrc);
-        /* get the count from the resource */
-    count = * (short *) (theCurrentKCHR + kTableCountOffset);
-        /* build inverse table by merging all key tables */
-    for (i=0; i<count; i++) {
-        ithKeyTable = theCurrentKCHR + kFirstTableOffset + (i * kTableSize);
-        for (j=0; j<kTableSize; j++) {
-            if ( keytable.transtable[ ithKeyTable[j] ] == -1)
-                keytable.transtable[ ithKeyTable[j] ] = j;
-        }
-    }
-        /* all done */
-        
-        return noErr;
-}
-
-short AsciiToKeyCode(short asciiCode)
-{        
-    if (asciiCode >= 0 && asciiCode <= 255) 
-		return keytable.transtable[asciiCode];
-    else return -1;
-}
-
 CGKeyCode keyNameToKeyCode(char* character)
 {
 	if (!strcmp(character,"RETURN")) return kVK_Return;
@@ -630,23 +579,57 @@ CGKeyCode keyNameToKeyCode(char* character)
 	if (!strcmp(character,"CONTROL")) return kVK_Control;
 	if (!strcmp(character,"COMMAND")) return kVK_Command;
 	if (!strcmp(character,"(reserved)")) return -1;
+	if (!strcmp(character,"[ {")) return kVK_ANSI_LeftBracket;
+	if (!strcmp(character,"\\ |")) return kVK_ANSI_Backslash;
+	if (!strcmp(character,"] }")) return kVK_ANSI_RightBracket;
+	if (!strcmp(character,"` ~")) return kVK_ANSI_Grave;
+	if (!strcmp(character,"0 )")) return kVK_ANSI_0;
+	if (!strcmp(character,"1 !")) return kVK_ANSI_1;  
+	if (!strcmp(character,"2 @")) return kVK_ANSI_2;  
+	if (!strcmp(character,"3 #")) return kVK_ANSI_3;  
+	if (!strcmp(character,"4 $")) return kVK_ANSI_4;  
+	if (!strcmp(character,"5 %")) return kVK_ANSI_5;  
+	if (!strcmp(character,"6 ^")) return kVK_ANSI_6;  
+	if (!strcmp(character,"7 &")) return kVK_ANSI_7;
+	if (!strcmp(character,"8 *")) return kVK_ANSI_8;
+	if (!strcmp(character,"9 (")) return kVK_ANSI_9;
+	if (!strcmp(character,"- _")) return kVK_ANSI_Minus;
+	if (!strcmp(character,"= +")) return kVK_ANSI_Equal;
+	if (!strcmp(character,", <")) return kVK_ANSI_Comma;
+	if (!strcmp(character,". >")) return kVK_ANSI_Period;
+	if (!strcmp(character,"/ ?")) return kVK_ANSI_Slash;
+	if (!strcmp(character,"; :")) return kVK_ANSI_Semicolon;
+	if (!strcmp(character,"' \"")) return kVK_ANSI_Quote;
+	if (!strcmp(character,"A")) return kVK_ANSI_A;
+	if (!strcmp(character,"B")) return kVK_ANSI_B;
+	if (!strcmp(character,"C")) return kVK_ANSI_C;
+	if (!strcmp(character,"D")) return kVK_ANSI_D;
+	if (!strcmp(character,"E")) return kVK_ANSI_E;
+	if (!strcmp(character,"F")) return kVK_ANSI_F;
+	if (!strcmp(character,"G")) return kVK_ANSI_G;
+	if (!strcmp(character,"H")) return kVK_ANSI_H;
+	if (!strcmp(character,"I")) return kVK_ANSI_I;
+	if (!strcmp(character,"J")) return kVK_ANSI_J;
+	if (!strcmp(character,"K")) return kVK_ANSI_K;
+	if (!strcmp(character,"L")) return kVK_ANSI_L;
+	if (!strcmp(character,"M")) return kVK_ANSI_M;
+	if (!strcmp(character,"N")) return kVK_ANSI_N;
+	if (!strcmp(character,"O")) return kVK_ANSI_O;
+	if (!strcmp(character,"P")) return kVK_ANSI_P;
+	if (!strcmp(character,"Q")) return kVK_ANSI_Q;
+	if (!strcmp(character,"R")) return kVK_ANSI_R;
+	if (!strcmp(character,"S")) return kVK_ANSI_S;
+	if (!strcmp(character,"T")) return kVK_ANSI_T;
+	if (!strcmp(character,"U")) return kVK_ANSI_U;
+	if (!strcmp(character,"V")) return kVK_ANSI_V;
+	if (!strcmp(character,"W")) return kVK_ANSI_W;
+	if (!strcmp(character,"X")) return kVK_ANSI_X;
+	if (!strcmp(character,"Y")) return kVK_ANSI_Y;
+	if (!strcmp(character,"Z")) return kVK_ANSI_Z;
 
-	return (CGKeyCode)AsciiToKeyCode((short)character[0]);
+	return -1;
 }
 
-
-char KeyCodeToAscii(short virtualKeyCode) {
-	unsigned long state;
-	long keyTrans;
-	char charCode;
-	Ptr kchr;
-	state = 0;
-	kchr = (Ptr) GetScriptVariable(smCurrentScript, smKCHRCache);
-	keyTrans = KeyTranslate(kchr, virtualKeyCode, &state);
-	charCode = keyTrans;
-	if (!charCode) charCode = (keyTrans>>16);
-	return charCode;
-}
 
 #endif
 
