@@ -1,6 +1,7 @@
 #ifndef MidiChordsPLUGINFILTER_H
 #define MidiChordsPLUGINFILTER_H
 
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "../../common/PizAudioProcessor.h"
 #include "../../common/midistuff.h"
 #include "../../common/ChordFunctions.h"
@@ -21,6 +22,13 @@ enum parameters {
 	kInputTranspose,
 	kToAllChannels,
 	kOutChannel,
+
+	kStrum,
+	kSpeed,
+	kMaxDelay,
+	kVelRamp,
+	kAccel,
+	//kVelToSpeed,
 
     numParams,
 	kVariation,
@@ -340,13 +348,23 @@ public:
 	int getNumStrings() {
 		return programs->get(curProgram,"NumStrings");
 	}
-	
+	void setStrumDirection(bool up)
+	{
+		programs->set(curProgram,"StrumUp"+String(curTrigger),up);
+		sendChangeMessage();
+	}
+	bool getStrumDirection()
+	{
+		return programs->get(curProgram,"StrumUp"+String(curTrigger));
+	}
 	void readChorderPreset(File file);
 	bool readKeyFile(File file=File::nonexistent);
 	bool demo;
 
 	Array<GuitarDefinition> guitarPresets;
 	void fillGuitarPresetList ();
+	
+	void toggleUsePC(bool use);
 
 	String dataPath;
 	int lastUIWidth, lastUIHeight;
@@ -354,11 +372,11 @@ public:
     juce_UseDebuggingNewOperator
 
 private:
+	MidiChordsPrograms* programs;
 	int curProgram;
 	int curTrigger;
 	//StringArray chordNames;
 
-	MidiChordsPrograms* programs;
 	bool init;
 
     int channel;
@@ -376,6 +394,13 @@ private:
 	bool inputtranspose;
 	bool ccToAllChannels;
 
+	bool  strum;
+	float fSpeed;
+	float fMaxDelay;
+	float fVelRamp;
+	float fAccel;
+	//float fVelToSpeed;
+
 	bool savedGuitarVoicing[128];
 	bool playingFromGUI, playFromGUI;
 	int playButtonTrigger;
@@ -386,9 +411,17 @@ private:
 
 	Array<ChordNote> playingChord[128];
 	bool chordNotePlaying[16][128];
+	bool chordNotePlaying2[16][128];
 	Array<int> ignoreNextNoteOff[16];
 
 	void copySettingsToProgram(int index);
+
+	MidiBuffer delayBuffer;
+	int noteDelay[16][128];
+	uint64 noteOrigPos[16][128];
+	uint64 totalSamples;
+	bool expectingDelayedNotes;
+	AudioPlayHead::CurrentPositionInfo lastPosInfo;
 };
 
 #endif

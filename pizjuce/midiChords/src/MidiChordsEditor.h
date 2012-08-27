@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  31 Jan 2012 8:42:55am
+  Creation date:  27 Aug 2012 11:21:42am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,13 +19,14 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
 #include "../../common/ChannelSlider.h"
 #include "../../common/NoteSlider.h"
+#include "../../common/VSTSlider.h"
 #include "../../common/GuitarNeckComponent.h"
 #include "../../common/LookAndFeel.h"
 
@@ -36,7 +37,7 @@ public:
 	FretsSlider(String name) : Slider(name)	{};
 	~FretsSlider() {};
 
-	const String getTextFromValue(double value)
+	String getTextFromValue(double value)
 	{
 		const int n = roundToInt(value);
 		return "Frets: "+String(n);
@@ -49,7 +50,7 @@ public:
 	StringsSlider(String name) : Slider(name)	{};
 	~StringsSlider() {};
 
-	const String getTextFromValue(double value)
+	String getTextFromValue(double value)
 	{
 		const int n = roundToInt(value);
 		return "Strings: "+String(n);
@@ -177,7 +178,7 @@ public:
 	}
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
-		const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
+		//const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
 		Colour c (Colours::transparentWhite);
 		if (isDown)
 			c = findColour (keyDownOverlayColourId);
@@ -467,6 +468,7 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
 	friend class ChordsKeyboardComponent;
 	friend class TriggerKeySelectorKeyboard;
+	static void chordMenuCallback (int result, MidiChordsEditor* editor);
     void textEditorTextChanged(TextEditor&);
     void textEditorReturnKeyPressed(TextEditor&);
     void textEditorEscapeKeyPressed(TextEditor&);
@@ -477,6 +479,10 @@ public:
     void mouseDown (const MouseEvent& e);
     void mouseDoubleClick (const MouseEvent& e);
 	void mouseUp (const MouseEvent& e);
+	virtual void selectionChanged() {};
+	virtual void fileClicked(const juce::File &file,const juce::MouseEvent &);
+	virtual void fileDoubleClicked (const File &file);
+	virtual void browserRootChanged (const File& newRoot);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -485,6 +491,9 @@ public:
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void labelTextChanged (Label* labelThatHasChanged);
 
+    // Binary resources:
+    static const char* midichordsLogo_png2;
+    static const int midichordsLogo_png2Size;
 
 
     //==============================================================================
@@ -502,13 +511,9 @@ private:
 	void loadPreset(File file);
 	void chordFromString(String chordString);
 
-	void fileDoubleClicked (const File &file);
-	void selectionChanged(void) {}
-	void fileClicked(const juce::File &file,const juce::MouseEvent &);
-
 	bool isGuitarPreset(int index)
 	{
-		if (getFilter()->getNumStrings()!=getFilter()->guitarPresets[index].numStrings) 
+		if (getFilter()->getNumStrings()!=getFilter()->guitarPresets[index].numStrings)
 			return false;
 		for (int i=0;i<getFilter()->getNumStrings();i++)
 		{
@@ -584,7 +589,7 @@ private:
     TextButton* chordMenuButton;
     Label* presetNameLabel;
     TextButton* presetMenuButton;
-    TextEditor* textEditor;
+    TextEditor* chordSaveEditor;
     TextButton* copyButton;
     TextButton* pasteButton;
     TextButton* previewButton;
@@ -607,7 +612,15 @@ private:
     Label* label2;
     TextButton* viewButton;
     TextButton* setupButton;
+    TextButton* strumDirectionButton;
+    TextButton* strumButton;
+    VSTSlider* maxTimeSlider;
+    VSTSlider* speedSlider;
+    VSTSlider* accelSlider;
+    VSTSlider* velRampSlider;
     TextEditor* infoBox;
+    TextEditor* tuningSaveEditor;
+    Image cachedImage_midichordsLogo_png2;
 
 
     //==============================================================================
@@ -617,4 +630,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_FAD4A16A__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__

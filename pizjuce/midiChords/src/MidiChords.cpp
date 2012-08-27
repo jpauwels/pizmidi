@@ -36,6 +36,13 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("InputTranspose",false,0);
 		progv.setProperty("ToAllChannels",false,0);
 
+		progv.setProperty("Strum",false,0);
+		progv.setProperty("Speed",0.5f,0);
+		progv.setProperty("MaxDelay",0.f,0);
+		progv.setProperty("VelRamp",0.5f,0);
+		progv.setProperty("Accel",0.5f,0);
+
+
 		progv.setProperty("Name","Program "+ String(p+1),0);
 		progv.setProperty("lastUIWidth",600,0);
 		progv.setProperty("lastUIHeight",400,0);
@@ -56,10 +63,15 @@ MidiChordsPrograms::MidiChordsPrograms ()
 		progv.setProperty("String9",-1,0);
 		progv.setProperty("String10",-1,0);
 		progv.setProperty("String11",-1,0);
+		progv.setProperty("String12",-1,0);
+		progv.setProperty("String13",-1,0);
+		progv.setProperty("String14",-1,0);
+		progv.setProperty("String15",-1,0);
 
 		for (int t=0;t<128;t++)
 		{
 			progv.setProperty("Bypassed"+String(t),false,0);
+			progv.setProperty("StrumUp"+String(t),true,0);
 			ValueTree noteMatrix("NoteMatrix_T"+String(t));
 			//for (int c=0;c<16;c++) {
 			//	noteMatrix.setProperty("Ch"+String(c)+"_0-31", 0, 0);
@@ -81,14 +93,14 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 	DBG("MidiChords()");
 
 	dataPath = getCurrentPath() + File::separatorString + "midiChords"; 
-	//if (File(path).exists())
-	//	dataPath = path;
-	//else {
-	//	path = File::getSpecialLocation(File::userApplicationDataDirectory).getFullPathName()
-	//		+ File::separatorString + "pizmidi" + File::separatorString + "midiChords";
-	//	if (!File(path).exists())
-	//		File 
-	//}
+	if (!File(dataPath).exists()) {
+		dataPath = File::getSpecialLocation(File::userApplicationDataDirectory).getFullPathName()
+			+ File::separatorString + "pizmidi" + File::separatorString + "midiChords";
+		if (!File(dataPath).exists()) {
+			dataPath = File::getSpecialLocation(File::commonApplicationDataDirectory).getFullPathName()
+				+ File::separatorString + "pizmidi" + File::separatorString + "midiChords";		
+		}
+	}
 
 	demo = !readKeyFile();
 	fillChordDatabase();
@@ -117,7 +129,15 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 	}
 	memset(notePlaying,0,sizeof(notePlaying));
 	memset(chordNotePlaying,0,sizeof(chordNotePlaying));
+	memset(chordNotePlaying2,0,sizeof(chordNotePlaying2));
 	memset(savedGuitarVoicing,0,sizeof(savedGuitarVoicing));
+
+	memset(noteDelay,0,sizeof(noteDelay));
+	memset(noteOrigPos,0,sizeof(noteOrigPos));
+	totalSamples = 0;
+	expectingDelayedNotes = false;
+
+
 	for (int c=0;c<16;c++)
 		for (int i=0;i<128;i++)
 			outputNote[c][i]=-1;
@@ -171,6 +191,12 @@ void MidiChords::setCurrentProgram (int index)
 	inputtranspose = programs->get(index,"InputTranspose");
 	ccToAllChannels = programs->get(index,"ToAllChannels");
 
+	strum = programs->get(index,"Strum");
+	fSpeed = programs->get(index,"Speed");
+	fMaxDelay = programs->get(index,"MaxDelay");
+	fVelRamp = programs->get(index,"VelRamp");
+	fAccel = programs->get(index,"Accel");
+
     lastUIWidth = programs->get(index,"lastUIWidth");
     lastUIHeight = programs->get(index,"lastUIHeight");
 	learn = false;
@@ -211,6 +237,12 @@ float MidiChords::getParameter (int index)
 	case kFlats: return flats ? 1.f : 0.f;
 	case kInputTranspose: return inputtranspose ? 1.f : 0.f;
 	case kToAllChannels: return ccToAllChannels ? 1.f : 0.f;
+	case kStrum: return strum ? 1.f : 0.f;
+	case kSpeed: return fSpeed;
+	case kMaxDelay: return fMaxDelay;
+	case kVelRamp: return fVelRamp;
+	case kAccel: return fAccel;
+
 	default: return 0.0f;
     }
 }
@@ -300,38 +332,54 @@ void MidiChords::setParameter (int index, float newValue)
         ccToAllChannels = newValue>0.f;
         sendChangeMessage();
     }
+	else if (index==kStrum)
+	{
+		strum = newValue>0.f;
+		sendChangeMessage();
+	}
+	else if (index==kSpeed)
+	{
+		fSpeed = newValue;
+		sendChangeMessage();
+	}
+	else if (index==kMaxDelay)
+	{
+		fMaxDelay = newValue;
+		sendChangeMessage();
+	}
+	else if (index==kVelRamp)
+	{
+		fVelRamp = newValue;
+		sendChangeMessage();
+	}
+	else if (index==kAccel)
+	{
+		fAccel = newValue;
+		sendChangeMessage();
+	}
 }
 
 const String MidiChords::getParameterName (int index)
 {
-    if (index == kChannel)
-        return "Channel";
-    if (index == kLearnChannel)
-        return "LearnChannel";
-    if (index == kOutChannel)
-        return "OutChannel";
-	if (index == kUseProgCh)
-		return "UseProgCh";
-	if (index == kLearnChord)
-		return "Learn";
-	if (index == kFollowInput)
-		return "FollowInput";
-	if (index == kTranspose)
-		return "Transpose";
-	if (index == kMode)
-		return "TriggerMode";
-	if (index == kRoot)
-		return "RootNote";
-	if (index == kGuess)
-		return "GuessChord";
-	if (index == kFlats)
-		return "Flats";
-	if (index == kVelocity)
-		return "PreviewVelocity";
-	if (index == kInputTranspose)
-		return "TranspInput";
-	if (index == kToAllChannels)
-		return "ToAllChannels";
+    if (index == kChannel)        return "Channel";
+    if (index == kLearnChannel)   return "LearnChannel";
+    if (index == kOutChannel)     return "OutChannel";
+	if (index == kUseProgCh)	  return "UseProgCh";
+	if (index == kLearnChord)     return "Learn";
+	if (index == kFollowInput)	  return "FollowInput";
+	if (index == kTranspose)	  return "Transpose";
+	if (index == kMode)			  return "TriggerMode";
+	if (index == kRoot)		      return "RootNote";
+	if (index == kGuess)		  return "GuessChord";
+	if (index == kFlats)		  return "Flats";
+	if (index == kVelocity)		  return "PreviewVelocity";
+	if (index == kInputTranspose) return "TranspInput";
+	if (index == kToAllChannels)  return "ToAllChannels";
+	if (index == kStrum)		  return "Strum";
+	if (index == kSpeed)		  return "Speed";
+	if (index == kMaxDelay)		  return "MaxTime";
+	if (index == kVelRamp)		  return "VelRamp";
+	if (index == kAccel)		  return "Accel";
 	return String::empty;
 }
 
@@ -370,6 +418,24 @@ const String MidiChords::getParameterText (int index)
         return inputtranspose ? "Yes" : "No";  
     if (index == kToAllChannels)
         return ccToAllChannels ? "Yes" : "No";  
+	if (index == kStrum)
+		return strum ? "On" : "Off";
+	if (index == kSpeed)
+		return String(roundToInt(fSpeed*100.f))+"%";
+	if (index == kMaxDelay)
+		return String(roundToInt(1000.f*(0.1f+2.9f*fMaxDelay))) + " ms";
+	if (index == kVelRamp) {
+		const int ramp = roundToInt(fVelRamp*200.f)-100;
+		if (ramp>0) 
+			return "+" + String(ramp);
+		return String(ramp);
+	}
+	if (index == kAccel) {
+		const int accel = roundToInt(fAccel*200.f)-100;
+		if (accel>0) 
+			return "+" + String(accel);
+		return String(accel);
+	}
 	return String::empty;
 }
 
@@ -400,12 +466,31 @@ void MidiChords::prepareToPlay (double sampleRate, int samplesPerBlock)
 
 void MidiChords::releaseResources()
 {
-
+	delayBuffer.clear();
 }
 
 void MidiChords::processBlock (AudioSampleBuffer& buffer,
                                 MidiBuffer& midiMessages)
 {
+	bool wasplaying;
+	AudioPlayHead::CurrentPositionInfo pos;
+    if (getPlayHead() != 0 && getPlayHead()->getCurrentPosition (pos))
+	    wasplaying = lastPosInfo.isPlaying || lastPosInfo.isRecording;
+    else { //no timeinfo
+        zeromem (&pos, sizeof (pos));
+		wasplaying=true;
+		pos.isPlaying = true;
+        pos.timeSigNumerator = 4;
+        pos.timeSigDenominator = 4;
+        pos.bpm = 120.0;
+		pos.ppqPosition = lastPosInfo.ppqPosition + buffer.getNumSamples()*(120.0/(60.0*getSampleRate()));
+	}
+    lastPosInfo = pos;
+    double samplesPerBeat = 60.0 * getSampleRate() / pos.bpm;
+	totalSamples=roundToInt(pos.ppqPosition*samplesPerBeat);
+	if (delayBuffer.getNumEvents()==0)
+		expectingDelayedNotes=false;
+
 	MidiBuffer output;
 	if (playFromGUI!=playingFromGUI)
 	{
@@ -421,23 +506,60 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 						usedNote = outchan>0;
 						int outputChannel = outchan==0 ? c : outchan;
 						int newNote = n+transpose;
-						if (chordNotePlaying[outputChannel][newNote]) {
-							ignoreNextNoteOff[outputChannel-1].add(newNote);
+						if (chordNotePlaying[outputChannel-1][newNote]) {
+							ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
 							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
 						}
 						else if (newNote < 128 && newNote >= 0) 
 						{
-							output.addEvent(MidiMessage::noteOn(outputChannel,newNote,(uint8)previewVel),0);
+							if (!strum) {
+								output.addEvent(MidiMessage::noteOn(outputChannel,newNote,(uint8)previewVel),0);
+								noteDelay[outputChannel-1][newNote] = 0;
+								noteOrigPos[outputChannel-1][newNote] = totalSamples+0;
+								chordNotePlaying[outputChannel-1][newNote]=true;
+							}
 							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
-							chordNotePlaying[outputChannel][newNote]=true;
 						}
 					}
+				}
+			}
+			if (strum) {
+				int chordpos = 0;
+				int heldnotes = playingChord[curTrigger].size();
+				bool upstroke = programs->get(curProgram,"StrumUp"+String(curTrigger));
+			    float accel = (2.f*fAccel-1.f);
+				float maxmax = (float)getSampleRate()*(0.1f+2.9f*fMaxDelay);
+				float maxdelay = (1.f-fSpeed)*maxmax;
+
+				while(chordpos<heldnotes) 
+				{
+					int p = upstroke ? chordpos : (heldnotes-1  - chordpos);
+					int delay = 0;
+					int n = playingChord[curTrigger][p].n;
+					int c = playingChord[curTrigger][p].c;
+					int velocity = previewVel;
+					if (playingChord[curTrigger].size()>1) {
+						const float x = (float)(chordpos)/(float)(heldnotes-1);
+						delay = roundToInt((accel*0.3f*sin(float_Pi*x)+x)*maxdelay);
+						velocity += roundToInt((2.f*fVelRamp-1.f)*(x*127.f-64.f));
+						velocity = jlimit(1,127,velocity);
+						//float veldelay = 1.f-(fVelToSpeed)*MIDI_TO_FLOAT(strumvel);
+						//delay=roundToInt(veldelay*(float)delay);
+					}
+					if (delay>0) {
+						delayBuffer.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),delay);
+						expectingDelayedNotes=true;
+					}
+					else
+						output.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),0);
+					noteDelay[c-1][n] = delay;
+					noteOrigPos[c-1][n] = totalSamples+0;
+					chordpos++;
 				}
 			}
 			notePlaying[ch][curTrigger]=true;
 			playingFromGUI = true;
 			playButtonTrigger = curTrigger;
-
 		}
 		else {
 			int numNotes = playingChord[playButtonTrigger].size();
@@ -450,13 +572,27 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			else {
 				for (int i = 0; i<numNotes; i++) {
 					const int chordNote = playingChord[playButtonTrigger][i].n;
-					const int c = playingChord[playButtonTrigger][i].c;
-					if (!ignoreNextNoteOff[c-1].contains(chordNote)) {
-						output.addEvent(MidiMessage::noteOff(c,chordNote),0);
-						chordNotePlaying[c][chordNote]=false;
+					const int c = playingChord[playButtonTrigger][i].c - 1;
+
+					int delay = noteDelay[c][chordNote];
+					if (!expectingDelayedNotes)
+						delay = 0;//(int)(totalSamples - noteOrigPos[c][chordNote])/*+tomod.deltaFrames*/ +(int)(getSampleRate()/1000.f);
+                    if ((noteDelay[c][chordNote]+noteOrigPos[c][chordNote])
+                        >= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
+                            delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
+                    }
+                    if (delay>0)
+                    {
+						delayBuffer.addEvent(MidiMessage::noteOff(c+1,chordNote),delay);
+                    }
+					else {
+						if (!ignoreNextNoteOff[c].contains(chordNote)) {
+							output.addEvent(MidiMessage::noteOff(c+1,chordNote),0);
+							chordNotePlaying[c][chordNote]=false;
+						}
+						else 
+							ignoreNextNoteOff[c].removeAllInstancesOf(chordNote);
 					}
-					else
-						ignoreNextNoteOff[c-1].removeValue(chordNote);
 				}
 				playingChord[playButtonTrigger].clear();
 			}
@@ -488,7 +624,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 				else 
 				{
 					blockOriginalEvent = true;
-					const int ch = m.getChannel();
+					const int ch = m.getChannel()-1;
 					const int tnote = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
 					const uint8 v = m.getVelocity();
 					if (!learn)
@@ -513,19 +649,78 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 										newNote += tnote-root;
 									else if (mode==Octave)
 										newNote +=  12 * (tnote/12 - 60/12);
-									if (chordNotePlaying[outputChannel][newNote]) {
-										ignoreNextNoteOff[outputChannel-1].add(newNote);
+									if (chordNotePlaying[outputChannel-1][newNote]) {
+										if (!strum) {
+											noteDelay[outputChannel-1][newNote] = 0;
+											noteOrigPos[outputChannel-1][newNote] = totalSamples+sample;
+											ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
+										}
+										// needs work, causes stuck notes when strumming...?
+										else {
+											if (!expectingDelayedNotes)
+												ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
+										}
 										playingChord[tnote].add(ChordNote(outputChannel,newNote));
 									}
 									else if (newNote < 128 && newNote >= 0) 
 									{
-										output.addEvent(MidiMessage::noteOn(outputChannel,newNote,v),sample);
+										if (!strum) {
+											output.addEvent(MidiMessage::noteOn(outputChannel,newNote,v),sample);
+											noteDelay[outputChannel-1][newNote] = 0;
+											noteOrigPos[outputChannel-1][newNote] = totalSamples+sample;
+											chordNotePlaying[outputChannel-1][newNote]=true;
+										}
 										playingChord[tnote].add(ChordNote(outputChannel,newNote));
-										chordNotePlaying[outputChannel][newNote]=true;
 									}
 								}
 							}
 						}
+						if (strum) {
+							int chordpos = 0;
+							int heldnotes = playingChord[trigger].size();
+							bool upstroke = programs->get(curProgram,"StrumUp"+String(trigger));
+							float accel = (2.f*fAccel-1.f);
+							float maxmax = (float)getSampleRate()*(0.1f+2.9f*fMaxDelay);
+							float maxdelay = (1.f-fSpeed)*maxmax;
+
+							while(chordpos<heldnotes) 
+							{
+								int p = upstroke ? chordpos : (heldnotes-1  - chordpos);
+								int delay = 0;
+								int n = playingChord[trigger][p].n;
+								int c = playingChord[trigger][p].c;
+								int velocity = v;
+								if (playingChord[trigger].size()>1) {
+									const float x = (float)(chordpos)/(float)(heldnotes-1);
+									delay = roundToInt((accel*0.3f*sin(float_Pi*x)+x)*maxdelay);
+									velocity += roundToInt((2.f*fVelRamp-1.f)*(x*127.f-64.f));
+									velocity = jlimit(1,127,velocity);
+									//float veldelay = 1.f-(fVelToSpeed)*MIDI_TO_FLOAT(strumvel);
+									//delay=roundToInt(veldelay*(float)delay);
+								}
+								if (delay>0) {
+									if (chordNotePlaying[c-1][n])
+										delayBuffer.addEvent(MidiMessage::noteOff(c,n),sample+delay-1);
+									delayBuffer.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),sample+delay);
+									expectingDelayedNotes=true;
+								}
+								else {
+									int s = sample;
+									int s2 = sample;
+									if (sample==0) s2+=1;
+									if (sample==buffer.getNumSamples()-1) s-=1;
+									if (chordNotePlaying[c-1][n]) {
+										output.addEvent(MidiMessage::noteOff(c,n),s);
+									}
+									output.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),s2);
+									chordNotePlaying[c-1][n]=true;
+								}
+								noteDelay[c-1][n] = delay;
+								noteOrigPos[c-1][n] = totalSamples+sample;
+								chordpos++;
+							}
+						}
+
 						if (triggered) sendChangeMessage();
 						notePlaying[ch][tnote]=true;
 						if (follow && mode!=Global)
@@ -535,27 +730,38 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			}
 			else if (m.isNoteOff()) {
 				blockOriginalEvent = true;
-				const int ch = m.getChannel();
+				const int ch = m.getChannel()-1;
 				const int note = inputtranspose ? (m.getNoteNumber() - transpose) : m.getNoteNumber();
 				if (!learn)
 				{
 					int numNotes = playingChord[note].size();
 					if (numNotes==0) {
 						if (outputNote[ch][note]!=-1) {
-							output.addEvent(MidiMessage::noteOff(ch,outputNote[ch][note]),sample);
+							output.addEvent(MidiMessage::noteOff(ch+1,outputNote[ch][note]),sample);
 							outputNote[ch][note]=-1;
 						}
 					}
 					else {
 						for (int i = 0; i<numNotes; i++) {
 							const int chordNote = playingChord[note][i].n;
-							const int c = playingChord[note][i].c;
-							if (!ignoreNextNoteOff[c-1].contains(chordNote)) {
-								output.addEvent(MidiMessage::noteOff(c,chordNote),sample);
-								chordNotePlaying[c][chordNote]=false;
+							const int c = playingChord[note][i].c - 1;
+							int delay = noteDelay[c][chordNote];
+							if (!expectingDelayedNotes)
+								delay = (int)(totalSamples - noteOrigPos[c][chordNote])+sample +(int)(getSampleRate()/1000.f);
+							if ((noteDelay[c][chordNote]+noteOrigPos[c][chordNote])
+								>= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
+									delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
 							}
-							else
-								ignoreNextNoteOff[c-1].removeValue(chordNote);
+							//if (!ignoreNextNoteOff[c].contains(chordNote)) {
+								if (delay>0)
+									delayBuffer.addEvent(MidiMessage::noteOff(c+1,chordNote),sample+delay);
+								else {
+									output.addEvent(MidiMessage::noteOff(c+1,chordNote),sample);
+									chordNotePlaying[c][chordNote]=false;
+								}
+							//}
+							//else
+							//	ignoreNextNoteOff[c].removeValue(chordNote);
 						}
 						playingChord[note].clear();
 					}
@@ -627,8 +833,80 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			output.addEvent(m,sample);
 	}
 
+    //process delay buffer----------------------------------------------------------
+	expectingDelayedNotes=false;
+    MidiBuffer newBuffer;
+	MidiBuffer::Iterator mid_buffer_iter2(delayBuffer);
+	while(mid_buffer_iter2.getNextEvent(m,sample)) 
+	{
+		if (sample < buffer.getNumSamples()) {
+            //event is due, send it
+			if (m.isNoteOn()) {
+				if (chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]) {
+					ignoreNextNoteOff[m.getChannel()-1].add(m.getNoteNumber());
+					output.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),sample);
+                }
+				output.addEvent(m,sample);
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
+            }
+			else if (m.isNoteOff()) {
+				const int c = m.getChannel()-1;
+				const int n = m.getNoteNumber();
+				if (!ignoreNextNoteOff[c].contains(n)) {
+					output.addEvent(m,sample);
+					chordNotePlaying[c][n]=false;
+				}
+				else
+					ignoreNextNoteOff[c].removeAllInstancesOf(n);
+            }
+        }
+        else {
+            //not due yet
+			newBuffer.addEvent(m,sample - buffer.getNumSamples());
+			if (m.isNoteOn()) 
+				expectingDelayedNotes = true;
+		}
+    }
+	if (wasplaying && !pos.isPlaying) {
+        newBuffer.clear();
+    }
+    //put leftover messages back into the buffer
+    delayBuffer.clear();
+    delayBuffer = newBuffer;
+
+	MidiBuffer sortedoutput;
+	MidiBuffer::Iterator mid_buffer_iter3(output);
+	while(mid_buffer_iter3.getNextEvent(m,sample)) 
+	{
+        if (m.isNoteOn()) {
+			int s = sample;
+			int s2 = sample;
+			if (sample==0) s2+=1;
+			if (sample==buffer.getNumSamples()-1) s-=1;
+			if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) {
+				sortedoutput.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),s);
+                chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
+            }
+            //if (!killall) {
+                chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=true;
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
+				sortedoutput.addEvent(m,s2);
+            //}
+        }
+		else if (m.isNoteOff()) {
+            if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) 
+                sortedoutput.addEvent(m,sample);
+            chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
+            chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
+        }
+        else sortedoutput.addEvent(m,sample);
+	}
+
+
+	output.clear();
 	midiMessages.clear();
-	midiMessages = output;
+	midiMessages = sortedoutput;
 
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
     {
@@ -646,18 +924,21 @@ AudioProcessorEditor* MidiChords::createEditor()
 void MidiChords::getStateInformation (MemoryBlock& destData)
 {
 	copySettingsToProgram(curProgram);
-	programs->writeToStream(MemoryOutputStream(destData,false));
+	MemoryOutputStream m(destData,false);
+	programs->writeToStream(m);
 }
 
 void MidiChords::getCurrentProgramStateInformation (MemoryBlock& destData)
 {
 	copySettingsToProgram(curProgram);
-	programs->getChild(curProgram).writeToStream(MemoryOutputStream(destData,false));
+	MemoryOutputStream m(destData,false);
+	programs->getChild(curProgram).writeToStream(m);
 }
 
 void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 {
-	ValueTree vt = ValueTree::readFromStream(MemoryInputStream(data,sizeInBytes,false));
+	MemoryInputStream m(data,sizeInBytes,false);
+	ValueTree vt = ValueTree::readFromStream(m);
 	if (vt.isValid())
 	{
 		if ((int)vt.getProperty("Version",0)>=3)
@@ -726,7 +1007,8 @@ void MidiChords::setStateInformation (const void* data, int sizeInBytes)
 
 void MidiChords::setCurrentProgramStateInformation (const void* data, int sizeInBytes)
 {
-	ValueTree vt = ValueTree::readFromStream(MemoryInputStream(data,sizeInBytes,false));
+	MemoryInputStream m(data,sizeInBytes,false);
+	ValueTree vt = ValueTree::readFromStream(m);
 	if ((int)vt.getProperty("Velocity")==0)
 		vt.setProperty("Velocity",100,0);
 	if(vt.getChildWithName("NoteMatrix_T0").isValid())
@@ -852,6 +1134,12 @@ void MidiChords::copySettingsToProgram(int index)
 	programs->set(index,"Velocity",previewVel);
 	programs->set(index,"InputTranspose",inputtranspose);
 	programs->set(index,"ToAllChannels",ccToAllChannels);
+
+	programs->set(index,"Strum",strum);
+	programs->set(index,"Speed",fSpeed);
+	programs->set(index,"MaxDelay",fMaxDelay);
+	programs->set(index,"VelRamp",fVelRamp);
+	programs->set(index,"Accel",fAccel);
 
 	for (int i=0;i<128;i++) {
 		programs->clearNoteMatrix(index,i);
@@ -1187,7 +1475,7 @@ bool MidiChords::readKeyFile(File file)
 			demo=false;
 			//infoString = "Registered to " + xmlKey->getStringAttribute("username");
 			if (copy) 
-				file.copyFileTo(File(getCurrentPath()+File::separatorString+"midiChordsKey.txt"));
+				file.copyFileTo(File(dataPath+File::separatorString+"midiChordsKey.txt"));
 			sendChangeMessage();
 		}
 		else
@@ -1204,7 +1492,7 @@ bool MidiChords::readKeyFile(File file)
 void MidiChords::readChorderPreset(File file)
 {
 	XmlDocument xmlDoc(file);
-	ScopedPointer<XmlElement> e = xmlDoc.getDocumentElement();
+	ScopedPointer<XmlElement> e (xmlDoc.getDocumentElement());
 	if (e != 0)
 	{
 		MemoryBlock data;
@@ -1327,7 +1615,7 @@ void MidiChords::translateToGuitarChord(bool force)
 				if (n >= zeroFretNote && n <= zeroFretNote+numFrets && unusedStrings.contains(s)) {
 					tempState[s][n]=true;
 					foundString=true;
-					unusedStrings.removeValue(s);
+					unusedStrings.removeAllInstancesOf(s);
 				}
 				s++;
 			}
@@ -1346,7 +1634,7 @@ void MidiChords::translateToGuitarChord(bool force)
 				int zeroFretNote = (int)programs->get(curProgram,"String"+String(unusedStrings[i]));
 				if (n >= zeroFretNote && n <= zeroFretNote+numFrets && unusedStrings.contains(0)) {
 					tempState[unusedStrings[i]][n]=true;
-					unusedStrings.removeValue(0);
+					unusedStrings.removeAllInstancesOf(0);
 				}
 			}
 		}
@@ -1374,8 +1662,7 @@ void MidiChords::translateToGuitarChord(bool force)
 void MidiChords::fillGuitarPresetList ()
 {
 	guitarPresets.clearQuick();
-	File chordPath(getCurrentPath()+File::separatorString
-		+"midiChords"+File::separatorString+"guitars");
+	File chordPath(dataPath+File::separatorString+"guitars");
 	Array<File> files;
 	chordPath.findChildFiles(files,File::findFiles,true);
 	for (int i=0;i<files.size();i++)
@@ -1400,4 +1687,12 @@ void MidiChords::fillGuitarPresetList ()
 			}
 		}
 	}
+}
+
+void MidiChords::toggleUsePC(bool use)
+{
+	for (int i=0;i<getNumPrograms();i++)
+		programs->set(i,"UsePC",use);
+	
+	setParameterNotifyingHost(kUseProgCh, use ? 1.f : 0.f);
 }
