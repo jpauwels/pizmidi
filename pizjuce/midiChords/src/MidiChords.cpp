@@ -677,7 +677,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 						}
 						if (strum) {
 							int chordpos = 0;
-							int heldnotes = playingChord[trigger].size();
+							int heldnotes = playingChord[tnote].size();
 							bool upstroke = programs->get(curProgram,"StrumUp"+String(trigger));
 							float accel = (2.f*fAccel-1.f);
 							float maxmax = (float)getSampleRate()*(0.1f+2.9f*fMaxDelay);
@@ -687,10 +687,10 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 							{
 								int p = upstroke ? chordpos : (heldnotes-1  - chordpos);
 								int delay = 0;
-								int n = playingChord[trigger][p].n;
-								int c = playingChord[trigger][p].c;
+								int n = playingChord[tnote][p].n;
+								int c = playingChord[tnote][p].c;
 								int velocity = v;
-								if (playingChord[trigger].size()>1) {
+								if (playingChord[tnote].size()>1) {
 									const float x = (float)(chordpos)/(float)(heldnotes-1);
 									delay = roundToInt((accel*0.3f*sin(float_Pi*x)+x)*maxdelay);
 									velocity += roundToInt((2.f*fVelRamp-1.f)*(x*127.f-64.f));
