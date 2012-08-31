@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="FFqIFg" name="midiChords" projectType="audioplug" version="1.2.1"
+<JUCERPROJECT id="FFqIFg" name="midiChords" projectType="audioplug" version="1.2.2"
               bundleIdentifier="org.thepiz.midiChords" buildVST="1" buildRTAS="0"
               buildAU="1" pluginName="midiChords" pluginDesc="midiChords" pluginManufacturer="Insert Piz Here"
               pluginManufacturerCode="IPHz" pluginCode="mCrd" pluginChannelConfigs="{2, 2}"
