@@ -677,7 +677,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 						}
 						if (strum) {
 							int chordpos = 0;
-							int heldnotes = playingChord[tnote].size();
+							int heldnotes = playingChord[trigger].size();
 							bool upstroke = programs->get(curProgram,"StrumUp"+String(trigger));
 							float accel = (2.f*fAccel-1.f);
 							float maxmax = (float)getSampleRate()*(0.1f+2.9f*fMaxDelay);
@@ -687,10 +687,10 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 							{
 								int p = upstroke ? chordpos : (heldnotes-1  - chordpos);
 								int delay = 0;
-								int n = playingChord[tnote][p].n;
-								int c = playingChord[tnote][p].c;
+								int n = playingChord[trigger][p].n;
+								int c = playingChord[trigger][p].c;
 								int velocity = v;
-								if (playingChord[tnote].size()>1) {
+								if (playingChord[trigger].size()>1) {
 									const float x = (float)(chordpos)/(float)(heldnotes-1);
 									delay = roundToInt((accel*0.3f*sin(float_Pi*x)+x)*maxdelay);
 									velocity += roundToInt((2.f*fVelRamp-1.f)*(x*127.f-64.f));
@@ -746,14 +746,11 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 							const int chordNote = playingChord[note][i].n;
 							const int c = playingChord[note][i].c - 1;
 							int delay = noteDelay[c][chordNote];
-							DBG("noteDelay=" << delay);
-							if (!expectingDelayedNotes && strum)
+							if (!expectingDelayedNotes)
 								delay = (int)(totalSamples - noteOrigPos[c][chordNote])+sample +(int)(getSampleRate()/1000.f);
 							if ((noteDelay[c][chordNote]+noteOrigPos[c][chordNote])
-								>= (totalSamples+delay - (int)(getSampleRate()/100.f))) 
-							{
-								// trigger note ended before the strum was finished
-								delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
+								>= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
+									delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
 							}
 							//if (!ignoreNextNoteOff[c].contains(chordNote)) {
 								if (delay>0)
@@ -762,7 +759,6 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 									output.addEvent(MidiMessage::noteOff(c+1,chordNote),sample);
 									chordNotePlaying[c][chordNote]=false;
 								}
-							DBG("noteOff delay=" << delay);
 							//}
 							//else
 							//	ignoreNextNoteOff[c].removeValue(chordNote);
@@ -839,89 +835,79 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 
     //process delay buffer----------------------------------------------------------
 	expectingDelayedNotes=false;
-	bool delayedStuff = false;
-	if (delayBuffer.getNumEvents() > 0)
+    MidiBuffer newBuffer;
+	MidiBuffer::Iterator mid_buffer_iter2(delayBuffer);
+	while(mid_buffer_iter2.getNextEvent(m,sample)) 
 	{
-		MidiBuffer newBuffer;
-		MidiBuffer::Iterator mid_buffer_iter2(delayBuffer);
-		while(mid_buffer_iter2.getNextEvent(m,sample)) 
-		{
-			if (sample < buffer.getNumSamples()) {
-				delayedStuff = true;
-				//event is due, send it
-				if (m.isNoteOn()) {
-					if (chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]) {
-						ignoreNextNoteOff[m.getChannel()-1].add(m.getNoteNumber());
-						output.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),sample);
-					}
-					output.addEvent(m,sample);
-					chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
-				}
-				else if (m.isNoteOff()) {
-					const int c = m.getChannel()-1;
-					const int n = m.getNoteNumber();
-					if (!ignoreNextNoteOff[c].contains(n)) {
-						output.addEvent(m,sample);
-						chordNotePlaying[c][n]=false;
-					}
-					else
-						ignoreNextNoteOff[c].removeAllInstancesOf(n);
-				}
-			}
-			else {
-				//not due yet
-				newBuffer.addEvent(m,sample - buffer.getNumSamples());
-				if (m.isNoteOn()) 
-					expectingDelayedNotes = true;
-			}
-		}
-		if (wasplaying && !pos.isPlaying) {
-			newBuffer.clear();
-		}
-		//put leftover messages back into the buffer
-		delayBuffer.clear();
-		delayBuffer = newBuffer;
-	}
-
-	if (!strum && !delayedStuff)
-	{
-		midiMessages.clear();
-		midiMessages = output;
-	}
-	else {		
-		MidiBuffer sortedoutput;
-		MidiBuffer::Iterator mid_buffer_iter3(output);
-		while(mid_buffer_iter3.getNextEvent(m,sample)) 
-		{
+		if (sample < buffer.getNumSamples()) {
+            //event is due, send it
 			if (m.isNoteOn()) {
-				int s = sample;
-				int s2 = sample;
-				if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) {
-					if (sample==0) s2+=1;
-					if (sample==buffer.getNumSamples()-1) s-=1;
-					sortedoutput.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),s);
-					chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
-					chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
-				}
-				chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=true;
-				chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
-				sortedoutput.addEvent(m,s2);
-			}
+				if (chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]) {
+					ignoreNextNoteOff[m.getChannel()-1].add(m.getNoteNumber());
+					output.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),sample);
+                }
+				output.addEvent(m,sample);
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
+            }
 			else if (m.isNoteOff()) {
-				if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) 
-					sortedoutput.addEvent(m,sample);
-				chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
-				chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
-			}
-			else sortedoutput.addEvent(m,sample);
+				const int c = m.getChannel()-1;
+				const int n = m.getNoteNumber();
+				if (!ignoreNextNoteOff[c].contains(n)) {
+					output.addEvent(m,sample);
+					chordNotePlaying[c][n]=false;
+				}
+				else
+					ignoreNextNoteOff[c].removeAllInstancesOf(n);
+            }
+        }
+        else {
+            //not due yet
+			newBuffer.addEvent(m,sample - buffer.getNumSamples());
+			if (m.isNoteOn()) 
+				expectingDelayedNotes = true;
 		}
+    }
+	if (wasplaying && !pos.isPlaying) {
+        newBuffer.clear();
+    }
+    //put leftover messages back into the buffer
+    delayBuffer.clear();
+    delayBuffer = newBuffer;
 
-
-		output.clear();
-		midiMessages.clear();
-		midiMessages = sortedoutput;
+	MidiBuffer sortedoutput;
+	MidiBuffer::Iterator mid_buffer_iter3(output);
+	while(mid_buffer_iter3.getNextEvent(m,sample)) 
+	{
+        if (m.isNoteOn()) {
+			int s = sample;
+			int s2 = sample;
+			if (sample==0) s2+=1;
+			if (sample==buffer.getNumSamples()-1) s-=1;
+			if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) {
+				sortedoutput.addEvent(MidiMessage::noteOff(m.getChannel(),m.getNoteNumber()),s);
+                chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
+            }
+            //if (!killall) {
+                chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=true;
+                chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=true;
+				sortedoutput.addEvent(m,s2);
+            //}
+        }
+		else if (m.isNoteOff()) {
+            if (chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]) 
+                sortedoutput.addEvent(m,sample);
+            chordNotePlaying2[m.getChannel()-1][m.getNoteNumber()]=false;
+            chordNotePlaying[m.getChannel()-1][m.getNoteNumber()]=false;
+        }
+        else sortedoutput.addEvent(m,sample);
 	}
-	
+
+
+	output.clear();
+	midiMessages.clear();
+	midiMessages = sortedoutput;
+
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
     {
         buffer.clear (i, 0, buffer.getNumSamples());

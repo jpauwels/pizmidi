@@ -277,7 +277,7 @@ const String GuitarNeckComponent::getNoteText (const int fret, const int string)
     //if (keyWidth > 14.0f && midiNoteNumber % 12 == 0)
         return MidiMessage::getMidiNoteName (midiNoteNumber, true, true, octaveNumForMiddleC);
 
-    return String::empty;
+    //return String::empty;
 }
 
 void GuitarNeckComponent::getFretPos (int fret, int& x, int& w) const

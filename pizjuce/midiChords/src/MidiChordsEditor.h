@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  27 Aug 2012 11:21:42am
+  Creation date:  26 Aug 2012 10:14:35pm
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -492,8 +492,8 @@ public:
     void labelTextChanged (Label* labelThatHasChanged);
 
     // Binary resources:
-    static const char* midichordsLogo_png2;
-    static const int midichordsLogo_png2Size;
+    static const char* midichordsLogo_png;
+    static const int midichordsLogo_pngSize;
 
 
     //==============================================================================
@@ -620,7 +620,7 @@ private:
     VSTSlider* velRampSlider;
     TextEditor* infoBox;
     TextEditor* tuningSaveEditor;
-    Image cachedImage_midichordsLogo_png2;
+    Image cachedImage_midichordsLogo_png;
 
 
     //==============================================================================
@@ -630,4 +630,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_781AE212__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
