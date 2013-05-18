@@ -504,7 +504,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 		}
 
 		else if (stopPlayingFromGUI) {
-			midiMessages.addEvent(MidiMessage::noteOff(ch,playButtonTrigger),buffer.getNumSamples()/2);
+			midiMessages.addEvent(MidiMessage::noteOff(ch,playButtonTrigger),0);
 			playingFromGUI = false;
 			playFromGUI = false;
 			stopPlayingFromGUI = false;
