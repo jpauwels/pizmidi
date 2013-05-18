@@ -292,10 +292,8 @@ public:
 	void savePreset(String name);
 	void playCurrentChord(bool on) 
 	{
-		if (playingFromGUI!=on)
-		{
-			playFromGUI=on;
-		}
+		if (on) playFromGUI = true;
+		else stopPlayingFromGUI = true;
 	}
 	bool isPreviewChordPlaying() {return playFromGUI;}
 	void translateToGuitarChord(bool force=false);
@@ -404,7 +402,7 @@ private:
 	//float fVelToSpeed;
 
 	bool savedGuitarVoicing[128];
-	bool playingFromGUI, playFromGUI;
+	bool playingFromGUI, playFromGUI, stopPlayingFromGUI;
 	int playButtonTrigger;
 	int learning;
 	bool notePlaying[16][128]; //trigger note

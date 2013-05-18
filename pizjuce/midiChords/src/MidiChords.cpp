@@ -143,7 +143,7 @@ MidiChords::MidiChords() : programs(0), curProgram(0)
 			outputNote[c][i]=-1;
 	learn = false;
 	learning = 0;
-	playFromGUI = playingFromGUI = false;
+	playFromGUI = playingFromGUI = stopPlayingFromGUI = false;
 	playButtonTrigger = curTrigger;
 	init = true;
 	fillGuitarPresetList();
@@ -492,114 +492,23 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 		expectingDelayedNotes=false;
 
 	MidiBuffer output;
-	if (playFromGUI!=playingFromGUI)
+	if ((playFromGUI!=playingFromGUI) || stopPlayingFromGUI)
 	{
 		int ch = jmax(channel,1);
-		if(playFromGUI)
+		if(playFromGUI && !playingFromGUI)
 		{
-			for (int c=1;c<=16;c++)
-			{
-				for (int n=0;n<128;n++)
-				{
-					bool usedNote = false;
-					if (progKbState[curProgram][curTrigger].isNoteOn(c,n) && !usedNote) {
-						usedNote = outchan>0;
-						int outputChannel = outchan==0 ? c : outchan;
-						int newNote = n+transpose;
-						if (chordNotePlaying[outputChannel-1][newNote]) {
-							ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
-							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
-						}
-						else if (newNote < 128 && newNote >= 0) 
-						{
-							if (!strum) {
-								output.addEvent(MidiMessage::noteOn(outputChannel,newNote,(uint8)previewVel),0);
-								noteDelay[outputChannel-1][newNote] = 0;
-								noteOrigPos[outputChannel-1][newNote] = totalSamples+0;
-								chordNotePlaying[outputChannel-1][newNote]=true;
-							}
-							playingChord[curTrigger].add(ChordNote(outputChannel,newNote));
-						}
-					}
-				}
-			}
-			if (strum) {
-				int chordpos = 0;
-				int heldnotes = playingChord[curTrigger].size();
-				bool upstroke = programs->get(curProgram,"StrumUp"+String(curTrigger));
-			    float accel = (2.f*fAccel-1.f);
-				float maxmax = (float)getSampleRate()*(0.1f+2.9f*fMaxDelay);
-				float maxdelay = (1.f-fSpeed)*maxmax;
-
-				while(chordpos<heldnotes) 
-				{
-					int p = upstroke ? chordpos : (heldnotes-1  - chordpos);
-					int delay = 0;
-					int n = playingChord[curTrigger][p].n;
-					int c = playingChord[curTrigger][p].c;
-					int velocity = previewVel;
-					if (playingChord[curTrigger].size()>1) {
-						const float x = (float)(chordpos)/(float)(heldnotes-1);
-						delay = roundToInt((accel*0.3f*sin(float_Pi*x)+x)*maxdelay);
-						velocity += roundToInt((2.f*fVelRamp-1.f)*(x*127.f-64.f));
-						velocity = jlimit(1,127,velocity);
-						//float veldelay = 1.f-(fVelToSpeed)*MIDI_TO_FLOAT(strumvel);
-						//delay=roundToInt(veldelay*(float)delay);
-					}
-					if (delay>0) {
-						delayBuffer.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),delay);
-						expectingDelayedNotes=true;
-					}
-					else
-						output.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),0);
-					noteDelay[c-1][n] = delay;
-					noteOrigPos[c-1][n] = totalSamples+0;
-					chordpos++;
-				}
-			}
-			notePlaying[ch-1][curTrigger]=true;
+			midiMessages.addEvent(MidiMessage::noteOn(ch,curTrigger,(uint8)previewVel),0);
 			playingFromGUI = true;
+			playFromGUI = false;
 			playButtonTrigger = curTrigger;
 		}
-		else {
-			int numNotes = playingChord[playButtonTrigger].size();
-			if (numNotes==0) {
-				if (outputNote[ch-1][curTrigger]!=-1) {
-					output.addEvent(MidiMessage::noteOff(ch,outputNote[ch-1][playButtonTrigger]),0);
-					outputNote[ch-1][playButtonTrigger]=-1;
-				}
-			}
-			else {
-				for (int i = 0; i<numNotes; i++) {
-					const int chordNote = playingChord[playButtonTrigger][i].n;
-					const int c = playingChord[playButtonTrigger][i].c - 1;
 
-					int delay = noteDelay[c][chordNote];
-					if (!expectingDelayedNotes)
-					    delay = (int)(totalSamples - noteOrigPos[c][chordNote]) + (int)(getSampleRate()/1000.f);
-                    if ((noteDelay[c][chordNote]+noteOrigPos[c][chordNote])
-                        >= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
-                            delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
-                    }
-                    if (delay>0)
-                    {
-						delayBuffer.addEvent(MidiMessage::noteOff(c+1,chordNote),delay);
-                    }
-					else {
-						if (!ignoreNextNoteOff[c].contains(chordNote)) {
-							output.addEvent(MidiMessage::noteOff(c+1,chordNote),0);
-							chordNotePlaying[c][chordNote]=false;
-						}
-						else 
-							ignoreNextNoteOff[c].removeAllInstancesOf(chordNote);
-					}
-				}
-				playingChord[playButtonTrigger].clear();
-			}
-			notePlaying[ch-1][playButtonTrigger]=false;
+		else if (stopPlayingFromGUI) {
+			midiMessages.addEvent(MidiMessage::noteOff(ch,playButtonTrigger),buffer.getNumSamples()/2);
 			playingFromGUI = false;
+			playFromGUI = false;
+			stopPlayingFromGUI = false;
 		}
-		playingFromGUI = playFromGUI;
 	}
 	MidiBuffer::Iterator mid_buffer_iter(midiMessages);
 	MidiMessage m(0xf0);
@@ -655,7 +564,6 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 											noteOrigPos[outputChannel-1][newNote] = totalSamples+sample;
 											ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
 										}
-										// needs work, causes stuck notes when strumming...?
 										else {
 											if (!expectingDelayedNotes)
 												ignoreNextNoteOff[outputChannel-1].addIfNotAlreadyThere(newNote);
@@ -707,13 +615,14 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 								else {
 									int s = sample;
 									int s2 = sample;
-									if (sample==0) s2+=1;
-									if (sample==buffer.getNumSamples()-1) s-=1;
 									if (chordNotePlaying[c-1][n]) {
+										if (sample==0) s2+=1;
+										if (sample==buffer.getNumSamples()-1) s-=1;
 										output.addEvent(MidiMessage::noteOff(c,n),s);
 									}
 									output.addEvent(MidiMessage::noteOn(c,n,(uint8)velocity),s2);
 									chordNotePlaying[c-1][n]=true;
+									sample = s2;
 								}
 								noteDelay[c-1][n] = delay;
 								noteOrigPos[c-1][n] = totalSamples+sample;
@@ -856,7 +765,8 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 			else if (m.isNoteOff()) {
 				const int c = m.getChannel()-1;
 				const int n = m.getNoteNumber();
-				if (!ignoreNextNoteOff[c].contains(n)) {
+				if (!ignoreNextNoteOff[c].contains(n)) 
+				{
 					output.addEvent(m,sample);
 					chordNotePlaying[c][n]=false;
 				}
