@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  26 Aug 2012 10:14:35pm
+  Creation date:  18 May 2013 11:24:04am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -858,7 +858,7 @@ void MidiChordsEditor::resized()
     prevButton->setBounds (90, 204, 23, 21);
     triggerNoteLabel->setBounds (558, 203, 73, 24);
     learnChanSlider->setBounds (6, 56, 38, 16);
-    demoLabel->setBounds (338, 5, 77, 24);
+    demoLabel->setBounds (318, 5, 97, 24);
     guitar->setBounds (8, 99, getWidth() - 16, 89);
     versionLabel->setBounds (352, 28, 58, 24);
     transposeInputButton->setBounds (545, 370, 91, 21);
@@ -2078,7 +2078,7 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="b13bd78310d4145" memberName="demoLabel"
-         virtualName="" explicitFocusOrder="0" pos="338 5 77 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="318 5 97 24" edTextCol="ff000000"
          edBkgCol="0" labelText="UNREGISTERED&#10;DEMO VERSION" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="OCR A Extended"
          fontsize="10" bold="0" italic="0" justification="36"/>

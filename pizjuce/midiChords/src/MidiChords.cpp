@@ -877,7 +877,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
     //put leftover messages back into the buffer
     delayBuffer.clear();
     delayBuffer = newBuffer;
-
+#if 0
 	MidiBuffer sortedoutput;
 	MidiBuffer::Iterator mid_buffer_iter3(output);
 	while(mid_buffer_iter3.getNextEvent(m,sample)) 
@@ -911,7 +911,10 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 	output.clear();
 	midiMessages.clear();
 	midiMessages = sortedoutput;
-
+#else
+	midiMessages.clear();
+	midiMessages = output;
+#endif
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
     {
         buffer.clear (i, 0, buffer.getNumSamples());

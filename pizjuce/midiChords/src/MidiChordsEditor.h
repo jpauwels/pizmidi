@@ -3,7 +3,7 @@
 
   This is an automatically generated file created by the Jucer!
 
-  Creation date:  26 Aug 2012 10:14:35pm
+  Creation date:  18 May 2013 11:24:04am
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
-#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
+#ifndef __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EF9903BE__
+#define __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EF9903BE__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "MidiChords.h"
@@ -177,7 +177,7 @@ public:
 		g.setColour (Colours::white);
 		g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 4, Justification::centredBottom, 1);
 	}
-	
+
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
 		//const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
@@ -235,12 +235,12 @@ public:
 		owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,midiChannel);
 	}
 	 */
-	
+
 protected:
 	MidiChords* owner;
     MidiKeyboardState* s;
 
-	virtual bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e) 
+	virtual bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e)
 	{
 		if (e.mods.isPopupMenu())
 		{
@@ -647,4 +647,4 @@ private:
 };
 
 
-#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_1C81678__
+#endif   // __JUCER_HEADER_MIDICHORDSEDITOR_MIDICHORDSEDITOR_EF9903BE__
