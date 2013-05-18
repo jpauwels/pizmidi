@@ -29,6 +29,14 @@ Also known as "Generic Fretted Stringed Instrument View." Some presets are provi
 
 Guitar definitions are filled in from text files in the "guitars" folder.
 
+Strumming:
+Click "Strum" button to toggle strumming on/off. The other strum controls are disabled when Strum is off. Strum direction is set per trigger note; other settings are global.
+Strum Direction - Chord notes are sorted by channel first. "Up" will order notes from Channel 1 to Channel 16, then from note 0 to 127. "Down" is the reverse.
+Max Time - Sets the maximum time between the first and last notes of the strum. The actual time also depends on the Speed setting.
+Speed - controls the speed of the strum, where 0% corresponds to Max Time and 100% is instantaneous.
+Vel. Ramp - Applies a change in velocity over the course of the strum. Negative value means the velocity decreases over time.
+Accel - Speed up (positive values) or slow down (negative values) over the course of the strum. Overall strum time remains the same.
+
 Presets menu:
 Presets are saved to and loaded from the "mappings" folder. Any files in .chords, .fxp, or .xml (Steinerg Chorder presets) formats can be loaded. Presets can also be loaded by drag & drop.
 

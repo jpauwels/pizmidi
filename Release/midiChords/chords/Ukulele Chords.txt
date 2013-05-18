@@ -1,0 +1,61 @@
+#Ukulele Chords
+; For instruments in "My dog has fleas" tuning
+--
+#Major Triads
+Major (str1&4): 0.1 -5.2 -8.3 0.4
+Major (str2 v1): 4.1 0.2 -5.3 4.4
+Major (str2 v2): 7.1 0.2 -5.3 4.4
+Major (str2 v3): 4.1 0.2 -5.3 0.4
+Major (str3 v1): 12.1 4.2 0.3 7.4
+Major (str3 v2): 7.1 4.2 0.3 7.4
+
+#Minor Triads
+Minor (str1&4): 0.1 -5.2 -9.3 0.4
+Minor (str3): 7.1 3.2 0.3 7.4
+Minor (str2 v1): 7.1 0.2 -5.3 3.4
+Minor (str2 v2): 3.1 0.2 -5.3 3.4
+Minor (str2 v3): 3.1 0.2 -5.3 0.4
+
+#Augmented Triads
++ (str3 v1): 12.1 4.2 0.3 8.4
++ (str3 v2): 8.1 4.2 0.3 8.4
++ (str2 v1): 8.1 0.2 -4.3 4.4
++ (str2 v2): 4.1 0.2 -4.3 0.4
+
+#Dominant 7ths
+7 (str3): 10.1 4.2 0.3 7.4
+7 (str2 v1): 7.1 0.2 -2.3 4.4
+7 (str2 v2): 4.1 0.2 -2.3 4.4
+7 (str4): 4.1 -2.2 -5.3 0.4
+7 (str1): 0.1 -5.2 -8.3 -2.4
++7 (string 2): 8.1 0.2 -2.3 4.4
++7 (string 3): 10.1 4.2 0.3 8.4
++7 (string 4): 4.1 -2.2 -4.3 0.4
++7 (string 1): 0.1 -4.2 -8.3 -2.4
+
+#Major 7ths
+Maj7 (str3): 11.1 4.2 0.3 7.4
+Maj7 (str2): 7.1 0.2 -1.3 4.4
+Maj7 (str4 v1): 4.1 -1.2 -5.3 0.4
+Maj7 (str1): 0.1 -5.2 -8.3 -1.4
+Maj7 (str4 v2): -1.1 -5.2 -8.3 0.4
+mMaj7 (str1): 0.1 -5.2 -9.3 -1.4
+
+#Minor 7ths
+m7 (string 3): 10.1 3.2 0.3 7.4
+m7 (string 4): 3.1 -2.2 -5.3 0.4
+m7 (string 2): 7.1 0.2 -2.3 3.4
+m7 (string 1): 0.1 -5.2 -9.3 -2.4
+
+#Sixths
+6 (str3): 9.1 4.2 0.3 7.4
+m6 (str3): 9.1 3.2 0.3 7.4
+m6 (str2): 7.1 0.2 -3.3 3.4
+m6 (str4): 3.1 -3.2 -5.3 0.4
+m6 (str1): 0.1 -5.2 -9.3 -3.4
+
+#Diminished
+dim7 (str4): 3.1 -3.2 -6.3 0.4
+dim7 (str3): 9.1 3.2 0.3 6.4
+dim7 (str2): 6.1 0.2 -3.3 3.4
+dim7 (str1): 0.1 -6.2 -9.3 -3.4

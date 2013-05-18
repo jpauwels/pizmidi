@@ -146,8 +146,9 @@ public:
 	void drawBlackNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& textColour)
 	{
 		Colour c (textColour);
+		const bool isReallyReallyDown = owner->getCurrentKbState()->isNoteOnForChannels(0xffff, midiNoteNumber);
 
-		if (isDown)
+		if (isReallyReallyDown)
 			c = c.overlaidWith (findColour (keyDownOverlayColourId));
 		else if (s->isNoteOnForChannels(0xffff,midiNoteNumber))
 			c = c.overlaidWith(Colours::brown.withAlpha(0.4f));
@@ -158,7 +159,7 @@ public:
 		g.setColour (c);
 		g.fillRect (x, y, w, h);
 
-		if (isDown)
+		if (isReallyReallyDown)
 		{
 			g.setColour (textColour);
 			g.drawRect (x, y, w, h);
@@ -176,14 +177,15 @@ public:
 		g.setColour (Colours::white);
 		g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 4, Justification::centredBottom, 1);
 	}
+	
 	void drawWhiteNote(int midiNoteNumber, Graphics& g, int x, int y, int w, int h, bool isDown, bool isOver, const Colour& lineColour, const Colour& textColour)
 	{
 		//const int chordChan = roundToInt(owner->getParameter(kLearnChannel)*16.f);
 		Colour c (Colours::transparentWhite);
-		if (isDown)
+		const bool isReallyReallyDown = owner->getCurrentKbState()->isNoteOnForChannels(0xffff, midiNoteNumber);
+
+		if (isReallyReallyDown)
 			c = findColour (keyDownOverlayColourId);
-		else if (s->isNoteOnForChannels(0xffff,midiNoteNumber))
-			c = Colours::brown.withAlpha(0.4f);
 		if (isOver)
 			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));
 
@@ -222,12 +224,24 @@ public:
 		//g.setColour (textColour);
 		//g.drawFittedText (String(midiNoteNumber), x + 2, y + 2, w - 4, h - 16, Justification::centredBottom, 1);
 	}
+	/*
+	void handleNoteOn(MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity)
+	{
+		owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,midiChannel);
+	}
 
-private:
+	void handleNoteOff(MidiKeyboardState* source, int midiChannel, int midiNoteNumber)
+	{
+		owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,midiChannel);
+	}
+	 */
+	
+protected:
 	MidiChords* owner;
     MidiKeyboardState* s;
 
-	bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e) {
+	virtual bool mouseDownOnKey(int midiNoteNumber, const MouseEvent &e) 
+	{
 		if (e.mods.isPopupMenu())
 		{
 			PopupMenu m;
@@ -240,11 +254,11 @@ private:
 			if (result!=0)
 			{
 				if (s->isNoteOn(result,midiNoteNumber)) {
-					s->noteOff(result,midiNoteNumber);
+					//s->noteOff(result,midiNoteNumber);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,result);
 				}
 				else {
-					s->noteOn(result,midiNoteNumber,127);
+					//s->noteOn(result,midiNoteNumber,127);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,result);
 				}
 				repaint();
@@ -260,19 +274,22 @@ private:
 					for (int c=1;c<=16;c++)
 					{
 						if (s->isNoteOn(c,midiNoteNumber))
+							//s->noteOff(c, midiNoteNumber);
 							owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,c);
 					}
 				}
-				else
+				else {
+					//s->noteOn(1,midiNoteNumber,1.f);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,1);
+				}
 			}
 			else {
 				if (s->isNoteOn(chordChan,midiNoteNumber)) {
-					//s->noteOff(this->getMidiChannel(),midiNoteNumber);
+					//s->noteOff(chordChan,midiNoteNumber);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,false,chordChan);
 				}
 				else {
-					//s->noteOn(this->getMidiChannel(),midiNoteNumber,1.f);
+					//s->noteOn(chordChan,midiNoteNumber,1.f);
 					owner->selectChordNote(owner->getCurrentTrigger(),midiNoteNumber,true,chordChan);
 				}
 			}
@@ -298,7 +315,7 @@ public:
 		const int mode = roundToInt(owner->getParameter(kMode)*(numModes-1));
 		Colour c (textColour);
 
-		if (isDown)
+		if (isDown || owner->getCurrentTrigger() == midiNoteNumber)
 			c = c.overlaidWith (findColour (keyDownOverlayColourId));
 
 		if (isOver)
@@ -348,7 +365,7 @@ public:
 		const int mode = roundToInt(owner->getParameter(kMode)*(numModes-1));
 		Colour c (Colours::transparentWhite);
 
-		if (isDown)
+		if (isDown || owner->getCurrentTrigger() == midiNoteNumber)
 			c = findColour (keyDownOverlayColourId);
 		if (isOver)
 			c = c.overlaidWith (findColour (mouseOverKeyOverlayColourId));

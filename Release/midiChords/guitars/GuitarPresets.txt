@@ -1,0 +1,9 @@
+;"5-String Banjo (gDGBD)", 5-String Banjo Chords.txt, 21 frets, 62,59,55,50,62
+"Irish Banjo (GDAE)", 5ths-Tuned Chords.txt, 19 frets, 64,57,50,43
+"Tenor Banjo (CGDA)", 5ths-Tuned Chords.txt, 19 frets, 69,62,55,48
+;"Bass (EADG)", Bass Chords.txt, 21 frets, 43,38,33,28
+"Guitar (EADGBE)", Guitar Chords.txt, 23 frets, 64,59,55,50,45,40
+;"7-String Guitar (BEADGBE)", Guitar Chords.txt, 23 frets, 64,59,55,50,45,40,35
+"Mandolin (GDAE)", 5ths-Tuned Chords.txt, 15 frets, 76,69,62,55
+"Ukulele (gCEA)", Ukulele Chords.txt, 12 frets, 69,64,60,67
+;"Ukulele (DGBE)", Baritone Ukulele Chords.txt, 12 frets, 64,59,55,50

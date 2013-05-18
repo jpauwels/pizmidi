@@ -1,0 +1,24 @@
+; For 4-stringed instruments tuned in fifths (mandolin, tenor banjo, violin, cello, etc.)
+
+#Triads
+Major (str4): 0.4 7.3 16.2 24.1
+Major (str3 v1): -5.4 0.3 7.2 16.1
+Major (str3 v2): -5.4 0.3 4.2 12.1
+Major (str3 v3): -8.4 0.3 7.2 12.1
+Major (str2): -17.4 -8.3 0.2 7.1
+Minor (str4): -5.4 0.3 7.2 15.1
+Minor (str3): 0.4 7.3 15.2 24.1
++ (str1): -16.3 -8.2 0.1
++ (str2): -8.3 0.2 8.1
++ (str3/4): 0.3 8.2 16.1
+
+#Sevenths
+7 (str1): -6.4 0.3 9.2 14.1
+7 (str2): -14.4 -8.3 0.2 7.1
+7 (str3): -5.4 0.3 10.2 16.1
+7 (str4): 0.4 7.3 16.2 22.1
+Maj7 (str4): 0.4 7.3 16.2 23.1
+m7 (str4): 0.4 7.3 15.2 22.1
+dim7 (str4): 0.4 6.3 15.2 21.1
+m6 (str4): -5.4 2.3 10.2 16.1
++7 (str4): 0.4 6.3 15.2 21.1

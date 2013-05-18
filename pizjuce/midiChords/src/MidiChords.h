@@ -260,6 +260,7 @@ public:
 	MidiKeyboardState progKbState[numProgs][128];
 	MidiKeyboardState chordKbState;
 	MidiKeyboardState triggerKbState;
+	MidiKeyboardState* getCurrentKbState() {return &(progKbState[curProgram][curTrigger]);}
 	void selectTrigger(int index);
 	void selectChordNote(int index, int note, bool on, int ch=-1);
 	int getCurrentTrigger() {return curTrigger;}
@@ -269,6 +270,7 @@ public:
 			if (notePlaying[i][note]) return true;
 		return false;
 	}
+	int getLearnChannel() {return learnchan;}
 	void setNoteBypassed(int note, bool bypass)
 	{
 		programs->set(curProgram,"Bypassed"+String(note),bypass);

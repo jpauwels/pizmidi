@@ -1065,7 +1065,7 @@ void MidiChordsEditor::buttonClicked (Button* buttonThatWasClicked)
 		{
 			for (int c=1;c<=16;c++)
 			{
-				if (getFilter()->chordKbState.isNoteOn(c,n))
+				if (getFilter()->progKbState[getFilter()->getCurrentProgram()][t].isNoteOn(c,n))
 					chordString += " " + String(n-t)+"."+String(c);
 			}
 		}
@@ -1532,6 +1532,7 @@ void MidiChordsEditor::updateParametersFromFilter()
 	const int transpose = roundToInt(filter->getParameter(kTranspose)*96.f)-48;
 	const int s = filter->getNumStrings();
 	const bool flats = filter->getParameter(kFlats)>0;
+	const int p = filter->getCurrentProgram();
 
 	guitar->setVisible(filter->getGuitarView());
 	setupButton->setEnabled(filter->getGuitarView());
@@ -1603,7 +1604,7 @@ void MidiChordsEditor::updateParametersFromFilter()
 	String chordString;// = String(t) + ":";
 	for (int n=0;n<128;n++) {
 		for (int c=1;c<=16;c++) {
-			if (getFilter()->chordKbState.isNoteOn(c,n))
+			if (getFilter()->progKbState[p][t].isNoteOn(c,n))
 				chordString += String(n-t)/*+"."+String(c)*/+" ";
 		}
 	}
@@ -1640,11 +1641,11 @@ void MidiChordsEditor::updateParametersFromFilter()
 			triggerNoteLabel->setText(getNoteNameWithoutOctave(t),false);
 	}
 
-	if (presetNameLabel->getText() != getFilter()->getProgramName(getFilter()->getCurrentProgram()))
-		presetNameLabel->setText(getFilter()->getProgramName(getFilter()->getCurrentProgram()),false);
+	if (presetNameLabel->getText() != getFilter()->getProgramName(p))
+		presetNameLabel->setText(getFilter()->getProgramName(p),false);
 
 	triggerKeyboard->repaint();
-	//repaint();
+	chordKeyboard->repaint();
 }
 
 String const MidiChordsEditor::getCurrentChordName()
@@ -1657,7 +1658,7 @@ String const MidiChordsEditor::getCurrentChordName()
 	{
 		for (int c=0;c<=16;c++)
 		{
-			if (getFilter()->chordKbState.isNoteOn(c,n))
+			if (getFilter()->progKbState[getFilter()->getCurrentProgram()][getFilter()->getCurrentTrigger()].isNoteOn(c,n))
 				chord.add(n);
 		}
 	}

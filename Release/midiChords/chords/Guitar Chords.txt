@@ -1,0 +1,87 @@
+; Chord shapes are defined as the difference in semitones from the trigger note,
+; in a space-separated list. Everything to the left of the colon is the chord
+; name displayed in the menu.
+; 
+; ; comment
+; # Section header
+; -- separator
+
+#Triads
+Power Chord: 12.3 7.4 0.5
+Major (str6, "E" shape): 0.6 7.5 12.4 16.3 19.2 24.1
+Major (str6, "G" shape): 24.1 16.2 12.3 7.4 4.5 0.6
+Major (str5, "A" shape): 19.1 16.2 12.3 7.4 0.5
+Major (str5, "C" shape): 16.1 12.2 7.3 4.4 0.5
+Major (str4, "D" shape): 0.4 7.3 12.2 16.1
+Minor (str6): 24.1 19.2 15.3 12.4 7.5 0.6
+Minor (str5): 19.1 15.2 12.3 7.4 0.5
+Minor (str4): 15.1 12.2 7.3 0.4
+Augmented v1: 16.1 12.2 8.3 0.4
+Augmented v2: 16.1 12.2 8.3 4.4 0.5
+Augmented v3: 0.3 4.2 8.1
+
+#Sevenths
+Dominant 7 (str6 v1): 24.1 19.2 16.3 10.4 7.5 0.6
+Dominant 7 (str6 v2): 22.1 16.2 12.3 7.4 4.5 0.6
+Dominant 7 (str5 v1): 19.1 16.2 10.3 7.4 0.5
+Dominant 7 (str5 v2): 19.1 12.2 10.3 4.4 0.5
+Dominant 7 (str5 v3): 16.1 12.2 10.3 4.4 0.5
+Dominant 7 (str4): 16.1 10.2 7.3 0.4
+Major 7 (str6): 19.2 16.3 11.4 0.6
+Major 7 (str5 v1): 19.1 16.2 11.3 7.4 0.5
+Major 7 (str5 v2): 16.1 11.2 7.3 4.4 0.5
+Major 7 (str4): 16.1 11.2 7.3 0.4
+Major 7 (str4): 11.1 7.2 4.3 0.4
+Minor 7 (str6 v1): 24.1 19.2 15.3 10.4 7.5 0.6
+Minor 7 (str6 v2): 19.2 15.3 10.4 0.6
+Minor 7 (str5): 19.1 15.2 10.3 7.4 0.5
+Minor 7 (str4): 15.1 10.2 7.3 0.4
+Major 6 (str6): 19.2 16.3 9.4 0.6
+Major 6 (str4): 16.1 9.2 7.3 0.4
+Minor 6 (str5 v1): 21.1 15.2 12.3 7.4 0.5
+Minor 6 (str5 v2): 19.1 12.2 9.3 3.4 0.5 
+Minor 6 (str4): 15.1 9.2 7.3 0.4
+Minor/Major 7 (str6): 24.1 19.2 15.3 11.4 7.5 0.6
+Minor/Major 7 (str5): 19.1 15.2 11.3 7.4 0.5
+Minor/Major 7 (str4): 15.1 11.2 7.3 0.4
+m7b5 (str5): 15.2 10.3 6.4 0.5
+m7b5 (str4): 18.2 15.3 10.4 0.6
+m7b5 (str4): 0.4 6.3 10.2 15.1
+dim7 (str5): 18.1 15.2 9.3 6.4 0.5
+dim7 (str4): 15.1 9.2 6.3 0.4
+
+#Ninth
+9 (str6 v1): 26.1 19.2 16.3 10.4 7.5 0.6
+9 (str6 v2): 16.2 14.3 10.4 0.6
+9 (str5): 19.1 14.2 10.3 4.4 0.5
+7#9 (str6 v1): 27.1 19.2 16.3 10.4 7.5 0.6
+7#9 (str6 v2): 24.1 19.2 15.3 10.4 4.5 0.6
+7#9 (str5): 15.2 10.3 4.4 0.5
+7b9 (str5 v2): 19.1 13.2 10.3 4.4 0.5
+7b9 (str5 v2): 13.2 10.3 4.4 0.5
+add9 (str5): 16.1 14.2 7.3 4.4 0.5
+maj9 (str6): 19.2 14.3 11.4 4.5 0.6
+maj9 (str5): 14.2 11.3 4.4 0.5
+maj9 (str4): 11.1 7.2 2.3 0.4 -8.5
+m6/9 (str5): 14.2 9.3 3.4 0.5
+m6 (str6): 19.2 15.3 9.4 0.6
+m9 (str5): 14.2 10.3 3.4 0.5
+m9 (str6): 26.1 19.2 15.3 10.4 0.6
+6(9) (str5): 14.2 9.3 4.4 0.5
+6(9) (str6): 19.2 14.3 9.4 0.6
+
+#Eleventh
+m11 (str5): 17.1 14.2 10.3 3.4 0.5
+m11 (str6): 17.2 15.3 10.4 0.6
+maj7#11 (str5): 18.1 14.2 9.3 4.4 0.5
+maj7#11 (str4): 0.4 4.3 6.2 11.1
+
+#Thirteenth
+13 (str6): 21.2 16.3 10.4 0.6
+13 (str5): 21.1 14.2 10.3 4.4 0.5
+7b13 (str6): 20.2 16.3 10.4 0.6
+
+#Suspended
+9sus4 (str6): 17.2 14.3 10.4 0.6
+9sus4 (str5): 14.2 10.3 5.4 0.5
+--

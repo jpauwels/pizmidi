@@ -557,16 +557,16 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 					chordpos++;
 				}
 			}
-			notePlaying[ch][curTrigger]=true;
+			notePlaying[ch-1][curTrigger]=true;
 			playingFromGUI = true;
 			playButtonTrigger = curTrigger;
 		}
 		else {
 			int numNotes = playingChord[playButtonTrigger].size();
 			if (numNotes==0) {
-				if (outputNote[ch][curTrigger]!=-1) {
-					output.addEvent(MidiMessage::noteOff(ch,outputNote[ch][playButtonTrigger]),0);
-					outputNote[ch][playButtonTrigger]=-1;
+				if (outputNote[ch-1][curTrigger]!=-1) {
+					output.addEvent(MidiMessage::noteOff(ch,outputNote[ch-1][playButtonTrigger]),0);
+					outputNote[ch-1][playButtonTrigger]=-1;
 				}
 			}
 			else {
@@ -576,7 +576,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 
 					int delay = noteDelay[c][chordNote];
 					if (!expectingDelayedNotes)
-						delay = 0;//(int)(totalSamples - noteOrigPos[c][chordNote])/*+tomod.deltaFrames*/ +(int)(getSampleRate()/1000.f);
+					    delay = (int)(totalSamples - noteOrigPos[c][chordNote]) + (int)(getSampleRate()/1000.f);
                     if ((noteDelay[c][chordNote]+noteOrigPos[c][chordNote])
                         >= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
                             delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
@@ -596,7 +596,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 				}
 				playingChord[playButtonTrigger].clear();
 			}
-			notePlaying[ch][playButtonTrigger]=false;
+			notePlaying[ch-1][playButtonTrigger]=false;
 			playingFromGUI = false;
 		}
 		playingFromGUI = playFromGUI;
@@ -745,6 +745,7 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 						for (int i = 0; i<numNotes; i++) {
 							const int chordNote = playingChord[note][i].n;
 							const int c = playingChord[note][i].c - 1;
+							
 							int delay = noteDelay[c][chordNote];
 							if (!expectingDelayedNotes)
 								delay = (int)(totalSamples - noteOrigPos[c][chordNote])+sample +(int)(getSampleRate()/1000.f);
@@ -752,16 +753,19 @@ void MidiChords::processBlock (AudioSampleBuffer& buffer,
 								>= (totalSamples+delay - (int)(getSampleRate()/100.f))) {
 									delay=noteDelay[c][chordNote]+(int)(getSampleRate()/1000.f);
 							}
-							//if (!ignoreNextNoteOff[c].contains(chordNote)) {
-								if (delay>0)
+							if (!ignoreNextNoteOff[c].contains(chordNote)) 
+							{
+								if (delay>0) 
+								{
 									delayBuffer.addEvent(MidiMessage::noteOff(c+1,chordNote),sample+delay);
+								}
 								else {
 									output.addEvent(MidiMessage::noteOff(c+1,chordNote),sample);
 									chordNotePlaying[c][chordNote]=false;
 								}
-							//}
-							//else
-							//	ignoreNextNoteOff[c].removeValue(chordNote);
+							}
+							else
+								ignoreNextNoteOff[c].removeAllInstancesOf(chordNote);
 						}
 						playingChord[note].clear();
 					}
@@ -1079,6 +1083,7 @@ void MidiChords::selectTrigger(int index)
 		if (mode==Octave)
 			index = 60 + index%12;
 		triggerKbState.noteOff(1,curTrigger);
+		curTrigger = index;
 		triggerKbState.noteOn(1,index,1.f);
 		chordKbState.reset();
 		for (int c=1;c<=16;c++) {
@@ -1086,7 +1091,6 @@ void MidiChords::selectTrigger(int index)
 				if (progKbState[curProgram][index].isNoteOn(c,i)) 
 					chordKbState.noteOn(c,i,1.f);
 		}
-		curTrigger = index;
 		programs->set(curProgram,"lastTrigger",index);
 		if (getGuitarView())
 			translateToGuitarChord();
