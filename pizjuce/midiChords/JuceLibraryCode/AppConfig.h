@@ -220,10 +220,10 @@ enum OperatingSystemType
  #define JucePlugin_EditorRequiresKeyboardFocus  0
 #endif
 #ifndef  JucePlugin_VersionCode
- #define JucePlugin_VersionCode            0x10203
+ #define JucePlugin_VersionCode            0x10204
 #endif
 #ifndef  JucePlugin_VersionString
- #define JucePlugin_VersionString          "1.2.3"
+ #define JucePlugin_VersionString          "1.2.4"
 #endif
 #ifndef  JucePlugin_VSTUniqueID
  #define JucePlugin_VSTUniqueID            JucePlugin_PluginCode

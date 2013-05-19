@@ -37,8 +37,8 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "midiChords";
-    const char* const  versionString  = "1.2.3";
-    const int          versionNumber  = 0x10203;
+    const char* const  versionString  = "1.2.4";
+    const int          versionNumber  = 0x10204;
 }
 
 #endif   // __APPHEADERFILE_FFQIFG__
