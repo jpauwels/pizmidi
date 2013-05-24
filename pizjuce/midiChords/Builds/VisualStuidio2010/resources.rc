@@ -3,7 +3,7 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION  1,2,0,0
+FILEVERSION  1,2,5,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -11,9 +11,9 @@ BEGIN
     BEGIN
       VALUE "CompanyName",  "Insert Piz Here\0"
       VALUE "FileDescription",  "midiChords\0"
-      VALUE "FileVersion",  "1.2.0\0"
+      VALUE "FileVersion",  "1.2.5\0"
       VALUE "ProductName",  "midiChords\0"
-      VALUE "ProductVersion",  "1.2.0\0"
+      VALUE "ProductVersion",  "1.2.5\0"
     END
   END
 
